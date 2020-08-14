@@ -1,0 +1,60 @@
+{
+    "common": {
+        "name": "dysonairpurifier",
+        "version": "0.1.0",
+        "news": {
+            "0.1.0": {
+                "en": "first steps for dyson Air purifier adapter"
+            }
+        },
+        "title": "dysonAirPurifier",
+        "titleLang": {
+            "en": "dyson Air Purifiers"
+        },
+        "desc": {
+            "en": "Integrate dyson air purifiers and fans into ioBroker"
+        },
+        "authors": [
+            "Hanjo Hingsen <hanjo@hingsen.de>"
+        ],
+        "keywords": [
+            "ioBroker",
+            "dyson",
+            "Smart Home",
+            "home automation",
+            "air purifier",
+            "pure cool",
+            "hot & cool",
+            "fan"
+        ],
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "main": "main.js",
+        "icon": "dyson_logo.svg",
+        "enabled": true,
+        "extIcon": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier/master/admin/dyson_logo.svg",
+        "readme": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier/blob/master/readme.md",
+        "loglevel": "info",
+        "mode": "daemon",
+        "type": "climate-control",
+        "compact": true,
+        "materialize": true,
+        "materializeTab": true,
+        "supportCustoms": false,
+        "connectionType": "local",
+        "dataSource": "pull",
+        "dependencies": [
+            {
+                "js-controller": ">=1.4.2"
+            }
+        ]
+    },
+    "native": {
+        "email": "",
+        "Password": "",
+        "country": "",
+        "pollInterval": 30
+    },
+    "objects": [],
+    "instanceObjects": []
+}

@@ -1,0 +1,138 @@
+    <html>
+
+<head>
+
+	<!-- Load ioBroker scripts and styles-->
+	<link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
+	<link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+
+	<script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+
+	<script type="text/javascript" src="../../js/translate.js"></script>
+	<script type="text/javascript" src="../../lib/js/materialize.js"></script>
+	<script type="text/javascript" src="../../js/adapter-settings.js"></script>
+
+	<!-- Load our own files -->
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script type="text/javascript" src="words.js"></script>
+
+	<script type="text/javascript">
+
+
+		// Create secrect for encrypted password storage
+		var secret;
+		function encrypt(key, value) {
+			var result = '';
+			for(var i = 0; i < value.length; ++i) {
+				result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
+			}
+			return result;
+		}
+		function decrypt(key, value) {
+			var result = '';
+			for(var i = 0; i < value.length; ++i) {
+				result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
+			}
+			return result;
+		}
+
+        function load(settings, onChange) {
+            if (!settings) return;
+            $('.value').each(function () {
+                var $key = $(this);
+                var id = $key.attr('id');
+
+                if ($key.attr('type') === 'checkbox') {
+                    // do not call onChange direct, because onChange could expect some arguments
+                    $key.prop('checked', settings[id]).change(function () {
+                        onChange();
+                    });
+                } else {
+                    // do not call onChange direct, because onChange could expect some arguments
+                    $key.val(settings[id]).change(function () {
+                        onChange();
+                    }).keyup(function () {
+                        onChange();
+                    });
+                }
+            });
+            socket.emit('getObject', 'system.config', function (err, obj) {
+                secret = (obj.native ? obj.native.secret : '') || 'Zgfr56gFe87jJOM';
+                $key = $('#Password');
+                settings['Password'] = decrypt(secret, settings['Password']);
+                $key.val(settings['Password']).change(function () {
+                    onChange();
+                }).keyup(function () {
+                    onChange();
+                });
+            });
+
+            onChange(false);
+            // (re)initialize all the Materialize labels on the page
+            M.updateTextFields();
+        }
+
+        function save(callback) {
+            let obj = {};
+            $('.value').each(function () {
+                let $this = $(this);
+                let id = $this.attr('id');
+
+                if ($this.attr('type') === 'checkbox') {
+                    obj[id] = $this.prop('checked');
+                } else {
+                    let value = $this.val();
+                    if ( id === 'Password') {
+                        value = encrypt(secret, value);
+                    }
+                    obj[id] = value;
+                }
+            });
+            callback(obj);
+        }
+	</script>
+
+</head>
+
+<body>
+
+    <div class="m adapter-container">
+
+        <div class="row">
+            <div class="col s12 m4 l2">
+                <img src="dyson_logo.svg" class="logo">
+            </div>
+        </div>
+
+        <!-- Put your content here -->
+
+        <!-- For example columns with settings: -->
+        <div class="row">
+            <div class="input-field col s12 m4">
+                <input class="value" id="email" type="text">
+                <label for="email" class="translate">email</label>
+                <span class="translate">email_desc</span>
+            </div>
+            <div class="input-field col s12 m4">
+                <input class="value" id="Password" type="password" maxlength="15">
+                <label for="Password" class="translate">Password</label>
+                <span class="translate">password_desc</span>
+            </div>
+            <div class="input-field col s12 m4">
+                <select class="value" id="country">
+                    <option value='de' class="translate">germany</option>
+                </select>
+                <label for="country" class="translate">country</label>
+                <span class="translate">country_desc</span>
+            </div>
+            <div class="col s6 m4 input-field">
+                <input type="text" class="value" id="pollInterval" />
+                <label for="pollInterval" class="translate">Poll_Interval</label>
+                <span class="translate">Poll_Interval_desc</span>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+{
+  "name": "iobroker.dysonairpurifier",
+  "version": "0.1.0",
+  "description": "ioBroker Adapter for dyson air purifiers and fans",
+  "author": {
+    "name": "Hanjo Hingsen",
+    "email": "hanjo@hingsen.de"
+  },
+  "homepage": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier",
+  "license": "MIT",
+  "keywords": [
+    "ioBroker",
+    "dyson",
+    "Smart Home",
+    "home automation",
+    "pure cool",
+    "pure hot & cool",
+    "air purifier",
+    "fan"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier.git"
+  },
+  "dependencies": {
+    "@iobroker/adapter-core": "^2.4.0",
+    "dyson-cloud": "^2.0.0",
+    "dyson-purelink": "^1.0.0",
+    "snyk": "^1.325.0"
+  },
+  "devDependencies": {
+    "@iobroker/testing": "^2.1.0",
+    "@types/chai": "^4.2.11",
+    "@types/chai-as-promised": "^7.1.2",
+    "@types/gulp": "^4.0.6",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^14.0.1",
+    "@types/proxyquire": "^1.3.28",
+    "@types/sinon": "^9.0.0",
+    "@types/sinon-chai": "^3.2.3",
+    "axios": "^0.19.2",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^6.8.0",
+    "gulp": "^4.0.2",
+    "mocha": "^7.1.1",
+    "proxyquire": "^2.1.3",
+    "sinon": "^9.0.1",
+    "sinon-chai": "^3.5.0"
+  },
+  "main": "main.js",
+  "scripts": {
+    "test:js": "mocha --opts test/mocha.custom.opts",
+    "test:package": "mocha test/package --exit",
+    "test:unit": "mocha test/unit --exit",
+    "test:integration": "mocha test/integration --exit",
+    "test": "npm run test:js && npm run test:package",
+    "lint": "eslint",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "bugs": {
+    "url": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues"
+  },
+  "readmeFilename": "readme.md",
+  "snyk": true
+}
