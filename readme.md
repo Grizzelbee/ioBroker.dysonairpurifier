@@ -2,7 +2,7 @@
 
 ![Logo](admin/dyson_logo.svg)![Logo](admin/dyson_pure_cool.jpg)  
 
-
+<!---
 ![Number of Installations (latest)](http://iobroker.live/badges/myvbus-installed.svg)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.myvbus.svg)](https://www.npmjs.com/package/iobroker.myvbus)
 ![Number of Installations (stable)](http://iobroker.live/badges/myvbus-stable.svg)
@@ -10,8 +10,8 @@
 [![Dependency Status](https://img.shields.io/david/iobroker-community-adapters/iobroker.myvbus.svg)](https://david-dm.org/iobroker-community-adapters/iobroker.myvbus)
 [![Known Vulnerabilities](https://snyk.io/test/github/iobroker-community-adapters/ioBroker.myvbus/badge.svg)](https://snyk.io/test/github/iobroker-community-adapters/ioBroker.myvbus)
 [![Travis-CI](http://img.shields.io/travis/iobroker-community-adapters/ioBroker.myvbus/master.svg)](https://travis-ci.org/iobroker-community-adapters/ioBroker.myvbus)
-[![NPM](https://nodei.co/npm/iobroker.myvbus.png?downloads=true)](https://nodei.co/npm/iobroker.myvbus/)
-  
+[![NPM](https://nodei.co/npm/iobroker.dysonAirPurifier.png?downloads=true)](https://nodei.co/npm/iobroker.myvbus/)
+-->
   
   
 ## ioBroker Adapter for dyson Air Purifiers and fans
@@ -28,10 +28,10 @@ Uses: <https://github.com/auchenberg/dyson-purelink>
 
 ## Changelog
 
-### 0.1.0
-* (grizzelbee) first steps
-## Legal Notices
+### 0.1.0 - not working! Do not install/use
+* (grizzelbee) first development body (non funtional)
 
+## Legal Notices
 dyson, pure cool, pure hot & cool, and others are trademarks or registered trademarks of dyson ltd.
 <https://www.dyson.com>
 
