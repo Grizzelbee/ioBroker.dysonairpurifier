@@ -1,15 +1,18 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "0.1.0",
+        "version": "0.2.0",
         "news": {
+            "0.2.0": {
+                "en": "second steps for dyson Air purifier adapter (not working)"
+            },
             "0.1.0": {
-                "en": "first steps for dyson Air purifier adapter"
+                "en": "first steps for dyson Air purifier adapter (not working)"
             }
         },
-        "title": "dysonAirPurifier",
+        "title": "dyson AirPurifier",
         "titleLang": {
-            "en": "dyson Air Purifiers"
+            "en": "ioBroker Adapter for dyson air purifiers and fans"
         },
         "desc": {
             "en": "Integrate dyson air purifiers and fans into ioBroker"

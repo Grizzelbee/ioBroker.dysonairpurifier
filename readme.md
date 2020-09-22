@@ -3,7 +3,7 @@
 ![Logo](admin/dyson_logo.svg)![Logo](admin/dyson_pure_cool.jpg)  
 
 <!---
-![Number of Installations (latest)](http://iobroker.live/badges/myvbus-installed.svg)
+![Number of Installations (latest)](http://iobroker.live/badges/dysonairpurifier-installed.svg)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.myvbus.svg)](https://www.npmjs.com/package/iobroker.myvbus)
 ![Number of Installations (stable)](http://iobroker.live/badges/myvbus-stable.svg)
 [![NPM version](https://img.shields.io/npm/v/iobroker.myvbus.svg)](https://www.npmjs.com/package/iobroker.myvbus)
@@ -21,15 +21,33 @@ Uses: <https://github.com/auchenberg/dyson-purelink>
 <div>Fan-Icon im Logo created by <a href="https://www.flaticon.com/de/autoren/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/de/" title="Flaticon">www.flaticon.com</a></div>
 
 ### supported devices
-* dyson pure cool
+#### Tested
+* 2018 Dyson Pure Cool Tower (TP04)
+
+#### Should work
+* Dyson Pure Humidify+Cool (PH01)
+* 2018 Dyson Pure Cool Desk (DP04)
+* 2018 Dyson Pure Hot+Cool (HP04)
+* Dyson Pure Cool Link Tower (TP02)
+* Dyson Pure Cool Link Desk (DP01)
+* Dyson Pure Hot+Cool Link (HP02)
 
 ## Features
 
 
 ## Changelog
 
-### 0.1.0 - not working! Do not install/use
-* (grizzelbee) first development body (non funtional)
+### 0.2.0 (2020-09-22) - not working! Do not install/use
+* (grizzelbee) New: Login to dyson API works
+* (grizzelbee) New: Login to dyson AirPurifier (2018 Dyson Pure Cool Tower [TP04]) works
+* (grizzelbee) New: mqtt-Login to [TP04] works
+* (grizzelbee) New: mqtt-request from [TP04] works
+* (grizzelbee) New: mqtt-request to [TP04] is responding
+
+
+
+### 0.1.0 (2020-09-04) - not working! Do not install/use
+* (grizzelbee) first development body (non functional)
 
 ## Legal Notices
 dyson, pure cool, pure hot & cool, and others are trademarks or registered trademarks of dyson ltd.
@@ -40,8 +58,6 @@ All other trademarks are the property of their respective owners.
 ## License
 
 MIT License
-
-Copyright (c) 2020 Hanjo Hingsen <hanjo@hingsen.de>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -60,3 +76,5 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+Copyright (c) 2020 Hanjo Hingsen <hanjo@hingsen.de>

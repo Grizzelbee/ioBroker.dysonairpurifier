@@ -1,6 +1,6 @@
 {
   "name": "iobroker.dysonairpurifier",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "ioBroker Adapter for dyson air purifiers and fans",
   "author": {
     "name": "Hanjo Hingsen",
@@ -24,8 +24,6 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^2.4.0",
-    "dyson-cloud": "^2.0.0",
-    "dyson-purelink": "^1.0.0",
     "snyk": "^1.325.0"
   },
   "devDependencies": {
