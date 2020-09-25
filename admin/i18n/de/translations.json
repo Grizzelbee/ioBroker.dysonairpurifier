@@ -1,0 +1,16 @@
+{
+    "Celsius": "Celsius",
+    "Fahrenheit": "Fahrenheit",
+    "Kelvin": "Kelvin",
+    "Lbl_Password": "Passwort",
+    "Lbl_country": "Ländercode",
+    "Lbl_email": "Email",
+    "Lbl_temperatureUnit": "Temperatureinheit",
+    "Poll_Interval": "Pollinterval",
+    "Poll_Interval_desc": "Suchen Sie alle x Minuten nach neuen Geräten.",
+    "country_desc": "ISO-Code des Landes, in dem Sie Ihr Dyson-Konto erstellt haben.",
+    "email_desc": "E-Mail-Adresse Ihres Dyson-Kontos.",
+    "germany": "Deutschland",
+    "password_desc": "Passwort Ihres Dyson-Kontos.",
+    "temperatureUnit_desc": "In der Einheit wird die Temperatur in angezeigt."
+}

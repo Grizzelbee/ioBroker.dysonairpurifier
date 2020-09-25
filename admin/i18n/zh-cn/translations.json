@@ -1,0 +1,16 @@
+{
+    "Celsius": "摄氏温度",
+    "Fahrenheit": "华氏温度",
+    "Kelvin": "开尔文",
+    "Lbl_Password": "密码",
+    "Lbl_country": "国家代码",
+    "Lbl_email": "电子邮件",
+    "Lbl_temperatureUnit": "温度单位",
+    "Poll_Interval": "轮询间隔",
+    "Poll_Interval_desc": "每隔x分钟寻找新设备。",
+    "country_desc": "您创建戴森帐户所在国家/地区的ISO代码。",
+    "email_desc": "您的戴森帐户的电子邮件地址。",
+    "germany": "德国",
+    "password_desc": "dyson帐户的密码。",
+    "temperatureUnit_desc": "将显示温度单位。"
+}
