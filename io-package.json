@@ -1,21 +1,57 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "0.2.0",
+        "version": "0.3.0",
         "news": {
             "0.2.0": {
-                "en": "second steps for dyson Air purifier adapter (not working)"
+                "en": "second steps for dyson Air purifier adapter (not working)",
+                "de": "zweite Schritte für Dyson Luftreinigeradapter (funktioniert nicht)",
+                "ru": "вторые шаги для адаптера очистителя воздуха dyson (не работает)",
+                "pt": "segundas etapas para adaptador de purificador de ar dyson (não funciona)",
+                "nl": "tweede stappen voor dyson Luchtreiniger adapter (werkt niet)",
+                "fr": "deuxièmes étapes pour l'adaptateur de purificateur d'air dyson (ne fonctionne pas)",
+                "it": "secondi passaggi per l'adattatore del purificatore d'aria dyson (non funzionante)",
+                "es": "segundos pasos para el adaptador de purificador de aire Dyson (no funciona)",
+                "pl": "drugie kroki dla dyson Adapter oczyszczacza powietrza (nie działa)",
+                "zh-cn": "戴森空气净化器适配器的第二步（不起作用）"
             },
             "0.1.0": {
-                "en": "first steps for dyson Air purifier adapter (not working)"
+                "en": "first steps for dyson Air purifier adapter (not working)",
+                "de": "erste Schritte für Dyson Luftreinigeradapter (funktioniert nicht)",
+                "ru": "Первые шаги для адаптера очистителя воздуха dyson (не работает)",
+                "pt": "primeiros passos para o adaptador de purificador de ar dyson (não funciona)",
+                "nl": "eerste stappen voor dyson luchtreiniger adapter (werkt niet)",
+                "fr": "premières étapes pour l'adaptateur de purificateur d'air dyson (ne fonctionne pas)",
+                "it": "primi passi per l'adattatore del purificatore d'aria dyson (non funzionante)",
+                "es": "primeros pasos para el adaptador de purificador de aire Dyson (no funciona)",
+                "pl": "pierwsze kroki dla dyson Adapter oczyszczacza powietrza (nie działa)",
+                "zh-cn": "戴森空气净化器适配器的第一步（不起作用）"
             }
         },
         "title": "dyson AirPurifier",
         "titleLang": {
-            "en": "ioBroker Adapter for dyson air purifiers and fans"
+            "en": "ioBroker Adapter for dyson air purifiers and fans",
+            "de": "ioBroker Adapter für Dyson Luftreiniger und Lüfter",
+            "ru": "ioBroker Адаптер для очистителей воздуха и вентиляторов dyson",
+            "pt": "Adaptador ioBroker para purificadores de ar e ventiladores dyson",
+            "nl": "ioBroker Adapter voor dyson luchtreinigers en ventilatoren",
+            "fr": "ioBroker Adaptateur pour purificateurs d'air et ventilateurs Dyson",
+            "it": "Adattatore ioBroker per purificatori d'aria e ventilatori Dyson",
+            "es": "Adaptador ioBroker para purificadores de aire y ventiladores Dyson",
+            "pl": "ioBroker Adapter do oczyszczaczy powietrza i wentylatorów Dyson",
+            "zh-cn": "戴森空气净化器和风扇的ioBroker适配器"
         },
         "desc": {
-            "en": "Integrate dyson air purifiers and fans into ioBroker"
+            "en": "Integrate dyson air purifiers and fans into ioBroker",
+            "de": "Integrieren Sie Dyson-Luftreiniger und -Lüfter in ioBroker",
+            "ru": "Интегрируйте очистители воздуха и вентиляторы dyson в ioBroker",
+            "pt": "Integre purificadores de ar e ventiladores dyson no ioBroker",
+            "nl": "Integreer dyson-luchtreinigers en -ventilatoren in ioBroker",
+            "fr": "Intégrez les purificateurs d'air et les ventilateurs Dyson dans ioBroker",
+            "it": "Integra i purificatori d'aria e i ventilatori Dyson in ioBroker",
+            "es": "Integre purificadores de aire y ventiladores Dyson en ioBroker",
+            "pl": "Zintegruj oczyszczacze powietrza i wentylatory Dyson w ioBroker",
+            "zh-cn": "将戴森空气净化器和风扇集成到ioBroker中"
         },
         "authors": [
             "Hanjo Hingsen <hanjo@hingsen.de>"
@@ -56,7 +92,8 @@
         "email": "",
         "Password": "",
         "country": "",
-        "pollInterval": 30
+        "pollInterval": 30,
+        "temperatureUnit": "C"
     },
     "objects": [],
     "instanceObjects": []
