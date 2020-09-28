@@ -44,22 +44,22 @@ Install from STABLE or LATEST repository or from github - depending what stabili
 * dyson account username
 * dyson account password
 * your ISO-Country code (DE, US, CA, ...). This will mostly be the country you opened your dyson account in.
-* your fans IP address in your LAN.
+* your fans/air purifiers IP address in your LAN.
 Due to early development state and a non conform mDNS implementation by dyson you'll need to provide the local fans IP after the first run.
-So please run the adapter and your fans are created. Then stop the adapter, place the IP into field Hostaddress. 
+On the first start of this adapter the dyson API is queried for all your devices and all supported devices will be created in the devicetree - with it's basic information provided by the API and an additional field "Hostaddress".
+So please run the adapter and your air purifiers get created in the devicetree with their basic information. 
+Then stop the adapter, place the IP into field Hostaddress and restart the adapter. After that all your air purifiers should get populated. 
 
 ## Changelog
 ### Todo:
 * calculate quality indexes for PM2.5, PM10, VOC and NO2
-* make IP editable / configurable
 
-
-
-### 0.3.0 (2020-09-25) - not fully working! Do not install/use
+### 0.3.0 (2020-09-28) - first version worth giving it a try
 * (grizzelbee) New: Messages received via Web-API and MQTT getting processed
 * (grizzelbee) New: datapoints getting created and populated
 * (grizzelbee) New: Added config item for desired temperature unit (Kelvin, Fahrenheit, Celsius).
 * (grizzelbee) New: Added missing product names to product numbers
+* (grizzelbee) New: Hostaddress/IP is editable / configurable
 
 ### 0.2.0 (2020-09-22) - not working! Do not install/use
 * (grizzelbee) New: Login to dyson API works
