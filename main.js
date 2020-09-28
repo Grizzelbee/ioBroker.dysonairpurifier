@@ -254,25 +254,114 @@ class dysonAirPurifier extends utils.Adapter {
             if ( row === "data"){
                 this.processMsg(device, ".Sensor", message[row]);
 
-                // PM2.5 Quality
+                // PM2.5 QualityIndex
                 // 0-35: Good, 36-53: Medium, 54-70: Bad, 71-150: very Bad, 151-250: extremly Bad, >251 worrying
+                let PM25Index = 'Good';
+                if (message[row].pm25 < 36) {
+                    PM25Index = 'Good';
+                } else if (message[row].pm25 >= 36 && message[row].pm25 <= 53){
+                    PM25Index = 'Medium';
+                } else if (message[row].pm25 >= 54 && message[row].pm25 <= 70){
+                    PM25Index = 'Bad';
+                } else if (message[row].pm25 >= 71 && message[row].pm25 <= 150){
+                    PM25Index = 'very Bad';
+                } else if (message[row].pm25 >= 151 && message[row].pm25 <= 250){
+                    PM25Index = 'extremly Bad';
+                } else if (message[row].pm25 >= 251){
+                    PM25Index = 'Worrying';
+                }
+                this.createOrExtendObject(device.Serial + '.Sensor.PM25Index', {
+                    type: 'state',
+                    common: {
+                        name: 'PM2.5 QualityIndex. 0-35: Good, 36-53: Medium, 54-70: Bad, 71-150: very Bad, 151-250: extremly Bad, >251 worrying',
+                        "read": true,
+                        "write": false,
+                        "role": "value",
+                        "type": "string"
+                    },
+                    native: {}
+                }, PM25Index);
 
-
-
-                // PM10 Quality
+                // PM10 QualityIndex
                 // 0-50: Good, 51-75: Medium, 76-100, Bad, 101-350: very Bad, 351-420: extremly Bad, >421 worrying
+                let PM10Index = 'Good';
+                if (message[row].pm10 < 51) {
+                    PM10Index = 'Good';
+                } else if (message[row].pm10 >= 51 && message[row].pm10 <= 75){
+                    PM10Index = 'Medium';
+                } else if (message[row].pm10 >= 76 && message[row].pm10 <= 100){
+                    PM10Index = 'Bad';
+                } else if (message[row].pm10 >= 101 && message[row].pm10 <= 350){
+                    PM10Index = 'very Bad';
+                } else if (message[row].pm10 >= 351 && message[row].pm10 <= 420){
+                    PM10Index = 'extremly Bad';
+                } else if (message[row].pm10 >= 421){
+                    PM10Index = 'Worrying';
+                }
+                this.createOrExtendObject(device.Serial + '.Sensor.PM10Index', {
+                    type: 'state',
+                    common: {
+                        name: 'PM10 QualityIndex. 0-50: Good, 51-75: Medium, 76-100, Bad, 101-350: very Bad, 351-420: extremly Bad, >421 worrying',
+                        "read": true,
+                        "write": false,
+                        "role": "value",
+                        "type": "string"
+                    },
+                    native: {}
+                }, PM10Index);
 
-                // VOC Quality
+                // VOC QualityIndex
                 // 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad
-
-                // NO2 Quality
+                let VOCIndex = 'Good';
+                if (message[row].voc < 4) {
+                    VOCIndex = 'Good';
+                } else if (message[row].voc >= 4 && message[row].voc <= 6){
+                    VOCIndex = 'Medium';
+                } else if (message[row].voc >= 7 && message[row].voc <= 8){
+                    VOCIndex = 'Bad';
+                } else if (message[row].voc >= 9){
+                    VOCIndex = 'very Bad';
+                }
+                this.createOrExtendObject(device.Serial + '.Sensor.VOCIndex', {
+                    type: 'state',
+                    common: {
+                        name: 'VOC QualityIndex. 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad',
+                        "read": true,
+                        "write": false,
+                        "role": "value",
+                        "type": "string"
+                    },
+                    native: {}
+                }, VOCIndex);
+                // NO2 QualityIndex
                 // 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad
+                let NO2Index = 'Good';
+                if (message[row].no2 < 4) {
+                    NO2Index = 'Good';
+                } else if (message[row].no2 >= 4 && message[row].no2 <= 6){
+                    NO2Index = 'Medium';
+                } else if (message[row].no2 >= 7 && message[row].no2 <= 8){
+                    NO2Index = 'Bad';
+                } else if (message[row].no2 >= 9){
+                    NO2Index = 'very Bad';
+                }
+                this.createOrExtendObject(device.Serial + '.Sensor.NO2Index', {
+                    type: 'state',
+                    common: {
+                        name: 'NO2 QualityIndex. 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad',
+                        "read": true,
+                        "write": false,
+                        "role": "value",
+                        "type": "string"
+                    },
+                    native: {}
+                }, NO2Index);
 
                 continue;
             }
             const helper = await this.getDatapoint(row);
             if ( helper === undefined){
-                this.log.info("Skipped creating datapoint for: [" + row + "] Value: |-> " + (typeof( message[row] ) === "object")? JSON.stringify(message[row]) : message[row] );
+                this.log.info("Skipped creating datafield for: [" + row + "] Value: |-> " + ((typeof( message[row] ) === "object")? JSON.stringify(message[row]) : message[row]) );
                 continue;
             }
             // strip leading zeros from numbers
@@ -320,7 +409,7 @@ class dysonAirPurifier extends utils.Adapter {
             const adapter = this;
             await this.dysonAPILogIn(this.config)
                 .then( (response) => {
-                    this.log.info('Successful dyson API Login.');
+                    this.log.debug('Successful dyson API Login.');
                     // Creates the authorization header for further use
                     myAccount = 'Basic ' + Buffer.from(response.data.Account + ':' + response.data.Password).toString('base64');
                     this.log.debug('[dysonAPILogIn]: Statuscode from Axios: [' + response.status + ']');
