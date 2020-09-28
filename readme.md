@@ -8,14 +8,14 @@
 ![Number of Installations (stable)](http://iobroker.live/badges/myvbus-stable.svg)
 [![NPM version](https://img.shields.io/npm/v/iobroker.myvbus.svg)](https://www.npmjs.com/package/iobroker.myvbus)
 [![Dependency Status](https://img.shields.io/david/iobroker-community-adapters/iobroker.myvbus.svg)](https://david-dm.org/iobroker-community-adapters/iobroker.myvbus)
-[![Known Vulnerabilities](https://snyk.io/test/github/iobroker-community-adapters/ioBroker.myvbus/badge.svg)](https://snyk.io/test/github/iobroker-community-adapters/ioBroker.myvbus)
-[![Travis-CI](http://img.shields.io/travis/iobroker-community-adapters/ioBroker.myvbus/master.svg)](https://travis-ci.org/iobroker-community-adapters/ioBroker.myvbus)
 [![NPM](https://nodei.co/npm/iobroker.dysonAirPurifier.png?downloads=true)](https://nodei.co/npm/iobroker.myvbus/)
 -->
-  
+[![Known Vulnerabilities](https://snyk.io/test/github/Grizzelbee/ioBroker.dysonairpurifier/badge.svg)](https://snyk.io/test/github/Grizzelbee/ioBroker.dysonairpurifier)
+[![Travis-CI](https://travis-ci.org/Grizzelbee/iobroker.dysonairpurifier.svg?branch=master)](https://travis-ci.com/github/Grizzelbee/iobroker.dysonairpurifier)
+
   
 ## ioBroker Adapter for dyson Air Purifiers and fans
-This adapter connects ioBroker to various dyson Air Purifiers, a JavaScript library is used for that.
+This adapter connects ioBroker to various dyson Air Purifiers.
 
 <div>Fan-Icon in Logo created by <a href="https://www.flaticon.com/de/autoren/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/de/" title="Flaticon">www.flaticon.com</a></div>
 
@@ -52,14 +52,17 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
 
 ## Changelog
 ### Todo:
-* calculate quality indexes for PM2.5, PM10, VOC and NO2
+* detect IP of devices automatically
+* Add more countrycodes
 
-### 0.3.0 (2020-09-28) - first version worth giving it a try
+
+### 0.3.0 (2020-09-27) - first version worth giving it a try
 * (grizzelbee) New: Messages received via Web-API and MQTT getting processed
 * (grizzelbee) New: datapoints getting created and populated
 * (grizzelbee) New: Added config item for desired temperature unit (Kelvin, Fahrenheit, Celsius).
 * (grizzelbee) New: Added missing product names to product numbers
 * (grizzelbee) New: Hostaddress/IP is editable / configurable
+* (grizzelbee) New: calculate quality indexes for PM2.5, PM10, VOC and NO2 according to dyson App 
 
 ### 0.2.0 (2020-09-22) - not working! Do not install/use
 * (grizzelbee) New: Login to dyson API works
