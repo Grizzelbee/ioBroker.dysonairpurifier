@@ -14,6 +14,7 @@ const mqtt   = require('mqtt');
 const adapterName = require('./package.json').name.split('.').pop();
 
 // Variable definitions
+const ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
 const apiUri = 'https://appapi.cp.dyson.com';
 const supportedProductTypes = ['358', '438', '455', '469', '475', '520', '527'];
 const products = {  '358':'Dyson Pure Humidify+Cool',
@@ -67,7 +68,6 @@ const datapoints = [
     ["noxl" , "NO2"  		              , "NO2 - Nitrogen dioxide (inside)"           , "number", "false", "value.NO2"         ,"" ],
     ["p25r" , "PM-R25"  		          , "PM-R2.5 - Particulate Matter 2.5µm"        , "number", "false", "value.PM25"        ,"µg/m³" ],
     ["p10r" , "PM-R10"  		          , "PM-R10 - Particulate Matter 10µm"          , "number", "false", "value.PM10"        ,"µg/m³" ]
-
 ];
 
 /*
@@ -108,28 +108,141 @@ class dysonAirPurifier extends utils.Adapter {
 
     /*
      * Function CreateOrUpdateDevice
-     * @param apiData {object} device data as delivered from dyson Web-API
-     * @param device  {object} additional data for the current device which are not provided by Web-API (IP-Address, MQTT-Password)
+     * @param device  {object} data for the current device which are not provided by Web-API (IP-Address, MQTT-Password)
      */
-    async CreateOrUpdateDevice(apiData, device){
-        // create device folder
-        this.log.debug("Creating device folder.");
-        this.createOrExtendObject( device.serial, { type: 'device', common: {name: products[device.productType] }, native: {} } );
-        this.createOrExtendObject( device.serial + '.Firmware', { type: 'channel', common: {name: 'Information on device\'s firmware', "read":true, "write": false }, native: {} } );
-        this.createOrExtendObject( device.serial + '.Firmware.Version', { type: 'state', common: {name: 'Current firmware version', "read":true, "write": false, "role": "value", "type":"string" }, native: {} }, apiData.Version );
-        this.createOrExtendObject( device.serial + '.Firmware.Autoupdate', { type: 'state', common: {name: 'Shows whether the device updates it\'s firmware automatically if update is avaliable.', "read":true, "write": true, "role": "indicator.autoupdate", "type":"boolean" }, native: {} }, apiData.AutoUpdate );
-        this.createOrExtendObject( device.serial + '.Firmware.NewVersionAvailable', { type: 'state', common: {name: 'Shows whether a firmware update for this device is avaliable online.', "read":true, "write": false, "role": "indicator.firmwareupdate", "type":"boolean" }, native: {} }, apiData.NewVersionAvailable );
-        this.createOrExtendObject( device.serial + '.ProductType', { type: 'state', common: {name: 'dyson internal productType.', "read":true, "write": false, "role": "value", "type":"number" }, native: {} }, apiData.ProductType );
-        this.createOrExtendObject( device.serial + '.ConnectionType', { type: 'state', common: {name: 'Type of connection.', "read":true, "write": false, "role": "value", "type":"string" }, native: {} }, apiData.ConnectionType );
-        this.createOrExtendObject( device.serial + '.Name', { type: 'state', common: {name: 'Name of device.', "read":true, "write": true, "role": "value", "type":"string" }, native: {} }, apiData.Name );
-        this.createOrExtendObject( device.serial + '.MqttCredentials', { type: 'state', common: {name: 'Local MQTT password of device.', "read":true, "write": false, "role": "value", "type":"string" }, native: {} }, device.password );
-        this.createOrExtendObject( device.serial + '.Hostaddress', { type: 'state', common: {name: 'Local host address (IP) of device.', "read":true, "write": true, "role": "value", "type":"string" }, native: {} }, device.hostAddress );
+    async CreateOrUpdateDevice(device){
+        try {
+            // create device folder
+            this.log.debug("Creating device folder.");
+            this.createOrExtendObject(device.Serial, {
+                type: 'device',
+                common: {name: products[device.ProductType]},
+                native: {}
+            });
+            this.createOrExtendObject(device.Serial + '.Firmware', {
+                type: 'channel',
+                common: {name: 'Information on device\'s firmware', "read": true, "write": false},
+                native: {}
+            });
+            this.createOrExtendObject(device.Serial + '.Firmware.Version', {
+                type: 'state',
+                common: {
+                    name: 'Current firmware version',
+                    "read": true,
+                    "write": false,
+                    "role": "value",
+                    "type": "string"
+                },
+                native: {}
+            }, device.Version);
+            this.createOrExtendObject(device.Serial + '.Firmware.Autoupdate', {
+                type: 'state',
+                common: {
+                    name: 'Shows whether the device updates it\'s firmware automatically if update is avaliable.',
+                    "read": true,
+                    "write": true,
+                    "role": "indicator.autoupdate",
+                    "type": "boolean"
+                },
+                native: {}
+            }, device.AutoUpdate);
+            this.createOrExtendObject(device.Serial + '.Firmware.NewVersionAvailable', {
+                type: 'state',
+                common: {
+                    name: 'Shows whether a firmware update for this device is avaliable online.',
+                    "read": true,
+                    "write": false,
+                    "role": "indicator.firmwareupdate",
+                    "type": "boolean"
+                },
+                native: {}
+            }, device.NewVersionAvailable);
+            this.createOrExtendObject(device.Serial + '.ProductType', {
+                type: 'state',
+                common: {
+                    name: 'dyson internal productType.',
+                    "read": true,
+                    "write": false,
+                    "role": "value",
+                    "type": "number"
+                },
+                native: {}
+            }, device.ProductType);
+            this.createOrExtendObject(device.Serial + '.ConnectionType', {
+                type: 'state',
+                common: {
+                    name: 'Type of connection.',
+                    "read": true,
+                    "write": false,
+                    "role": "value",
+                    "type": "string"
+                },
+                native: {}
+            }, device.ConnectionType);
+            this.createOrExtendObject(device.Serial + '.Name', {
+                type: 'state',
+                common: {name: 'Name of device.', "read": true, "write": true, "role": "value", "type": "string"},
+                native: {}
+            }, device.Name);
+            this.createOrExtendObject(device.Serial + '.MqttCredentials', {
+                type: 'state',
+                common: {
+                    name: 'Local MQTT password of device.',
+                    "read": true,
+                    "write": false,
+                    "role": "value",
+                    "type": "string"
+                },
+                native: {}
+            }, device.mqttPassword);
+            this.log.debug('Querying Host-Address of device: ' + device.Serial);
+            await this.getStateAsync(device.Serial + '.Hostaddress')
+                .then((state) => {
+                    if (state  && state.val != '') {
+                        this.log.debug('Found valid Host-Address.val [' + state.val + '] for device: ' + device.Serial);
+                        device.hostAddress = state.val;
+                        this.createOrExtendObject(device.Serial + '.Hostaddress', {
+                            type: 'state',
+                            common: {
+                                name: 'Local host address (IP) of device.',
+                                "read": true,
+                                "write": true,
+                                "role": "value",
+                                "type": "string"
+                            },
+                            native: {}
+                        }, device.hostAddress);
+                    } else {
+                        // No valid IP address of device found. Without we can't proceed. So terminate adapter.
+                        this.createOrExtendObject(device.Serial + '.Hostaddress', {
+                            type: 'state',
+                            common: {
+                                name: 'Local host address (IP) of device.',
+                                "read": true,
+                                "write": true,
+                                "role": "value",
+                                "type": "string"
+                            },
+                            native: {}
+                        }, undefined);
+                        this.log.error('IP-Address of device ['+ device.Serial +'] is invalid. Please enter the valid IP of this device in your LAN to the devicetree.');
+                        this.setState('info.connection', false);
+                        this.terminate('Terminating Adapter due to missing or invalid device IP.', 11);
+                    }
+                })
+                .catch( (error) => {
+                    this.log.error("[CreateOrUpdateDevice-getSateAsync] Error: " + error + ", Callstack: " + error.stack);
+                })
+        } catch(error){
+            this.log.error("[CreateOrUpdateDevice] Error: " + error + ", Callstack: " + error.stack);
+        }
     }
 
     /*
      * Function processCurrentStateMsg
      *
      * @param device  {object} additional data for the current device which are not provided by Web-API (IP-Address, MQTT-Password)
+     * @param path    {string} Additional subfolders can be given here if needed with a leading dot (eg. .Sensor)!
      * @param message {object} Current State of the device. Message is send by device via mqtt due to request or state change.
      */
     async processMsg( device, path, message ) {
@@ -140,22 +253,37 @@ class dysonAirPurifier extends utils.Adapter {
             }
             if ( row === "data"){
                 this.processMsg(device, ".Sensor", message[row]);
+
+                // PM2.5 Quality
+                // 0-35: Good, 36-53: Medium, 54-70: Bad, 71-150: very Bad, 151-250: extremly Bad, >251 worrying
+
+
+
+                // PM10 Quality
+                // 0-50: Good, 51-75: Medium, 76-100, Bad, 101-350: very Bad, 351-420: extremly Bad, >421 worrying
+
+                // VOC Quality
+                // 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad
+
+                // NO2 Quality
+                // 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad
+
                 continue;
             }
             const helper = await this.getDatapoint(row);
             if ( helper === undefined){
-                this.log.info("Skipped creating datapoint for: [" + row +" |-> " + (typeof( message[row] ) === "object")? JSON.stringify(message[row]) : message[row] + "]");
+                this.log.info("Skipped creating datapoint for: [" + row + "] Value: |-> " + (typeof( message[row] ) === "object")? JSON.stringify(message[row]) : message[row] );
                 continue;
             }
             // strip leading zeros from numbers
             let value;
             if (helper[3]==="number"){
                 // convert temperature to configured unit
-                value = parseInt(message[helper[0]], 10);
+                value = Number.parseInt(message[helper[0]], 10);
                 if (helper[5] === "value.temperature") {
                     helper[6] = this.config.temperatureUnit;
                     switch (this.config.temperatureUnit) {
-                        case 'K' : // do nothing - value is already in Kelvin
+                        case 'K' : value /= 10;
                             break;
                         case 'C' :
                             value = Number((value/10) - 273.15).toFixed(2);
@@ -168,7 +296,7 @@ class dysonAirPurifier extends utils.Adapter {
             } else {
                 value = message[helper[0]];
             }
-            this.createOrExtendObject( device.serial + path + '.'+ helper[1], { type: 'state', common: {name: helper[2], "read":true, "write": helper[4]==true, "role": helper[5], "type":helper[3], "unit":helper[6] }, native: {} }, value );
+            this.createOrExtendObject( device.Serial + path + '.'+ helper[1], { type: 'state', common: {name: helper[2], "read":true, "write": helper[4]==true, "role": helper[5], "type":helper[3], "unit":helper[6] }, native: {} }, value );
         }
     }
 
@@ -189,6 +317,7 @@ class dysonAirPurifier extends utils.Adapter {
 
         try {
             let myAccount;
+            const adapter = this;
             await this.dysonAPILogIn(this.config)
                 .then( (response) => {
                     this.log.info('Successful dyson API Login.');
@@ -200,63 +329,60 @@ class dysonAirPurifier extends utils.Adapter {
                 .catch( (error) => {
                     this.log.error('Error during dyson API login:' + error + ', Callstack: ' + error.stack);
                 })
+
             this.log.debug('Querying devices from dyson API.');
+            let devices=[];
             await this.dysonGetDevicesFromApi(myAccount)
             .then( (response) => {
-                let devices=[];
-                for (let thisDevice in response.data){
-                    this.log.debug('JSON-Data: ' + JSON.stringify(response.data[thisDevice]));
+                for (let thisDevice in response.data) {
+                    this.log.debug('Data received from dyson API: ' + JSON.stringify(response.data[thisDevice]));
                     // 1. create datapoints if device is supported
-                    if (!supportedProductTypes.some(function(t) { return t === response.data[thisDevice].ProductType; })) {
+                    if (!supportedProductTypes.some(function (t) {
+                        return t === response.data[thisDevice].ProductType;
+                    })) {
                         this.log.info('Device with serial number [' + response.data[thisDevice].Serial + '] not added, hence it is not supported by this adapter. Product type: [' + response.data[thisDevice].ProductType + ']');
                         this.log.info('Please open an Issue on github if you think your device should be supported.');
                         continue;
                     } else {
-                        // 2. Search Network for IP-Address of current thisDevice
-                        // 2a. Store IP-Address in additional persistant datafield
-                        // createOrUpdateDevice()
-                        // 3. query local data from each thisDevice
-/*
-                        // Gets the corresponding thisDevice configuration
-                        let config = platform.config.devices.find(function(d) { return d.serialNumber === apiConfig.Serial; });
-                        if (!config) {
-                            platform.log.warn('No IP address provided for thisDevice with serial number ' + apiConfig.Serial + '.');
-                            continue;
-                        }
-*/
-                        this.log.debug('Trying to add device to array.');
-                        // TODO replace fixed host address with some dynamic solution that works for everyone and for any number of devices
-                        devices.push({"serial"     : response.data[thisDevice].Serial,
-                                      "productType": response.data[thisDevice].ProductType,
-                                      "hostAddress": '192.168.175.88',
-                                      "mqttClient" : null,
-                                      "password"   : decryptMqttPasswd(response, response.data[thisDevice].LocalCredentials)} );
+                        // productType is supported: Push to Array and create in devicetree
+                        response.data[thisDevice].hostAddress  = undefined;
+                        response.data[thisDevice].mqttClient   = null;
+                        response.data[thisDevice].mqttPassword =  decryptMqttPasswd(response, response.data[thisDevice].LocalCredentials);
+                        devices.push(response.data[thisDevice]);
+                    }
+                }
+            })
+            .catch( (error) => {
+                    this.log.error('[dysonGetDevicesFromApi] Error: ('+error.statuscode+')' + error + ', Callstack: ' + error.stack);
+            })
 
-                        // Build Devicetree
-                        this.CreateOrUpdateDevice(response.data[thisDevice], devices[thisDevice]);
-
-
-
+            let updateIntervalHandle = null;
+            // 2. Search Network for IP-Address of current thisDevice
+            // 2a. Store IP-Address in additional persistant datafield
+            // createOrUpdateDevice()
+            // 3. query local data from each thisDevice
+            for (let thisDevice in devices) {
+                await this.CreateOrUpdateDevice(devices[thisDevice])
+                    .then((response) => {
                         // Initializes the MQTT client for local communication with the thisDevice
-                        this.log.debug('Trying to connect device ['+devices[thisDevice].serial+'] to mqtt.');
-                        devices[thisDevice].mqttClient = mqtt.connect('mqtt://'+devices[thisDevice].hostAddress , {
-                            username: devices[thisDevice].serial,
-                            password: devices[thisDevice].password,
+                        this.log.debug('Trying to connect device [' + devices[thisDevice].Serial + '] to mqtt.');
+                        devices[thisDevice].mqttClient = mqtt.connect('mqtt://' + devices[thisDevice].hostAddress, {
+                            username: devices[thisDevice].Serial,
+                            password: devices[thisDevice].mqttPassword,
                             protocolVersion: 3,
                             protocolId: 'MQIsdp'
                         });
-                        this.log.debug(devices[thisDevice].serial + ' - MQTT connection requested for ['+ devices[thisDevice].hostAddress+'].');
-                        let updateIntervalHandle = null;
-                        let adapter = this;
+                        this.log.debug(devices[thisDevice].Serial + ' - MQTT connection requested for [' + devices[thisDevice].hostAddress + '].');
+
                         // Subscribes for events of the MQTT client
                         devices[thisDevice].mqttClient.on('connect', function () {
-                            adapter.log.debug(devices[thisDevice].serial + ' - MQTT connection established.');
+                            adapter.log.debug(devices[thisDevice].Serial + ' - MQTT connection established.');
 
                             // Subscribes to the status topic to receive updates
-                            devices[thisDevice].mqttClient.subscribe(devices[thisDevice].productType + '/' + devices[thisDevice].serial + '/status/current', function () {
+                            devices[thisDevice].mqttClient.subscribe(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/status/current', function () {
 
-                            // Sends an initial request for the current state
-                            devices[thisDevice].mqttClient.publish(devices[thisDevice].productType + '/' + devices[thisDevice].serial + '/command', JSON.stringify({
+                                // Sends an initial request for the current state
+                                devices[thisDevice].mqttClient.publish(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/command', JSON.stringify({
                                     msg: 'REQUEST-CURRENT-STATE',
                                     time: new Date().toISOString()
                                 }));
@@ -267,72 +393,62 @@ class dysonAirPurifier extends utils.Adapter {
                             // change dataType from Buffer to JSON object
                             payload = JSON.parse(payload.toString());
                             adapter.log.debug("MessageType: " + payload.msg);
-                            switch (payload.msg){
+                            switch (payload.msg) {
                                 case "CURRENT-STATE" :
-                                    adapter.processMsg( devices[thisDevice], "", payload);
+                                    adapter.processMsg(devices[thisDevice], "", payload);
                                     break;
                                 case "ENVIRONMENTAL-CURRENT-SENSOR-DATA" :
-                                    adapter.createOrExtendObject( devices[thisDevice].serial + '.Sensor', { type: 'channel', common: {name: 'Information from device\'s sensors', "read":true, "write": false }, native: {} } );
-                                    adapter.processMsg( devices[thisDevice], ".Sensor", payload);
+                                    adapter.createOrExtendObject(devices[thisDevice].Serial + '.Sensor', {
+                                        type: 'channel',
+                                        common: {
+                                            name: 'Information from device\'s sensors',
+                                            "read": true,
+                                            "write": false
+                                        },
+                                        native: {}
+                                    });
+                                    adapter.processMsg(devices[thisDevice], ".Sensor", payload);
                                     break;
                             }
-
-                            adapter.log.debug(devices[thisDevice].serial + ' - MQTT message received: ' + JSON.stringify(payload));
+                            adapter.log.debug(devices[thisDevice].Serial + ' - MQTT message received: ' + JSON.stringify(payload));
                         });
+
                         devices[thisDevice].mqttClient.on('error', function (error) {
-                            adapter.log.debug(devices[thisDevice].serial + ' - MQTT error: ' + error);
+                            adapter.log.debug(devices[thisDevice].Serial + ' - MQTT error: ' + error);
                         });
+
                         devices[thisDevice].mqttClient.on('reconnect', function () {
-                            adapter.log.debug(devices[thisDevice].serial + ' - MQTT reconnecting.');
+                            adapter.log.debug(devices[thisDevice].Serial + ' - MQTT reconnecting.');
                         });
+
                         devices[thisDevice].mqttClient.on('close', function () {
-                            adapter.log.debug(devices[thisDevice].serial + ' - MQTT disconnected.');
+                            adapter.log.debug(devices[thisDevice].Serial + ' - MQTT disconnected.');
                             if (updateIntervalHandle) {
                                 clearInterval(updateIntervalHandle);
                                 updateIntervalHandle = null;
                             }
                         });
+
                         devices[thisDevice].mqttClient.on('offline', function () {
-                            adapter.log.debug(devices[thisDevice].serial + ' - MQTT offline.');
+                            adapter.log.debug(devices[thisDevice].Serial + ' - MQTT offline.');
                             if (updateIntervalHandle) {
                                 clearInterval(updateIntervalHandle);
                                 updateIntervalHandle = null;
                             }
                         });
+
                         devices[thisDevice].mqttClient.on('end', function () {
-                            adapter.log.debug(devices[thisDevice].serial + ' - MQTT ended.');
+                            adapter.log.debug(devices[thisDevice].Serial + ' - MQTT ended.');
                             if (updateIntervalHandle) {
                                 clearInterval(updateIntervalHandle);
                                 updateIntervalHandle = null;
                             }
                         });
-
-
-                        /*
-                        // Creates the thisDevice instance and adds it to the list of all devices
-                        if (platform.config.supportedProductTypes.some(function(t) { return t === apiConfig.ProductType; })) {
-                            apiConfig.password = password;
-
-                            // Prints out the credentials hint
-                            platform.log.info('Credentials for thisDevice with serial number ' + apiConfig.Serial + ' are: ' + Buffer.from(JSON.stringify(apiConfig)).toString('base64'));
-
-                            // Creates the thisDevice
-                            platform.devices.push(new DysonPureCoolDevice(platform, apiConfig.Name, apiConfig.Serial, apiConfig.ProductType, apiConfig.Version, password, config));
-                        }
-                        */
-
-
-
-
-
-                    }
-                }
-            })
-            .catch( (error) => {
-                    this.log.error('[dysonGetDevicesFromApi] Error: ('+error.statuscode+')' + error + ', Callstack: ' + error.stack);
-                })
-
-
+                    })
+                    .catch((error) => {
+                        this.log.error(`[main/CreateOrUpdateDevice] error: ${error.message}, stack: ${error.stack}`);
+                    });
+            }
         } catch (error) {
             this.log.error(`[main()] error: ${error.message}, stack: ${error.stack}`);
         }
@@ -354,7 +470,7 @@ class dysonAirPurifier extends utils.Adapter {
         this.log.debug(`enc. Password: ${config.Password}`);
         this.log.debug(`Locale: ${config.country}`);
         // TODO Do more precise tests. This is very rough
-        const promise = new Promise(
+        new Promise(
             function(resolve, reject) {
                 if (   (!config.email    || config.email === '')
                     || (!config.Password || config.Password === '')
@@ -362,7 +478,7 @@ class dysonAirPurifier extends utils.Adapter {
                     reject('Given adapter config is invalid. Please fix.');
                 } else
                     resolve('Given config seems to be valid. Please continue ...');
-                })
+            });
     }
 
     /*
@@ -375,8 +491,7 @@ class dysonAirPurifier extends utils.Adapter {
             // Adapter is restarted automatically when config page is closed
             await this.configIsValid(this.config)
             .then((result) => {
-                this.log.debug(result);
-                // configisValid! Noe decrypt password
+                // configisValid! Now decrypt password
                 this.getForeignObject('system.config', (err, obj) => {
                     if (obj && obj.native && obj.native.secret) {
                         //noinspection JSUnresolvedVariable
@@ -491,31 +606,3 @@ if (module.parent) {
     // otherwise start the instance directly
     new dysonAirPurifier();
 }
-/*
-
-            // Maps the values of the sensors to the relative values described in the app (1 - 5 => Good, Medium, Bad, Very Bad, Extremely Bad)
-            const pm25Quality = pm25 <= 35 ? 1 : (pm25 <= 53 ? 2 : (pm25 <= 70 ? 3 : (pm25 <= 150 ? 4 : 5)));
-            const pm10Quality = pm10 <= 50 ? 1 : (pm10 <= 75 ? 2 : (pm10 <= 100 ? 3 : (pm10 <= 350 ? 4 : 5)));
-
-            // Maps the VOC values to a self-created scale (as described values in the app don't fit)
-            const va10Quality = (va10 * 0.125) <= 3 ? 1 : ((va10 * 0.125) <= 6 ? 2 : ((va10 * 0.125) <= 8 ? 3 : 4));
-
-            // Maps the NO2 value ti a self-created scale
-            const noxlQuality = noxl <= 30 ? 1 : (noxl <= 60 ? 2 : (noxl <= 80 ? 3 : (noxl <= 90 ? 4 : 5)));
-
-            // Maps the values of the sensors to the relative values, these operations are copied from the newer devices as the app does not specify the correct values
-            const pQuality = p <= 2 ? 1 : (p <= 4 ? 2 : (p <= 7 ? 3 : (p <= 9 ? 4 : 5)));
-            const vQuality = (v * 0.125) <= 3 ? 1 : ((v * 0.125) <= 6 ? 2 : ((v * 0.125) <= 8 ? 3 : 4));
-
-            // Sets the sensor data for air quality (the poorest sensor result wins)
-            if (hasAdvancedAirQualitySensors) {
-                airQualityService.updateCharacteristic(Characteristic.AirQuality, Math.max(pm25Quality, pm10Quality, va10Quality, noxlQuality));
-                airQualityService.updateCharacteristic(Characteristic.PM2_5Density, pm25)
-                airQualityService.updateCharacteristic(Characteristic.PM10Density, pm10)
-                airQualityService.updateCharacteristic(Characteristic.VOCDensity, va10)
-                airQualityService.updateCharacteristic(Characteristic.NitrogenDioxideDensity, noxl);
-            } else {
-                airQualityService.updateCharacteristic(Characteristic.AirQuality, Math.max(pQuality, vQuality));
-            }
-
- */
