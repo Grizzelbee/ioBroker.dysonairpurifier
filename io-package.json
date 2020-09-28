@@ -3,16 +3,28 @@
         "name": "dysonairpurifier",
         "version": "0.3.0",
         "news": {
+            "0.3.0": {
+                "en": "Working so far - first version worth giving it a try.",
+                "de": "Bisher funktioniert - erste Version, die es wert ist, ausprobiert zu werden.",
+                "ru": "Пока работает - стоит попробовать первую версию.",
+                "pt": "Funcionando até agora - vale a pena tentar a primeira versão.",
+                "nl": "Werkend tot nu toe - eerste versie die het proberen waard is.",
+                "fr": "Jusqu'à présent, la première version vaut la peine d'être essayée.",
+                "it": "Finora funzionante: vale la pena provare la prima versione.",
+                "es": "Funcionando hasta ahora, vale la pena probar la primera versión.",
+                "pl": "Działam do tej pory - pierwsza wersja, którą warto spróbować.",
+                "zh-cn": "到目前为止已经可以使用-值得尝试的第一个版本。"
+            },
             "0.2.0": {
-                "en": "second steps for dyson Air purifier adapter (not working)",
-                "de": "zweite Schritte für Dyson Luftreinigeradapter (funktioniert nicht)",
-                "ru": "вторые шаги для адаптера очистителя воздуха dyson (не работает)",
-                "pt": "segundas etapas para adaptador de purificador de ar dyson (não funciona)",
-                "nl": "tweede stappen voor dyson Luchtreiniger adapter (werkt niet)",
-                "fr": "deuxièmes étapes pour l'adaptateur de purificateur d'air dyson (ne fonctionne pas)",
-                "it": "secondi passaggi per l'adattatore del purificatore d'aria dyson (non funzionante)",
-                "es": "segundos pasos para el adaptador de purificador de aire Dyson (no funciona)",
-                "pl": "drugie kroki dla dyson Adapter oczyszczacza powietrza (nie działa)",
+                "en": "second step for dyson Air purifier adapter (not working)",
+                "de": "zweiter Schritt für Dyson Luftreinigeradapter (funktioniert nicht)",
+                "ru": "второй шаг для адаптера очистителя воздуха dyson (не работает)",
+                "pt": "segundo passo para adaptador de purificador de ar dyson (não funciona)",
+                "nl": "tweede stap voor dyson Luchtreiniger adapter (werkt niet)",
+                "fr": "deuxième étape pour l'adaptateur de purificateur d'air dyson (ne fonctionne pas)",
+                "it": "secondo passaggio per l'adattatore del purificatore d'aria dyson (non funzionante)",
+                "es": "segundo paso para el adaptador de purificador de aire Dyson (no funciona)",
+                "pl": "Drugi krok dla adaptera oczyszczacza powietrza dyson (nie działa)",
                 "zh-cn": "戴森空气净化器适配器的第二步（不起作用）"
             },
             "0.1.0": {
