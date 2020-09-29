@@ -53,7 +53,14 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
 ## Changelog
 ### Todo:
 * detect IP of devices automatically
-* Add more countrycodes
+* Add more country codes
+* remove deprecated library crypto
+* process state change messages
+* make devices controllable
+* test with more different devices
+* fix build errors
+* fix bug: AirQualityIndices aren't updating correctly
+* collect more mqtt messaage acronym meanings
 
 
 ### 0.3.0 (2020-09-27) - first version worth giving it a try
