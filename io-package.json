@@ -81,7 +81,7 @@
         "license": "MIT",
         "platform": "Javascript/Node.js",
         "main": "main.js",
-        "icon": "dyson_logo.svg",
+        "icon": "admin/dyson_logo.svg",
         "enabled": true,
         "extIcon": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier/master/admin/dyson_logo.svg",
         "readme": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier/blob/master/readme.md",
