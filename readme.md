@@ -2,17 +2,18 @@
 
 ![Logo](admin/dyson_logo.svg)![Logo](admin/dyson_pure_cool.jpg)  
 
-<!---
-![Number of Installations (latest)](http://iobroker.live/badges/dysonairpurifier-installed.svg)
-[![Downloads](https://img.shields.io/npm/dm/iobroker.myvbus.svg)](https://www.npmjs.com/package/iobroker.myvbus)
-![Number of Installations (stable)](http://iobroker.live/badges/myvbus-stable.svg)
-[![NPM version](https://img.shields.io/npm/v/iobroker.myvbus.svg)](https://www.npmjs.com/package/iobroker.myvbus)
-[![Dependency Status](https://img.shields.io/david/iobroker-community-adapters/iobroker.myvbus.svg)](https://david-dm.org/iobroker-community-adapters/iobroker.myvbus)
-[![NPM](https://nodei.co/npm/iobroker.dysonAirPurifier.png?downloads=true)](https://nodei.co/npm/iobroker.myvbus/)
+<!-- 
+![Number of Installations (stable)](http://iobroker.live/badges/dysonairpurifier-stable.svg) */
 -->
+
+![Number of Installations (latest)](http://iobroker.live/badges/dysonairpurifier-installed.svg)
+[![NPM version](https://img.shields.io/npm/v/iobroker.dysonairpurifier.svg)](https://www.npmjs.com/package/iobroker.dysonairpurifier)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.dysonairpurifier.svg)](https://www.npmjs.com/package/iobroker.dysonairpurifier)
+[![Dependency Status](https://img.shields.io/david/Grizzelbee/iobroker.dysonairpurifier.svg)](https://david-dm.org/Grizzelbee/iobroker.dysonairpurifier)
 [![Known Vulnerabilities](https://snyk.io/test/github/Grizzelbee/ioBroker.dysonairpurifier/badge.svg)](https://snyk.io/test/github/Grizzelbee/ioBroker.dysonairpurifier)
 [![Travis-CI](https://travis-ci.org/Grizzelbee/iobroker.dysonairpurifier.svg?branch=master)](https://travis-ci.com/github/Grizzelbee/iobroker.dysonairpurifier)
 
+[![NPM](https://nodei.co/npm/iobroker.dysonAirPurifier.svg?downloads=true)](https://nodei.co/npm/iobroker.dysonairpurifier/)
   
 ## ioBroker Adapter for dyson Air Purifiers and fans
 This adapter connects ioBroker to various dyson Air Purifiers.
@@ -59,9 +60,14 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
 * make devices controllable
 * test with more different devices
 * fix build errors
-* fix bug: AirQualityIndices aren't updating correctly
-* collect more mqtt messaage acronym meanings
+* fix bug: AirQualityIndices aren't updating correctly (root cause: varying datafileld names for devices)
+* collect more mqtt message acronym meanings
 
+### known issues:
+ * devices are currently **not controllable**
+ * AirQualityIndices aren't updated as intended
+ * No automatic IP detection of devices
+ 
 
 ### 0.3.0 (2020-09-27) - first version worth giving it a try
 * (grizzelbee) New: Messages received via Web-API and MQTT getting processed
@@ -77,8 +83,6 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
 * (grizzelbee) New: mqtt-Login to [TP04] works
 * (grizzelbee) New: mqtt-request from [TP04] works
 * (grizzelbee) New: mqtt-request to [TP04] is responding
-
-
 
 ### 0.1.0 (2020-09-04) - not working! Do not install/use
 * (grizzelbee) first development body (non functional)
