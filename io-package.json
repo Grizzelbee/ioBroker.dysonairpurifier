@@ -95,7 +95,7 @@
         "main": "main.js",
         "icon": "admin/dyson_logo.svg",
         "enabled": true,
-        "extIcon": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier/master/admin/dyson_logo.svg",
+        "extIcon": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier/blob/master/admin/dyson_logo.svg",
         "readme": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier/blob/master/readme.md",
         "loglevel": "info",
         "mode": "daemon",
