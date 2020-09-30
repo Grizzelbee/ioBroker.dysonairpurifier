@@ -341,13 +341,13 @@ class dysonAirPurifier extends utils.Adapter {
                 // VOC QualityIndex
                 // 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad
                 let VOCIndex = 'Good';
-                if (message[row].voc < 4) {
+                if (message[row].va10 < 4) {
                     VOCIndex = 'Good';
-                } else if (message[row].voc >= 4 && message[row].voc <= 6){
+                } else if (message[row].va10 >= 4 && message[row].va10 <= 6){
                     VOCIndex = 'Medium';
-                } else if (message[row].voc >= 7 && message[row].voc <= 8){
+                } else if (message[row].va10 >= 7 && message[row].va10 <= 8){
                     VOCIndex = 'Bad';
-                } else if (message[row].voc >= 9){
+                } else if (message[row].va10 >= 9){
                     VOCIndex = 'very Bad';
                 }
                 this.createOrExtendObject(device.Serial + '.Sensor.VOCIndex', {
@@ -364,13 +364,13 @@ class dysonAirPurifier extends utils.Adapter {
                 // NO2 QualityIndex
                 // 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad
                 let NO2Index = 'Good';
-                if (message[row].no2 < 4) {
+                if (message[row].noxl < 4) {
                     NO2Index = 'Good';
-                } else if (message[row].no2 >= 4 && message[row].no2 <= 6){
+                } else if (message[row].noxl >= 4 && message[row].noxl <= 6){
                     NO2Index = 'Medium';
-                } else if (message[row].no2 >= 7 && message[row].no2 <= 8){
+                } else if (message[row].noxl >= 7 && message[row].noxl <= 8){
                     NO2Index = 'Bad';
-                } else if (message[row].no2 >= 9){
+                } else if (message[row].noxl >= 9){
                     NO2Index = 'very Bad';
                 }
                 this.createOrExtendObject(device.Serial + '.Sensor.NO2Index', {
@@ -458,6 +458,7 @@ class dysonAirPurifier extends utils.Adapter {
                 })
                 .catch( (error) => {
                     this.log.error('Error during dyson API login:' + error + ', Callstack: ' + error.stack);
+                    if (error.response.status === 400) this.terminate('Terminating Adapter due to bad configuration (Missing dyson credentials).', 11);
                 })
 
             this.log.debug('Querying devices from dyson API.');
