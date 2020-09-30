@@ -602,7 +602,7 @@ class dysonAirPurifier extends utils.Adapter {
         this.log.debug(`enc. Password: ${config.Password}`);
         this.log.debug(`Locale: ${config.country}`);
         // TODO Do more precise tests. This is very rough
-        new Promise(
+        return new Promise(
             function(resolve, reject) {
                 if (   (!config.email    || config.email === '')
                     || (!config.Password || config.Password === '')
@@ -640,7 +640,7 @@ class dysonAirPurifier extends utils.Adapter {
                 })
             })
             .catch((error) => {
-                this.log.error('Error during Password decryption: ' + error);
+                this.log.error('Error during config validation: ' + error);
                 this.setState('info.connection', false);
                 this.terminate('Terminate Adapter until Configuration is completed', 11);
             })
