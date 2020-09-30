@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "0.3.0",
+        "version": "0.4.0",
         "news": {
+            "0.4.0": {
+                "en": "Devices are controllable now, State changes get processed now, Some minor bugfixes.",
+                "de": "Geräte sind jetzt steuerbar, Statusänderungen werden jetzt verarbeitet, einige kleinere Bugfixes.",
+                "ru": "Теперь устройствами можно управлять, изменения состояния обрабатываются, исправлены мелкие ошибки.",
+                "pt": "Dispositivos são controláveis ​​agora, mudanças de estado são processadas agora, algumas pequenas correções de bugs.",
+                "nl": "Apparaten zijn nu bestuurbaar, statuswijzigingen worden nu verwerkt, enkele kleine bugfixes.",
+                "fr": "Les appareils sont contrôlables maintenant, les changements d'état sont traités maintenant, quelques corrections de bugs mineurs.",
+                "it": "I dispositivi sono ora controllabili, le modifiche di stato vengono elaborate ora, alcune correzioni di bug minori.",
+                "es": "Los dispositivos son controlables ahora, los cambios de estado se procesan ahora, algunas correcciones de errores menores.",
+                "pl": "Urządzenia można teraz kontrolować, zmiany stanu są przetwarzane teraz, kilka drobnych poprawek błędów.",
+                "zh-cn": "设备现在是可控的，状态更改现在得到处理，一些小错误修正。"
+            },
             "0.3.0": {
                 "en": "Working so far - first version worth giving it a try.",
                 "de": "Bisher funktioniert - erste Version, die es wert ist, ausprobiert zu werden.",
