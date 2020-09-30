@@ -34,28 +34,28 @@ const datapoints = [
     ["ercd" , "LastErrorCode"             , "Errorcode of the last error occured on this device" 							, "string", "false", "value.error"        	       ,"" ],
     ["filf" , "FilterLife"                , "Estimated remaining filterlife in hours."  									, "string", "false", "value.lifetime"         , "hours"],
     ["fmod" , "Mode" 					  , "Mode of device"                                 								, "string", "false", "value"    		           ,"" ],
-    ["fnsp" , "FanSpeed" 				  , "Current fanspeed"                                 							    , "number", "false", "value.fanspeed"  	           ,"" ],
-    ["fnst" , "FanStatus"                 , "Current Fanstate"                                 							    , "string", "false", "state.fan"   		           ,"" ],
+    ["fnsp" , "FanSpeed" 				  , "Current fanspeed"                                 							    , "number", "true",  "value.fanspeed"  	           ,"" ],
+    ["fnst" , "FanStatus"                 , "Current Fanstate"                                 							    , "string", "true",  "state.fan"   		           ,"" ],
     ["nmod" , "Nightmode"                 , "Nightmode state"                                 								, "string", "true",  "indicator.nightmode"         ,"" ],
-    ["oson" , "Oscillation"               , "Oscillation of fan."                                 							, "string", "false", "state.oscillation"           ,"" ],
+    ["oson" , "Oscillation"               , "Oscillation of fan."                                 							, "string", "true",  "state.oscillation"           ,"" ],
     ["qtar" , "AirQualityTarget"          , "Target Air quality for Auto Mode."                                             , "string", "false", "value"                       ,"" ],
-    ["rhtm" , "ContiniousMonitoring"      , "Continious Monitoring by environmental sensors."                               , "string", "false", "state.continiousMonitoring"  ,"" ],
+    ["rhtm" , "ContiniousMonitoring"      , "Continious Monitoring by environmental sensors."                               , "string", "true",  "state.continiousMonitoring"  ,"" ],
     ["wacd" , "wacd" 				 	  , "Unknown"                                                                       , "string", "false", "value"                       ,"" ],
-    ["fpwr" , "MainPower" 		 		  , "Main Power of fan."                                							, "string", "false", "state.power"                 ,"" ],
-    ["auto" , "AutomaticMode"             , "Fan is in automatic mode."                                 					, "string", "false", "state.automatic"   		   ,"" ],
+    ["fpwr" , "MainPower" 		 		  , "Main Power of fan."                                							, "string", "true",  "state.power"                 ,"" ],
+    ["auto" , "AutomaticMode"             , "Fan is in automatic mode."                                 					, "string", "true",  "state.automatic"   		   ,"" ],
     ["oscs" , "OscillationActive"         , "Fan is currently oscillating."                                 				, "string", "false", "indicator.oscillation"       ,"" ],
     ["nmdv" , "NightModeMaxFan"           , "Maximum fan speed in night mode."                                          	, "number", "false", "value"                       ,"" ],
     ["bril" , "bril"                      , "Unknown"                                 										, "string", "false", "value"                       ,"" ],
     ["corf" , "corf"                      , "Unknown"                                 										, "string", "false", "value"  		               ,"" ],
     ["cflr" , "Coalfilter"                , "Remaining lifetime of activated coalfilter."                                 	, "number", "false", "state.coalfilter" , "%"	   ,"" ],
-    ["fdir" , "Fandirection"              , "Direction the fan blows to. ON=Front; OFF=Back"                                , "string", "false", "indicator.fandirection"      ,"" ],
+    ["fdir" , "Fandirection"              , "Direction the fan blows to. ON=Front; OFF=Back"                                , "string", "true",  "indicator.fandirection"      ,"" ],
     ["hflr" , "HEPA-Filter"               , "Remaining lifetime of HEPA-Filter."                                 			, "number", "false", "state.hepaFilter" , "%"      ,"" ],
     ["cflt" , "Carbonfilter"              , "Filtertype installed in carbonfilter port."                                 	, "string", "false", "value"                       ,"" ],
     ["hflt" , "HEPAfilter"                , "Filtertype installed in HEPA-filter port."                                 	, "string", "false", "value" 				       ,"" ],
     ["sltm" , "Sleeptimer"                , "Sleeptimer."                                 									, "string", "false", "indicator.sleeptimer"        ,"" ],
-    ["osal" , "OscilationLeft"  		  , "Maximum oscillation to the left. Relative to Ancorpoint."                      , "number", "false", "value"                       ,"°"],
-    ["osau" , "OscilationRight"  		  , "Maximum oscillation to the right. Relative to Ancorpoint."                     , "number", "false", "value"                       ,"°"],
-    ["ancp" , "Ancorpoint" 				  , "Ancorpoint for oscillation. By default the dyson logo on the bottom plate."    , "number", "false", "value.ancor"                 ,"°"],
+    ["osal" , "OscilationLeft"  		  , "Maximum oscillation to the left. Relative to Ancorpoint."                      , "number", "true", "value"                       ,"°"],
+    ["osau" , "OscilationRight"  		  , "Maximum oscillation to the right. Relative to Ancorpoint."                     , "number", "true", "value"                       ,"°"],
+    ["ancp" , "Ancorpoint" 				  , "Ancorpoint for oscillation. By default the dyson logo on the bottom plate."    , "number", "true", "value.ancor"                 ,"°"],
     ["rssi" , "RSSI"  		              , "Received Signal Strength Indication. Quality indicator for WIFI signal."       , "number", "false", "value.rssi"               ,"dBm" ],
     ["channel" , "WIFIchannel" 	          , "Number of the used WIFI channel."                                              , "number", "false", "value.wifiChannel"           ,"" ],
     ["pact" , "Dust"  		              , "Dust"                                      , "number", "false", "value.dust"        ,"" ],
@@ -341,13 +341,13 @@ class dysonAirPurifier extends utils.Adapter {
                 // VOC QualityIndex
                 // 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad
                 let VOCIndex = 'Good';
-                if (message[row].voc < 4) {
+                if (message[row].va10 < 4) {
                     VOCIndex = 'Good';
-                } else if (message[row].voc >= 4 && message[row].voc <= 6){
+                } else if (message[row].va10 >= 4 && message[row].va10 <= 6){
                     VOCIndex = 'Medium';
-                } else if (message[row].voc >= 7 && message[row].voc <= 8){
+                } else if (message[row].va10 >= 7 && message[row].va10 <= 8){
                     VOCIndex = 'Bad';
-                } else if (message[row].voc >= 9){
+                } else if (message[row].va10 >= 9){
                     VOCIndex = 'very Bad';
                 }
                 this.createOrExtendObject(device.Serial + '.Sensor.VOCIndex', {
@@ -364,13 +364,13 @@ class dysonAirPurifier extends utils.Adapter {
                 // NO2 QualityIndex
                 // 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad
                 let NO2Index = 'Good';
-                if (message[row].no2 < 4) {
+                if (message[row].noxl < 4) {
                     NO2Index = 'Good';
-                } else if (message[row].no2 >= 4 && message[row].no2 <= 6){
+                } else if (message[row].noxl >= 4 && message[row].noxl <= 6){
                     NO2Index = 'Medium';
-                } else if (message[row].no2 >= 7 && message[row].no2 <= 8){
+                } else if (message[row].noxl >= 7 && message[row].noxl <= 8){
                     NO2Index = 'Bad';
-                } else if (message[row].no2 >= 9){
+                } else if (message[row].noxl >= 9){
                     NO2Index = 'very Bad';
                 }
                 this.createOrExtendObject(device.Serial + '.Sensor.NO2Index', {
@@ -458,6 +458,7 @@ class dysonAirPurifier extends utils.Adapter {
                 })
                 .catch( (error) => {
                     this.log.error('Error during dyson API login:' + error + ', Callstack: ' + error.stack);
+                    if (error.response.status === 400) this.terminate('Terminating Adapter due to bad configuration (Missing dyson credentials).', 11);
                 })
 
             this.log.debug('Querying devices from dyson API.');
@@ -601,7 +602,7 @@ class dysonAirPurifier extends utils.Adapter {
         this.log.debug(`enc. Password: ${config.Password}`);
         this.log.debug(`Locale: ${config.country}`);
         // TODO Do more precise tests. This is very rough
-        new Promise(
+        return new Promise(
             function(resolve, reject) {
                 if (   (!config.email    || config.email === '')
                     || (!config.Password || config.Password === '')
@@ -639,7 +640,7 @@ class dysonAirPurifier extends utils.Adapter {
                 })
             })
             .catch((error) => {
-                this.log.error('Error during Password decryption: ' + error);
+                this.log.error('Error during config validation: ' + error);
                 this.setState('info.connection', false);
                 this.terminate('Terminate Adapter until Configuration is completed', 11);
             })
