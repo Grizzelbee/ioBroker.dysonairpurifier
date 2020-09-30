@@ -23,12 +23,12 @@ This adapter connects ioBroker to various dyson Air Purifiers.
 ### supported devices
 #### Tested
 * 2018 Dyson Pure Cool Tower (TP04)
+* Dyson Pure Cool Link Tower (TP02)
 
 #### Should work
 * Dyson Pure Humidify+Cool (PH01)
 * 2018 Dyson Pure Cool Desk (DP04)
 * 2018 Dyson Pure Hot+Cool (HP04)
-* Dyson Pure Cool Link Tower (TP02)
 * Dyson Pure Cool Link Desk (DP01)
 * Dyson Pure Hot+Cool Link (HP02)
 
@@ -56,19 +56,21 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
 * detect IP of devices automatically
 * Add more country codes
 * remove deprecated library crypto
-* process state change messages
-* make devices controllable
 * test with more different devices
 * fix build errors
 * fix bug: AirQualityIndices aren't updating correctly (root cause: varying datafileld names for devices)
 * collect more mqtt message acronym meanings
 
 ### known issues:
- * devices are currently **not controllable**
  * AirQualityIndices aren't updated as intended
  * No automatic IP detection of devices
  
 
+### 0.4.0 (2020-09-29)
+ * (grizzelbee) New: state-change-messages are processed correctly now
+ * (grizzelbee) Fix: Added missing °-Sign to temperature unit
+ * (grizzelbee) New: devices are now **controllable**
+ 
 ### 0.3.0 (2020-09-27) - first version worth giving it a try
 * (grizzelbee) New: Messages received via Web-API and MQTT getting processed
 * (grizzelbee) New: datapoints getting created and populated
@@ -130,8 +132,10 @@ Information copied and extended from https://github.com/shadowwa/Dyson-MQTT2RRD/
 | sltm | Sleeptimer | ON, OFF ||
 | osal | Oscilation left degrees | 0005 - 355| °  (degrees)|
 | osau | Oscilation right degrees | 0005 - 355 | °  (degrees)|
-| ancp | Ankerpoint for oscilation ?  | CUST, 0180 |° (degrees)|
-| fdir | Fandirection / ON=Front, OFF=Back | ON, OFF | | |
+| ancp | Ancorpoint for oscilation ?  | CUST, 0180 |° (degrees)|
+| fdir | Fandirection / ON=Front, OFF=Back | ON, OFF | | 
+| hmod | Heating Mode | ON, OFF | | 
+| hmax | Target temperature for heating | 0 .. 5000 | °K | 
 
 |Error-Codes| Meaning |
 | ----- | ----- |
