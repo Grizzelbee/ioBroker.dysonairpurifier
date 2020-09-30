@@ -58,11 +58,9 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
 * remove deprecated library crypto
 * test with more different devices
 * fix build errors
-* fix bug: AirQualityIndices aren't updating correctly (root cause: varying datafileld names for devices)
 * collect more mqtt message acronym meanings
 
 ### known issues:
- * AirQualityIndices aren't updated as intended
  * No automatic IP detection of devices
  
 
@@ -70,6 +68,9 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
  * (grizzelbee) New: state-change-messages are processed correctly now
  * (grizzelbee) Fix: Added missing °-Sign to temperature unit
  * (grizzelbee) New: devices are now **controllable**
+ * (grizzelbee) Fix: Terminating adapter when starting with missing dyson credentials.
+ * (grizzelbee) Fix: NO2 and VOC Indices should work now
+ 
  
 ### 0.3.0 (2020-09-27) - first version worth giving it a try
 * (grizzelbee) New: Messages received via Web-API and MQTT getting processed
