@@ -57,7 +57,6 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
 * Add more country codes
 * remove deprecated library crypto
 * test with more different devices
-* fix build errors
 * collect more mqtt message acronym meanings
 
 ### known issues:
@@ -65,11 +64,12 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
  
 
 ### 0.4.0 (2020-09-29)
+ * (grizzelbee) New: devices are now **controllable**
  * (grizzelbee) New: state-change-messages are processed correctly now
  * (grizzelbee) Fix: Added missing °-Sign to temperature unit
- * (grizzelbee) New: devices are now **controllable**
  * (grizzelbee) Fix: Terminating adapter when starting with missing dyson credentials.
  * (grizzelbee) Fix: NO2 and VOC Indices should work now
+ * (grizzelbee) Fix: Fixed build errors
  
  
 ### 0.3.0 (2020-09-27) - first version worth giving it a try
