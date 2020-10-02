@@ -137,6 +137,7 @@ Information copied and extended from https://github.com/shadowwa/Dyson-MQTT2RRD/
 | osau | Oscilation right degrees | 0005 - 355 | °  (degrees)|
 | ancp | Ancorpoint for oscilation ?  | CUST, 0180 |° (degrees)|
 | fdir | Fandirection / ON=Front, OFF=Back | ON, OFF | | 
+| ffoc | JetFocus | ON, OFF |
 | hmod | Heating Mode | ON, OFF | | 
 | hmax | Target temperature for heating | 0 .. 5000 | K | 
 | hume | Dehumidifier State     | ON, OFF, |

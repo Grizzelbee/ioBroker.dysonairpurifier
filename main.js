@@ -44,6 +44,7 @@ const datapoints = [
     ["nmdv" , "NightModeMaxFan"           , "Maximum fan speed in night mode."                                          	, "number", "false", "value"                       ,"" ],
     ["cflr" , "Coalfilter"                , "Remaining lifetime of activated coalfilter."                                 	, "number", "false", "state.coalfilter" , "%"	   ,"" ],
     ["fdir" , "Fandirection"              , "Direction the fan blows to. ON=Front; OFF=Back"                                , "string", "true",  "indicator.fandirection"      ,"" ],
+    ["ffoc" , "Jetfocus    "              , "Jetfocus [ON/OFF]"                                                             , "string", "true",  "indicator.jetfocus"          ,"" ],
     ["hflr" , "HEPA-Filter"               , "Remaining lifetime of HEPA-Filter."                                 			, "number", "false", "state.hepaFilter" , "%"      ,"" ],
     ["cflt" , "Carbonfilter"              , "Filtertype installed in carbonfilter port."                                 	, "string", "false", "value"                       ,"" ],
     ["hflt" , "HEPAfilter"                , "Filtertype installed in HEPA-filter port."                                 	, "string", "false", "value" 				       ,"" ],
