@@ -29,8 +29,6 @@ const products = {  '358':'Dyson Pure Humidify+Cool',
 // datastructure to determine readable names, etc for any datapoint
 // Every row is one state in a dyson message. Format: [ dysonCode, Name of Datapoint, Description, datatype, writable, role, unit]
 const datapoints = [
-    ["fqhp" , "fqhp"                      , "Unknown"                                 										, "string", "false", "value"          		       ,"" ],
-    ["fghp" , "fghp"                      , "Unknown"                                 										, "string", "false", "value"          		       ,"" ],
     ["ercd" , "LastErrorCode"             , "Errorcode of the last error occured on this device" 							, "string", "false", "value.error"        	       ,"" ],
     ["filf" , "FilterLife"                , "Estimated remaining filterlife in hours."  									, "string", "false", "value.lifetime"         , "hours"],
     ["fmod" , "Mode" 					  , "Mode of device"                                 								, "string", "false", "value"    		           ,"" ],
@@ -40,40 +38,47 @@ const datapoints = [
     ["oson" , "Oscillation"               , "Oscillation of fan."                                 							, "string", "true",  "state.oscillation"           ,"" ],
     ["qtar" , "AirQualityTarget"          , "Target Air quality for Auto Mode."                                             , "string", "false", "value"                       ,"" ],
     ["rhtm" , "ContiniousMonitoring"      , "Continious Monitoring by environmental sensors."                               , "string", "true",  "state.continiousMonitoring"  ,"" ],
-    ["wacd" , "wacd" 				 	  , "Unknown"                                                                       , "string", "false", "value"                       ,"" ],
     ["fpwr" , "MainPower" 		 		  , "Main Power of fan."                                							, "string", "true",  "state.power"                 ,"" ],
     ["auto" , "AutomaticMode"             , "Fan is in automatic mode."                                 					, "string", "true",  "state.automatic"   		   ,"" ],
     ["oscs" , "OscillationActive"         , "Fan is currently oscillating."                                 				, "string", "false", "indicator.oscillation"       ,"" ],
     ["nmdv" , "NightModeMaxFan"           , "Maximum fan speed in night mode."                                          	, "number", "false", "value"                       ,"" ],
-    ["bril" , "bril"                      , "Unknown"                                 										, "string", "false", "value"                       ,"" ],
-    ["corf" , "corf"                      , "Unknown"                                 										, "string", "false", "value"  		               ,"" ],
     ["cflr" , "Coalfilter"                , "Remaining lifetime of activated coalfilter."                                 	, "number", "false", "state.coalfilter" , "%"	   ,"" ],
     ["fdir" , "Fandirection"              , "Direction the fan blows to. ON=Front; OFF=Back"                                , "string", "true",  "indicator.fandirection"      ,"" ],
     ["hflr" , "HEPA-Filter"               , "Remaining lifetime of HEPA-Filter."                                 			, "number", "false", "state.hepaFilter" , "%"      ,"" ],
     ["cflt" , "Carbonfilter"              , "Filtertype installed in carbonfilter port."                                 	, "string", "false", "value"                       ,"" ],
     ["hflt" , "HEPAfilter"                , "Filtertype installed in HEPA-filter port."                                 	, "string", "false", "value" 				       ,"" ],
     ["sltm" , "Sleeptimer"                , "Sleeptimer."                                 									, "string", "false", "indicator.sleeptimer"        ,"" ],
-    ["osal" , "OscilationLeft"  		  , "Maximum oscillation to the left. Relative to Ancorpoint."                      , "number", "true", "value"                       ,"°"],
-    ["osau" , "OscilationRight"  		  , "Maximum oscillation to the right. Relative to Ancorpoint."                     , "number", "true", "value"                       ,"°"],
-    ["ancp" , "Ancorpoint" 				  , "Ancorpoint for oscillation. By default the dyson logo on the bottom plate."    , "number", "true", "value.ancor"                 ,"°"],
+    ["osal" , "OscilationLeft"  		  , "Maximum oscillation to the left. Relative to Ancorpoint."                      , "number", "true", "value"                        ,"°"],
+    ["osau" , "OscilationRight"  		  , "Maximum oscillation to the right. Relative to Ancorpoint."                     , "number", "true", "value"                        ,"°"],
+    ["ancp" , "Ancorpoint" 				  , "Ancorpoint for oscillation. By default the dyson logo on the bottom plate."    , "number", "true", "value.ancor"                  ,"°"],
     ["rssi" , "RSSI"  		              , "Received Signal Strength Indication. Quality indicator for WIFI signal."       , "number", "false", "value.rssi"               ,"dBm" ],
     ["channel" , "WIFIchannel" 	          , "Number of the used WIFI channel."                                              , "number", "false", "value.wifiChannel"           ,"" ],
-    ["pact" , "Dust"  		              , "Dust"                                      , "number", "false", "value.dust"        ,"" ],
-    ["hact" , "Humidity"  		          , "Humidity"                                  , "number", "false", "value.humidity"    ,"%" ],
-    ["sltm" , "Sleeptimer"  		      , "Sleeptimer"                                , "number", "false", "value.timer"       ,"Min" ],
-    ["tact" , "Temperature"  		      , "Temperature"                               , "number", "false", "value.temperature" ,"" ],
-    ["vact" , "VOC"  		              , "VOC - Volatil Organic Compounds"           , "number", "false", "value.voc"         ,"" ],
-    ["pm25" , "PM25"  		              , "PM2.5 - Particulate Matter 2.5µm"          , "number", "false", "value.PM25"        ,"µg/m³" ],
-    ["pm10" , "PM10"  		              , "PM10 - Particulate Matter 10µm"            , "number", "false", "value.PM10"        ,"µg/m³" ],
-    ["va10" , "VOC"  		              , "VOC - Volatil Organic Compounds (inside)"  , "number", "false", "value.VOC"         ,"" ],
-    ["noxl" , "NO2"  		              , "NO2 - Nitrogen dioxide (inside)"           , "number", "false", "value.NO2"         ,"" ],
-    ["p25r" , "PM-R25"  		          , "PM-R2.5 - Particulate Matter 2.5µm"        , "number", "false", "value.PM25"        ,"µg/m³" ],
-    ["p10r" , "PM-R10"  		          , "PM-R10 - Particulate Matter 10µm"          , "number", "false", "value.PM10"        ,"µg/m³" ]
+    ["pact" , "Dust"  		              , "Dust"                                                                          , "number", "false", "value.dust"                  ,"" ],
+    ["hact" , "Humidity"  		          , "Humidity"                                                                      , "number", "false", "value.humidity"             ,"%" ],
+    ["sltm" , "Sleeptimer"  		      , "Sleeptimer"                                                                    , "number", "false", "value.timer"              ,"Min" ],
+    ["tact" , "Temperature"  		      , "Temperature"                                                                   , "number", "false", "value.temperature"           ,"" ],
+    ["vact" , "VOC"  		              , "VOC - Volatil Organic Compounds"                                               , "number", "false", "value.voc"                   ,"" ],
+    ["pm25" , "PM25"  		              , "PM2.5 - Particulate Matter 2.5µm"                                              , "number", "false", "value.PM25"             ,"µg/m³" ],
+    ["pm10" , "PM10"  		              , "PM10 - Particulate Matter 10µm"                                                , "number", "false", "value.PM10"             ,"µg/m³" ],
+    ["va10" , "VOC"  		              , "VOC - Volatil Organic Compounds (inside)"                                      , "number", "false", "value.VOC"                   ,"" ],
+    ["noxl" , "NO2"  		              , "NO2 - Nitrogen dioxide (inside)"                                               , "number", "false", "value.NO2"                   ,"" ],
+    ["p25r" , "PM-R25"  		          , "PM-R2.5 - Particulate Matter 2.5µm"                                            , "number", "false", "value.PM25"             ,"µg/m³" ],
+    ["p10r" , "PM-R10"  		          , "PM-R10 - Particulate Matter 10µm"                                              , "number", "false", "value.PM10"             ,"µg/m³" ],
+    ["hmod" , "HeatingMode"               , "Heating Mode [ON/OFF]"                                 						, "string", "false", "value"          		       ,"" ],
+    ["hmax" , "HeatingTargetTemp" 		  , "Target temperature for heating"                                                , "string", "false", "value.temperature"           ,"" ],
+    ["hume" , "DehumidifierState"         , "Dehumidifier State [ON/OFF]"                                 			    	, "string", "false", "value"          		       ,"" ],
+    ["haut" , "TargetHumidifierState"     , "Target Humidifier Dehumidifier State"                                 			, "string", "false", "value"          		       ,"" ],
+    ["humt" , "RelativeHumidityThreshold" , "Relative Humidity Humidifier Threshold"                                 		, "string", "false", "value"          		       ,"" ],
+    ["bril" , "bril"                      , "Unknown"                                 										, "string", "false", "value"                       ,"" ],
+    ["corf" , "corf"                      , "Unknown"                                 										, "string", "false", "value"  		               ,"" ],
+    ["fqhp" , "fqhp"                      , "Unknown"                                 										, "string", "false", "value"          		       ,"" ],
+    ["fghp" , "fghp"                      , "Unknown"                                 										, "string", "false", "value"          		       ,"" ],
+    ["wacd" , "wacd" 				 	  , "Unknown"                                                                       , "string", "false", "value"                       ,"" ]
 ];
 
-/*
- * Main class of dyson AirPurifier adapter for ioBroker
- */
+    /*
+     * Main class of dyson AirPurifier adapter for ioBroker
+     */
 class dysonAirPurifier extends utils.Adapter {
     /**
      * @param {Partial<ioBroker.AdapterOptions>} [options={}]
@@ -398,14 +403,15 @@ class dysonAirPurifier extends utils.Adapter {
                 // convert temperature to configured unit
                 value = Number.parseInt(message[helper[0]], 10);
                 if (helper[5] === "value.temperature") {
-                    helper[6] = '°' + this.config.temperatureUnit;
                     switch (this.config.temperatureUnit) {
                         case 'K' : value /= 10;
                             break;
                         case 'C' :
+                            helper[6] = '°' + this.config.temperatureUnit;
                             value = Number((value/10) - 273.15).toFixed(2);
                             break;
                         case 'F' :
+                            helper[6] = '°' + this.config.temperatureUnit;
                             value = Number(((value/10) - 273.15) * (9/5) + 32).toFixed(2);
                             break;
                     }
@@ -485,8 +491,6 @@ class dysonAirPurifier extends utils.Adapter {
             .catch( (error) => {
                     this.log.error('[dysonGetDevicesFromApi] Error: ('+error.statuscode+')' + error + ', Callstack: ' + error.stack);
             })
-
-            let updateIntervalHandle = null;
             // 2. Search Network for IP-Address of current thisDevice
             // 2a. Store IP-Address in additional persistant datafield
             // 3. query local data from each thisDevice
@@ -555,26 +559,14 @@ class dysonAirPurifier extends utils.Adapter {
 
                         devices[thisDevice].mqttClient.on('close', function () {
                             adapter.log.debug(devices[thisDevice].Serial + ' - MQTT disconnected.');
-                            if (updateIntervalHandle) {
-                                clearInterval(updateIntervalHandle);
-                                updateIntervalHandle = null;
-                            }
                         });
 
                         devices[thisDevice].mqttClient.on('offline', function () {
                             adapter.log.debug(devices[thisDevice].Serial + ' - MQTT offline.');
-                            if (updateIntervalHandle) {
-                                clearInterval(updateIntervalHandle);
-                                updateIntervalHandle = null;
-                            }
                         });
 
                         devices[thisDevice].mqttClient.on('end', function () {
                             adapter.log.debug(devices[thisDevice].Serial + ' - MQTT ended.');
-                            if (updateIntervalHandle) {
-                                clearInterval(updateIntervalHandle);
-                                updateIntervalHandle = null;
-                            }
                         });
                     })
                     .catch((error) => {
@@ -665,10 +657,10 @@ class dysonAirPurifier extends utils.Adapter {
         const self = this;
         this.getObject(id, function (err, oldObj) {
             if (!err && oldObj) {
-                self.log.debug('Updating existing object ' + id );
+                self.log.debug('Updating existing object [' + id +'] with value: ['+ value+']');
                 self.extendObject(id, objData, callback);
             } else {
-                self.log.debug('Creating new object ' + id );
+                self.log.debug('Creating new object [' + id +'] with value: ['+ value+']');
                 self.setObjectNotExists(id, objData, callback);
             }
             self.setState(id, value, true);
@@ -719,8 +711,9 @@ class dysonAirPurifier extends utils.Adapter {
             // Exit adapter
     onUnload(callback) {
         try {
-            this.log.info('Cleaned up everything...');
-            callback();
+                for (let thisDevice in devices) devices[thisDevice].mqttClient.close();
+                this.log.info('Cleaned up everything...');
+                callback();
         } catch (e) {
             callback();
         }

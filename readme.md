@@ -2,12 +2,9 @@
 
 ![Logo](admin/dyson_logo.svg)![Logo](admin/dyson_pure_cool.jpg)  
 
-<!-- 
-![Number of Installations (stable)](http://iobroker.live/badges/dysonairpurifier-stable.svg) */
--->
-
 ![Number of Installations (latest)](http://iobroker.live/badges/dysonairpurifier-installed.svg)
 [![NPM version](https://img.shields.io/npm/v/iobroker.dysonairpurifier.svg)](https://www.npmjs.com/package/iobroker.dysonairpurifier)
+![Number of Installations (stable)](http://iobroker.live/badges/dysonairpurifier-stable.svg)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.dysonairpurifier.svg)](https://www.npmjs.com/package/iobroker.dysonairpurifier)
 [![Dependency Status](https://img.shields.io/david/Grizzelbee/iobroker.dysonairpurifier.svg)](https://david-dm.org/Grizzelbee/iobroker.dysonairpurifier)
 [![Known Vulnerabilities](https://snyk.io/test/github/Grizzelbee/ioBroker.dysonairpurifier/badge.svg)](https://snyk.io/test/github/Grizzelbee/ioBroker.dysonairpurifier)
@@ -23,14 +20,14 @@ This adapter connects ioBroker to various dyson Air Purifiers.
 ### supported devices
 #### Tested
 * 2018 Dyson Pure Cool Tower (TP04)
+* 2018 Dyson Pure Hot+Cool   (HP04)
 * Dyson Pure Cool Link Tower (TP02)
 
 #### Should work
 * Dyson Pure Humidify+Cool (PH01)
 * 2018 Dyson Pure Cool Desk (DP04)
-* 2018 Dyson Pure Hot+Cool (HP04)
-* Dyson Pure Cool Link Desk (DP01)
 * Dyson Pure Hot+Cool Link (HP02)
+* Dyson Pure Cool Link Desk (DP01)
 
 ## Features
 
@@ -58,10 +55,15 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
 * remove deprecated library crypto
 * test with more different devices
 * collect more mqtt message acronym meanings
+* calculate filter life in % not in hours
 
 ### known issues:
  * No automatic IP detection of devices
  
+
+### 0.4.1 (2020-10-01)
+ * (grizzelbee) Fix: removed unnessecary updateInterval. Statechanges are propagated automatically.
+ * (grizzelbee) New: Added some Hot&Cool specific datafields
 
 ### 0.4.0 (2020-09-29)
  * (grizzelbee) New: devices are now **controllable**
@@ -136,7 +138,10 @@ Information copied and extended from https://github.com/shadowwa/Dyson-MQTT2RRD/
 | ancp | Ancorpoint for oscilation ?  | CUST, 0180 |° (degrees)|
 | fdir | Fandirection / ON=Front, OFF=Back | ON, OFF | | 
 | hmod | Heating Mode | ON, OFF | | 
-| hmax | Target temperature for heating | 0 .. 5000 | °K | 
+| hmax | Target temperature for heating | 0 .. 5000 | K | 
+| hume | Dehumidifier State     | ON, OFF, |
+| haut | Target Humidifier Dehumidifier State| |
+| humt | Relative Humidity Humidifier Threshold| |
 
 |Error-Codes| Meaning |
 | ----- | ----- |
@@ -164,7 +169,7 @@ Information copied and extended from https://github.com/shadowwa/Dyson-MQTT2RRD/
 | hact | Humidity (%) | 0000 - 0100 | Percent |
 | pact | Dust | 0000 - 0009 | |
 | sltm | Sleeptimer | OFF... 9999 | Minutes |
-| tact | Temperature in Kelvin | 0000 - 5000 | °K|
+| tact | Temperature in Kelvin | 0000 - 5000 | K|
 | vact | volatil organic compounds | 0001 - 0009 | |
 |pm25|  PM2.5 |0018||
 |pm10|  PM10 |0011||
