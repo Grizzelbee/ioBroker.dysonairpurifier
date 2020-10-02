@@ -56,6 +56,7 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
 * test with more different devices
 * collect more mqtt message acronym meanings
 * calculate filter life in % not in hours
+* Pull sensor values every X seconds - they don't update theirselfs on every change
 
 ### known issues:
  * No automatic IP detection of devices
@@ -64,6 +65,7 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
 ### 0.4.1 (2020-10-01)
  * (grizzelbee) Fix: removed unnessecary updateInterval. Statechanges are propagated automatically.
  * (grizzelbee) New: Added some Hot&Cool specific datafields
+ * (grizzelbee) New: Logging of from devices, when shutting down the adapter
 
 ### 0.4.0 (2020-09-29)
  * (grizzelbee) New: devices are now **controllable**
@@ -100,7 +102,7 @@ Information copied and extended from https://github.com/shadowwa/Dyson-MQTT2RRD/
 
 | name | meaning | possible values | Unit |
 | ------------- | ----- | ----- | ----- |
-| mode-reason | Current Mode has been set by RemoteControl, App, Scheduler | PRC, LAPP, LSCH| |
+| mode-reason | Current Mode has been set by RemoteControl, App, Scheduler | PRC, LAPP, LSCH, PUI | |
 | state-reason | | MODE | |  
 | rssi | WIFI Strength| -100 - 0| dBm|
 | channel| WIFI Channel| 52 | |

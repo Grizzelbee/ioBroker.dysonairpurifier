@@ -73,7 +73,7 @@ const datapoints = [
     ["bril" , "bril"                      , "Unknown"                                 										, "string", "false", "value"                       ,"" ],
     ["corf" , "corf"                      , "Unknown"                                 										, "string", "false", "value"  		               ,"" ],
     ["fqhp" , "fqhp"                      , "Unknown"                                 										, "string", "false", "value"          		       ,"" ],
-    ["fghp" , "fghp"                      , "Unknown"                                 										, "string", "false", "value"          		       ,"" ],
+    ["msta" , "msta"                      , "Unknown"                                 										, "string", "false", "value"          		       ,"" ],
     ["wacd" , "wacd" 				 	  , "Unknown"                                                                       , "string", "false", "value"                       ,"" ]
 ];
 
