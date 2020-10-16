@@ -2,12 +2,9 @@
 
 ![Logo](admin/dyson_logo.svg)![Logo](admin/dyson_pure_cool.jpg)  
 
-<!-- 
-![Number of Installations (stable)](http://iobroker.live/badges/dysonairpurifier-stable.svg) */
--->
-
 ![Number of Installations (latest)](http://iobroker.live/badges/dysonairpurifier-installed.svg)
 [![NPM version](https://img.shields.io/npm/v/iobroker.dysonairpurifier.svg)](https://www.npmjs.com/package/iobroker.dysonairpurifier)
+![Number of Installations (stable)](http://iobroker.live/badges/dysonairpurifier-stable.svg)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.dysonairpurifier.svg)](https://www.npmjs.com/package/iobroker.dysonairpurifier)
 [![Dependency Status](https://img.shields.io/david/Grizzelbee/iobroker.dysonairpurifier.svg)](https://david-dm.org/Grizzelbee/iobroker.dysonairpurifier)
 [![Known Vulnerabilities](https://snyk.io/test/github/Grizzelbee/ioBroker.dysonairpurifier/badge.svg)](https://snyk.io/test/github/Grizzelbee/ioBroker.dysonairpurifier)
@@ -22,15 +19,15 @@ This adapter connects ioBroker to various dyson Air Purifiers.
 
 ### supported devices
 #### Tested
-* 2018 Dyson Pure Cool Tower (TP04)
-* Dyson Pure Cool Link Tower (TP02)
+* 2018 Dyson Pure Cool Tower (TP04, ProductType 438)
+* 2018 Dyson Pure Hot+Cool   (HP04, ProductType 527)
+* Dyson Pure Cool Link Tower (TP02, ProductType 475)
 
 #### Should work
-* Dyson Pure Humidify+Cool (PH01)
-* 2018 Dyson Pure Cool Desk (DP04)
-* 2018 Dyson Pure Hot+Cool (HP04)
-* Dyson Pure Cool Link Desk (DP01)
-* Dyson Pure Hot+Cool Link (HP02)
+* Dyson Pure Humidify+Cool (PH01, ProductType 358)
+* 2018 Dyson Pure Cool Desk (DP04, ProductType 520)
+* Dyson Pure Hot+Cool Link (HP02, ProductType 455)
+* Dyson Pure Cool Link Desk (DP01, ProductType 469)
 
 ## Features
 
@@ -55,14 +52,25 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
 ### Todo:
 * detect IP of devices automatically
 * Add more country codes
-* remove deprecated library crypto
-* test with more different devices
 * collect more mqtt message acronym meanings
+* test with more different devices
+* remove deprecated library crypto
+* calculate filter life (filf) in % not in hours
 
 ### known issues:
  * No automatic IP detection of devices
  
 
+### 0.4.1 (2020-10-16)
+ * (grizzelbee) New: (Issue #8) Documented ProductTypes for better overview and user experience in ReadMe 
+ * (grizzelbee) New: (Issue #9) Added some Hot&Cool specific datafields
+ * (grizzelbee) New: Logging of from devices, when shutting down the adapter
+ * (grizzelbee) New: (Issue #10) Pollig device data every X (configurable) seconds for new data, hence sensors don't send updates on changing values 
+ * (grizzelbee) New: (Issue #11) Added Austria and France to Country-List
+ * (grizzelbee) Fix: Fixed bug in error handling when login to dyson API fails
+ * (grizzelbee) Fix: (Issue #12) Fixed dyson API login by completely securing via HTTPS.
+ * (grizzelbee) Fix: Updated some descriptions in config
+  
 ### 0.4.0 (2020-09-29)
  * (grizzelbee) New: devices are now **controllable**
  * (grizzelbee) New: state-change-messages are processed correctly now
@@ -98,7 +106,7 @@ Information copied and extended from https://github.com/shadowwa/Dyson-MQTT2RRD/
 
 | name | meaning | possible values | Unit |
 | ------------- | ----- | ----- | ----- |
-| mode-reason | Current Mode has been set by RemoteControl, App, Scheduler | PRC, LAPP, LSCH| |
+| mode-reason | Current Mode has been set by RemoteControl, App, Scheduler | PRC, LAPP, LSCH, PUI | |
 | state-reason | | MODE | |  
 | rssi | WIFI Strength| -100 - 0| dBm|
 | channel| WIFI Channel| 52 | |
@@ -135,8 +143,12 @@ Information copied and extended from https://github.com/shadowwa/Dyson-MQTT2RRD/
 | osau | Oscilation right degrees | 0005 - 355 | °  (degrees)|
 | ancp | Ancorpoint for oscilation ?  | CUST, 0180 |° (degrees)|
 | fdir | Fandirection / ON=Front, OFF=Back | ON, OFF | | 
+| ffoc | JetFocus | ON, OFF |
 | hmod | Heating Mode | ON, OFF | | 
-| hmax | Target temperature for heating | 0 .. 5000 | °K | 
+| hmax | Target temperature for heating | 0 .. 5000 | K | 
+| hume | Dehumidifier State     | ON, OFF, |
+| haut | Target Humidifier Dehumidifier State| |
+| humt | Relative Humidity Humidifier Threshold| |
 
 |Error-Codes| Meaning |
 | ----- | ----- |
@@ -164,7 +176,7 @@ Information copied and extended from https://github.com/shadowwa/Dyson-MQTT2RRD/
 | hact | Humidity (%) | 0000 - 0100 | Percent |
 | pact | Dust | 0000 - 0009 | |
 | sltm | Sleeptimer | OFF... 9999 | Minutes |
-| tact | Temperature in Kelvin | 0000 - 5000 | °K|
+| tact | Temperature in Kelvin | 0000 - 5000 | K|
 | vact | volatil organic compounds | 0001 - 0009 | |
 |pm25|  PM2.5 |0018||
 |pm10|  PM10 |0011||

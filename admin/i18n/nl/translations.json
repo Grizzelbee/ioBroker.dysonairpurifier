@@ -2,15 +2,17 @@
     "Celsius": "Celsius",
     "Fahrenheit": "Fahrenheit",
     "Kelvin": "Kelvin",
-    "Lbl_Password": "wachtwoord",
+    "Lbl_Password": "Wachtwoord",
     "Lbl_country": "Landcode",
     "Lbl_email": "e-mail",
     "Lbl_temperatureUnit": "Temperatuureenheid",
     "Poll_Interval": "Pollinterval",
-    "Poll_Interval_desc": "Zoek elke x minuten naar nieuwe apparaten.",
+    "Poll_Interval_desc": "Vraag elke X seconden nieuwe status- en sensorinformatie van apparaten op.",
+    "austria": "Oostenrijk",
     "country_desc": "ISO-code van het land waarin je je dyson-account hebt aangemaakt.",
     "email_desc": "e-mailadres van uw dyson-account.",
+    "france": "Frankrijk",
     "germany": "Duitsland",
     "password_desc": "Wachtwoord van uw dyson-account.",
-    "temperatureUnit_desc": "Eenheid waarin de temperatuur wordt weergegeven."
+    "temperatureUnit_desc": "Eenheid om de temperatuur weer te geven."
 }

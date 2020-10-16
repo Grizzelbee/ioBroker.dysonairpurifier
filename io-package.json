@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "0.4.0",
+        "version": "0.4.1",
         "news": {
+            "0.4.1": {
+                "en": "enhancements and bugfixes.",
+                "de": "Verbesserungen und Bugfixes.",
+                "ru": "улучшения и исправления.",
+                "pt": "melhorias e correções de bugs.",
+                "nl": "verbeteringen en bugfixes.",
+                "fr": "améliorations et corrections de bogues.",
+                "it": "miglioramenti e correzioni di bug.",
+                "es": "mejoras y correcciones de errores.",
+                "pl": "ulepszenia i poprawki błędów.",
+                "zh-cn": "增强功能和错误修正。"
+            },
             "0.4.0": {
                 "en": "Devices are controllable now, State changes get processed now, Some minor bugfixes.",
                 "de": "Geräte sind jetzt steuerbar, Statusänderungen werden jetzt verarbeitet, einige kleinere Bugfixes.",
@@ -54,16 +66,16 @@
         },
         "title": "dyson AirPurifier",
         "titleLang": {
-            "en": "ioBroker Adapter for dyson air purifiers and fans",
-            "de": "ioBroker Adapter für Dyson Luftreiniger und Lüfter",
-            "ru": "ioBroker Адаптер для очистителей воздуха и вентиляторов dyson",
-            "pt": "Adaptador ioBroker para purificadores de ar e ventiladores dyson",
-            "nl": "ioBroker Adapter voor dyson luchtreinigers en ventilatoren",
-            "fr": "ioBroker Adaptateur pour purificateurs d'air et ventilateurs Dyson",
-            "it": "Adattatore ioBroker per purificatori d'aria e ventilatori Dyson",
-            "es": "Adaptador ioBroker para purificadores de aire y ventiladores Dyson",
-            "pl": "ioBroker Adapter do oczyszczaczy powietrza i wentylatorów Dyson",
-            "zh-cn": "戴森空气净化器和风扇的ioBroker适配器"
+            "en": "dyson air purifiers, air humidifiers, fan heater and fans",
+            "de": "Dyson Luftreiniger, Luftbefeuchter, Heizlüfter und Lüfter",
+            "ru": "очистители воздуха, увлажнители воздуха, тепловентилятор и вентиляторы dyson",
+            "pt": "purificadores de ar da Dison, umidificadores de ar, aquecedor e ventiladores",
+            "nl": "dyson luchtreinigers, luchtbevochtigers, luchtverhitter en ventilatoren",
+            "fr": "Purificateurs d'air, humidificateurs d'air, radiateurs soufflants et ventilateurs dyson",
+            "it": "purificatori d'aria dyson, umidificatori d'aria, termoventilatori e ventilatori",
+            "es": "Purificadores de aire Dyson, humidificadores de aire, calefactores y ventiladores.",
+            "pl": "oczyszczacze powietrza dyson, nawilżacze powietrza, nagrzewnice i wentylatory",
+            "zh-cn": "戴森空气净化器，空气加湿器，风扇加热器和风扇"
         },
         "desc": {
             "en": "Integrate dyson air purifiers and fans into ioBroker",
