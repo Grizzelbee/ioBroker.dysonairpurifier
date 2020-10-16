@@ -4,7 +4,16 @@
         "version": "0.4.1",
         "news": {
             "0.4.1": {
-                "en": "enhancements and bugfixes."
+                "en": "enhancements and bugfixes.",
+                "de": "Verbesserungen und Bugfixes.",
+                "ru": "улучшения и исправления.",
+                "pt": "melhorias e correções de bugs.",
+                "nl": "verbeteringen en bugfixes.",
+                "fr": "améliorations et corrections de bogues.",
+                "it": "miglioramenti e correzioni di bug.",
+                "es": "mejoras y correcciones de errores.",
+                "pl": "ulepszenia i poprawki błędów.",
+                "zh-cn": "增强功能和错误修正。"
             },
             "0.4.0": {
                 "en": "Devices are controllable now, State changes get processed now, Some minor bugfixes.",

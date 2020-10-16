@@ -19,15 +19,15 @@ This adapter connects ioBroker to various dyson Air Purifiers.
 
 ### supported devices
 #### Tested
-* 2018 Dyson Pure Cool Tower (TP04)
-* 2018 Dyson Pure Hot+Cool   (HP04)
-* Dyson Pure Cool Link Tower (TP02)
+* 2018 Dyson Pure Cool Tower (TP04, ProductType 438)
+* 2018 Dyson Pure Hot+Cool   (HP04, ProductType 527)
+* Dyson Pure Cool Link Tower (TP02, ProductType 475)
 
 #### Should work
-* Dyson Pure Humidify+Cool (PH01)
-* 2018 Dyson Pure Cool Desk (DP04)
-* Dyson Pure Hot+Cool Link (HP02)
-* Dyson Pure Cool Link Desk (DP01)
+* Dyson Pure Humidify+Cool (PH01, ProductType 358)
+* 2018 Dyson Pure Cool Desk (DP04, ProductType 520)
+* Dyson Pure Hot+Cool Link (HP02, ProductType 455)
+* Dyson Pure Cool Link Desk (DP01, ProductType 469)
 
 ## Features
 
@@ -52,23 +52,25 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
 ### Todo:
 * detect IP of devices automatically
 * Add more country codes
-* remove deprecated library crypto
-* test with more different devices
 * collect more mqtt message acronym meanings
-* calculate filter life in % not in hours
+* test with more different devices
+* remove deprecated library crypto
+* calculate filter life (filf) in % not in hours
 
 ### known issues:
  * No automatic IP detection of devices
  
 
-### 0.4.1 (2020-10-xx)
+### 0.4.1 (2020-10-16)
+ * (grizzelbee) New: (Issue #8) Documented ProductTypes for better overview and user experience in ReadMe 
  * (grizzelbee) New: (Issue #9) Added some Hot&Cool specific datafields
  * (grizzelbee) New: Logging of from devices, when shutting down the adapter
  * (grizzelbee) New: (Issue #10) Pollig device data every X (configurable) seconds for new data, hence sensors don't send updates on changing values 
- * (grizzelbee) New: (Issue #11) Added Austria to Country-List
- * (grizzelbee) Fix: Fixed bug in errorhandling when login to dyson API fails
- * (grizzelbee) Fix: (Issue #12) Fixed dyson API login by completly securing via HTTPS.
- 
+ * (grizzelbee) New: (Issue #11) Added Austria and France to Country-List
+ * (grizzelbee) Fix: Fixed bug in error handling when login to dyson API fails
+ * (grizzelbee) Fix: (Issue #12) Fixed dyson API login by completely securing via HTTPS.
+ * (grizzelbee) Fix: Updated some descriptions in config
+  
 ### 0.4.0 (2020-09-29)
  * (grizzelbee) New: devices are now **controllable**
  * (grizzelbee) New: state-change-messages are processed correctly now
