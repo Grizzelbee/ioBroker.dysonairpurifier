@@ -62,13 +62,13 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
  
 
 ### 0.4.1 (2020-10-16)
- * (grizzelbee) New: (Issue #8 ) Documented ProductTypes for better overview and user experience in ReadMe 
- * (grizzelbee) New: (Issue #9 ) Added some Hot&Cool specific datafields
+ * (grizzelbee) New: #8 - Documented ProductTypes for better overview and user experience in ReadMe
+ * (grizzelbee) New: #9 - Added some Hot&Cool specific datafields
  * (grizzelbee) New: Logging of from devices, when shutting down the adapter
- * (grizzelbee) New: (Issue #10 ) Pollig device data every X (configurable) seconds for new data, hence sensors don't send updates on changing values 
- * (grizzelbee) New: (Issue #11 ) Added Austria and France to Country-List
+ * (grizzelbee) New: #10 - Pollig device data every X (configurable) seconds for new data, hence sensors don't send updates on changing values
+ * (grizzelbee) New: #11 - Added Austria and France to Country-List - 
  * (grizzelbee) Fix: Fixed bug in error handling when login to dyson API fails
- * (grizzelbee) Fix: (Issue #12 ) Fixed dyson API login by completely securing via HTTPS.
+ * (grizzelbee) Fix: #12 - Fixed dyson API login by completely securing via HTTPS.
  * (grizzelbee) Fix: Updated some descriptions in config
   
 ### 0.4.0 (2020-09-29)
