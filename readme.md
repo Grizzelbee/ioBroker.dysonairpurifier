@@ -30,6 +30,11 @@ This adapter connects ioBroker to various dyson Air Purifiers.
 * Dyson Pure Cool Link Desk (DP01, ProductType 469)
 
 ## Features
+Connects your dyson fans, fan heaters, air purifiers and air humidifiers to ioBroker.
+* Reads values from devices and sensors
+* can control devices by giving you the ability to change some values (Main-power, oscillation, heating, fanspeed, ...)
+* reads devicelist from dyson servers 
+
 
 ## Installation
 Install from STABLE or LATEST repository or from github - depending what stability you prefer.
@@ -60,6 +65,9 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
 ### known issues:
  * No automatic IP detection of devices
  
+
+### 0.5.0 (2020-10-xx)
+
 
 ### 0.4.1 (2020-10-16)
  * (grizzelbee) New: #8 - Documented ProductTypes for better overview and user experience in ReadMe
