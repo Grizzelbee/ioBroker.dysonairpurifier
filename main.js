@@ -100,33 +100,40 @@ class dysonAirPurifier extends utils.Adapter {
         this.on('unload', this.onUnload.bind(this));
     }
 
+    /*
+    * Function onStateChange
+    * sends the control mqtt message to your device in case you changed a value
+    *
+    * @param id    {string} id of the datapoint that was changed
+    * @param state {object} new state-object of the datapoint after change
+    */
     async onStateChange(id, state) {
-            // Warning, state can be null if it was deleted
-            if (state && !state.ack) {
-                // you can use the ack flag to detect if it is status (true) or command (false)
-                let action = id.split('.').pop();
-                // get the whole datafield array
-                let dysonAction = await this.getDatapoint( action );
-                // pick the dyson internal Action
-                dysonAction = dysonAction[0];
-                let thisDevice = id.split('.')[2];
-                // build the message to be send to the device
-                let message = {"msg": "STATE-SET",
-                               "time": new Date().toISOString(),
-                               "mode-reason": "LAPP",
-                               "data": {[dysonAction]: state.val}
-                    };
-                for (let mqttDevice in devices){
-                    if (devices[mqttDevice].Serial === thisDevice){
-                        this.log.debug('CHANGE: device [' + thisDevice + '] -> [' + action +'] -> [' + state.val + ']');
-                        devices[mqttDevice].mqttClient.publish(
-                            devices[mqttDevice].ProductType + '/' + thisDevice + '/command',
-                            JSON.stringify(message)
-                        );
-                    }
+        // Warning, state can be null if it was deleted
+        if (state && !state.ack) {
+            // you can use the ack flag to detect if it is status (true) or command (false)
+            let action = id.split('.').pop();
+            // get the whole datafield array
+            let dysonAction = await this.getDatapoint( action );
+            // pick the dyson internal Action
+            dysonAction = dysonAction[0];
+            let thisDevice = id.split('.')[2];
+            // build the message to be send to the device
+            let message = {"msg": "STATE-SET",
+                           "time": new Date().toISOString(),
+                           "mode-reason": "LAPP",
+                           "data": {[dysonAction]: state.val}
+                };
+            for (let mqttDevice in devices){
+                if (devices[mqttDevice].Serial === thisDevice){
+                    this.log.debug('CHANGE: device [' + thisDevice + '] -> [' + action +'] -> [' + state.val + ']');
+                    devices[mqttDevice].mqttClient.publish(
+                        devices[mqttDevice].ProductType + '/' + thisDevice + '/command',
+                        JSON.stringify(message)
+                    );
                 }
             }
         }
+    }
 
     /*
      * Function getDatapoint
@@ -423,6 +430,11 @@ class dysonAirPurifier extends utils.Adapter {
                             break;
                     }
                 }
+                if (helper[0] === 'filf') {
+                    // change filterlife value from hours to percent
+                    value = value * 100/4300;
+                    helper[5] = '%';
+                }
             } else {
                 value = message[helper[0]];
             }
@@ -443,7 +455,13 @@ class dysonAirPurifier extends utils.Adapter {
         }
     }
 
-    decryptMqttPasswd(response, LocalCredentials) {
+    /*
+     * Function decryptMqttPasswd
+     * decrypts the fans local mqtt password and returns a value you can connect with
+     *
+     * @param LocalCredentials  {string} encrypted mqtt password
+     */
+    decryptMqttPasswd(LocalCredentials) {
         // Gets the MQTT credentials from the thisDevice (see https://github.com/CharlesBlonde/libpurecoollink/blob/master/libpurecoollink/utils.py)
         const key = Uint8Array.from(Array(32), (_, index) => index + 1);
         const initializationVector = new Uint8Array(16);
@@ -453,6 +471,12 @@ class dysonAirPurifier extends utils.Adapter {
         return decryptedPasswordJson.apPasswordHash;
     }
 
+    /*
+     * Function clearIntervalHandle
+     * sets an intervalHandle (timeoutHandle) to null if it's existing to clear it
+     *
+     * @param updateIntervalHandle  {any} timeOutHandle to be checked and cleared
+     */
     clearIntervalHandle(updateIntervalHandle){
         if (updateIntervalHandle) {
             clearInterval(updateIntervalHandle);
