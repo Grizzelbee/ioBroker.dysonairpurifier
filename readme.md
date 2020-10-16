@@ -56,17 +56,19 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
 * test with more different devices
 * collect more mqtt message acronym meanings
 * calculate filter life in % not in hours
-* Pull sensor values every X seconds - they don't update theirselfs on every change
 
 ### known issues:
  * No automatic IP detection of devices
  
 
-### 0.4.1 (2020-10-01)
- * (grizzelbee) Fix: removed unnessecary updateInterval. Statechanges are propagated automatically.
- * (grizzelbee) New: Added some Hot&Cool specific datafields
+### 0.4.1 (2020-10-xx)
+ * (grizzelbee) New: (Issue #9) Added some Hot&Cool specific datafields
  * (grizzelbee) New: Logging of from devices, when shutting down the adapter
-
+ * (grizzelbee) New: (Issue #10) Pollig device data every X (configurable) seconds for new data, hence sensors don't send updates on changing values 
+ * (grizzelbee) New: (Issue #11) Added Austria to Country-List
+ * (grizzelbee) Fix: Fixed bug in errorhandling when login to dyson API fails
+ * (grizzelbee) Fix: (Issue #12) Fixed dyson API login by completly securing via HTTPS.
+ 
 ### 0.4.0 (2020-09-29)
  * (grizzelbee) New: devices are now **controllable**
  * (grizzelbee) New: state-change-messages are processed correctly now
