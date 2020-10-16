@@ -8,6 +8,7 @@
     "Lbl_temperatureUnit": "Temperature unit",
     "Poll_Interval": "Pollinterval",
     "Poll_Interval_desc": "Look for new devices every x minutes.",
+    "austria": "Austria",
     "country_desc": "ISO-Code of the country you created your dyson Account in.",
     "email_desc": "email address of your dyson account.",
     "germany": "Germany",

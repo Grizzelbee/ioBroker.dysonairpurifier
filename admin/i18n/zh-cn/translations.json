@@ -8,6 +8,7 @@
     "Lbl_temperatureUnit": "温度单位",
     "Poll_Interval": "轮询间隔",
     "Poll_Interval_desc": "每隔x分钟寻找新设备。",
+    "austria": "奥地利",
     "country_desc": "您创建戴森帐户所在国家/地区的ISO代码。",
     "email_desc": "您的戴森帐户的电子邮件地址。",
     "germany": "德国",
