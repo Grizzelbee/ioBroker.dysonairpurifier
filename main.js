@@ -554,18 +554,23 @@ class dysonAirPurifier extends utils.Adapter {
                                     }));
                                 })
                                 // Sets the interval for status updates
-                                updateIntervalHandle = setInterval(function() {
+
+
+                                adapter.log.info('Starting Polltimer with a ' + adapter.config.pollInterval + ' seconds interval.');
+                                // start refresh scheduler with interval from adapters config
+                                updateIntervalHandle = setTimeout(function schedule() {
+                                    adapter.log.debug("Updating device [" + devices[thisDevice].Serial + "] (polling API scheduled).");
                                     try {
-                                        device.mqttClient.publish(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/command', JSON.stringify({
+                                        devices[thisDevice].mqttClient.publish(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/command', JSON.stringify({
                                             msg: 'REQUEST-CURRENT-STATE',
                                             time: new Date().toISOString()
                                         }));
                                     } catch (error) {
-                                        this.log.error(devices[thisDevice].Serial + ' - MQTT interval error: ' + error);
+                                        adapter.log.error(devices[thisDevice].Serial + ' - MQTT interval error: ' + error);
                                     }
-                                }, this.config.pollInterval*1000);
+                                    updateIntervalHandle = setTimeout(schedule, adapter.config.pollInterval * 1000);
+                                }, 10);
                             });
-
                             devices[thisDevice].mqttClient.on('message', function (_, payload) {
                                 // change dataType from Buffer to JSON object
                                 payload = JSON.parse(payload.toString());
@@ -603,21 +608,21 @@ class dysonAirPurifier extends utils.Adapter {
 
                             devices[thisDevice].mqttClient.on('close', function () {
                                 adapter.log.debug(devices[thisDevice].Serial + ' - MQTT disconnected.');
-                                this.clearIntervalHandle(updateIntervalHandle);
+                                adapter.clearIntervalHandle(updateIntervalHandle);
                             });
 
                             devices[thisDevice].mqttClient.on('offline', function () {
                                 adapter.log.debug(devices[thisDevice].Serial + ' - MQTT offline.');
-                                this.clearIntervalHandle(updateIntervalHandle);
+                                adapter.clearIntervalHandle(updateIntervalHandle);
                             });
 
                             devices[thisDevice].mqttClient.on('end', function () {
                                 adapter.log.debug(devices[thisDevice].Serial + ' - MQTT ended.');
-                                this.clearIntervalHandle(updateIntervalHandle);
+                                adapter.clearIntervalHandle(updateIntervalHandle);
                             });
                         })
                         .catch((error) => {
-                            this.log.error(`[main/CreateOrUpdateDevice] error: ${error.message}, stack: ${error.stack}`);
+                            adapter.log.error(`[main/CreateOrUpdateDevice] error: ${error.message}, stack: ${error.stack}`);
                         });
                 }
             }
@@ -641,6 +646,7 @@ class dysonAirPurifier extends utils.Adapter {
         this.log.debug(`eMail: ${config.email}`);
         this.log.debug(`enc. Password: ${config.Password}`);
         this.log.debug(`Locale: ${config.country}`);
+        this.log.debug(`Locale: ${config.pollInterval}`);
         // TODO Do more precise tests. This is very rough
         return new Promise(
             function(resolve, reject) {
