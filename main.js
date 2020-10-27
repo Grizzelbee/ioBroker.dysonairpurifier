@@ -56,8 +56,8 @@ const datapoints = [
     ["cflt" , "Carbonfilter"              , "Filtertype installed in carbonfilter port."                                    , "string", "false", "value"                       ,"" ],
     ["hflt" , "HEPAfilter"                , "Filtertype installed in HEPA-filter port."                                     , "string", "false", "value"                       ,"" ],
     ["sltm" , "Sleeptimer"                , "Sleeptimer."                                                                   , "string", "false", "indicator.sleeptimer"        ,"" ],
-    ["osal" , "OscilationLeft"            , "Maximum oscillation to the left. Relative to Ancorpoint."                      , "number", "true",  "value"                      ,"°" ],
-    ["osau" , "OscilationRight"           , "Maximum oscillation to the right. Relative to Ancorpoint."                     , "number", "true",  "value"                      ,"°" ],
+    ["osal" , "OscilationLeft"            , "Maximum oscillation to the left. Relative to Ancorpoint."                      , "string", "true",  "value"                      ,"°" ],
+    ["osau" , "OscilationRight"           , "Maximum oscillation to the right. Relative to Ancorpoint."                     , "string", "true",  "value"                      ,"°" ],
     ["ancp" , "Ancorpoint"                , "Ancorpoint for oscillation. By default the dyson logo on the bottom plate."    , "string", "true",  "value.ancor"                ,"°" ],
     ["rssi" , "RSSI"                      , "Received Signal Strength Indication. Quality indicator for WIFI signal."       , "number", "false", "value.rssi"               ,"dBm" ],
     ["pact" , "Dust"                      , "Dust"                                                                          , "number", "false", "value.dust"                  ,"" ],
@@ -72,7 +72,7 @@ const datapoints = [
     ["p25r" , "PM-R25"                    , "PM-R2.5 - Particulate Matter 2.5µm"                                            , "number", "false", "value.PM25"             ,"µg/m³" ],
     ["p10r" , "PM-R10"                    , "PM-R10 - Particulate Matter 10µm"                                              , "number", "false", "value.PM10"             ,"µg/m³" ],
     ["hmod" , "HeatingMode"               , "Heating Mode [ON/OFF]"                                                         , "string", "true",  "indicator.heating"           ,"", {'OFF': 'OFF', 'ON': 'ON'} ],
-    ["hmax" , "HeatingTargetTemp"         , "Target temperature for heating"                                                , "string", "false", "value.temperature"           ,"" ],
+    ["hmax" , "HeatingTargetTemp"         , "Target temperature for heating"                                                , "string", "true", "value.temperature"           ,"" ],
     ["hume" , "DehumidifierState"         , "Dehumidifier State [ON/OFF]"                                                   , "string", "true",  "value"                       ,"", {'OFF': 'OFF', 'ON': 'ON'} ],
     ["haut" , "TargetHumidifierState"     , "Target Humidifier Dehumidifier State"                                          , "string", "false", "value"                       ,"" ],
     ["humt" , "RelativeHumidityThreshold" , "Relative Humidity Humidifier Threshold"                                        , "string", "false", "value"                       ,"" ],
@@ -100,6 +100,26 @@ class dysonAirPurifier extends utils.Adapter {
         this.on('unload', this.onUnload.bind(this));
     }
 
+
+    /*
+    * Function zeroFill
+    * Formats a number as a string with leading zeros
+    *
+    * @param number {number} Value thats needs to be filled up with leading zeros
+    * @param width  {number} width of the complete new string incl. number and zeros
+    *
+    * @returns The given number filled up with leading zeros to a given width
+    */
+    zeroFill( number, width )
+    {
+        width -= number.toString().length;
+        if ( width > 0 )
+        {
+            return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
+        }
+        return number + ""; // always return a string
+    }
+
     /*
     * Function onStateChange
     * sends the control mqtt message to your device in case you changed a value
@@ -125,22 +145,20 @@ class dysonAirPurifier extends utils.Adapter {
                         messageData.auto = "ON";
                     }
                     break;
-                case 'osal':
-                    // Oscilation left degrees	0005 - 355
-                    // must be < than OSAU
-                    if ( (state.val < 5) ){
-                        messageData = {[dysonAction]: "0005"};
-                    }
-                    break;
-                case 'osau':
-                    // Oscilation right degrees	0005 - 355
-                    // must be > than OSAL
-                    if ( (state.val > 355) ){
-                        messageData = {[dysonAction]: "0355"};
-                    }
-                    break;
                 case 'hmax':
                     // Target temperature for heating in KELVIN!
+                    // convert temperature to configured unit
+                    let value = Number.parseInt(state.val, 10);
+                    switch (this.config.temperatureUnit) {
+                        case 'K' : value *= 10;
+                            break;
+                        case 'C' :
+                            value = Number((value*10) + 273.15).toFixed(2);
+                            break;
+                        case 'F' :
+                            value = Number(((value*10) + 273.15) * (9/5) + 32).toFixed(2);
+                            break;
+                    }
                     break;
             }
             this.log.info('SENDING this data to device: ' + JSON.stringify(messageData));
@@ -178,8 +196,6 @@ class dysonAirPurifier extends utils.Adapter {
             }
         }
     }
-
-
 
     /*
      * Function CreateOrUpdateDevice
@@ -439,7 +455,7 @@ class dysonAirPurifier extends utils.Adapter {
                 continue;
             }
             // Handle all other message types
-            this.log.debug('Processing Message: ' + typeof message === 'object'? JSON.stringify(message) : message);
+            this.log.debug('Processing Message: ' + ((typeof message === 'object')? JSON.stringify(message) : message) );
             const helper = await this.getDatapoint(row);
             if ( helper === undefined){
                 this.log.info("Skipped creating datafield for: [" + row + "] Value: |-> " + ((typeof( message[row] ) === "object")? JSON.stringify(message[row]) : message[row]) );
@@ -465,7 +481,7 @@ class dysonAirPurifier extends utils.Adapter {
                     }
                 }
                 if (helper[0] === 'filf') {
-                    // change filterlife value from hours to percent
+                    // change filterlife value from hours to percent; 4300 is the estimated lifetime in hours by dyson
                     value = value * 100/4300;
                     helper[5] = '%';
                 }
@@ -813,7 +829,6 @@ class dysonAirPurifier extends utils.Adapter {
     }
 
     async dysonGetDevicesFromApi(auth) {
-
         // Sends a request to the API to get all devices of the user
         return axios.get(apiUri + '/v2/provisioningservice/manifest',
             { httpsAgent,
