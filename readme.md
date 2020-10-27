@@ -56,27 +56,30 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
 ## Changelog
 ### Todo:
 * detect IP of devices automatically
-* Add more country codes
 * collect more mqtt message acronym meanings
 * test with more different devices
 * remove deprecated library crypto
-* calculate filter life (filf) in % not in hours
 
 ### known issues:
  * No automatic IP detection of devices
  
 
 ### 0.5.0 (2020-10-xx)
+ * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Filter life value is now displayed in percent not in hours
+ * (grizzelbee) Fix: [#6](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/6) - Changing the fanspeed does now fully work.  
+ * (grizzelbee) New: Editable data fields have now appropiate value lists
+ * (grizzelbee) New: Added more country codes
+ * (grizzelbee) New: Target temperature of heater can now be set - **in the configured unit!**
 
 
-### 0.4.1 (2020-10-16)
- * (grizzelbee) New: #8 - Documented ProductTypes for better overview and user experience in ReadMe
- * (grizzelbee) New: #9 - Added some Hot&Cool specific datafields
+### 0.4.1 (2020-10-16) (unbroken)
+ * (grizzelbee) New: [#8](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/8) - Documented ProductTypes for better overview and user experience in ReadMe
+ * (grizzelbee) New: [#9](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/9) - Added some Hot&Cool specific datafields
  * (grizzelbee) New: Logging of from devices, when shutting down the adapter
- * (grizzelbee) New: #10 - Pollig device data every X (configurable) seconds for new data, hence sensors don't send updates on changing values
- * (grizzelbee) New: #11 - Added Austria and France to Country-List - 
+ * (grizzelbee) New: [#10](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/10) - Pollig device data every X (configurable) seconds for new data, hence sensors don't send updates on changing values
+ * (grizzelbee) New: [#11](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/11) - Added Austria and France to Country-List - 
  * (grizzelbee) Fix: Fixed bug in error handling when login to dyson API fails
- * (grizzelbee) Fix: #12 - Fixed dyson API login by completely securing via HTTPS.
+ * (grizzelbee) Fix: [#12](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/12) - Fixed dyson API login by completely securing via HTTPS.
  * (grizzelbee) Fix: Updated some descriptions in config
   
 ### 0.4.0 (2020-09-29)
