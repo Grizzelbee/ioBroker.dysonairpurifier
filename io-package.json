@@ -1,8 +1,11 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "0.5.0",
+        "version": "0.5.1",
         "news": {
+            "0.5.1": {
+                "en": "bugfix for missing clearTimeout."
+            },
             "0.5.0": {
                 "en": "enhancements, bugfixes and initial support for heater.",
                 "de": "Verbesserungen, Bugfixes und anfängliche Unterstützung für die Heizung.",
@@ -117,7 +120,7 @@
         "license": "MIT",
         "platform": "Javascript/Node.js",
         "main": "main.js",
-        "icon": "admin/dyson_logo.svg",
+        "icon": "dyson_logo.svg",
         "enabled": true,
         "extIcon": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier/blob/master/admin/dyson_logo.svg",
         "readme": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier/blob/master/readme.md",

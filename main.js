@@ -11,7 +11,7 @@ const utils = require('@iobroker/adapter-core');
 const axios  = require('axios');
 const crypto = require('crypto');
 const mqtt   = require('mqtt');
-const {parse, stringify} = require('flatted');
+const {stringify} = require('flatted');
 const path = require('path');
 const https = require('https');
 const rootCas = require('ssl-root-cas').create();
@@ -21,7 +21,7 @@ const adapterName = require('./package.json').name.split('.').pop();
 
 // Variable definitions
 let devices=[]; // Array that contains all local devices
-const ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+// const ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
 const apiUri = 'https://appapi.cp.dyson.com';
 const supportedProductTypes = ['358', '438', '455', '469', '475', '520', '527'];
 const products = {  '358':'Dyson Pure Humidify+Cool',
@@ -101,24 +101,7 @@ class dysonAirPurifier extends utils.Adapter {
     }
 
 
-    /*
-    * Function zeroFill
-    * Formats a number as a string with leading zeros
-    *
-    * @param number {number} Value thats needs to be filled up with leading zeros
-    * @param width  {number} width of the complete new string incl. number and zeros
-    *
-    * @returns The given number filled up with leading zeros to a given width
-    */
-    zeroFill( number, width )
-    {
-        width -= number.toString().length;
-        if ( width > 0 )
-        {
-            return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
-        }
-        return number + ""; // always return a string
-    }
+
 
     /*
     * Function onStateChange
@@ -159,6 +142,7 @@ class dysonAirPurifier extends utils.Adapter {
                             value = Number(((value*10) + 273.15) * (9/5) + 32).toFixed(2);
                             break;
                     }
+                    messageData = {[dysonAction]: this.zeroFill(value, 4)};
                     break;
             }
             this.log.info('SENDING this data to device: ' + JSON.stringify(messageData));
@@ -181,21 +165,6 @@ class dysonAirPurifier extends utils.Adapter {
         }
     }
 
-    /*
-     * Function getDatapoint
-     * returns the configDetails for any datapoint
-     *
-     * @param searchValue {string} dysonCode to search for.
-     */
-    async getDatapoint( searchValue ){
-        this.log.debug("getDatapoint("+searchValue+")");
-        for(let row=0; row < datapoints.length; row++){
-            if (datapoints[row].find( element => element === searchValue)){
-                this.log.debug("FOUND: " + datapoints[row]);
-                return datapoints[row];
-            }
-        }
-    }
 
     /*
      * Function CreateOrUpdateDevice
@@ -290,7 +259,7 @@ class dysonAirPurifier extends utils.Adapter {
             this.log.debug('Querying Host-Address of device: ' + device.Serial);
             await this.getStateAsync(device.Serial + '.Hostaddress')
                 .then((state) => {
-                    if (state  && state.val != '') {
+                    if (state  && state.val !== '') {
                         this.log.debug('Found valid Host-Address.val [' + state.val + '] for device: ' + device.Serial);
                         device.hostAddress = state.val;
                         this.createOrExtendObject(device.Serial + '.Hostaddress', {
@@ -534,7 +503,7 @@ class dysonAirPurifier extends utils.Adapter {
      */
     clearIntervalHandle(updateIntervalHandle){
         if (updateIntervalHandle) {
-            clearInterval(updateIntervalHandle);
+            clearTimeout(updateIntervalHandle);
             return null;
         } else {
             return updateIntervalHandle;
@@ -808,6 +777,42 @@ class dysonAirPurifier extends utils.Adapter {
         }
         return result;
     }
+
+    /*
+      * Function getDatapoint
+      * returns the configDetails for any datapoint
+      *
+      * @param searchValue {string} dysonCode to search for.
+      */
+    async getDatapoint( searchValue ){
+        this.log.debug("getDatapoint("+searchValue+")");
+        for(let row=0; row < datapoints.length; row++){
+            if (datapoints[row].find( element => element === searchValue)){
+                this.log.debug("FOUND: " + datapoints[row]);
+                return datapoints[row];
+            }
+        }
+    }
+
+    /*
+    * Function zeroFill
+    * Formats a number as a string with leading zeros
+    *
+    * @param number {number} Value thats needs to be filled up with leading zeros
+    * @param width  {number} width of the complete new string incl. number and zeros
+    *
+    * @returns The given number filled up with leading zeros to a given width
+    */
+    zeroFill( number, width )
+    {
+        width -= number.toString().length;
+        if ( width > 0 )
+        {
+            return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
+        }
+        return number + ""; // always return a string
+    }
+
 
     /***********************************************
     * dyson API functions                         *
