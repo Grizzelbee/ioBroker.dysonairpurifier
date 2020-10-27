@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "0.4.1",
+        "version": "0.5.0",
         "news": {
+            "0.5.0": {
+                "en": "enhancements, bugfixes and initial support for heater.",
+                "de": "Verbesserungen, Bugfixes und anfängliche Unterstützung für die Heizung.",
+                "ru": "улучшения, исправления и начальная поддержка нагревателя.",
+                "pt": "melhorias, correções de bugs e suporte inicial para aquecedor.",
+                "nl": "verbeteringen, bugfixes en initiële ondersteuning voor verwarming.",
+                "fr": "améliorations, corrections de bugs et assistance initiale pour le chauffage.",
+                "it": "miglioramenti, correzioni di bug e supporto iniziale per il riscaldatore.",
+                "es": "mejoras, correcciones de errores y soporte inicial para calentador.",
+                "pl": "ulepszenia, poprawki błędów i początkowe wsparcie dla podgrzewacza.",
+                "zh-cn": "增强功能，错误修正和加热器的初始支持。"
+            },
             "0.4.1": {
                 "en": "enhancements and bugfixes.",
                 "de": "Verbesserungen und Bugfixes.",
