@@ -64,7 +64,7 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
  * No automatic IP detection of devices
  
 
-### 0.5.0 (2020-10-xx)
+### 0.5.0 (2020-10-27) (Heart of the hurricance)
  * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Filter life value is now displayed in percent not in hours
  * (grizzelbee) Fix: [#6](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/6) - Changing the fanspeed does now fully work.  
  * (grizzelbee) New: Editable data fields have now appropiate value lists
