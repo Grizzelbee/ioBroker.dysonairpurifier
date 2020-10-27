@@ -116,12 +116,40 @@ class dysonAirPurifier extends utils.Adapter {
             let dysonAction = await this.getDatapoint( action );
             // pick the dyson internal Action
             dysonAction = dysonAction[0];
+            let messageData = {[dysonAction]: state.val};
+            switch (dysonAction) {
+                case 'fnsp' :
+                    // when AUTO set AUTO to true also
+                    if (state.val === "AUTO") {
+                        // add second value to message to get auto mode working
+                        messageData.auto = "ON";
+                    }
+                    break;
+                case 'osal':
+                    // Oscilation left degrees	0005 - 355
+                    // must be < than OSAU
+                    if ( (state.val < 5) ){
+                        messageData = {[dysonAction]: "0005"};
+                    }
+                    break;
+                case 'osau':
+                    // Oscilation right degrees	0005 - 355
+                    // must be > than OSAL
+                    if ( (state.val > 355) ){
+                        messageData = {[dysonAction]: "0355"};
+                    }
+                    break;
+                case 'hmax':
+                    // Target temperature for heating in KELVIN!
+                    break;
+            }
+            this.log.info('SENDING this data to device: ' + JSON.stringify(messageData));
             let thisDevice = id.split('.')[2];
             // build the message to be send to the device
             let message = {"msg": "STATE-SET",
                            "time": new Date().toISOString(),
                            "mode-reason": "LAPP",
-                           "data": {[dysonAction]: state.val}
+                           "data": messageData
                 };
             for (let mqttDevice in devices){
                 if (devices[mqttDevice].Serial === thisDevice){
