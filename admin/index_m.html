@@ -59,7 +59,7 @@
             });
             socket.emit('getObject', 'system.config', function (err, obj) {
                 secret = (obj.native ? obj.native.secret : '') || 'Zgfr56gFe87jJOM';
-                $key = $('#Password');
+                var $key = $('#Password');
                 settings['Password'] = decrypt(secret, settings['Password']);
                 $key.val(settings['Password']).change(function () {
                     onChange();
