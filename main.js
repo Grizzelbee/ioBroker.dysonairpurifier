@@ -30,7 +30,7 @@ const products = {  '358':'Dyson Pure Humidify+Cool',
                     '469':'Dyson Pure Cool Link Desk',
                     '475':'Dyson Pure Cool Link Tower',
                     '520':'Dyson Pure Cool Desk',
-                    '527':'Dyson Pure Hot+Cool'}
+                    '527':'Dyson Pure Hot+Cool'};
 
 // datastructure to determine readable names, etc for any datapoint
 // Every row is one state in a dyson message. Format: [ dysonCode, Name of Datapoint, Description, datatype, writable, role, unit]
@@ -293,7 +293,7 @@ class dysonAirPurifier extends utils.Adapter {
                 })
                 .catch( (error) => {
                     this.log.error("[CreateOrUpdateDevice-getSateAsync] Error: " + error + ", Callstack: " + error.stack);
-                })
+                });
         } catch(error){
             this.log.error("[CreateOrUpdateDevice] Error: " + error + ", Callstack: " + error.stack);
         }
@@ -479,36 +479,6 @@ class dysonAirPurifier extends utils.Adapter {
         }
     }
 
-    /*
-     * Function decryptMqttPasswd
-     * decrypts the fans local mqtt password and returns a value you can connect with
-     *
-     * @param LocalCredentials  {string} encrypted mqtt password
-     */
-    decryptMqttPasswd(LocalCredentials) {
-        // Gets the MQTT credentials from the thisDevice (see https://github.com/CharlesBlonde/libpurecoollink/blob/master/libpurecoollink/utils.py)
-        const key = Uint8Array.from(Array(32), (_, index) => index + 1);
-        const initializationVector = new Uint8Array(16);
-        const decipher = crypto.createDecipheriv('aes-256-cbc', key, initializationVector);
-        const decryptedPasswordString = decipher.update(LocalCredentials, 'base64', 'utf8') + decipher.final('utf8');
-        const decryptedPasswordJson = JSON.parse(decryptedPasswordString);
-        return decryptedPasswordJson.apPasswordHash;
-    }
-
-    /*
-     * Function clearIntervalHandle
-     * sets an intervalHandle (timeoutHandle) to null if it's existing to clear it
-     *
-     * @param updateIntervalHandle  {any} timeOutHandle to be checked and cleared
-     */
-    clearIntervalHandle(updateIntervalHandle){
-        if (updateIntervalHandle) {
-            clearTimeout(updateIntervalHandle);
-            return null;
-        } else {
-            return updateIntervalHandle;
-        }
-    }
 
     /*
     *  Main
@@ -803,8 +773,7 @@ class dysonAirPurifier extends utils.Adapter {
     *
     * @returns The given number filled up with leading zeros to a given width
     */
-    zeroFill( number, width )
-    {
+    zeroFill( number, width ) {
         width -= number.toString().length;
         if ( width > 0 )
         {
@@ -813,6 +782,36 @@ class dysonAirPurifier extends utils.Adapter {
         return number + ""; // always return a string
     }
 
+    /*
+     * Function decryptMqttPasswd
+     * decrypts the fans local mqtt password and returns a value you can connect with
+     *
+     * @param LocalCredentials  {string} encrypted mqtt password
+     */
+    decryptMqttPasswd(LocalCredentials) {
+        // Gets the MQTT credentials from the thisDevice (see https://github.com/CharlesBlonde/libpurecoollink/blob/master/libpurecoollink/utils.py)
+        const key = Uint8Array.from(Array(32), (_, index) => index + 1);
+        const initializationVector = new Uint8Array(16);
+        const decipher = crypto.createDecipheriv('aes-256-cbc', key, initializationVector);
+        const decryptedPasswordString = decipher.update(LocalCredentials, 'base64', 'utf8') + decipher.final('utf8');
+        const decryptedPasswordJson = JSON.parse(decryptedPasswordString);
+        return decryptedPasswordJson.apPasswordHash;
+    }
+
+    /*
+     * Function clearIntervalHandle
+     * sets an intervalHandle (timeoutHandle) to null if it's existing to clear it
+     *
+     * @param updateIntervalHandle  {any} timeOutHandle to be checked and cleared
+     */
+    clearIntervalHandle(updateIntervalHandle){
+        if (updateIntervalHandle) {
+            clearTimeout(updateIntervalHandle);
+            return null;
+        } else {
+            return updateIntervalHandle;
+        }
+    }
 
     /***********************************************
     * dyson API functions                         *
