@@ -502,14 +502,21 @@ class dysonAirPurifier extends utils.Adapter {
                     if (error.response) {
                         // The request was made and the server responded with a status code
                         // that falls out of the range of 2xx
-                        this.log.error('[error.response.data]: ' + error.response.data);
-                        this.log.error('[error.response.status]: ' + error.response.status);
-                        this.log.error('[error.response.headers]: ' + error.response.headers);
+                        switch (error.response.status){
+                            case 401 : // unauthorized
+                                this.log.error('Error: Unable to authenticate user! Your credentials are invalid. Please doublecheck and fix them. This adapter has a maximum Pwd length of 15 chars.');
+                                break;
+                            default:
+                                this.log.error('[error.response.data]: '    + ( (typeof error.response.data    === 'object')? stringify(error.response.data):error.response.data ) );
+                                this.log.error('[error.response.status]: '  + ( (typeof error.response.status  === 'object')? stringify(error.response.status):error.response.status ) );
+                                this.log.error('[error.response.headers]: ' + ( (typeof error.response.headers === 'object')? stringify(error.response.headers):error.response.headers ) );
+                                break;
+                        }
                     } else if (error.request) {
                         // The request was made but no response was received
                         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
                         // http.ClientRequest in node.js
-                        this.log.error('[error.request]: ' +  stringify(error.request) );
+                        this.log.error('[error.request]: ' + ((typeof error.request === 'object')? stringify(error.request):error.request ) );
                     } else {
                         // Something happened in setting up the request that triggered an Error
                         this.log.error('[Error]: ', error.message);

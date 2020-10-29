@@ -43,7 +43,6 @@ Install from STABLE or LATEST repository or from github - depending what stabili
 ### Config-data needed
 * dyson account username
 * dyson account password
-* your ISO-Country code (DE, US, CA, ...). This will mostly be the country you opened your dyson account in.
 * your fans/air purifiers IP address in your LAN.
 Due to early development state and a non conform mDNS implementation by dyson you'll need to provide the local fans IP after the first run.
 On the first start of this adapter the dyson API is queried for all your devices and all supported devices will be created in the devicetree - with it's basic information provided by the API and an additional field "Hostaddress".
@@ -61,7 +60,8 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
  * No automatic IP detection of devices
  
 ### 0.6.0 (2020-10-xx) (Rage before the storm)
- * (grizzelbee) New: [#17](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/17) -   
+ * (grizzelbee) New: [#17](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/17) - Added online-indicator for each device   
+ * (grizzelbee) New: [#20](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/20) - Improved errorhandling on http communication with dyson API   
  
 ### 0.5.1 (2020-10-27) (Heart of the hurricance)
  * (grizzelbee) Fix: Added missing clearTimeout
