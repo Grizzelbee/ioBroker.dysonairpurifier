@@ -161,8 +161,11 @@ Information copied and extended from https://github.com/shadowwa/Dyson-MQTT2RRD/
 | ancp | Ancorpoint for oscilation ?  | CUST, 0180 |° (degrees)|
 | fdir | Fandirection / ON=Front, OFF=Back | ON, OFF | | 
 | ffoc | JetFocus | ON, OFF |
-| hmod | Heating Mode | ON, OFF | | 
+| hmod | Heating Mode | HEAT | | 
 | hmax | Target temperature for heating | 0 .. 5000 | K | 
+| psta | [DP0x] Unknown |  | | 
+| hsta | [DP0x] Unknown |  | | 
+| tilt | [DP0x] Unknown |  | | 
 | hume | Dehumidifier State     | ON, OFF, |
 | haut | Target Humidifier Dehumidifier State| |
 | humt | Relative Humidity Humidifier Threshold| |
