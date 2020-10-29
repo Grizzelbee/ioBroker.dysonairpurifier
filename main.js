@@ -708,7 +708,7 @@ class dysonAirPurifier extends utils.Adapter {
                     } else {
                         //noinspection JSUnresolvedVariable
                         this.log.debug('System secrect rejected. Using SALT for decryption.');
-                        this.config.Password = this.decrypt('Zgfr56gFe87jJOM', this.config.Password);
+                        this.config.Password = this.decrypt('3eezLO2gNPrt1ww0pcWNhqPZxMjfb3br', this.config.Password);
                     }
 
                     // config is valid and password is decrypted -> run main() function
