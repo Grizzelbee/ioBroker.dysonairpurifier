@@ -58,7 +58,7 @@ const datapoints = [
     ["sltm" , "Sleeptimer"                , "Sleeptimer."                                                                   , "string", "false", "indicator.sleeptimer"        ,"" ],
     ["osal" , "OscilationLeft"            , "Maximum oscillation to the left. Relative to Ancorpoint."                      , "string", "true",  "value"                      ,"°" ],
     ["osau" , "OscilationRight"           , "Maximum oscillation to the right. Relative to Ancorpoint."                     , "string", "true",  "value"                      ,"°" ],
-    ["ancp" , "Ancorpoint"                , "Ancorpoint for oscillation. By default the dyson logo on the bottom plate."    , "string", "true",  "value.ancor"                ,"°" ],
+    ["ancp" , "Anchorpoint"               , "Anchorpoint for oscillation. By default the dyson logo on the bottom plate."   , "string", "true",  "value.anchor"               ,"°" ],
     ["rssi" , "RSSI"                      , "Received Signal Strength Indication. Quality indicator for WIFI signal."       , "number", "false", "value.rssi"               ,"dBm" ],
     ["pact" , "Dust"                      , "Dust"                                                                          , "number", "false", "value.dust"                  ,"" ],
     ["hact" , "Humidity"                  , "Humidity"                                                                      , "number", "false", "value.humidity"             ,"%" ],
@@ -614,24 +614,29 @@ class dysonAirPurifier extends utils.Adapter {
                                         break;
                                 }
                                 adapter.log.debug(devices[thisDevice].Serial + ' - MQTT message received: ' + JSON.stringify(payload));
+                                adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'online');
                             });
 
                             devices[thisDevice].mqttClient.on('error', function (error) {
                                 adapter.log.debug(devices[thisDevice].Serial + ' - MQTT error: ' + error);
+                                adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'error');
                             });
 
                             devices[thisDevice].mqttClient.on('reconnect', function () {
                                 adapter.log.debug(devices[thisDevice].Serial + ' - MQTT reconnecting.');
+                                adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'reconnect');
                             });
 
                             devices[thisDevice].mqttClient.on('close', function () {
                                 adapter.log.debug(devices[thisDevice].Serial + ' - MQTT disconnected.');
                                 adapter.clearIntervalHandle(updateIntervalHandle);
+                                adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'disconnected');
                             });
 
                             devices[thisDevice].mqttClient.on('offline', function () {
                                 adapter.log.debug(devices[thisDevice].Serial + ' - MQTT offline.');
                                 adapter.clearIntervalHandle(updateIntervalHandle);
+                                adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'offline');
                             });
 
                             devices[thisDevice].mqttClient.on('end', function () {
@@ -716,6 +721,29 @@ class dysonAirPurifier extends utils.Adapter {
     /***********************************************
      * Misc helper functions                       *
     ***********************************************/
+    /*
+    * Function setDeviceOnlineState
+    * Sets an indicator whether the device is reachable via mqtt
+    *
+    * @param device {string} path to the device incl. Serial
+    * @param state  {string} state to set (online, offline, reconnecting, ...)
+    */
+    setDeviceOnlineState(device,  state) {
+        this.createOrExtendObject(device + '.Online', {
+            type: 'state',
+            common: {
+                name: 'Indicator whether device if online or offline.',
+                "read": true,
+                "write": false,
+                "role": "indicator.reachable",
+                "type": "boolean"
+            },
+            native: {}
+        }, state === 'online');
+    }
+
+
+
     /*
     * Function Create or extend object
     * Updates an existing object (id) or creates it if not existing.
