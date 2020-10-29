@@ -18,16 +18,13 @@ This adapter connects ioBroker to various dyson Air Purifiers.
 <div>Fan-Icon in Logo created by <a href="https://www.flaticon.com/de/autoren/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/de/" title="Flaticon">www.flaticon.com</a></div>
 
 ### supported devices
-#### Tested
-* 2018 Dyson Pure Cool Tower (TP04, ProductType 438)
-* 2018 Dyson Pure Hot+Cool   (HP04, ProductType 527)
 * Dyson Pure Cool Link Tower (TP02, ProductType 475)
-
-#### Should work
-* Dyson Pure Humidify+Cool (PH01, ProductType 358)
-* 2018 Dyson Pure Cool Desk (DP04, ProductType 520)
-* Dyson Pure Hot+Cool Link (HP02, ProductType 455)
-* Dyson Pure Cool Link Desk (DP01, ProductType 469)
+* 2018 Dyson Pure Cool Tower (TP04, ProductType 438)
+* Dyson Pure Cool Link Desk  (DP01, ProductType 469)
+* 2018 Dyson Pure Cool Desk  (DP04, ProductType 520)
+* Dyson Pure Hot+Cool Link   (HP02, ProductType 455)
+* 2018 Dyson Pure Hot+Cool   (HP04, ProductType 527)
+* Dyson Pure Humidify+Cool   (PH01, ProductType 358)
 
 ## Features
 Connects your dyson fans, fan heaters, air purifiers and air humidifiers to ioBroker.
@@ -62,6 +59,9 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
 
 ### known issues:
  * No automatic IP detection of devices
+ 
+### 0.6.0 (2020-10-xx) (Rage before the storm)
+ * (grizzelbee) New: [#17](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/17) -   
  
 ### 0.5.1 (2020-10-27) (Heart of the hurricance)
  * (grizzelbee) Fix: Added missing clearTimeout
