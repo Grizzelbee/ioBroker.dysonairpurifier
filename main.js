@@ -37,7 +37,7 @@ const products = {  '358':'Dyson Pure Humidify+Cool',
 const datapoints = [
     ["channel" , "WIFIchannel"            , "Number of the used WIFI channel."                                              , "number", "false", "value.wifiChannel"           ,"" ],
     ["ercd" , "LastErrorCode"             , "Errorcode of the last error occured on this device"                            , "string", "false", "value.error"                 ,"" ],
-    ["filf" , "FilterLife"                , "Estimated remaining filterlife in hours."                                      , "string", "false", "value.lifetime"        , "hours" ],
+    ["filf" , "FilterLife"                , "Estimated remaining filterlife in hours."                                      , "number", "false", "value.lifetime"        , "hours" ],
     ["fmod" , "Mode"                      , "Mode of device"                                                                , "string", "false", "value"                       ,"", {'FAN':'Fan', 'AUTO':'Auto'} ],
     ["fnsp" , "FanSpeed"                  , "Current fanspeed"                                                              , "string", "true",  "value.fanspeed"              ,"", {'AUTO':'Auto', '0001':'1', '0002':'2', '0003':'3', '0004':'4', '0005':'5', '0006':'6', '0007':'7', '0008':'8', '0009':'9', '0010':'10' } ],
     ["fnst" , "FanStatus"                 , "Current Fanstate"                                                              , "string", "true",  "state.fan"                   ,"", {'FAN':'Fan', 'OFF':'OFF', 'ON':'ON'} ],
@@ -427,7 +427,7 @@ class dysonAirPurifier extends utils.Adapter {
             this.log.debug('Processing Message: ' + ((typeof message === 'object')? JSON.stringify(message) : message) );
             const helper = await this.getDatapoint(row);
             if ( helper === undefined){
-                this.log.info("Skipped creating datafield for: [" + row + "] Value: |-> " + ((typeof( message[row] ) === "object")? JSON.stringify(message[row]) : message[row]) );
+                this.log.info("Skipped creating unknown datafield for: [" + row + "] Value: |-> " + ((typeof( message[row] ) === "object")? JSON.stringify(message[row]) : message[row]) );
                 continue;
             }
             // strip leading zeros from numbers
@@ -466,7 +466,6 @@ class dysonAirPurifier extends utils.Adapter {
                    value = value[1];
                }
             }
-            this.log.debug('Helper: ' + helper + ' has length of '+ helper.length+']');
             if (helper.length > 7) {
                 this.createOrExtendObject( device.Serial + path + '.'+ helper[1], { type: 'state', common: {name: helper[2], "read":true, "write": helper[4]==="true", "role": helper[5], "type":helper[3], "unit":helper[6], "states": helper[7]}, native: {} }, value );
             } else {
