@@ -504,7 +504,7 @@ class dysonAirPurifier extends utils.Adapter {
                         // that falls out of the range of 2xx
                         switch (error.response.status){
                             case 401 : // unauthorized
-                                this.log.error('Error: Unable to authenticate user! Your credentials are invalid. Please doublecheck and fix them. This adapter has a maximum Pwd length of 15 chars.');
+                                this.log.error('Error: Unable to authenticate user! Your credentials are invalid. Please doublecheck and fix them. This adapter has a maximum Pwd length of 32 chars.');
                                 break;
                             default:
                                 this.log.error('[error.response.data]: '    + ( (typeof error.response.data    === 'object')? stringify(error.response.data):error.response.data ) );
