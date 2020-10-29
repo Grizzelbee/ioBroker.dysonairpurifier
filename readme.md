@@ -163,9 +163,9 @@ Information copied and extended from https://github.com/shadowwa/Dyson-MQTT2RRD/
 | ffoc | JetFocus | ON, OFF |
 | hmod | Heating Mode | HEAT | | 
 | hmax | Target temperature for heating | 0 .. 5000 | K | 
-| psta | [DP0x] Unknown |  | | 
-| hsta | [DP0x] Unknown |  | | 
-| tilt | [DP0x] Unknown |  | | 
+| psta | [HP0x] Unknown |  | | 
+| hsta | [HP0x] Unknown |  | | 
+| tilt | [HP0x] Unknown |  | | 
 | hume | Dehumidifier State     | ON, OFF, |
 | haut | Target Humidifier Dehumidifier State| |
 | humt | Relative Humidity Humidifier Threshold| |
