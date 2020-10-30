@@ -7,7 +7,7 @@
 // you need to create an adapter
 const utils = require('@iobroker/adapter-core');
 
-// Load modules here, e.g.:
+// Load additional modules
 const axios  = require('axios');
 const crypto = require('crypto');
 const mqtt   = require('mqtt');
@@ -18,6 +18,7 @@ const rootCas = require('ssl-root-cas').create();
 rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
 const httpsAgent = new https.Agent({ca: rootCas});
 const adapterName = require('./package.json').name.split('.').pop();
+const _ = require('lodash/core');
 
 // Variable definitions
 let devices=[]; // Array that contains all local devices
@@ -86,9 +87,9 @@ const datapoints = [
     ["wacd" , "wacd"                      , "Unknown"                                                                       , "string", "false", "value"                       ,"" ]
 ];
 
-    /*
-     * Main class of dyson AirPurifier adapter for ioBroker
-     */
+/*
+ * Main class of dyson AirPurifier adapter for ioBroker
+ */ 
 class dysonAirPurifier extends utils.Adapter {
     /**
      * @param {Partial<ioBroker.AdapterOptions>} [options={}]
@@ -102,9 +103,6 @@ class dysonAirPurifier extends utils.Adapter {
         // this.on('message', this.onMessage.bind(this));
         this.on('unload', this.onUnload.bind(this));
     }
-
-
-
 
     /*
     * Function onStateChange
@@ -167,7 +165,6 @@ class dysonAirPurifier extends utils.Adapter {
             }
         }
     }
-
 
     /*
      * Function CreateOrUpdateDevice
@@ -481,7 +478,6 @@ class dysonAirPurifier extends utils.Adapter {
         }
     }
 
-
     /*
     *  Main
     * It's the main routine of the adapter
@@ -730,6 +726,7 @@ class dysonAirPurifier extends utils.Adapter {
     /***********************************************
      * Misc helper functions                       *
     ***********************************************/
+
     /*
     * Function setDeviceOnlineState
     * Sets an indicator whether the device is reachable via mqtt
@@ -750,8 +747,6 @@ class dysonAirPurifier extends utils.Adapter {
             native: {}
         }, state === 'online');
     }
-
-
 
     /*
     * Function Create or extend object
@@ -816,6 +811,7 @@ class dysonAirPurifier extends utils.Adapter {
         {
             return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
         }
+        // `${_.padStart(number, width, '0')}`
         return number + ""; // always return a string
     }
 
@@ -853,6 +849,7 @@ class dysonAirPurifier extends utils.Adapter {
     /***********************************************
     * dyson API functions                         *
     ***********************************************/
+    
     /*
      * dysonAPILogin
      *
@@ -878,9 +875,7 @@ class dysonAirPurifier extends utils.Adapter {
             );
     }
 
-
-
-            // Exit adapter
+    // Exit adapter
     onUnload(callback) {
         try {
                 for (let thisDevice in devices) devices[thisDevice].mqttClient.close();

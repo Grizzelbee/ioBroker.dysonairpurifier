@@ -1,30 +1,17 @@
-'use strict';
-
-/**
- * This is a dummy TypeScript test file using chai and mocha
- *
- * It's automatically excluded from npm and its build output is excluded from both git and npm.
- * It is advised to test all your modules with accompanying *.test.js-files
- */
-
-// tslint:disable:no-unused-expression
+// 'use strict';
 
 const { expect } = require('chai');
-// import { functionToTest } from "./moduleToTest";
 
-describe('module to test => function to test', () => {
-    // initializing logic
-    const expected = 5;
+const main = require('./main');
 
-    it(`should return ${expected}`, () => {
-        const result = 5;
-        // assign result a value from functionToTest
-        expect(result).to.equal(expected);
-        // or using the should() syntax
-        result.should.equal(expected);
-    });
-    // ... more tests => it
+// describe('dysonairpurifier => helper: zeroFill', () => {
+//     it(`should left-pad zeroes for input numbers`, () => {
+//         expect(main.zeroFill('5', 4)).to.equal('0005');
+//         expect(main.zeroFill('1', 1)).to.equal('1');
+//         expect(main.zeroFill('45', 2)).to.equal('45');
+//         expect(main.zeroFill('-38', 6)).to.equal('-00038');
 
-});
+//         // expect(dysonAirPurifier.zeroFill(input, length)).to.equal(expected);
+//     });
 
-// ... more test suites => describe
+// });
