@@ -44,7 +44,7 @@ const datapoints = [
     ["nmod" , "Nightmode"                 , "Nightmode state"                                                               , "string", "true",  "indicator.nightmode"         ,"", {'OFF':'OFF', 'ON':'ON'} ],
     ["oson" , "Oscillation"               , "Oscillation of fan."                                                           , "string", "true",  "state.oscillation"           ,"", {'OFF':'OFF', 'ON':'ON'} ],
     ["qtar" , "AirQualityTarget"          , "Target Air quality for Auto Mode."                                             , "string", "false", "value"                       ,"" ],
-    ["rhtm" , "ContiniousMonitoring"      , "Continious Monitoring by environmental sensors."                               , "string", "true",  "state.continiousMonitoring"  ,"", {'OFF':'OFF', 'ON':'ON'} ],
+    ["rhtm" , "ContiniousMonitoring"      , "Continious Monitoring of environmental sensors even if device is off."         , "string", "true",  "state.continiousMonitoring"  ,"", {'OFF':'OFF', 'ON':'ON'} ],
     ["fpwr" , "MainPower"                 , "Main Power of fan."                                                            , "string", "true",  "state.power"                 ,"", {'OFF':'OFF', 'ON':'ON'} ],
     ["auto" , "AutomaticMode"             , "Fan is in automatic mode."                                                     , "string", "true",  "state.automatic"             ,"", {'OFF':'OFF', 'ON':'ON'} ],
     ["oscs" , "OscillationActive"         , "Fan is currently oscillating."                                                 , "string", "false", "indicator.oscillation"       ,"", {'IDLE':'Idle', 'OFF':'OFF', 'ON':'ON'} ],
