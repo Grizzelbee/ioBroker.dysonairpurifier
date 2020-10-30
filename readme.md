@@ -18,16 +18,13 @@ This adapter connects ioBroker to various dyson Air Purifiers.
 <div>Fan-Icon in Logo created by <a href="https://www.flaticon.com/de/autoren/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/de/" title="Flaticon">www.flaticon.com</a></div>
 
 ### supported devices
-#### Tested
-* 2018 Dyson Pure Cool Tower (TP04, ProductType 438)
-* 2018 Dyson Pure Hot+Cool   (HP04, ProductType 527)
 * Dyson Pure Cool Link Tower (TP02, ProductType 475)
-
-#### Should work
-* Dyson Pure Humidify+Cool (PH01, ProductType 358)
-* 2018 Dyson Pure Cool Desk (DP04, ProductType 520)
-* Dyson Pure Hot+Cool Link (HP02, ProductType 455)
-* Dyson Pure Cool Link Desk (DP01, ProductType 469)
+* 2018 Dyson Pure Cool Tower (TP04, ProductType 438)
+* Dyson Pure Cool Link Desk  (DP01, ProductType 469)
+* 2018 Dyson Pure Cool Desk  (DP04, ProductType 520)
+* Dyson Pure Hot+Cool Link   (HP02, ProductType 455)
+* 2018 Dyson Pure Hot+Cool   (HP04, ProductType 527)
+* Dyson Pure Humidify+Cool   (PH01, ProductType 358)
 
 ## Features
 Connects your dyson fans, fan heaters, air purifiers and air humidifiers to ioBroker.
@@ -45,8 +42,7 @@ Install from STABLE or LATEST repository or from github - depending what stabili
 
 ### Config-data needed
 * dyson account username
-* dyson account password
-* your ISO-Country code (DE, US, CA, ...). This will mostly be the country you opened your dyson account in.
+* dyson account password (Adapter can handle passwords up to 32 characters)
 * your fans/air purifiers IP address in your LAN.
 Due to early development state and a non conform mDNS implementation by dyson you'll need to provide the local fans IP after the first run.
 On the first start of this adapter the dyson API is queried for all your devices and all supported devices will be created in the devicetree - with it's basic information provided by the API and an additional field "Hostaddress".
@@ -62,6 +58,13 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
 
 ### known issues:
  * No automatic IP detection of devices
+ 
+### 0.6.0 (2020-10-29) (Rage before the storm)
+ * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Filter life value is now displayed in percent not in hours
+ * (grizzelbee) New: [#17](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/17) - Added online-indicator for each device   
+ * (grizzelbee) New: [#19](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/19) - Extended Password length from 15 characters to 32
+ * (grizzelbee) New: [#20](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/20) - Improved errorhandling on http communication with dyson API
+    
  
 ### 0.5.1 (2020-10-27) (Heart of the hurricance)
  * (grizzelbee) Fix: Added missing clearTimeout
@@ -158,8 +161,11 @@ Information copied and extended from https://github.com/shadowwa/Dyson-MQTT2RRD/
 | ancp | Ancorpoint for oscilation ?  | CUST, 0180 |° (degrees)|
 | fdir | Fandirection / ON=Front, OFF=Back | ON, OFF | | 
 | ffoc | JetFocus | ON, OFF |
-| hmod | Heating Mode | ON, OFF | | 
+| hmod | Heating Mode | HEAT | | 
 | hmax | Target temperature for heating | 0 .. 5000 | K | 
+| psta | [HP0x] Unknown |  | | 
+| hsta | [HP0x] Unknown |  | | 
+| tilt | [HP0x] Unknown |  | | 
 | hume | Dehumidifier State     | ON, OFF, |
 | haut | Target Humidifier Dehumidifier State| |
 | humt | Relative Humidity Humidifier Threshold| |

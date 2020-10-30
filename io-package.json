@@ -1,10 +1,31 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "0.5.1",
+        "version": "0.6.0",
         "news": {
+            "0.6.0": {
+                "en": "minor bugfix and small improvements.",
+                "de": "kleiner Bugfix und kleine Verbesserungen.",
+                "ru": "мелкие исправления и небольшие улучшения.",
+                "pt": "pequenas correções de bugs e pequenas melhorias.",
+                "nl": "kleine bugfix en kleine verbeteringen.",
+                "fr": "correction de bugs mineurs et petites améliorations.",
+                "it": "bugfix minori e piccoli miglioramenti.",
+                "es": "corrección de errores menores y pequeñas mejoras.",
+                "pl": "drobne poprawki i drobne ulepszenia.",
+                "zh-cn": "小错误修正和小改进。"
+            },
             "0.5.1": {
-                "en": "bugfix for missing clearTimeout."
+                "en": "bugfix for missing clearTimeout.",
+                "de": "Bugfix für fehlendes clearTimeout.",
+                "ru": "исправление из-за отсутствия clearTimeout.",
+                "pt": "correção de bug para clearTimeout ausente.",
+                "nl": "bugfix voor het missen van clearTimeout.",
+                "fr": "correctif pour le clearTimeout manquant.",
+                "it": "bugfix per clearTimeout mancante.",
+                "es": "corrección de errores por falta de clearTimeout.",
+                "pl": "poprawka dla brakującego clearTimeout.",
+                "zh-cn": "缺少clearTimeout的错误修正。"
             },
             "0.5.0": {
                 "en": "enhancements, bugfixes and initial support for heater.",

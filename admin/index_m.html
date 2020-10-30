@@ -58,8 +58,8 @@
                 }
             });
             socket.emit('getObject', 'system.config', function (err, obj) {
-                secret = (obj.native ? obj.native.secret : '') || 'Zgfr56gFe87jJOM';
-                $key = $('#Password');
+                secret = (obj.native ? obj.native.secret : '') || '3eezLO2gNPrt1ww0pcWNhqPZxMjfb3br';
+                var $key = $('#Password');
                 settings['Password'] = decrypt(secret, settings['Password']);
                 $key.val(settings['Password']).change(function () {
                     onChange();
@@ -115,7 +115,7 @@
                 <span class="translate">email_desc</span>
             </div>
             <div class="input-field col s12 m4">
-                <input class="value" id="Password" type="password" maxlength="15">
+                <input class="value" id="Password" type="password" maxlength="32">
                 <label for="Password" class="translate">Lbl_Password</label>
                 <span class="translate">password_desc</span>
             </div>

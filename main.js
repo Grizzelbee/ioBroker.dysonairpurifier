@@ -30,14 +30,14 @@ const products = {  '358':'Dyson Pure Humidify+Cool',
                     '469':'Dyson Pure Cool Link Desk',
                     '475':'Dyson Pure Cool Link Tower',
                     '520':'Dyson Pure Cool Desk',
-                    '527':'Dyson Pure Hot+Cool'}
+                    '527':'Dyson Pure Hot+Cool'};
 
 // datastructure to determine readable names, etc for any datapoint
 // Every row is one state in a dyson message. Format: [ dysonCode, Name of Datapoint, Description, datatype, writable, role, unit]
 const datapoints = [
     ["channel" , "WIFIchannel"            , "Number of the used WIFI channel."                                              , "number", "false", "value.wifiChannel"           ,"" ],
     ["ercd" , "LastErrorCode"             , "Errorcode of the last error occured on this device"                            , "string", "false", "value.error"                 ,"" ],
-    ["filf" , "FilterLife"                , "Estimated remaining filterlife in hours."                                      , "string", "false", "value.lifetime"        , "hours" ],
+    ["filf" , "FilterLife"                , "Estimated remaining filterlife in hours."                                      , "number", "false", "value.lifetime"        , "hours" ],
     ["fmod" , "Mode"                      , "Mode of device"                                                                , "string", "false", "value"                       ,"", {'FAN':'Fan', 'AUTO':'Auto'} ],
     ["fnsp" , "FanSpeed"                  , "Current fanspeed"                                                              , "string", "true",  "value.fanspeed"              ,"", {'AUTO':'Auto', '0001':'1', '0002':'2', '0003':'3', '0004':'4', '0005':'5', '0006':'6', '0007':'7', '0008':'8', '0009':'9', '0010':'10' } ],
     ["fnst" , "FanStatus"                 , "Current Fanstate"                                                              , "string", "true",  "state.fan"                   ,"", {'FAN':'Fan', 'OFF':'OFF', 'ON':'ON'} ],
@@ -58,7 +58,7 @@ const datapoints = [
     ["sltm" , "Sleeptimer"                , "Sleeptimer."                                                                   , "string", "false", "indicator.sleeptimer"        ,"" ],
     ["osal" , "OscilationLeft"            , "Maximum oscillation to the left. Relative to Ancorpoint."                      , "string", "true",  "value"                      ,"°" ],
     ["osau" , "OscilationRight"           , "Maximum oscillation to the right. Relative to Ancorpoint."                     , "string", "true",  "value"                      ,"°" ],
-    ["ancp" , "Ancorpoint"                , "Ancorpoint for oscillation. By default the dyson logo on the bottom plate."    , "string", "true",  "value.ancor"                ,"°" ],
+    ["ancp" , "Anchorpoint"               , "Anchorpoint for oscillation. By default the dyson logo on the bottom plate."   , "string", "true",  "value.anchor"               ,"°" ],
     ["rssi" , "RSSI"                      , "Received Signal Strength Indication. Quality indicator for WIFI signal."       , "number", "false", "value.rssi"               ,"dBm" ],
     ["pact" , "Dust"                      , "Dust"                                                                          , "number", "false", "value.dust"                  ,"" ],
     ["hact" , "Humidity"                  , "Humidity"                                                                      , "number", "false", "value.humidity"             ,"%" ],
@@ -72,10 +72,13 @@ const datapoints = [
     ["p25r" , "PM-R25"                    , "PM-R2.5 - Particulate Matter 2.5µm"                                            , "number", "false", "value.PM25"             ,"µg/m³" ],
     ["p10r" , "PM-R10"                    , "PM-R10 - Particulate Matter 10µm"                                              , "number", "false", "value.PM10"             ,"µg/m³" ],
     ["hmod" , "HeatingMode"               , "Heating Mode [ON/OFF]"                                                         , "string", "true",  "indicator.heating"           ,"", {'OFF': 'OFF', 'ON': 'ON'} ],
-    ["hmax" , "HeatingTargetTemp"         , "Target temperature for heating"                                                , "string", "true", "value.temperature"           ,"" ],
-    ["hume" , "DehumidifierState"         , "Dehumidifier State [ON/OFF]"                                                   , "string", "true",  "value"                       ,"", {'OFF': 'OFF', 'ON': 'ON'} ],
+    ["hmax" , "HeatingTargetTemp"         , "Target temperature for heating"                                                , "string", "true",  "value.temperature"           ,"" ],
+    ["hume" , "DehumidifierState"         , "Dehumidifier State [ON/OFF]"                                                   , "string", "false",  "value"                       ,"" ],
     ["haut" , "TargetHumidifierState"     , "Target Humidifier Dehumidifier State"                                          , "string", "false", "value"                       ,"" ],
     ["humt" , "RelativeHumidityThreshold" , "Relative Humidity Humidifier Threshold"                                        , "string", "false", "value"                       ,"" ],
+    ["psta" , "psta"                      , "[HP0x] Unknown"                                                                , "string", "false", "value"                       ,"" ],
+    ["hsta" , "hsta"                      , "[HP0x] Unknown"                                                                , "string", "false", "value"                       ,"" ],
+    ["tilt" , "tilt"                      , "[HP0x] Unknown"                                                                , "string", "false", "value"                       ,"" ],
     ["bril" , "bril"                      , "Unknown"                                                                       , "string", "false", "value"                       ,"" ],
     ["corf" , "corf"                      , "Unknown"                                                                       , "string", "false", "value"                       ,"" ],
     ["fqhp" , "fqhp"                      , "Unknown"                                                                       , "string", "false", "value"                       ,"" ],
@@ -293,7 +296,7 @@ class dysonAirPurifier extends utils.Adapter {
                 })
                 .catch( (error) => {
                     this.log.error("[CreateOrUpdateDevice-getSateAsync] Error: " + error + ", Callstack: " + error.stack);
-                })
+                });
         } catch(error){
             this.log.error("[CreateOrUpdateDevice] Error: " + error + ", Callstack: " + error.stack);
         }
@@ -427,7 +430,7 @@ class dysonAirPurifier extends utils.Adapter {
             this.log.debug('Processing Message: ' + ((typeof message === 'object')? JSON.stringify(message) : message) );
             const helper = await this.getDatapoint(row);
             if ( helper === undefined){
-                this.log.info("Skipped creating datafield for: [" + row + "] Value: |-> " + ((typeof( message[row] ) === "object")? JSON.stringify(message[row]) : message[row]) );
+                this.log.info("Skipped creating unknown datafield for: [" + row + "] Value: |-> " + ((typeof( message[row] ) === "object")? JSON.stringify(message[row]) : message[row]) );
                 continue;
             }
             // strip leading zeros from numbers
@@ -466,7 +469,6 @@ class dysonAirPurifier extends utils.Adapter {
                    value = value[1];
                }
             }
-            this.log.debug('Helper: ' + helper + ' has length of '+ helper.length+']');
             if (helper.length > 7) {
                 this.createOrExtendObject( device.Serial + path + '.'+ helper[1], { type: 'state', common: {name: helper[2], "read":true, "write": helper[4]==="true", "role": helper[5], "type":helper[3], "unit":helper[6], "states": helper[7]}, native: {} }, value );
             } else {
@@ -479,36 +481,6 @@ class dysonAirPurifier extends utils.Adapter {
         }
     }
 
-    /*
-     * Function decryptMqttPasswd
-     * decrypts the fans local mqtt password and returns a value you can connect with
-     *
-     * @param LocalCredentials  {string} encrypted mqtt password
-     */
-    decryptMqttPasswd(LocalCredentials) {
-        // Gets the MQTT credentials from the thisDevice (see https://github.com/CharlesBlonde/libpurecoollink/blob/master/libpurecoollink/utils.py)
-        const key = Uint8Array.from(Array(32), (_, index) => index + 1);
-        const initializationVector = new Uint8Array(16);
-        const decipher = crypto.createDecipheriv('aes-256-cbc', key, initializationVector);
-        const decryptedPasswordString = decipher.update(LocalCredentials, 'base64', 'utf8') + decipher.final('utf8');
-        const decryptedPasswordJson = JSON.parse(decryptedPasswordString);
-        return decryptedPasswordJson.apPasswordHash;
-    }
-
-    /*
-     * Function clearIntervalHandle
-     * sets an intervalHandle (timeoutHandle) to null if it's existing to clear it
-     *
-     * @param updateIntervalHandle  {any} timeOutHandle to be checked and cleared
-     */
-    clearIntervalHandle(updateIntervalHandle){
-        if (updateIntervalHandle) {
-            clearTimeout(updateIntervalHandle);
-            return null;
-        } else {
-            return updateIntervalHandle;
-        }
-    }
 
     /*
     *  Main
@@ -532,14 +504,21 @@ class dysonAirPurifier extends utils.Adapter {
                     if (error.response) {
                         // The request was made and the server responded with a status code
                         // that falls out of the range of 2xx
-                        this.log.error('[error.response.data]: ' + error.response.data);
-                        this.log.error('[error.response.status]: ' + error.response.status);
-                        this.log.error('[error.response.headers]: ' + error.response.headers);
+                        switch (error.response.status){
+                            case 401 : // unauthorized
+                                this.log.error('Error: Unable to authenticate user! Your credentials are invalid. Please doublecheck and fix them. This adapter has a maximum Pwd length of 32 chars.');
+                                break;
+                            default:
+                                this.log.error('[error.response.data]: '    + ( (typeof error.response.data    === 'object')? stringify(error.response.data):error.response.data ) );
+                                this.log.error('[error.response.status]: '  + ( (typeof error.response.status  === 'object')? stringify(error.response.status):error.response.status ) );
+                                this.log.error('[error.response.headers]: ' + ( (typeof error.response.headers === 'object')? stringify(error.response.headers):error.response.headers ) );
+                                break;
+                        }
                     } else if (error.request) {
                         // The request was made but no response was received
                         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
                         // http.ClientRequest in node.js
-                        this.log.error('[error.request]: ' +  stringify(error.request) );
+                        this.log.error('[error.request]: ' + ((typeof error.request === 'object')? stringify(error.request):error.request ) );
                     } else {
                         // Something happened in setting up the request that triggered an Error
                         this.log.error('[Error]: ', error.message);
@@ -644,24 +623,29 @@ class dysonAirPurifier extends utils.Adapter {
                                         break;
                                 }
                                 adapter.log.debug(devices[thisDevice].Serial + ' - MQTT message received: ' + JSON.stringify(payload));
+                                adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'online');
                             });
 
                             devices[thisDevice].mqttClient.on('error', function (error) {
                                 adapter.log.debug(devices[thisDevice].Serial + ' - MQTT error: ' + error);
+                                adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'error');
                             });
 
                             devices[thisDevice].mqttClient.on('reconnect', function () {
                                 adapter.log.debug(devices[thisDevice].Serial + ' - MQTT reconnecting.');
+                                adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'reconnect');
                             });
 
                             devices[thisDevice].mqttClient.on('close', function () {
                                 adapter.log.debug(devices[thisDevice].Serial + ' - MQTT disconnected.');
                                 adapter.clearIntervalHandle(updateIntervalHandle);
+                                adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'disconnected');
                             });
 
                             devices[thisDevice].mqttClient.on('offline', function () {
                                 adapter.log.debug(devices[thisDevice].Serial + ' - MQTT offline.');
                                 adapter.clearIntervalHandle(updateIntervalHandle);
+                                adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'offline');
                             });
 
                             devices[thisDevice].mqttClient.on('end', function () {
@@ -726,7 +710,7 @@ class dysonAirPurifier extends utils.Adapter {
                     } else {
                         //noinspection JSUnresolvedVariable
                         this.log.debug('System secrect rejected. Using SALT for decryption.');
-                        this.config.Password = this.decrypt('Zgfr56gFe87jJOM', this.config.Password);
+                        this.config.Password = this.decrypt('3eezLO2gNPrt1ww0pcWNhqPZxMjfb3br', this.config.Password);
                     }
 
                     // config is valid and password is decrypted -> run main() function
@@ -746,6 +730,29 @@ class dysonAirPurifier extends utils.Adapter {
     /***********************************************
      * Misc helper functions                       *
     ***********************************************/
+    /*
+    * Function setDeviceOnlineState
+    * Sets an indicator whether the device is reachable via mqtt
+    *
+    * @param device {string} path to the device incl. Serial
+    * @param state  {string} state to set (online, offline, reconnecting, ...)
+    */
+    setDeviceOnlineState(device,  state) {
+        this.createOrExtendObject(device + '.Online', {
+            type: 'state',
+            common: {
+                name: 'Indicator whether device if online or offline.',
+                "read": true,
+                "write": false,
+                "role": "indicator.reachable",
+                "type": "boolean"
+            },
+            native: {}
+        }, state === 'online');
+    }
+
+
+
     /*
     * Function Create or extend object
     * Updates an existing object (id) or creates it if not existing.
@@ -803,8 +810,7 @@ class dysonAirPurifier extends utils.Adapter {
     *
     * @returns The given number filled up with leading zeros to a given width
     */
-    zeroFill( number, width )
-    {
+    zeroFill( number, width ) {
         width -= number.toString().length;
         if ( width > 0 )
         {
@@ -813,6 +819,36 @@ class dysonAirPurifier extends utils.Adapter {
         return number + ""; // always return a string
     }
 
+    /*
+     * Function decryptMqttPasswd
+     * decrypts the fans local mqtt password and returns a value you can connect with
+     *
+     * @param LocalCredentials  {string} encrypted mqtt password
+     */
+    decryptMqttPasswd(LocalCredentials) {
+        // Gets the MQTT credentials from the thisDevice (see https://github.com/CharlesBlonde/libpurecoollink/blob/master/libpurecoollink/utils.py)
+        const key = Uint8Array.from(Array(32), (_, index) => index + 1);
+        const initializationVector = new Uint8Array(16);
+        const decipher = crypto.createDecipheriv('aes-256-cbc', key, initializationVector);
+        const decryptedPasswordString = decipher.update(LocalCredentials, 'base64', 'utf8') + decipher.final('utf8');
+        const decryptedPasswordJson = JSON.parse(decryptedPasswordString);
+        return decryptedPasswordJson.apPasswordHash;
+    }
+
+    /*
+     * Function clearIntervalHandle
+     * sets an intervalHandle (timeoutHandle) to null if it's existing to clear it
+     *
+     * @param updateIntervalHandle  {any} timeOutHandle to be checked and cleared
+     */
+    clearIntervalHandle(updateIntervalHandle){
+        if (updateIntervalHandle) {
+            clearTimeout(updateIntervalHandle);
+            return null;
+        } else {
+            return updateIntervalHandle;
+        }
+    }
 
     /***********************************************
     * dyson API functions                         *
