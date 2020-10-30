@@ -1,6 +1,6 @@
 'use strict';
 
-const _ = require('lodash/core');
+const _ = require('lodash');
 
 // class DysonUtils {
 //     DysonUtils() {}
@@ -17,10 +17,5 @@ const _ = require('lodash/core');
 * @returns The given number filled up with leading zeros to a given width
 */
 module.exports.zeroFill = function (number, width) {
-    width -= number.toString().length;
-    if (width > 0) {
-        return new Array(width + (/\./.test(number) ? 2 : 1)).join('0') + number;
-    }
-    // return `${_.padStart(number, width, '0')}`
-    return number + ""; // always return a string
+    return `${_.padStart(number, width, '0')}`;
 };
