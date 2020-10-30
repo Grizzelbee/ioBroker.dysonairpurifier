@@ -37,6 +37,8 @@ Connects your dyson fans, fan heaters, air purifiers and air humidifiers to ioBr
 Install from STABLE or LATEST repository or from github - depending what stability you prefer.
 
 ### Prerequisites
+
+* This adapter needs Node.js >= version 10
 * To get this adapter running you'll need a dyson account.
 * Make sure to add your fan to your account. Either via App or online.
 
