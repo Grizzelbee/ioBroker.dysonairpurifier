@@ -19,7 +19,7 @@ rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
 const httpsAgent = new https.Agent({ca: rootCas});
 const adapterName = require('./package.json').name.split('.').pop();
 const _ = require('lodash/core');
-const dysonUtils = require('./dysonUtils.js');
+const dysonUtils = require('./dyson-utils.js');
 
 // Variable definitions
 let devices=[]; // Array that contains all local devices
