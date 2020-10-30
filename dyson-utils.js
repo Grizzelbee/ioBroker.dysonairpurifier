@@ -2,10 +2,9 @@
 
 const _ = require('lodash/core');
 
-// eslint-disable-next-line no-unused-vars
-class DysonUtils {
-    DysonUtils() { }
-}
+// class DysonUtils {
+//     DysonUtils() {}
+// }
 
 /*
 * Function zeroFill
