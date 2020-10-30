@@ -5,12 +5,14 @@
 ![Number of Installations (latest)](http://iobroker.live/badges/dysonairpurifier-installed.svg)
 [![NPM version](https://img.shields.io/npm/v/iobroker.dysonairpurifier.svg)](https://www.npmjs.com/package/iobroker.dysonairpurifier)
 ![Number of Installations (stable)](http://iobroker.live/badges/dysonairpurifier-stable.svg)
-[![Downloads](https://img.shields.io/npm/dm/iobroker.dysonairpurifier.svg)](https://www.npmjs.com/package/iobroker.dysonairpurifier)
 [![Dependency Status](https://img.shields.io/david/Grizzelbee/iobroker.dysonairpurifier.svg)](https://david-dm.org/Grizzelbee/iobroker.dysonairpurifier)
 [![Known Vulnerabilities](https://snyk.io/test/github/Grizzelbee/ioBroker.dysonairpurifier/badge.svg)](https://snyk.io/test/github/Grizzelbee/ioBroker.dysonairpurifier)
 [![Travis-CI](https://travis-ci.org/Grizzelbee/iobroker.dysonairpurifier.svg?branch=master)](https://travis-ci.com/github/Grizzelbee/iobroker.dysonairpurifier)
 
 [![NPM](https://nodei.co/npm/iobroker.dysonAirPurifier.svg?downloads=true)](https://nodei.co/npm/iobroker.dysonairpurifier/)
+
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/grizzelbee/iobroker.dysonairpurifier/blob/master/LICENSE) 
+[![Downloads](https://img.shields.io/npm/dm/iobroker.dysonairpurifier.svg)](https://www.npmjs.com/package/iobroker.dysonairpurifier)
   
 ## ioBroker Adapter for dyson Air Purifiers and fans
 This adapter connects ioBroker to various dyson Air Purifiers.
