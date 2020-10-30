@@ -56,11 +56,13 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
 * detect IP of devices automatically
 * collect more mqtt message acronym meanings
 * test with more different devices
-* remove deprecated library crypto
 
 ### known issues:
  * No automatic IP detection of devices
  
+### 0.7.0
+* (jpwenzel) Removing crypto from package dependency list (using Node.js provided version)
+
 ### 0.6.0 (2020-10-29) (Rage before the storm)
  * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Filter life value is now displayed in percent not in hours
  * (grizzelbee) New: [#17](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/17) - Added online-indicator for each device   
