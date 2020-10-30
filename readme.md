@@ -39,6 +39,8 @@ Connects your dyson fans, fan heaters, air purifiers and air humidifiers to ioBr
 Install from STABLE or LATEST repository or from github - depending what stability you prefer.
 
 ### Prerequisites
+
+* This adapter needs Node.js >= version 10
 * To get this adapter running you'll need a dyson account.
 * Make sure to add your fan to your account. Either via App or online.
 
@@ -56,12 +58,13 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
 * detect IP of devices automatically
 * collect more mqtt message acronym meanings
 * test with more different devices
-* remove deprecated library crypto
 
 ### known issues:
  * No automatic IP detection of devices
  
 ### 0.7.0 (2020-11-xx) (Afraid of the dark)
+
+* (jpwenzel) Removing crypto from package dependency list (using Node.js provided version)
 
 
 ### 0.6.0 (2020-10-29) (Rage before the storm)
