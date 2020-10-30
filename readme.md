@@ -204,7 +204,7 @@ Information copied and extended from https://github.com/shadowwa/Dyson-MQTT2RRD/
 |pm25|  PM2.5 |0018||
 |pm10|  PM10 |0011||
 |va10|  volatil organic compounds|0004||
-|noxl|  NO2 |0005||
+|noxl|  NO2 |0000 - 0014||
 |p25r|  |0019||
 |p10r|  |0018||
 
