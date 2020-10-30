@@ -18,7 +18,6 @@ const rootCas = require('ssl-root-cas').create();
 rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
 const httpsAgent = new https.Agent({ca: rootCas});
 const adapterName = require('./package.json').name.split('.').pop();
-const _ = require('lodash/core');
 const dysonUtils = require('./dyson-utils.js');
 
 // Variable definitions

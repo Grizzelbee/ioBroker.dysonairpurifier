@@ -1,5 +1,7 @@
 'use strict';
 
+const _ = require('lodash/core');
+
 // eslint-disable-next-line no-unused-vars
 class DysonUtils {
     DysonUtils() { }
@@ -7,6 +9,7 @@ class DysonUtils {
 
 /*
 * Function zeroFill
+*
 * Formats a number as a string with leading zeros
 *
 * @param number {number} Value thats needs to be filled up with leading zeros
@@ -19,6 +22,6 @@ module.exports.zeroFill = function (number, width) {
     if (width > 0) {
         return new Array(width + (/\./.test(number) ? 2 : 1)).join('0') + number;
     }
-    // `${_.padStart(number, width, '0')}`
+    // return `${_.padStart(number, width, '0')}`
     return number + ""; // always return a string
 };
