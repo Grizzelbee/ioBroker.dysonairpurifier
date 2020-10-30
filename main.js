@@ -19,6 +19,7 @@ rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
 const httpsAgent = new https.Agent({ca: rootCas});
 const adapterName = require('./package.json').name.split('.').pop();
 const _ = require('lodash/core');
+const dysonUtils = require('./dysonUtils.js');
 
 // Variable definitions
 let devices=[]; // Array that contains all local devices
@@ -143,7 +144,7 @@ class dysonAirPurifier extends utils.Adapter {
                             value = Number(((value*10) + 273.15) * (9/5) + 32).toFixed(2);
                             break;
                     }
-                    messageData = {[dysonAction]: this.zeroFill(value, 4)};
+                    messageData = {[dysonAction]: dysonUtils.zeroFill(value, 4)};
                     break;
             }
             this.log.info('SENDING this data to device: ' + JSON.stringify(messageData));
@@ -794,25 +795,6 @@ class dysonAirPurifier extends utils.Adapter {
                 return datapoints[row];
             }
         }
-    }
-
-    /*
-    * Function zeroFill
-    * Formats a number as a string with leading zeros
-    *
-    * @param number {number} Value thats needs to be filled up with leading zeros
-    * @param width  {number} width of the complete new string incl. number and zeros
-    *
-    * @returns The given number filled up with leading zeros to a given width
-    */
-    zeroFill( number, width ) {
-        width -= number.toString().length;
-        if ( width > 0 )
-        {
-            return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
-        }
-        // `${_.padStart(number, width, '0')}`
-        return number + ""; // always return a string
     }
 
     /*

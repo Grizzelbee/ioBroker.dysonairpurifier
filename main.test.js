@@ -3,6 +3,9 @@
 const { expect } = require('chai');
 
 const main = require('./main');
+const dysonUtils = require('./dysonUtils');
+
+dysonUtils.zeroFill(5, 5);
 
 // describe('dysonairpurifier => helper: zeroFill', () => {
 //     it(`should left-pad zeroes for input numbers`, () => {
