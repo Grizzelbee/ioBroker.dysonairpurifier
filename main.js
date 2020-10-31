@@ -32,9 +32,15 @@ const products = {  '358':'Dyson Pure Humidify+Cool',
                     '475':'Dyson Pure Cool Link Tower',
                     '520':'Dyson Pure Cool Desk',
                     '527':'Dyson Pure Hot+Cool'};
+let NO2  = 0; // Numeric representation of current NO2Index
+let VOC  = 0; // Numeric representation of current VOCIndex
+let PM25 = 0; // Numeric representation of current PM25Index
+let PM10 = 0; // Numeric representation of current PM10Index
+let Dust = 0; // Numeric representation of current DustIndex
+
 
 // datastructure to determine readable names, etc for any datapoint
-// Every row is one state in a dyson message. Format: [ dysonCode, Name of Datapoint, Description, datatype, writable, role, unit]
+// Every row is one state in a dyson message. Format: [ dysonCode, Name of Datapoint, Description, datatype, writable, role, unit, possible values for data field]
 const datapoints = [
     ["channel" , "WIFIchannel"            , "Number of the used WIFI channel."                                              , "number", "false", "value.wifiChannel"           ,"" ],
     ["ercd" , "LastErrorCode"             , "Errorcode of the last error occured on this device"                            , "string", "false", "value.error"                 ,"" ],
@@ -163,6 +169,30 @@ class dysonAirPurifier extends utils.Adapter {
                     );
                 }
             }
+        } else if (state && state.ack) {
+            // statechanges by hardware or adapter depending on hardware values
+            // check if it is an Index calculation
+            let action = id.split('.').pop();
+            if ( action.substr( action.length-5, 5 ) === 'Index' ) {
+                let device = id.split('.');
+                device.pop(); // remove first last element from devicepath
+                device.pop(); // remove second last element from devicepath
+                this.log.debug('AirQuality device=' + device.join('.')) ;
+                let AirQ = Math.max(NO2, VOC, Dust, PM25, PM10);
+                this.createOrExtendObject(device.join('.') + '.AirQuality', {
+                    type: 'state',
+                    common: {
+                        name: 'Overall AirQuality (worst value of all indexes)',
+                        "read": true,
+                        "write": false,
+                        "role": "value",
+                        "type": "number",
+                        "states" : {0:'Good', 1:'Medium', 2:'Bad', 3:'very Bad', 4:'extremly Bad', 5:'worrying'}
+                    },
+                    native: {}
+                }, AirQ);
+            }
+
         }
     }
 
@@ -401,15 +431,15 @@ class dysonAirPurifier extends utils.Adapter {
     createNO2(message, row, device) {
         // NO2 QualityIndex
         // 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad
-        let NO2Index = 'Good';
+        let NO2Index = 0;
         if (message[row].noxl < 4) {
-            NO2Index = 'Good';
+            NO2Index = 0;
         } else if (message[row].noxl >= 4 && message[row].noxl <= 6) {
-            NO2Index = 'Medium';
+            NO2Index = 1;
         } else if (message[row].noxl >= 7 && message[row].noxl <= 8) {
-            NO2Index = 'Bad';
+            NO2Index = 2;
         } else if (message[row].noxl >= 9) {
-            NO2Index = 'very Bad';
+            NO2Index = 3;
         }
         this.createOrExtendObject(device.Serial + '.Sensor.NO2Index', {
             type: 'state',
@@ -418,10 +448,13 @@ class dysonAirPurifier extends utils.Adapter {
                 "read": true,
                 "write": false,
                 "role": "value",
-                "type": "string"
+                "type": "number",
+                "states" : {0:'Good', 1:'Medium', 2:'Bad', 3:'very Bad', 4:'extremly Bad', 5:'worrying'}
             },
             native: {}
         }, NO2Index);
+        NO2 = NO2Index;
+        this.subscribeStates(device.Serial + '.Sensor.NO2Index' );
     }
 
     /*
@@ -435,15 +468,15 @@ class dysonAirPurifier extends utils.Adapter {
     createVOC(message, row, device) {
         // VOC QualityIndex
         // 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad
-        let VOCIndex = 'Good';
+        let VOCIndex = 0;
         if (message[row].va10 < 4) {
-            VOCIndex = 'Good';
+            VOCIndex = 0;
         } else if (message[row].va10 >= 4 && message[row].va10 <= 6) {
-            VOCIndex = 'Medium';
+            VOCIndex = 1;
         } else if (message[row].va10 >= 7 && message[row].va10 <= 8) {
-            VOCIndex = 'Bad';
+            VOCIndex = 2;
         } else if (message[row].va10 >= 9) {
-            VOCIndex = 'very Bad';
+            VOCIndex = 3;
         }
         this.createOrExtendObject(device.Serial + '.Sensor.VOCIndex', {
             type: 'state',
@@ -452,10 +485,13 @@ class dysonAirPurifier extends utils.Adapter {
                 "read": true,
                 "write": false,
                 "role": "value",
-                "type": "string"
+                "type": "number",
+                "states" : {0:'Good', 1:'Medium', 2:'Bad', 3:'very Bad', 4:'extremly Bad', 5:'worrying'}
             },
             native: {}
         }, VOCIndex);
+        VOC = VOCIndex;
+        this.subscribeStates(device.Serial + '.Sensor.VOCIndex' );
     }
 
     /*
@@ -469,19 +505,19 @@ class dysonAirPurifier extends utils.Adapter {
     createPM10(message, row, device) {
         // PM10 QualityIndex
         // 0-50: Good, 51-75: Medium, 76-100, Bad, 101-350: very Bad, 351-420: extremly Bad, >421 worrying
-        let PM10Index = 'Good';
+        let PM10Index = 0;
         if (message[row].pm10 < 51) {
-            PM10Index = 'Good';
+            PM10Index = 0;
         } else if (message[row].pm10 >= 51 && message[row].pm10 <= 75) {
-            PM10Index = 'Medium';
+            PM10Index = 1;
         } else if (message[row].pm10 >= 76 && message[row].pm10 <= 100) {
-            PM10Index = 'Bad';
+            PM10Index = 2;
         } else if (message[row].pm10 >= 101 && message[row].pm10 <= 350) {
-            PM10Index = 'very Bad';
+            PM10Index = 3;
         } else if (message[row].pm10 >= 351 && message[row].pm10 <= 420) {
-            PM10Index = 'extremly Bad';
+            PM10Index = 4;
         } else if (message[row].pm10 >= 421) {
-            PM10Index = 'Worrying';
+            PM10Index = 5;
         }
         this.createOrExtendObject(device.Serial + '.Sensor.PM10Index', {
             type: 'state',
@@ -490,10 +526,13 @@ class dysonAirPurifier extends utils.Adapter {
                 "read": true,
                 "write": false,
                 "role": "value",
-                "type": "string"
+                "type": "number",
+                "states" : {0:'Good', 1:'Medium', 2:'Bad', 3:'very Bad', 4:'extremly Bad', 5:'worrying'}
             },
             native: {}
         }, PM10Index);
+        PM10 = PM10Index;
+        this.subscribeStates(device.Serial + '.Sensor.PM10Index' );
     }
 
     /*
@@ -507,31 +546,34 @@ class dysonAirPurifier extends utils.Adapter {
     createDust(message, row, device) {
         // PM10 QualityIndex
         // 0-50: Good, 51-75: Medium, 76-100, Bad, 101-350: very Bad, 351-420: extremly Bad, >421 worrying
-        let dustIndex = 'Good';
+        let dustIndex = 0;
         if (message[row].pm10 < 51) {
-            dustIndex = 'Good';
+            dustIndex = 0;
         } else if (message[row].pm10 >= 51 && message[row].pm10 <= 75) {
-            dustIndex = 'Medium';
+            dustIndex = 1;
         } else if (message[row].pm10 >= 76 && message[row].pm10 <= 100) {
-            dustIndex = 'Bad';
+            dustIndex = 2;
         } else if (message[row].pm10 >= 101 && message[row].pm10 <= 350) {
-            dustIndex = 'very Bad';
+            dustIndex =3;
         } else if (message[row].pm10 >= 351 && message[row].pm10 <= 420) {
-            dustIndex = 'extremly Bad';
+            dustIndex = 4;
         } else if (message[row].pm10 >= 421) {
-            dustIndex = 'Worrying';
+            dustIndex = 5;
         }
-        this.createOrExtendObject(device.Serial + '.Sensor.dustIndex', {
+        this.createOrExtendObject(device.Serial + '.Sensor.DustIndex', {
             type: 'state',
             common: {
                 name: 'Dust QualityIndex. 0-50: Good, 51-75: Medium, 76-100, Bad, 101-350: very Bad, 351-420: extremly Bad, >421 worrying',
                 "read": true,
                 "write": false,
                 "role": "value",
-                "type": "string"
+                "type": "number",
+                "states" : {0:'Good', 1:'Medium', 2:'Bad', 3:'very Bad', 4:'extremly Bad', 5:'worrying'}
             },
             native: {}
         }, dustIndex);
+        Dust = DustIndex;
+        this.subscribeStates(device.Serial + '.Sensor.DustIndex' );
     }
 
     /*
@@ -545,19 +587,19 @@ class dysonAirPurifier extends utils.Adapter {
     createPM25(message, row, device) {
         // PM2.5 QualityIndex
         // 0-35: Good, 36-53: Medium, 54-70: Bad, 71-150: very Bad, 151-250: extremly Bad, >251 worrying
-        let PM25Index = 'Good';
+        let PM25Index = 0;
         if (message[row].pm25 < 36) {
-            PM25Index = 'Good';
+            PM25Index = 0;
         } else if (message[row].pm25 >= 36 && message[row].pm25 <= 53) {
-            PM25Index = 'Medium';
+            PM25Index = 1;
         } else if (message[row].pm25 >= 54 && message[row].pm25 <= 70) {
-            PM25Index = 'Bad';
+            PM25Index = 2;
         } else if (message[row].pm25 >= 71 && message[row].pm25 <= 150) {
-            PM25Index = 'very Bad';
+            PM25Index = 3;
         } else if (message[row].pm25 >= 151 && message[row].pm25 <= 250) {
-            PM25Index = 'extremly Bad';
+            PM25Index = 4;
         } else if (message[row].pm25 >= 251) {
-            PM25Index = 'Worrying';
+            PM25Index = 5;
         }
         this.createOrExtendObject(device.Serial + '.Sensor.PM25Index', {
             type: 'state',
@@ -566,10 +608,13 @@ class dysonAirPurifier extends utils.Adapter {
                 "read": true,
                 "write": false,
                 "role": "value",
-                "type": "string"
+                "type": "number",
+                "states" : {0:'Good', 1:'Medium', 2:'Bad', 3:'very Bad', 4:'extremly Bad', 5:'worrying'}
             },
             native: {}
         }, PM25Index);
+        PM25 = PM25Index;
+        this.subscribeStates(device.Serial + '.Sensor.PM25Index' );
     }
 
     /*
