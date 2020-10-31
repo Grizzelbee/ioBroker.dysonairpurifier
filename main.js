@@ -174,11 +174,9 @@ class dysonAirPurifier extends utils.Adapter {
             // check if it is an Index calculation
             let action = id.split('.').pop();
             if ( action.substr( action.length-5, 5 ) === 'Index' ) {
-                let device = id.split('.');
+                let device = id.split('.'); // convert string into array
                 device.pop(); // remove first last element from devicepath
                 device.pop(); // remove second last element from devicepath
-                this.log.debug('AirQuality device=' + device.join('.')) ;
-                let AirQ = Math.max(NO2, VOC, Dust, PM25, PM10);
                 this.createOrExtendObject(device.join('.') + '.AirQuality', {
                     type: 'state',
                     common: {
@@ -190,7 +188,7 @@ class dysonAirPurifier extends utils.Adapter {
                         "states" : {0:'Good', 1:'Medium', 2:'Bad', 3:'very Bad', 4:'extremly Bad', 5:'worrying'}
                     },
                     native: {}
-                }, AirQ);
+                }, Math.max(NO2, VOC, Dust, PM25, PM10));
             }
 
         }
