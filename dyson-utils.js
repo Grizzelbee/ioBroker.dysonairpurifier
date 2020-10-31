@@ -23,5 +23,8 @@ module.exports.zeroFill = function (number, width) {
         return '';
     }
 
-    return (num < 0 ? '-' : '') + `${_.padStart(('' + Math.abs(num)), width, '0')}`;
+    const negativeSign = num < 0 ? '-' : '';
+    const str = '' + Math.abs(num);
+
+    return `${negativeSign}${_.padStart(str, width, '0')}`;
 };
