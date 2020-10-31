@@ -50,12 +50,12 @@ const datapoints = [
     ["auto" , "AutomaticMode"             , "Fan is in automatic mode."                                                     , "string", "true",  "state.automatic"             ,"", {'OFF':'OFF', 'ON':'ON'} ],
     ["oscs" , "OscillationActive"         , "Fan is currently oscillating."                                                 , "string", "false", "indicator.oscillation"       ,"", {'IDLE':'Idle', 'OFF':'OFF', 'ON':'ON'} ],
     ["nmdv" , "NightModeMaxFan"           , "Maximum fan speed in night mode."                                              , "number", "false", "value"                       ,"" ],
-    ["cflr" , "Coalfilter"                , "Remaining lifetime of activated coalfilter."                                   , "number", "false", "state.coalfilter" 		  ,"%" ],
+    ["cflr" , "CarbonfilterLifetime"      , "Remaining lifetime of activated coalfilter."                                   , "number", "false", "state.coalfilter" 		  ,"%" ],
     ["fdir" , "Fandirection"              , "Direction the fan blows to. ON=Front; OFF=Back"                                , "string", "true",  "indicator.fandirection"      ,"", {'OFF': 'Back', 'ON': 'Front'} ],
     ["ffoc" , "Jetfocus    "              , "Jetfocus [ON/OFF]"                                                             , "string", "true",  "indicator.jetfocus"          ,"", {'OFF': 'OFF', 'ON': 'ON'} ],
-    ["hflr" , "HEPA-Filter"               , "Remaining lifetime of HEPA-Filter."                                            , "number", "false", "state.hepaFilter"           ,"%" ],
+    ["hflr" , "HEPA-FilterLifetime"       , "Remaining lifetime of HEPA-Filter."                                            , "number", "false", "state.hepaFilter"           ,"%" ],
     ["cflt" , "Carbonfilter"              , "Filtertype installed in carbonfilter port."                                    , "string", "false", "value"                       ,"" ],
-    ["hflt" , "HEPAfilter"                , "Filtertype installed in HEPA-filter port."                                     , "string", "false", "value"                       ,"" ],
+    ["hflt" , "HEPA-Filter"               , "Filtertype installed in HEPA-filter port."                                     , "string", "false", "value"                       ,"" ],
     ["sltm" , "Sleeptimer"                , "Sleeptimer."                                                                   , "string", "false", "indicator.sleeptimer"        ,"" ],
     ["osal" , "OscilationLeft"            , "Maximum oscillation to the left. Relative to Ancorpoint."                      , "string", "true",  "value"                      ,"°" ],
     ["osau" , "OscilationRight"           , "Maximum oscillation to the right. Relative to Ancorpoint."                     , "string", "true",  "value"                      ,"°" ],
@@ -70,11 +70,11 @@ const datapoints = [
     ["pm10" , "PM10"                      , "PM10 - Particulate Matter 10µm"                                                , "number", "false", "value.PM10"             ,"µg/m³" ],
     ["va10" , "VOC"                       , "VOC - Volatil Organic Compounds (inside)"                                      , "number", "false", "value.VOC"                   ,"" ],
     ["noxl" , "NO2"                       , "NO2 - Nitrogen dioxide (inside)"                                               , "number", "false", "value.NO2"                   ,"" ],
-    ["p25r" , "PM-R25"                    , "PM-R2.5 - Particulate Matter 2.5µm"                                            , "number", "false", "value.PM25"             ,"µg/m³" ],
-    ["p10r" , "PM-R10"                    , "PM-R10 - Particulate Matter 10µm"                                              , "number", "false", "value.PM10"             ,"µg/m³" ],
+    ["p25r" , "PM25R"                     , "PM-2.5R - Particulate Matter 2.5µm"                                            , "number", "false", "value.PM25"             ,"µg/m³" ],
+    ["p10r" , "PM10R"                     , "PM-10R - Particulate Matter 10µm"                                              , "number", "false", "value.PM10"             ,"µg/m³" ],
     ["hmod" , "HeatingMode"               , "Heating Mode [ON/OFF]"                                                         , "string", "true",  "indicator.heating"           ,"", {'OFF': 'OFF', 'ON': 'ON'} ],
     ["hmax" , "HeatingTargetTemp"         , "Target temperature for heating"                                                , "string", "true",  "value.temperature"           ,"" ],
-    ["hume" , "DehumidifierState"         , "Dehumidifier State [ON/OFF]"                                                   , "string", "false",  "value"                       ,"" ],
+    ["hume" , "DehumidifierState"         , "Dehumidifier State [ON/OFF]"                                                   , "string", "false", "value"                       ,"" ],
     ["haut" , "TargetHumidifierState"     , "Target Humidifier Dehumidifier State"                                          , "string", "false", "value"                       ,"" ],
     ["humt" , "RelativeHumidityThreshold" , "Relative Humidity Humidifier Threshold"                                        , "string", "false", "value"                       ,"" ],
     ["psta" , "psta"                      , "[HP0x] Unknown"                                                                , "string", "false", "value"                       ,"" ],
@@ -317,110 +317,21 @@ class dysonAirPurifier extends utils.Adapter {
             // Is this a "data" message?
             if ( row === "data"){
                 this.processMsg(device, ".Sensor", message[row]);
-
-                // PM2.5 QualityIndex
-                // 0-35: Good, 36-53: Medium, 54-70: Bad, 71-150: very Bad, 151-250: extremly Bad, >251 worrying
-                let PM25Index = 'Good';
-                if (message[row].pm25 < 36) {
-                    PM25Index = 'Good';
-                } else if (message[row].pm25 >= 36 && message[row].pm25 <= 53){
-                    PM25Index = 'Medium';
-                } else if (message[row].pm25 >= 54 && message[row].pm25 <= 70){
-                    PM25Index = 'Bad';
-                } else if (message[row].pm25 >= 71 && message[row].pm25 <= 150){
-                    PM25Index = 'very Bad';
-                } else if (message[row].pm25 >= 151 && message[row].pm25 <= 250){
-                    PM25Index = 'extremly Bad';
-                } else if (message[row].pm25 >= 251){
-                    PM25Index = 'Worrying';
+                if ( message[row].hasOwnProperty('pm25') ) {
+                    this.createPM25(message, row, device);
                 }
-                this.createOrExtendObject(device.Serial + '.Sensor.PM25Index', {
-                    type: 'state',
-                    common: {
-                        name: 'PM2.5 QualityIndex. 0-35: Good, 36-53: Medium, 54-70: Bad, 71-150: very Bad, 151-250: extremly Bad, >251 worrying',
-                        "read": true,
-                        "write": false,
-                        "role": "value",
-                        "type": "string"
-                    },
-                    native: {}
-                }, PM25Index);
-
-                // PM10 QualityIndex
-                // 0-50: Good, 51-75: Medium, 76-100, Bad, 101-350: very Bad, 351-420: extremly Bad, >421 worrying
-                let PM10Index = 'Good';
-                if (message[row].pm10 < 51) {
-                    PM10Index = 'Good';
-                } else if (message[row].pm10 >= 51 && message[row].pm10 <= 75){
-                    PM10Index = 'Medium';
-                } else if (message[row].pm10 >= 76 && message[row].pm10 <= 100){
-                    PM10Index = 'Bad';
-                } else if (message[row].pm10 >= 101 && message[row].pm10 <= 350){
-                    PM10Index = 'very Bad';
-                } else if (message[row].pm10 >= 351 && message[row].pm10 <= 420){
-                    PM10Index = 'extremly Bad';
-                } else if (message[row].pm10 >= 421){
-                    PM10Index = 'Worrying';
+                if ( message[row].hasOwnProperty('pm10') ) {
+                    this.createPM10(message, row, device);
                 }
-                this.createOrExtendObject(device.Serial + '.Sensor.PM10Index', {
-                    type: 'state',
-                    common: {
-                        name: 'PM10 QualityIndex. 0-50: Good, 51-75: Medium, 76-100, Bad, 101-350: very Bad, 351-420: extremly Bad, >421 worrying',
-                        "read": true,
-                        "write": false,
-                        "role": "value",
-                        "type": "string"
-                    },
-                    native: {}
-                }, PM10Index);
-
-                // VOC QualityIndex
-                // 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad
-                let VOCIndex = 'Good';
-                if (message[row].va10 < 4) {
-                    VOCIndex = 'Good';
-                } else if (message[row].va10 >= 4 && message[row].va10 <= 6){
-                    VOCIndex = 'Medium';
-                } else if (message[row].va10 >= 7 && message[row].va10 <= 8){
-                    VOCIndex = 'Bad';
-                } else if (message[row].va10 >= 9){
-                    VOCIndex = 'very Bad';
+                if ( message[row].hasOwnProperty('pact') ) {
+                    this.createDust(message, row, device);
                 }
-                this.createOrExtendObject(device.Serial + '.Sensor.VOCIndex', {
-                    type: 'state',
-                    common: {
-                        name: 'VOC QualityIndex. 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad',
-                        "read": true,
-                        "write": false,
-                        "role": "value",
-                        "type": "string"
-                    },
-                    native: {}
-                }, VOCIndex);
-                // NO2 QualityIndex
-                // 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad
-                let NO2Index = 'Good';
-                if (message[row].noxl < 4) {
-                    NO2Index = 'Good';
-                } else if (message[row].noxl >= 4 && message[row].noxl <= 6){
-                    NO2Index = 'Medium';
-                } else if (message[row].noxl >= 7 && message[row].noxl <= 8){
-                    NO2Index = 'Bad';
-                } else if (message[row].noxl >= 9){
-                    NO2Index = 'very Bad';
+                if ( message[row].hasOwnProperty('va10') ) {
+                    this.createVOC(message, row, device);
                 }
-                this.createOrExtendObject(device.Serial + '.Sensor.NO2Index', {
-                    type: 'state',
-                    common: {
-                        name: 'NO2 QualityIndex. 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad',
-                        "read": true,
-                        "write": false,
-                        "role": "value",
-                        "type": "string"
-                    },
-                    native: {}
-                }, NO2Index);
-
+                if ( message[row].hasOwnProperty('noxl') ) {
+                    this.createNO2(message, row, device);
+                }
                 continue;
             }
             // Handle all other message types
@@ -450,9 +361,10 @@ class dysonAirPurifier extends utils.Adapter {
                     }
                 }
                 if (helper[0] === 'filf') {
-                    // change filterlife value from hours to percent; 4300 is the estimated lifetime in hours by dyson
-                    value = value * 100/4300;
+                    // create additional data field filterlifePercent converting value from hours to percent; 4300 is the estimated lifetime in hours by dyson
+                    value = Number(value * 100/4300);
                     helper[5] = '%';
+                    this.createOrExtendObject( device.Serial + path + '.FilterLifePercent', { type: 'state', common: {name: helper[2], "read":true, "write": helper[4]==="true", "role": helper[5], "type":helper[3], "unit":helper[6], "states": helper[7]}, native: {} }, value );
                 }
             } else {
                 value = message[helper[0]];
@@ -479,9 +391,191 @@ class dysonAirPurifier extends utils.Adapter {
     }
 
     /*
-    *  Main
-    * It's the main routine of the adapter
-    */
+     * createNO2
+     * creates the data fields for the values itself and the index if the device has a NO2 sensor
+     *
+     * @param message {object} the received mqtt message
+     * @param row     {string} the current datarow
+     * @param device  {object} the deviceobject the data is valid for
+     */
+    createNO2(message, row, device) {
+        // NO2 QualityIndex
+        // 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad
+        let NO2Index = 'Good';
+        if (message[row].noxl < 4) {
+            NO2Index = 'Good';
+        } else if (message[row].noxl >= 4 && message[row].noxl <= 6) {
+            NO2Index = 'Medium';
+        } else if (message[row].noxl >= 7 && message[row].noxl <= 8) {
+            NO2Index = 'Bad';
+        } else if (message[row].noxl >= 9) {
+            NO2Index = 'very Bad';
+        }
+        this.createOrExtendObject(device.Serial + '.Sensor.NO2Index', {
+            type: 'state',
+            common: {
+                name: 'NO2 QualityIndex. 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad',
+                "read": true,
+                "write": false,
+                "role": "value",
+                "type": "string"
+            },
+            native: {}
+        }, NO2Index);
+    }
+
+    /*
+     * createVOC
+     * creates the data fields for the values itself and the index if the device has a VOC sensor
+     *
+     * @param message {object} the received mqtt message
+     * @param row     {string} the current datarow
+     * @param device  {object} the deviceobject the data is valid for
+     */
+    createVOC(message, row, device) {
+        // VOC QualityIndex
+        // 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad
+        let VOCIndex = 'Good';
+        if (message[row].va10 < 4) {
+            VOCIndex = 'Good';
+        } else if (message[row].va10 >= 4 && message[row].va10 <= 6) {
+            VOCIndex = 'Medium';
+        } else if (message[row].va10 >= 7 && message[row].va10 <= 8) {
+            VOCIndex = 'Bad';
+        } else if (message[row].va10 >= 9) {
+            VOCIndex = 'very Bad';
+        }
+        this.createOrExtendObject(device.Serial + '.Sensor.VOCIndex', {
+            type: 'state',
+            common: {
+                name: 'VOC QualityIndex. 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad',
+                "read": true,
+                "write": false,
+                "role": "value",
+                "type": "string"
+            },
+            native: {}
+        }, VOCIndex);
+    }
+
+    /*
+     * createPM10
+     * creates the data fields for the values itself and the index if the device has a PM 10 sensor
+     *
+     * @param message {object} the received mqtt message
+     * @param row     {string} the current datarow
+     * @param device  {object} the deviceobject the data is valid for
+     */
+    createPM10(message, row, device) {
+        // PM10 QualityIndex
+        // 0-50: Good, 51-75: Medium, 76-100, Bad, 101-350: very Bad, 351-420: extremly Bad, >421 worrying
+        let PM10Index = 'Good';
+        if (message[row].pm10 < 51) {
+            PM10Index = 'Good';
+        } else if (message[row].pm10 >= 51 && message[row].pm10 <= 75) {
+            PM10Index = 'Medium';
+        } else if (message[row].pm10 >= 76 && message[row].pm10 <= 100) {
+            PM10Index = 'Bad';
+        } else if (message[row].pm10 >= 101 && message[row].pm10 <= 350) {
+            PM10Index = 'very Bad';
+        } else if (message[row].pm10 >= 351 && message[row].pm10 <= 420) {
+            PM10Index = 'extremly Bad';
+        } else if (message[row].pm10 >= 421) {
+            PM10Index = 'Worrying';
+        }
+        this.createOrExtendObject(device.Serial + '.Sensor.PM10Index', {
+            type: 'state',
+            common: {
+                name: 'PM10 QualityIndex. 0-50: Good, 51-75: Medium, 76-100, Bad, 101-350: very Bad, 351-420: extremly Bad, >421 worrying',
+                "read": true,
+                "write": false,
+                "role": "value",
+                "type": "string"
+            },
+            native: {}
+        }, PM10Index);
+    }
+
+    /*
+     * createDust
+     * creates the data fields for the values itself and the index if the device has a simple dust sensor
+     *
+     * @param message {object} the received mqtt message
+     * @param row     {string} the current datarow
+     * @param device  {object} the deviceobject the data is valid for
+     */
+    createDust(message, row, device) {
+        // PM10 QualityIndex
+        // 0-50: Good, 51-75: Medium, 76-100, Bad, 101-350: very Bad, 351-420: extremly Bad, >421 worrying
+        let dustIndex = 'Good';
+        if (message[row].pm10 < 51) {
+            dustIndex = 'Good';
+        } else if (message[row].pm10 >= 51 && message[row].pm10 <= 75) {
+            dustIndex = 'Medium';
+        } else if (message[row].pm10 >= 76 && message[row].pm10 <= 100) {
+            dustIndex = 'Bad';
+        } else if (message[row].pm10 >= 101 && message[row].pm10 <= 350) {
+            dustIndex = 'very Bad';
+        } else if (message[row].pm10 >= 351 && message[row].pm10 <= 420) {
+            dustIndex = 'extremly Bad';
+        } else if (message[row].pm10 >= 421) {
+            dustIndex = 'Worrying';
+        }
+        this.createOrExtendObject(device.Serial + '.Sensor.dustIndex', {
+            type: 'state',
+            common: {
+                name: 'Dust QualityIndex. 0-50: Good, 51-75: Medium, 76-100, Bad, 101-350: very Bad, 351-420: extremly Bad, >421 worrying',
+                "read": true,
+                "write": false,
+                "role": "value",
+                "type": "string"
+            },
+            native: {}
+        }, dustIndex);
+    }
+
+    /*
+     * createPM25
+     * creates the data fields for the values itself and the index if the device has a PM 2,5 sensor
+     *
+     * @param message {object} the received mqtt message
+     * @param row     {string} the current datarow
+     * @param device  {object} the deviceobject the data is valid for
+     */
+    createPM25(message, row, device) {
+        // PM2.5 QualityIndex
+        // 0-35: Good, 36-53: Medium, 54-70: Bad, 71-150: very Bad, 151-250: extremly Bad, >251 worrying
+        let PM25Index = 'Good';
+        if (message[row].pm25 < 36) {
+            PM25Index = 'Good';
+        } else if (message[row].pm25 >= 36 && message[row].pm25 <= 53) {
+            PM25Index = 'Medium';
+        } else if (message[row].pm25 >= 54 && message[row].pm25 <= 70) {
+            PM25Index = 'Bad';
+        } else if (message[row].pm25 >= 71 && message[row].pm25 <= 150) {
+            PM25Index = 'very Bad';
+        } else if (message[row].pm25 >= 151 && message[row].pm25 <= 250) {
+            PM25Index = 'extremly Bad';
+        } else if (message[row].pm25 >= 251) {
+            PM25Index = 'Worrying';
+        }
+        this.createOrExtendObject(device.Serial + '.Sensor.PM25Index', {
+            type: 'state',
+            common: {
+                name: 'PM2.5 QualityIndex. 0-35: Good, 36-53: Medium, 54-70: Bad, 71-150: very Bad, 151-250: extremly Bad, >251 worrying',
+                "read": true,
+                "write": false,
+                "role": "value",
+                "type": "string"
+            },
+            native: {}
+        }, PM25Index);
+    }
+
+    /*
+        *  Main
+        * It's the main routine of the adapter
+        */
     async main() {
         let updateIntervalHandle;
         try {

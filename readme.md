@@ -63,8 +63,12 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
  * No automatic IP detection of devices
  
 ### 0.7.0 (2020-11-xx) (Afraid of the dark)
-
-* (jpwenzel) Removing crypto from package dependency list (using Node.js provided version)
+* (jpwenzel)   New: Removing crypto from package dependency list (using Node.js provided version)
+* (jpwenzel)   New: Introducing unit tests
+* (grizzelbee) Fix: renamed some sensor datafields - please delete the whole sensor folder and get them newly created. 
+* (grizzelbee) Fix: [#18](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/18) - Fixed creating the indexes when there is no according sensor
+* (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Displaying Filter life value in hours again
+* (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Creating additional Filter life value in percent
 
 
 ### 0.6.0 (2020-10-29) (Rage before the storm)
@@ -72,7 +76,7 @@ Then stop the adapter, place the IP into field Hostaddress and restart the adapt
  * (grizzelbee) New: [#17](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/17) - Added online-indicator for each device   
  * (grizzelbee) New: [#19](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/19) - Extended Password length from 15 characters to 32
  * (grizzelbee) New: [#20](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/20) - Improved errorhandling on http communication with dyson API
-    
+ * (grizzelbee) Fix: Fixed typo within data field anchorpoint - please delete the old ancorpoint manually.      
  
 ### 0.5.1 (2020-10-27) (Heart of the hurricance)
  * (grizzelbee) Fix: Added missing clearTimeout
