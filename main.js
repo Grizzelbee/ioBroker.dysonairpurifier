@@ -7,7 +7,7 @@
 // you need to create an adapter
 const utils = require('@iobroker/adapter-core');
 
-// Load modules here, e.g.:
+// Load additional modules
 const axios  = require('axios');
 const crypto = require('crypto');
 const mqtt   = require('mqtt');
@@ -18,6 +18,7 @@ const rootCas = require('ssl-root-cas').create();
 rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
 const httpsAgent = new https.Agent({ca: rootCas});
 const adapterName = require('./package.json').name.split('.').pop();
+const dysonUtils = require('./dyson-utils.js');
 
 // Variable definitions
 let devices=[]; // Array that contains all local devices
@@ -86,9 +87,9 @@ const datapoints = [
     ["wacd" , "wacd"                      , "Unknown"                                                                       , "string", "false", "value"                       ,"" ]
 ];
 
-    /*
-     * Main class of dyson AirPurifier adapter for ioBroker
-     */
+/*
+ * Main class of dyson AirPurifier adapter for ioBroker
+ */ 
 class dysonAirPurifier extends utils.Adapter {
     /**
      * @param {Partial<ioBroker.AdapterOptions>} [options={}]
@@ -102,9 +103,6 @@ class dysonAirPurifier extends utils.Adapter {
         // this.on('message', this.onMessage.bind(this));
         this.on('unload', this.onUnload.bind(this));
     }
-
-
-
 
     /*
     * Function onStateChange
@@ -145,7 +143,7 @@ class dysonAirPurifier extends utils.Adapter {
                             value = Number(((value*10) + 273.15) * (9/5) + 32).toFixed(2);
                             break;
                     }
-                    messageData = {[dysonAction]: this.zeroFill(value, 4)};
+                    messageData = {[dysonAction]: dysonUtils.zeroFill(value, 4)};
                     break;
             }
             this.log.info('SENDING this data to device: ' + JSON.stringify(messageData));
@@ -167,7 +165,6 @@ class dysonAirPurifier extends utils.Adapter {
             }
         }
     }
-
 
     /*
      * Function CreateOrUpdateDevice
@@ -481,7 +478,6 @@ class dysonAirPurifier extends utils.Adapter {
         }
     }
 
-
     /*
     *  Main
     * It's the main routine of the adapter
@@ -730,6 +726,7 @@ class dysonAirPurifier extends utils.Adapter {
     /***********************************************
      * Misc helper functions                       *
     ***********************************************/
+
     /*
     * Function setDeviceOnlineState
     * Sets an indicator whether the device is reachable via mqtt
@@ -750,8 +747,6 @@ class dysonAirPurifier extends utils.Adapter {
             native: {}
         }, state === 'online');
     }
-
-
 
     /*
     * Function Create or extend object
@@ -802,24 +797,6 @@ class dysonAirPurifier extends utils.Adapter {
     }
 
     /*
-    * Function zeroFill
-    * Formats a number as a string with leading zeros
-    *
-    * @param number {number} Value thats needs to be filled up with leading zeros
-    * @param width  {number} width of the complete new string incl. number and zeros
-    *
-    * @returns The given number filled up with leading zeros to a given width
-    */
-    zeroFill( number, width ) {
-        width -= number.toString().length;
-        if ( width > 0 )
-        {
-            return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
-        }
-        return number + ""; // always return a string
-    }
-
-    /*
      * Function decryptMqttPasswd
      * decrypts the fans local mqtt password and returns a value you can connect with
      *
@@ -853,6 +830,7 @@ class dysonAirPurifier extends utils.Adapter {
     /***********************************************
     * dyson API functions                         *
     ***********************************************/
+    
     /*
      * dysonAPILogin
      *
@@ -878,9 +856,7 @@ class dysonAirPurifier extends utils.Adapter {
             );
     }
 
-
-
-            // Exit adapter
+    // Exit adapter
     onUnload(callback) {
         try {
                 for (let thisDevice in devices) devices[thisDevice].mqttClient.close();
