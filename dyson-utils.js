@@ -6,7 +6,7 @@ const _ = require('lodash');
 //     DysonUtils() {}
 // }
 
-/*
+/**
 * Function zeroFill
 *
 * Formats a number as a string with leading zeros
@@ -27,4 +27,17 @@ module.exports.zeroFill = function (number, width) {
     const str = '' + Math.abs(num);
 
     return `${negativeSign}${_.padStart(str, width, '0')}`;
+};
+
+/**
+ * Parse an incoming JSON message the Dyson API
+ * 
+ * @param msg Incoming JSON message
+ */
+module.exports.parseDysonMessage = function (msg) {
+    if (null == msg || '' == msg) return;
+
+    const data = JSON.parse(msg);
+    console.log(data);
+    return;
 };
