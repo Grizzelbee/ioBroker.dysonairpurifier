@@ -11,128 +11,156 @@
 
 [![NPM](https://nodei.co/npm/iobroker.dysonAirPurifier.svg?downloads=true)](https://nodei.co/npm/iobroker.dysonairpurifier/)
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/grizzelbee/iobroker.dysonairpurifier/blob/master/LICENSE) 
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/grizzelbee/iobroker.dysonairpurifier/blob/master/LICENSE)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.dysonairpurifier.svg)](https://www.npmjs.com/package/iobroker.dysonairpurifier)
-  
-## ioBroker Adapter for dyson Air Purifiers and fans
-This adapter connects ioBroker to various dyson Air Purifiers.
 
-<div>Fan-Icon in Logo created by <a href="https://www.flaticon.com/de/autoren/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/de/" title="Flaticon">www.flaticon.com</a></div>
+## ioBroker Adapter for Dyson Air Purifiers and fans
+
+This adapter connects ioBroker to various Dyson Air Purifiers.
+
+Fan-Icon in Logo created by [Freepik](https://www.flaticon.com/de/autoren/freepik) from [www.flaticon.com](https://www.flaticon.com/de/).
 
 ### supported devices
+
 * Dyson Pure Cool Link Tower (TP02, ProductType 475)
-* 2018 Dyson Pure Cool Tower (TP04, ProductType 438)
-* Dyson Pure Cool Link Desk  (DP01, ProductType 469)
-* 2018 Dyson Pure Cool Desk  (DP04, ProductType 520)
-* Dyson Pure Hot+Cool Link   (HP02, ProductType 455)
-* 2018 Dyson Pure Hot+Cool   (HP04, ProductType 527)
-* Dyson Pure Humidify+Cool   (PH01, ProductType 358)
+* Dyson Pure Cool Tower, 2018 model (TP04, ProductType 438)
+* Dyson Pure Cool Link Desk (DP01, ProductType 469)
+* Dyson Pure Cool Desk, 2018 model (DP04, ProductType 520)
+* Dyson Pure Hot+Cool Link (HP02, ProductType 455)
+* 2018 Dyson Pure Hot+Cool (HP04, ProductType 527)
+* Dyson Pure Humidify+Cool (PH01, ProductType 358)
 
 ## Features
-Connects your dyson fans, fan heaters, air purifiers and air humidifiers to ioBroker.
-* Reads values from devices and sensors
-* can control devices by giving you the ability to change some values (Main-power, oscillation, heating, fanspeed, ...)
-* reads devicelist from dyson servers 
 
+Connects your Dyson fans, fan heaters, air purifiers, and air humidifiers to ioBroker.
+
+* Reads values from devices and sensors
+* Can control devices by giving you the ability to change some values (main power, oscillation, heating, fan speed, ...)
+* Reads device list from Dyson servers
 
 ## Installation
-Install from STABLE or LATEST repository or from github - depending what stability you prefer.
 
 ### Prerequisites
 
 * This adapter needs Node.js >= version 10
-* To get this adapter running you'll need a dyson account.
+* To get this adapter running you'll need a Dyson account.
 * Make sure to add your fan to your account. Either via App or online.
 
+### Adapter installation
+
+#### Using npm
+
+Run ```npm install ioBroker.dysonairpurifier``` on your ioBroker installation to grab the latest version of this adapter from the npm repository.
+
+#### Alternative: Using GitHub URL
+
+Install through the ioBroker Admin UI by pointing it to the latest stable release on GitHub:
+<https://github.com/Grizzelbee/ioBroker.dysonairpurifier/tarball/master/>
+
+You can also install older release versions using this methods (by pointing to a version tag, e.g., ```v0.6.0``` instead of ```master```in the URL), but the most recent one is generally preferred.
+
 ### Config-data needed
-* dyson account username
-* dyson account password (Adapter can handle passwords up to 32 characters)
+
+* Dyson account username
+* Dyson account password (this adapter can handle passwords up to 32 characters)
 * your fans/air purifiers IP address in your LAN.
-Due to early development state and a non conform mDNS implementation by dyson you'll need to provide the local fans IP after the first run.
-On the first start of this adapter the dyson API is queried for all your devices and all supported devices will be created in the devicetree - with it's basic information provided by the API and an additional field "Hostaddress".
-So please run the adapter and your air purifiers get created in the devicetree with their basic information. 
-Then stop the adapter, place the IP into field Hostaddress and restart the adapter. After that all your air purifiers should get populated. 
+
+*Please note*: Due to early development state and a non conform mDNS implementation by Dyson you'll need to provide the local IP of the device *after the first run*.
+
+> On the first start of this adapter the Dyson API is queried for all your devices and all supported devices will be created in the devicetree -- with it's basic information provided by the API and an additional field "Hostaddress".
+>
+> So please run the adapter once and your Dyson device will be created in the device tree with their basic settings.
+>
+> Then stop the adapter, enter the IP into the Hostaddress field and restart the adapter. After that your Dyson device in the device tree should be populated with data.
 
 ## Changelog
-### Todo:
+
+### Todo
+
 * detect IP of devices automatically
 * collect more mqtt message acronym meanings
 * test with more different devices
 
-### known issues:
- * No automatic IP detection of devices
- 
+### Known issues
+
+* No automatic IP detection of devices
+
 ### 0.7.0 (2020-11-xx) (Afraid of the dark)
+
 * (jpwenzel)   New: Removing crypto from package dependency list (using Node.js provided version)
 * (jpwenzel)   New: Introducing unit tests
-* (grizzelbee) Fix: renamed some sensor datafields - please delete the whole sensor folder and get them newly created. 
+* (grizzelbee) Fix: renamed some sensor datafields - please delete the whole sensor folder and get them newly created.
 * (grizzelbee) Fix: [#18](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/18) - Fixed creating the indexes when there is no according sensor
 * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Displaying Filter life value in hours again
 * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Creating additional Filter life value in percent
 * (grizzelbee) New: [#23](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/23) - Introduced new data field AirQuality which represents the worst value of all present indexes.
 
-
 ### 0.6.0 (2020-10-29) (Rage before the storm)
- * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Filter life value is now displayed in percent not in hours
- * (grizzelbee) New: [#17](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/17) - Added online-indicator for each device   
- * (grizzelbee) New: [#19](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/19) - Extended Password length from 15 characters to 32
- * (grizzelbee) New: [#20](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/20) - Improved errorhandling on http communication with dyson API
- * (grizzelbee) Fix: Fixed typo within data field anchorpoint - please delete the old ancorpoint manually.      
- 
-### 0.5.1 (2020-10-27) (Heart of the hurricance)
- * (grizzelbee) Fix: Added missing clearTimeout
 
+* (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Filter life value is now displayed in percent not in hours
+* (grizzelbee) New: [#17](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/17) - Added online-indicator for each device
+* (grizzelbee) New: [#19](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/19) - Extended Password length from 15 characters to 32
+* (grizzelbee) New: [#20](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/20) - Improved errorhandling on http communication with Dyson API
+* (grizzelbee) Fix: Fixed typo within data field anchorpoint - please delete the old ancorpoint manually.
+
+### 0.5.1 (2020-10-27) (Heart of the hurricance)
+
+* (grizzelbee) Fix: Added missing clearTimeout
 
 ### 0.5.0 (2020-10-27) (Heart of the hurricance)
- * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Filter life value is now displayed in percent not in hours
- * (grizzelbee) Fix: [#6](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/6) - Changing the fanspeed does now fully work.  
- * (grizzelbee) New: Editable data fields have now appropiate value lists
- * (grizzelbee) New: Added more country codes
- * (grizzelbee) New: Target temperature of heater can now be set - **in the configured unit!**
 
+* (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Filter life value is now displayed in percent not in hours
+* (grizzelbee) Fix: [#6](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/6) - Changing the fanspeed does now fully work.  
+* (grizzelbee) New: Editable data fields have now appropiate value lists
+* (grizzelbee) New: Added more country codes
+* (grizzelbee) New: Target temperature of heater can now be set - **in the configured unit!**
 
 ### 0.4.1 (2020-10-16) (unbroken)
- * (grizzelbee) New: [#8](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/8) - Documented ProductTypes for better overview and user experience in ReadMe
- * (grizzelbee) New: [#9](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/9) - Added some Hot&Cool specific datafields
- * (grizzelbee) New: Logging of from devices, when shutting down the adapter
- * (grizzelbee) New: [#10](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/10) - Pollig device data every X (configurable) seconds for new data, hence sensors don't send updates on changing values
- * (grizzelbee) New: [#11](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/11) - Added Austria and France to Country-List - 
- * (grizzelbee) Fix: Fixed bug in error handling when login to dyson API fails
- * (grizzelbee) Fix: [#12](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/12) - Fixed dyson API login by completely securing via HTTPS.
- * (grizzelbee) Fix: Updated some descriptions in config
+
+* (grizzelbee) New: [#8](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/8) - Documented ProductTypes for better overview and user experience in ReadMe
+* (grizzelbee) New: [#9](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/9) - Added some Hot&Cool specific datafields
+* (grizzelbee) New: Logging of from devices, when shutting down the adapter
+* (grizzelbee) New: [#10](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/10) - Pollig device data every X (configurable) seconds for new data, hence sensors don't send updates on changing values
+* (grizzelbee) New: [#11](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/11) - Added Austria and France to Country-List
+* (grizzelbee) Fix: Fixed bug in error handling when login to Dyson API fails
+* (grizzelbee) Fix: [#12](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/12) - Fixed Dyson API login by completely securing via HTTPS.
+* (grizzelbee) Fix: Updated some descriptions in config
   
 ### 0.4.0 (2020-09-29)
- * (grizzelbee) New: devices are now **controllable**
- * (grizzelbee) New: state-change-messages are processed correctly now
- * (grizzelbee) Fix: Added missing °-Sign to temperature unit
- * (grizzelbee) Fix: Terminating adapter when starting with missing dyson credentials.
- * (grizzelbee) Fix: NO2 and VOC Indices should work now
- * (grizzelbee) Fix: Fixed build errors
- 
- 
+
+* (grizzelbee) New: devices are now **controllable**
+* (grizzelbee) New: state-change-messages are processed correctly now
+* (grizzelbee) Fix: Added missing °-Sign to temperature unit
+* (grizzelbee) Fix: Terminating adapter when starting with missing Dyson credentials
+* (grizzelbee) Fix: NO2 and VOC Indices should work now
+* (grizzelbee) Fix: Fixed build errors
+
 ### 0.3.0 (2020-09-27) - first version worth giving it a try
+
 * (grizzelbee) New: Messages received via Web-API and MQTT getting processed
 * (grizzelbee) New: datapoints getting created and populated
-* (grizzelbee) New: Added config item for desired temperature unit (Kelvin, Fahrenheit, Celsius).
+* (grizzelbee) New: Added config item for desired temperature unit (Kelvin, Fahrenheit, Celsius)
 * (grizzelbee) New: Added missing product names to product numbers
 * (grizzelbee) New: Hostaddress/IP is editable / configurable
-* (grizzelbee) New: calculate quality indexes for PM2.5, PM10, VOC and NO2 according to dyson App 
+* (grizzelbee) New: calculate quality indexes for PM2.5, PM10, VOC and NO2 according to Dyson App
 
 ### 0.2.0 (2020-09-22) - not working! Do not install/use
-* (grizzelbee) New: Login to dyson API works
-* (grizzelbee) New: Login to dyson AirPurifier (2018 Dyson Pure Cool Tower [TP04]) works
+
+* (grizzelbee) New: Login to Dyson API works
+* (grizzelbee) New: Login to Dyson AirPurifier (2018 Dyson Pure Cool Tower [TP04]) works
 * (grizzelbee) New: mqtt-Login to [TP04] works
 * (grizzelbee) New: mqtt-request from [TP04] works
 * (grizzelbee) New: mqtt-request to [TP04] is responding
 
 ### 0.1.0 (2020-09-04) - not working! Do not install/use
+
 * (grizzelbee) first development body (non functional)
 
+## Explanation of Dyson API data (message payload)
 
-# Data explanation
-Information copied and extended from https://github.com/shadowwa/Dyson-MQTT2RRD/blob/master/README.md
+Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD/blob/master/README.md>
 
-## CURRENT-STATE
+### CURRENT-STATE
 
 | name | meaning | possible values | Unit |
 | ------------- | ----- | ----- | ----- |
@@ -143,8 +171,7 @@ Information copied and extended from https://github.com/shadowwa/Dyson-MQTT2RRD/
 | fqhp | | 96704 | |
 | fghp | | 70480 | |
 
-
-### product-state
+#### product-state
 
 | name | meaning | possible values | Unit |
 | ------------- | ----- | ----- | ----- |
@@ -172,13 +199,13 @@ Information copied and extended from https://github.com/shadowwa/Dyson-MQTT2RRD/
 | osal | Oscilation left degrees | 0005 - 355| °  (degrees)|
 | osau | Oscilation right degrees | 0005 - 355 | °  (degrees)|
 | ancp | Ancorpoint for oscilation ?  | CUST, 0180 |° (degrees)|
-| fdir | Fandirection / ON=Front, OFF=Back | ON, OFF | | 
+| fdir | Fandirection / ON=Front, OFF=Back | ON, OFF | |
 | ffoc | JetFocus | ON, OFF |
-| hmod | Heating Mode | HEAT | | 
-| hmax | Target temperature for heating | 0 .. 5000 | K | 
-| psta | [HP0x] Unknown |  | | 
-| hsta | [HP0x] Unknown |  | | 
-| tilt | [HP0x] Unknown |  | | 
+| hmod | Heating Mode | HEAT | |
+| hmax | Target temperature for heating | 0 .. 5000 | K |
+| psta | [HP0x] Unknown |  | |
+| hsta | [HP0x] Unknown |  | |
+| tilt | [HP0x] Unknown |  | |
 | hume | Dehumidifier State     | ON, OFF, |
 | haut | Target Humidifier Dehumidifier State| |
 | humt | Relative Humidity Humidifier Threshold| |
@@ -189,10 +216,7 @@ Information copied and extended from https://github.com/shadowwa/Dyson-MQTT2RRD/
 |57C2| unknown |
 |11E1| Oscilation has been disabled. Please press Button "Oscilation" on your remote to continue.|
 
-
-
-
-### scheduler
+#### scheduler
 
 | name | meaning | possible values | Unit |
 | ------------- | ----- | ----- | ----- |
@@ -200,9 +224,9 @@ Information copied and extended from https://github.com/shadowwa/Dyson-MQTT2RRD/
 | srsc | ? | 7c68... | |
 | tzid | timezone? | 0001... | |
 
-## ENVIRONMENTAL-CURRENT-SENSOR-DATA
+### ENVIRONMENTAL-CURRENT-SENSOR-DATA
 
-### data
+#### data
 
 | name | meaning | possible values | Unit |
 | ------------- | ----- | ----- | ----- |
@@ -218,11 +242,11 @@ Information copied and extended from https://github.com/shadowwa/Dyson-MQTT2RRD/
 |p25r|  |0019||
 |p10r|  |0018||
 
-## ENVIRONMENTAL-AND-USAGE-DATA
+### ENVIRONMENTAL-AND-USAGE-DATA
 
 Redundant values?
 
-### data
+#### data
 
 | name | meaning | possible values | Unit |
 | ------------- | ----- | ----- | ----- |
@@ -239,11 +263,9 @@ Redundant values?
 | humm | humidity ? (%) | 0000 - 0100 | |
 | tmpm | temperature in kelvin ? | 0000 - 5000 | |
 
-
 ## Legal Notices
-dyson, pure cool, pure hot & cool, and others are trademarks or registered trademarks of dyson ltd.
-<https://www.dyson.com>
 
+Dyson, pure cool, pure hot & cool, and others are trademarks or registered trademarks of [Dyson Ltd.](https://www.dyson.com)
 All other trademarks are the property of their respective owners.
 
 ## License
