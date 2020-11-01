@@ -36,13 +36,26 @@ Connects your dyson fans, fan heaters, air purifiers and air humidifiers to ioBr
 
 
 ## Installation
-Install from STABLE or LATEST repository or from github - depending what stability you prefer.
 
 ### Prerequisites
 
 * This adapter needs Node.js >= version 10
 * To get this adapter running you'll need a dyson account.
 * Make sure to add your fan to your account. Either via App or online.
+
+### Adapter installation
+
+#### Using npm
+
+Run ```npm install ioBroker.dysonairpurifier``` on your ioBroker installation to grab the latest version of this adapter from the npm repository.
+
+#### Alternative: Using GitHub URL
+
+Install through the ioBroker Admin UI by pointing it to the latest stable release on GitHub:
+
+<https://github.com/Grizzelbee/ioBroker.dysonairpurifier/tarball/master/>
+
+You can also install older release versions using this methods (by pointing to a version tag, e.g., ```v0.6.0``` instead of ```master```in the URL), but the most recent one is generally preferred.
 
 ### Config-data needed
 * dyson account username
