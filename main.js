@@ -676,7 +676,7 @@ class dysonAirPurifier extends utils.Adapter {
                                 // productType is supported: Push to Array and create in devicetree
                                 response.data[thisDevice].hostAddress  = undefined;
                                 response.data[thisDevice].mqttClient   = null;
-                                response.data[thisDevice].mqttPassword = this.decryptMqttPasswd(response.data[thisDevice].LocalCredentials);
+                                response.data[thisDevice].mqttPassword = dysonUtils.decryptMqttPasswd(response.data[thisDevice].LocalCredentials);
                                 devices.push(response.data[thisDevice]);
                             }
                         }
@@ -796,33 +796,7 @@ class dysonAirPurifier extends utils.Adapter {
         }
     }
 
-    /*
-    * configIsValid
-    * {promise} Tests whether the given adapters config is valid
-    *           resolves if the config is valid
-    *           rejects if the config is invalid
-    *
-    * @param config {object} config-object to test
-    *
-    * */
-    async configIsValid(config){
-        this.log.debug('Entering Function [configIsValid]');
-        // Log the current config given to the function (Pwd and email are commented off intentionally
-        // this.log.debug(`eMail: ${config.email}`);
-        //this.log.debug(`enc. Password: ${config.Password}`);
-        this.log.debug(`Locale: ${config.country}`);
-        this.log.debug(`pollInterval: ${config.pollInterval}`);
-        // TODO Do more precise tests. This is very rough
-        return new Promise(
-            function(resolve, reject) {
-                if (   (!config.email    || config.email === '')
-                    || (!config.Password || config.Password === '')
-                    || (!config.country  || config.country === '') ) {
-                    reject('Given adapter config is invalid. Please fix.');
-                } else
-                    resolve('Given config seems to be valid. Please continue ...');
-            });
-    }
+    
 
     /*
     * onReady
@@ -832,29 +806,29 @@ class dysonAirPurifier extends utils.Adapter {
         try {
             // Terminate adapter after first start because configuration is not yet received
             // Adapter is restarted automatically when config page is closed
-            await this.configIsValid(this.config)
-            .then((result) => {
-                // configisValid! Now decrypt password
-                this.getForeignObject('system.config', (err, obj) => {
-                    if (obj && obj.native && obj.native.secret) {
-                        //noinspection JSUnresolvedVariable
-                        this.log.debug('System secrect resolved. Using for decryption.');
-                        this.config.Password = this.decrypt(obj.native.secret, this.config.Password);
-                    } else {
-                        //noinspection JSUnresolvedVariable
-                        this.log.debug('System secrect rejected. Using SALT for decryption.');
-                        this.config.Password = this.decrypt('3eezLO2gNPrt1ww0pcWNhqPZxMjfb3br', this.config.Password);
-                    }
+            await dysonUtils.checkAdapterConfig(this.config)
+                .then(() => {
+                    // configisValid! Now decrypt password
+                    this.getForeignObject('system.config', (err, obj) => {
+                        if (obj && obj.native && obj.native.secret) {
+                            //noinspection JSUnresolvedVariable
+                            this.log.debug('System secrect resolved. Using for decryption.');
+                            this.config.Password = dysonUtils.decrypt(obj.native.secret, this.config.Password);
+                        } else {
+                            //noinspection JSUnresolvedVariable
+                            this.log.debug('System secrect rejected. Using SALT for decryption.');
+                            this.config.Password = dysonUtils.decrypt('3eezLO2gNPrt1ww0pcWNhqPZxMjfb3br', this.config.Password);
+                        }
 
-                    // config is valid and password is decrypted -> run main() function
-                    this.main();
+                        // config is valid and password is decrypted -> run main() function
+                        this.main();
+                    });
                 })
-            })
-            .catch((error) => {
-                this.log.error('Error during config validation: ' + error);
-                this.setState('info.connection', false);
-                this.terminate('Terminate Adapter until Configuration is completed', 11);
-            })
+                .catch((error) => {
+                    this.log.error('Error during config validation: ' + error);
+                    this.setState('info.connection', false);
+                    this.terminate('Terminating adapter until configuration is fixed.', 11);
+                });
         } catch (error) {
             this.log.error(`[onReady] error: ${error.message}, stack: ${error.stack}`);
         }
@@ -908,15 +882,6 @@ class dysonAirPurifier extends utils.Adapter {
         });
     }
 
-    // Decrypt passwords
-    decrypt(key, value) {
-        let result = '';
-        for (let i = 0; i < value.length; ++i) {
-            result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
-        }
-        return result;
-    }
-
     /*
       * Function getDatapoint
       * returns the configDetails for any datapoint
@@ -931,22 +896,6 @@ class dysonAirPurifier extends utils.Adapter {
                 return datapoints[row];
             }
         }
-    }
-
-    /*
-     * Function decryptMqttPasswd
-     * decrypts the fans local mqtt password and returns a value you can connect with
-     *
-     * @param LocalCredentials  {string} encrypted mqtt password
-     */
-    decryptMqttPasswd(LocalCredentials) {
-        // Gets the MQTT credentials from the thisDevice (see https://github.com/CharlesBlonde/libpurecoollink/blob/master/libpurecoollink/utils.py)
-        const key = Uint8Array.from(Array(32), (_, index) => index + 1);
-        const initializationVector = new Uint8Array(16);
-        const decipher = crypto.createDecipheriv('aes-256-cbc', key, initializationVector);
-        const decryptedPasswordString = decipher.update(LocalCredentials, 'base64', 'utf8') + decipher.final('utf8');
-        const decryptedPasswordJson = JSON.parse(decryptedPasswordString);
-        return decryptedPasswordJson.apPasswordHash;
     }
 
     /*
