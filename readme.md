@@ -67,11 +67,11 @@ You can also install older release versions using this methods (by pointing to a
 
 *Please note*: Due to early development state and a non conform mDNS implementation by Dyson you'll need to provide the local IP of the device *after the first run*.
 
-> On the first start of this adapter the Dyson API is queried for all your devices and all supported devices will be created in the devicetree -- with it's basic information provided by the API and an additional field "Hostaddress".
+> On the first start of this adapter the Dyson API is queried for all your devices and all supported devices will be created in the devicetree -- with their basic information provided by the API and an additional field "Hostaddress".
 >
-> So please run the adapter once and your Dyson device will be created in the device tree with their basic settings.
+> So please run the adapter once and your Dyson devices will be created in the device tree with their basic settings.
 >
-> Then stop the adapter, enter the IP into the Hostaddress field and restart the adapter. After that your Dyson device in the device tree should be populated with data.
+> Then stop the adapter, enter the IP(s) into the Hostaddress field(s) and restart the adapter. After that your Dyson devices in the device tree should be populated with data.
 
 ## Changelog
 
@@ -89,7 +89,8 @@ You can also install older release versions using this methods (by pointing to a
 
 * (jpwenzel)   New: Removing crypto from package dependency list (using Node.js provided version)
 * (jpwenzel)   New: Introducing unit tests
-* (grizzelbee) Fix: renamed some sensor datafields - please delete the whole sensor folder and get them newly created.
+* (jpwenzel)   Fix: general overhaul of readme
+* (grizzelbee) Fix: fixed some datafield names - please delete the whole device folder and get them newly created.
 * (grizzelbee) Fix: [#18](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/18) - Fixed creating the indexes when there is no according sensor
 * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Displaying Filter life value in hours again
 * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Creating additional Filter life value in percent
