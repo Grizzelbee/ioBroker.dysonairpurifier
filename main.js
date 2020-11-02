@@ -6,10 +6,10 @@
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 const utils = require('@iobroker/adapter-core');
+const adapterName = require('./package.json').name.split('.').pop();
 
 // Load additional modules
 const axios  = require('axios');
-const crypto = require('crypto');
 const mqtt   = require('mqtt');
 const {stringify} = require('flatted');
 const path = require('path');
@@ -17,7 +17,6 @@ const https = require('https');
 const rootCas = require('ssl-root-cas').create();
 rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
 const httpsAgent = new https.Agent({ca: rootCas});
-const adapterName = require('./package.json').name.split('.').pop();
 const dysonUtils = require('./dyson-utils.js');
 
 // Variable definitions
@@ -806,7 +805,7 @@ class dysonAirPurifier extends utils.Adapter {
         try {
             // Terminate adapter after first start because configuration is not yet received
             // Adapter is restarted automatically when config page is closed
-            await dysonUtils.checkAdapterConfig(this.config)
+            await dysonUtils.checkAdapterConfig(this)
                 .then(() => {
                     // configisValid! Now decrypt password
                     this.getForeignObject('system.config', (err, obj) => {
@@ -963,5 +962,5 @@ if (module.parent) {
     module.exports = (options) => new dysonAirPurifier(options);
 } else {
     // otherwise start the instance directly
-    new dysonAirPurifier();
+    module.exports = (dysonAdapter) => new dysonAirPurifier();
 }

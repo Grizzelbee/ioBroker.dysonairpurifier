@@ -40,8 +40,45 @@ describe('dysonUtils => zeroFill', () => {
     });
 });
 
+describe('dysonUtils => checkAdapterConfig', () => {
+    // TODO Replace by adapter mock
+    const fakeAdapter = null;
+
+    let config = {
+        temperatureUnit: '',
+        pollInterval: '',
+        country: '',
+        email: '',
+        Password: ''
+    };
+
+    it('should reject an empty adapter configuration', () => {
+        expect(dysonUtils.checkAdapterConfig(fakeAdapter, config)).to.be.rejected;
+    });
+
+    it('should pass with a valid adapter configuration', () => {
+        config = {
+            temperatureUnit: 'C',
+            pollInterval: '60',
+            country: 'DE',
+            email: 'me@example.com',
+            Password: 'SecretPassword'
+        };
+        expect(dysonUtils.checkAdapterConfig(fakeAdapter, config)).to.be.fulfilled;
+    });
+
+});
+
+describe('dysonUtils => decrypt', () => {
+    it.skip('should verify decrypt mechanism', () => {});
+});
+
+describe('dysonUtils => decryptMqttPasswd', () => {
+    it.skip('should verify decrypt MQTT password mechanism', () => {});
+});
+
 describe('dysonUtils => parseDysonMsgPayload', () => {
-    // See adapter.processMsg()
+    // TODO See adapter.processMsg() and migrate implementation later
 
     it('should ignore empty or null message payload', () => {
         try {

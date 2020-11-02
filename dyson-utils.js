@@ -1,6 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
+const crypto = require('crypto');
 
 // class DysonUtils {
 //     DysonUtils() {}
@@ -29,7 +30,6 @@ module.exports.zeroFill = function (number, width) {
     return `${negativeSign}${_.padStart(str, width, '0')}`;
 };
 
-
 /**
  * configIsValid
  *
@@ -37,24 +37,23 @@ module.exports.zeroFill = function (number, width) {
  *           resolves if the config is valid
  *           rejects if the config is invalid
  *
- * @param config {object} config-object to test
- *
- * 
+ * @param config {JSON} ioBroker adapter which contains the configuration that should be checked
  */
-module.exports.checkAdapterConfig = async function (config) {
-    this.log.debug('Entering function [checkAdapterConfig]...');
-    this.log.debug(`Locale: ${config.country}`);
-    this.log.debug(`pollInterval: ${config.pollInterval}`);
-
-    // TODO Do more precise tests. This is very rough
+module.exports.checkAdapterConfig = async function (adapter, config) {
+    // adapter.log.debug('Entering function [checkAdapterConfig]...');
+    
     return new Promise(
         function (resolve, reject) {
+            // TODO Do more precise tests. This is very rough
             if ((!config.email || config.email === '')
                 || (!config.Password || config.Password === '')
                 || (!config.country || config.country === '')) {
+                // this.log.debug(`Locale: ${!!config && config.country}`);
+                // this.log.debug(`pollInterval: ${!!config && config.pollInterval}`);
                 reject('Given adapter config is invalid. Please fix.');
-            } else
+            } else {
                 resolve('Given config seems to be valid.');
+            }
         });
 };
 
