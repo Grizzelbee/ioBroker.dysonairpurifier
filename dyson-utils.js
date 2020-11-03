@@ -40,7 +40,7 @@ module.exports.zeroFill = function (number, width) {
  * @param config {JSON} ioBroker adapter which contains the configuration that should be checked
  */
 module.exports.checkAdapterConfig = async function (adapter, config) {
-    // adapter.log.debug('Entering function [checkAdapterConfig]...');
+    adapter.log.debug('Entering function [checkAdapterConfig]...');
     
     return new Promise(
         function (resolve, reject) {
@@ -48,8 +48,8 @@ module.exports.checkAdapterConfig = async function (adapter, config) {
             if ((!config.email || config.email === '')
                 || (!config.Password || config.Password === '')
                 || (!config.country || config.country === '')) {
-                // this.log.debug(`Locale: ${!!config && config.country}`);
-                // this.log.debug(`pollInterval: ${!!config && config.pollInterval}`);
+                adapter.log.debug(`Locale: ${!!config && config.country}`);
+                adapter.log.debug(`pollInterval: ${!!config && config.pollInterval}`);
                 reject('Given adapter config is invalid. Please fix.');
             } else {
                 resolve('Given config seems to be valid.');

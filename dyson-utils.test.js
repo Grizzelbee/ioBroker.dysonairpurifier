@@ -4,6 +4,7 @@ const fs = require('fs');
 
 const { fail } = require('assert');
 const { expect } = require('chai');
+const sinon = require('sinon');
 
 const dysonUtils = require('./dyson-utils');
 
@@ -41,23 +42,25 @@ describe('dysonUtils => zeroFill', () => {
 });
 
 describe('dysonUtils => checkAdapterConfig', () => {
-    // TODO Replace by adapter mock
-    const fakeAdapter = null;
-
-    let config = {
-        temperatureUnit: '',
-        pollInterval: '',
-        country: '',
-        email: '',
-        Password: ''
+    after(() => sinon.restore() );
+    
+    const fakeAdapter = {
+        log: {debug: sinon.fake()}
     };
 
     it('should reject an empty adapter configuration', () => {
+        const config = {
+            temperatureUnit: '',
+            pollInterval: '',
+            country: '',
+            email: '',
+            Password: ''
+        };
         expect(dysonUtils.checkAdapterConfig(fakeAdapter, config)).to.be.rejected;
     });
 
     it('should pass with a valid adapter configuration', () => {
-        config = {
+        const config = {
             temperatureUnit: 'C',
             pollInterval: '60',
             country: 'DE',
