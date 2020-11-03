@@ -64,8 +64,8 @@ const datapoints = [
     ["cflt" , "Carbonfilter"              , "Filtertype installed in carbonfilter port."                                    , "string", "false", "value"                       ,"" ],
     ["hflt" , "HEPA-Filter"               , "Filtertype installed in HEPA-filter port."                                     , "string", "false", "value"                       ,"" ],
     ["sltm" , "Sleeptimer"                , "Sleeptimer."                                                                   , "string", "false", "indicator.sleeptimer"        ,"" ],
-    ["osal" , "OscilationLeft"            , "Maximum oscillation to the left. Relative to Ancorpoint."                      , "string", "true",  "value"                      ,"°" ],
-    ["osau" , "OscilationRight"           , "Maximum oscillation to the right. Relative to Ancorpoint."                     , "string", "true",  "value"                      ,"°" ],
+    ["osal" , "OscillationLeft"           , "Maximum oscillation to the left. Relative to Ancorpoint."                      , "string", "true",  "value"                      ,"°" ],
+    ["osau" , "OscillationRight"          , "Maximum oscillation to the right. Relative to Ancorpoint."                     , "string", "true",  "value"                      ,"°" ],
     ["ancp" , "Anchorpoint"               , "Anchorpoint for oscillation. By default the dyson logo on the bottom plate."   , "string", "true",  "value.anchor"               ,"°" ],
     ["rssi" , "RSSI"                      , "Received Signal Strength Indication. Quality indicator for WIFI signal."       , "number", "false", "value.rssi"               ,"dBm" ],
     ["pact" , "Dust"                      , "Dust"                                                                          , "number", "false", "value.dust"                  ,"" ],
@@ -191,7 +191,7 @@ class dysonAirPurifier extends utils.Adapter {
                     native: {}
                 }, Math.max(NO2, VOC, Dust, PM25, PM10));
             }
-
+        // OscillationOpeningAngle
         }
     }
 
@@ -406,6 +406,13 @@ class dysonAirPurifier extends utils.Adapter {
                 } else {
                    value = value[1];
                }
+            }
+            // check whether fan supports oscillation and add OscillationOpeningAngle if nessecary
+            if (helper[0] === 'oson'){
+                let left  = await this.getStateAsync(device.Serial + path + '.OscillationLeft');
+                let right = await this.getStateAsync(device.Serial + path + '.OscillationRight');
+                this.createOrExtendObject( device.Serial + path + '.OscillationOpeningAngle', { type: 'state', common: {name: 'Opening angle for oscillation', "read":true, "write": true, "role": "value.oscillationangle", "type":"number", "unit":"°", "states":{0:"0", 15:"15", 30:"30", 45:"45", 90:"90", 180:"180", 270:"270", 350:"350"} }, native: {} }, Number.parseInt(right.val)-Number.parseInt(left.val) );
+                this.subscribeStates(device.Serial + path + '.OscillationOpeningAngle' );
             }
             if (helper.length > 7) {
                 this.createOrExtendObject( device.Serial + path + '.'+ helper[1], { type: 'state', common: {name: helper[2], "read":true, "write": helper[4]==="true", "role": helper[5], "type":helper[3], "unit":helper[6], "states": helper[7]}, native: {} }, value );

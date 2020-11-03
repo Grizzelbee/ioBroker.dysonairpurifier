@@ -179,37 +179,37 @@ Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD
 | ercd | Last Error Code | NONE , or some hexa values |  |
 | filf | remaining Filter life | 0000 - 4300 | hours|
 | fmod | Mode | FAN , AUTO | |
-| fnsp | Fan speed | 0001 - 0010, AUTO | |
-| fnst | Fan Status | ON , OFF, FAN | |
-| nmod | Night mode | ON , OFF | |
-| oson | Oscillation | ON , OFF | |
-| qtar | Air Quality target | 0001 , 0003... | |
-| rhtm | Continious Monitoring | ON, OFF | |
-| wacd | ? | NONE... | |
 | fpwr | Main Power | ON, OFF | |
-| auto | AutomaticMode | ON, OFF | |
-| oscs | OscillationActive | ON, OFF, IDLE | |
-| nmdv | NightMode Max Fanspeed? | 0004 | |
-| bril |  AirQualityIndex| 0002 | LuQx |  
-| corf |  | ON, OFF | |
-| cflr | Status Coalfilter  | 0000 - 0100 | Percent |
-| hflr | Status HEPA-Filter | 0000 - 0100 | Percent |
-| cflt | Carbonfilter | CARF | |
-| hflt | HEPAfilter | GHEP | |
-| sltm | Sleeptimer | ON, OFF ||
-| osal | Oscilation left degrees | 0005 - 355| °  (degrees)|
-| osau | Oscilation right degrees | 0005 - 355 | °  (degrees)|
-| ancp | Ancorpoint for oscilation ?  | CUST, 0180 |° (degrees)|
+| fnst | Fan Status | ON , OFF, FAN | |
+| fnsp | Fan speed | 0001 - 0010, AUTO | |
 | fdir | Fandirection / ON=Front, OFF=Back | ON, OFF | |
 | ffoc | JetFocus | ON, OFF |
+| nmod | Night mode | ON , OFF | |
+| oson | Oscillation | ON , OFF , OIOF| |
+| osal | Oscilation left degrees | 0005 - 355| °  (degrees)|
+| osau | Oscilation right degrees | 0005 - 355 | °  (degrees)|
+| oscs | OscillationActive | ON, OFF, IDLE | |
+| ancp | Ancorpoint for oscilation ?  | CUST, 0180 |° (degrees)|
+| qtar | Air Quality target | 0001 , 0003... | |
+| rhtm | Continious Monitoring | ON, OFF | |
+| auto | AutomaticMode | ON, OFF | |
+| nmdv | NightMode Max Fanspeed? | 0004 | |
+| cflr | Status Coalfilter  | 0000 - 0100 | Percent |
+| cflt | Carbonfilter | CARF | |
+| hflr | Status HEPA-Filter | 0000 - 0100 | Percent |
+| hflt | HEPAfilter | GHEP | |
+| sltm | Sleeptimer | ON, OFF ||
 | hmod | Heating Mode | HEAT | |
 | hmax | Target temperature for heating | 0 .. 5000 | K |
+| hume | Humidifier State     | ON, OFF, |
+| haut | Target Humidifier Dehumidifier State| |
+| humt | Relative Humidity Humidifier Threshold| |
+| wacd | WarningCode? | NONE... | |
+| bril |  AirQualityIndex?| 0002 | LuQx |  
+| corf |  | ON, OFF | |
 | psta | [HP0x] Unknown |  | |
 | hsta | [HP0x] Unknown |  | |
 | tilt | [HP0x] Unknown |  | |
-| hume | Dehumidifier State     | ON, OFF, |
-| haut | Target Humidifier Dehumidifier State| |
-| humt | Relative Humidity Humidifier Threshold| |
 
 |Error-Codes| Meaning |
 | ----- | ----- |
