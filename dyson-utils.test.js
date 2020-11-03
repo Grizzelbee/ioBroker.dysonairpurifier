@@ -45,9 +45,9 @@ describe('dysonUtils => checkAdapterConfig', () => {
     after(() => sinon.restore() );
     
     const fakeAdapter = {
-        log: {debug: sinon.fake()}
+        log: { debug: sinon.fake() }
     };
-
+    
     it('should reject an empty adapter configuration', () => {
         const config = {
             temperatureUnit: '',

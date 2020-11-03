@@ -2,6 +2,7 @@
 
 const _ = require('lodash');
 const crypto = require('crypto');
+const { traverse } = require('traverse');
 
 // class DysonUtils {
 //     DysonUtils() {}
@@ -42,14 +43,18 @@ module.exports.zeroFill = function (number, width) {
 module.exports.checkAdapterConfig = async function (adapter, config) {
     adapter.log.debug('Entering function [checkAdapterConfig]...');
     
+    // Masking sensitive fields (password) for logging configuration
+    // TODO Move to separate function for masking config wherever needed in this module
+    const logConfig = config;
+    logConfig.Password = '(***)';
+
     return new Promise(
         function (resolve, reject) {
             // TODO Do more precise tests. This is very rough
             if ((!config.email || config.email === '')
                 || (!config.Password || config.Password === '')
                 || (!config.country || config.country === '')) {
-                adapter.log.debug(`Locale: ${!!config && config.country}`);
-                adapter.log.debug(`pollInterval: ${!!config && config.pollInterval}`);
+                adapter.log.debug(`Invalid configuration provided: ${logConfig}`);
                 reject('Given adapter config is invalid. Please fix.');
             } else {
                 resolve('Given config seems to be valid.');
