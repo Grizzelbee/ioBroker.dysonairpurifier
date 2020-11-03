@@ -91,7 +91,7 @@ module.exports.decryptMqttPasswd = function (LocalCredentials) {
 };
 
 /**
- * Parse an incoming JSON message the Dyson API
+ * Parse an incoming JSON message payload from the Dyson device
  * 
  * @param msg Incoming JSON message
  */
@@ -100,7 +100,7 @@ module.exports.parseDysonMessage = function (msg) {
 
     // TODO incomplete
 
-    const data = JSON.parse(msg);
-    console.log(data);
+    // const data = JSON.parse(msg);
+    // console.log(data);
     return;
 };

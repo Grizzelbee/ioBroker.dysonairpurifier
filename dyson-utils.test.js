@@ -81,7 +81,7 @@ describe('dysonUtils => decryptMqttPasswd', () => {
 });
 
 describe('dysonUtils => parseDysonMsgPayload', () => {
-    // TODO See adapter.processMsg() and migrate implementation later
+    // TODO See adapter.processMsg() for now, considering migration to separate message parser later
 
     it('should ignore empty or null message payload', () => {
         try {
@@ -99,5 +99,17 @@ describe('dysonUtils => parseDysonMsgPayload', () => {
         console.log(data);
     });
 
-    it.skip('should parse a DP01 ENVIRONMENTAL-CURRENT-SENSOR-DATA payload', () => {});
+    it.skip('should parse a DP01 ENVIRONMENTAL-CURRENT-SENSOR-DATA payload', () => {
+        const msg = fs.readFileSync('./test/sample-data/sample-msg-DP01-2.json');
+        const data = JSON.parse(msg);
+
+        console.log(data);
+    });
+
+    it.skip('should parse a DP01 STATE-CHANGE payload', () => {
+        const msg = fs.readFileSync('./test/sample-data/sample-msg-DP01-3.json');
+        const data = JSON.parse(msg);
+
+        console.log(data);
+    });
 });
