@@ -63,7 +63,7 @@ describe('dysonUtils => checkAdapterConfig', () => {
     it('should pass with a valid adapter configuration', () => {
         fakeAdapter.config = {
             temperatureUnit: 'C',
-            pollInterval: '60',
+            pollInterval: 60,
             country: 'DE',
             email: 'me@example.com',
             Password: 'SecretPassword'
