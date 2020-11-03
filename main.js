@@ -17,6 +17,8 @@ const https = require('https');
 const rootCas = require('ssl-root-cas').create();
 rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
 const httpsAgent = new https.Agent({ca: rootCas});
+
+// Load utils for this adapter
 const dysonUtils = require('./dyson-utils.js');
 
 // Variable definitions
