@@ -44,10 +44,10 @@ module.exports.checkAdapterConfig = async function (adapter) {
     
     const config = adapter.config;
 
-    // Masking sensitive fields (password) for logging configuration
-    // TODO Move to separate function for masking config wherever needed in this module
-    const logConfig = config;
+    // Masking sensitive fields (password) for logging configuration (creating a deep copy of the config)
+    const logConfig = JSON.parse(JSON.stringify(config));
     logConfig.Password = '(***)';
+    // TODO Move to separate function for masking config wherever needed in this module
 
     return new Promise(
         function (resolve, reject) {
