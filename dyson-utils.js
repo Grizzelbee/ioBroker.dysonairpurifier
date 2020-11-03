@@ -31,7 +31,7 @@ module.exports.zeroFill = function (number, width) {
 };
 
 /**
- * configIsValid
+ * checkAdapterConfig
  *
  * {promise} Tests whether the given adapters config is valid
  *           resolves if the config is valid
