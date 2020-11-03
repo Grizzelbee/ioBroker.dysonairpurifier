@@ -45,29 +45,30 @@ describe('dysonUtils => checkAdapterConfig', () => {
     after(() => sinon.restore() );
     
     const fakeAdapter = {
-        log: { debug: sinon.fake() }
+        log: { debug: sinon.fake() },
+        config: null
     };
     
     it('should reject an empty adapter configuration', () => {
-        const config = {
+        fakeAdapter.config = {
             temperatureUnit: '',
             pollInterval: '',
             country: '',
             email: '',
             Password: ''
         };
-        expect(dysonUtils.checkAdapterConfig(fakeAdapter, config)).to.be.rejected;
+        expect(dysonUtils.checkAdapterConfig(fakeAdapter)).to.be.rejected;
     });
 
     it('should pass with a valid adapter configuration', () => {
-        const config = {
+        fakeAdapter.config = {
             temperatureUnit: 'C',
             pollInterval: '60',
             country: 'DE',
             email: 'me@example.com',
             Password: 'SecretPassword'
         };
-        expect(dysonUtils.checkAdapterConfig(fakeAdapter, config)).to.be.fulfilled;
+        expect(dysonUtils.checkAdapterConfig(fakeAdapter)).to.be.fulfilled;
     });
 
 });

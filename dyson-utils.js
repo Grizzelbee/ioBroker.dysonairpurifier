@@ -37,11 +37,13 @@ module.exports.zeroFill = function (number, width) {
  *           resolves if the config is valid
  *           rejects if the config is invalid
  *
- * @param config {JSON} ioBroker adapter which contains the configuration that should be checked
+ * @param config {Adapter} ioBroker adapter which contains the configuration that should be checked
  */
-module.exports.checkAdapterConfig = async function (adapter, config) {
+module.exports.checkAdapterConfig = async function (adapter) {
     adapter.log.debug('Entering function [checkAdapterConfig]...');
     
+    const config = adapter.config;
+
     // Masking sensitive fields (password) for logging configuration
     // TODO Move to separate function for masking config wherever needed in this module
     const logConfig = config;
