@@ -99,7 +99,7 @@ const datapoints = [
  */ 
 class dysonAirPurifier extends utils.Adapter {
     /**
-     * @param {Partial<ioBroker.AdapterOptions>} [options={}]
+     * @param {Partial<utils.AdapterOptions>} [options={}]
      */
     constructor(options) {
         super({...options, name: adapterName});
@@ -932,30 +932,34 @@ class dysonAirPurifier extends utils.Adapter {
      *
      * @returns promise {Promise} Promise that fulfills when dyson login worked and rejects on any http error.
      */
-    async dysonAPILogIn(config){
+    async dysonAPILogIn(config) {
         // Sends the login request to the API
         this.log.debug('Signing in into dyson API.');
-        return axios.post( apiUri + "/v1/userregistration/authenticate?country=" + config.country,
-             { Email: config.email,
-                    Password: config.Password },
-            {httpsAgent});
+        return axios.post(apiUri + "/v1/userregistration/authenticate?country=" + config.country,
+            {
+                Email: config.email,
+                Password: config.Password
+            },
+            { httpsAgent });
     }
 
     async dysonGetDevicesFromApi(auth) {
         // Sends a request to the API to get all devices of the user
         return axios.get(apiUri + '/v2/provisioningservice/manifest',
-            { httpsAgent,
-              headers: { 'Authorization': auth },
-              json: true}
-            );
+            {
+                httpsAgent,
+                headers: { 'Authorization': auth },
+                json: true
+            }
+        );
     }
 
     // Exit adapter
     onUnload(callback) {
         try {
-                for (let thisDevice in devices) devices[thisDevice].mqttClient.close();
-                this.log.info('Cleaned up everything...');
-                callback();
+            for (let thisDevice in devices) devices[thisDevice].mqttClient.close();
+            this.log.info('Cleaned up everything...');
+            callback();
         } catch (e) {
             callback();
         }
@@ -966,7 +970,7 @@ class dysonAirPurifier extends utils.Adapter {
 if (module.parent) {
     // Export the constructor in compact mode
     /**
-     * @param {Partial<ioBroker.AdapterOptions>} [options={}]
+     * @param {Partial<utils.AdapterOptions>} [options={}]
      */
     module.exports = (options) => new dysonAirPurifier(options);
 } else {
