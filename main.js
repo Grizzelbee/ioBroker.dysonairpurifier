@@ -962,5 +962,5 @@ if (module.parent) {
     module.exports = (options) => new dysonAirPurifier(options);
 } else {
     // otherwise start the instance directly
-    module.exports = (dysonAdapter) => new dysonAirPurifier();
+    new dysonAirPurifier();
 }
