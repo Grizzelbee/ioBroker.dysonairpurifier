@@ -577,7 +577,7 @@ class dysonAirPurifier extends utils.Adapter {
             },
             native: {}
         }, dustIndex);
-        Dust = DustIndex;
+        Dust = dustIndex;
         this.subscribeStates(device.Serial + '.Sensor.DustIndex' );
     }
 
