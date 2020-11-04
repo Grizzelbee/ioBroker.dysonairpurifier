@@ -186,7 +186,7 @@ Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD
 | fdir | Fandirection aka. Jet focus/ ON=Front, OFF=Back | ON, OFF | |
 | ffoc | JetFocus | ON, OFF |
 | nmod | Night mode | ON , OFF | |
-| oson | Oscillation | ON , OFF , OIOF| |
+| oson | Oscillation | ON , OFF| |
 | osal | Oscilation left degrees | 0005 - 355| °  (degrees)|
 | osau | Oscilation right degrees | 0005 - 355 | °  (degrees)|
 | oscs | OscillationActive | ON, OFF, IDLE | |
