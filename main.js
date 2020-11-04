@@ -410,7 +410,9 @@ class dysonAirPurifier extends utils.Adapter {
                 }
             }
             // check whether fan supports oscillation and add OscillationOpeningAngle if nessecary
-            if (helper[0] === 'oson'){
+            // testing oson is not possible, because it exists on fans without oscillation also (e.g. DP01).
+            // Testing OscillationAngleLeft (osal) instead
+            if (helper[0] === 'osal'){
                 const left  = await this.getStateAsync(device.Serial + path + '.OscillationLeft');
                 const right = await this.getStateAsync(device.Serial + path + '.OscillationRight');
                 if (null != left && null !=right) {
@@ -420,11 +422,13 @@ class dysonAirPurifier extends utils.Adapter {
                     this.log.debug('Oscillation angle left/right missing in data.');
                 }
             }
+            // helper.length>7 means the data field has predefined states attached, that need to be handled
             if (helper.length > 7) {
                 this.createOrExtendObject( device.Serial + path + '.'+ helper[1], { type: 'state', common: {name: helper[2], "read":true, "write": helper[4]==="true", "role": helper[5], "type":helper[3], "unit":helper[6], "states": helper[7]}, native: {} }, value );
             } else {
                 this.createOrExtendObject( device.Serial + path + '.'+ helper[1], { type: 'state', common: {name: helper[2], "read":true, "write": helper[4]==="true", "role": helper[5], "type":helper[3], "unit":helper[6] }, native: {} }, value );
             }
+            // helper[4]=true -> data field is editable, so subscribe for statechanges
             if (helper[4]==="true") {
                 this.log.debug('Subscribing for statechanges on :' + device.Serial + path + '.'+ helper[1] );
                 this.subscribeStates(device.Serial + path + '.'+ helper[1] );
