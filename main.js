@@ -22,6 +22,7 @@ const httpsAgent = new https.Agent({ca: rootCas});
 const dysonUtils = require('./dyson-utils.js');
 
 // Variable definitions
+let adapter = null;
 let devices=[]; // Array that contains all local devices
 // const ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
 const apiUri = 'https://appapi.cp.dyson.com';
@@ -57,9 +58,9 @@ const datapoints = [
     ["auto" , "AutomaticMode"             , "Fan is in automatic mode."                                                     , "string", "true",  "state.automatic"             ,"", {'OFF':'OFF', 'ON':'ON'} ],
     ["oscs" , "OscillationActive"         , "Fan is currently oscillating."                                                 , "string", "false", "indicator.oscillation"       ,"", {'IDLE':'Idle', 'OFF':'OFF', 'ON':'ON'} ],
     ["nmdv" , "NightModeMaxFan"           , "Maximum fan speed in night mode."                                              , "number", "false", "value"                       ,"" ],
-    ["cflr" , "CarbonfilterLifetime"      , "Remaining lifetime of activated coalfilter."                                   , "number", "false", "state.coalfilter" 		  ,"%" ],
-    ["fdir" , "Fandirection"              , "Direction the fan blows to. ON=Front; OFF=Back"                                , "string", "true",  "indicator.fandirection"      ,"", {'OFF': 'Back', 'ON': 'Front'} ],
-    ["ffoc" , "Jetfocus    "              , "Jetfocus [ON/OFF]"                                                             , "string", "true",  "indicator.jetfocus"          ,"", {'OFF': 'OFF', 'ON': 'ON'} ],
+    ["cflr" , "CarbonfilterLifetime"      , "Remaining lifetime of activated coalfilter."                                   , "number", "false", "state.coalfilter" 	 	  ,"%" ],
+    ["fdir" , "Fandirection"              , "Direction the fan blows to. ON=Front; OFF=Back (aka Jetfocus)"                 , "string", "true",  "indicator.fandirection"      ,"", {'OFF': 'Back', 'ON': 'Front'} ],
+    ["ffoc" , "Jetfocus"                  , "Direction the fan blows to. ON=Front; OFF=Back (aka Jetfocus)"                 , "string", "true",  "indicator.fandirection"      ,"", {'OFF': 'Back', 'ON': 'Front'} ],
     ["hflr" , "HEPA-FilterLifetime"       , "Remaining lifetime of HEPA-Filter."                                            , "number", "false", "state.hepaFilter"           ,"%" ],
     ["cflt" , "Carbonfilter"              , "Filtertype installed in carbonfilter port."                                    , "string", "false", "value"                       ,"" ],
     ["hflt" , "HEPA-Filter"               , "Filtertype installed in HEPA-filter port."                                     , "string", "false", "value"                       ,"" ],
@@ -112,7 +113,7 @@ class dysonAirPurifier extends utils.Adapter {
     }
 
     /**
-    * Function onStateChange
+    * onStateChange
     * 
     * Sends the control mqtt message to your device in case you changed a value
     *
@@ -120,10 +121,11 @@ class dysonAirPurifier extends utils.Adapter {
     * @param state {object} new state-object of the datapoint after change
     */
     async onStateChange(id, state) {
+        let thisDevice = id.split('.')[2];
+        let action = id.split('.').pop();
         // Warning, state can be null if it was deleted
         if (state && !state.ack) {
             // you can use the ack flag to detect if it is status (true) or command (false)
-            let action = id.split('.').pop();
             // get the whole datafield array
             let dysonAction = await this.getDatapoint( action );
             // pick the dyson internal Action
@@ -155,7 +157,6 @@ class dysonAirPurifier extends utils.Adapter {
                     break;
             }
             this.log.info('SENDING this data to device: ' + JSON.stringify(messageData));
-            let thisDevice = id.split('.')[2];
             // build the message to be send to the device
             let message = {"msg": "STATE-SET",
                            "time": new Date().toISOString(),
@@ -174,12 +175,9 @@ class dysonAirPurifier extends utils.Adapter {
         } else if (state && state.ack) {
             // statechanges by hardware or adapter depending on hardware values
             // check if it is an Index calculation
-            let action = id.split('.').pop();
             if ( action.substr( action.length-5, 5 ) === 'Index' ) {
-                let device = id.split('.'); // convert string into array
-                device.pop(); // remove first last element from devicepath
-                device.pop(); // remove second last element from devicepath
-                this.createOrExtendObject(device.join('.') + '.AirQuality', {
+                // if some index has changed recalculate overall AirQuality
+                this.createOrExtendObject(thisDevice + '.AirQuality', {
                     type: 'state',
                     common: {
                         name: 'Overall AirQuality (worst value of all indexes)',
@@ -197,7 +195,7 @@ class dysonAirPurifier extends utils.Adapter {
     }
 
     /**
-     * Function CreateOrUpdateDevice
+     * CreateOrUpdateDevice
      * 
      * Creates the base device information
      * 
@@ -332,7 +330,7 @@ class dysonAirPurifier extends utils.Adapter {
     }
 
     /**
-     * Function processMsg
+     * processMsg
      * 
      * Processes the current received message and updates relevant data fields
      *
@@ -637,7 +635,7 @@ class dysonAirPurifier extends utils.Adapter {
     }
 
     /**
-    * Main
+    * main
     * 
     * It's the main routine of the adapter
     */
@@ -736,9 +734,7 @@ class dysonAirPurifier extends utils.Adapter {
                                 }));
                             })
                             // Sets the interval for status updates
-
-
-                            adapterLog.info('Starting Polltimer with a ' + this.config.pollInterval + ' seconds interval.');
+                            adapterLog.info('Starting Polltimer with a ' + adapter.config.pollInterval + ' seconds interval.');
                             // start refresh scheduler with interval from adapters config
                             updateIntervalHandle = setTimeout(function schedule() {
                                 adapterLog.debug("Updating device [" + devices[thisDevice].Serial + "] (polling API scheduled).");
@@ -750,7 +746,7 @@ class dysonAirPurifier extends utils.Adapter {
                                 } catch (error) {
                                     adapterLog.error(devices[thisDevice].Serial + ' - MQTT interval error: ' + error);
                                 }
-                                updateIntervalHandle = setTimeout(schedule, this.config.pollInterval * 1000);
+                                updateIntervalHandle = setTimeout(schedule, adapter.config.pollInterval * 1000);
                             }, 10);
                             });
                             devices[thisDevice].mqttClient.on('message', function (_, payload) {
@@ -759,10 +755,10 @@ class dysonAirPurifier extends utils.Adapter {
                                 adapterLog.debug("MessageType: " + payload.msg);
                                 switch (payload.msg) {
                                     case "CURRENT-STATE" :
-                                        this.processMsg(devices[thisDevice], "", payload);
+                                        adapter.processMsg(devices[thisDevice], "", payload);
                                         break;
                                     case "ENVIRONMENTAL-CURRENT-SENSOR-DATA" :
-                                        this.createOrExtendObject(devices[thisDevice].Serial + '.Sensor', {
+                                        adapter.createOrExtendObject(devices[thisDevice].Serial + '.Sensor', {
                                             type: 'channel',
                                             common: {
                                                 name: 'Information from device\'s sensors',
@@ -771,41 +767,41 @@ class dysonAirPurifier extends utils.Adapter {
                                             },
                                             native: {}
                                         });
-                                        this.processMsg(devices[thisDevice], ".Sensor", payload);
+                                        adapter.processMsg(devices[thisDevice], ".Sensor", payload);
                                         break;
                                     case "STATE-CHANGE":
-                                        this.processMsg(devices[thisDevice], "", payload);
+                                        adapter.processMsg(devices[thisDevice], "", payload);
                                         break;
                                 }
                                 adapterLog.debug(devices[thisDevice].Serial + ' - MQTT message received: ' + JSON.stringify(payload));
-                                this.setDeviceOnlineState(devices[thisDevice].Serial,  'online');
+                                adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'online');
                             });
 
                             devices[thisDevice].mqttClient.on('error', function (error) {
                                 adapterLog.debug(devices[thisDevice].Serial + ' - MQTT error: ' + error);
-                                this.setDeviceOnlineState(devices[thisDevice].Serial,  'error');
+                                adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'error');
                             });
 
                             devices[thisDevice].mqttClient.on('reconnect', function () {
                                 adapterLog.debug(devices[thisDevice].Serial + ' - MQTT reconnecting.');
-                                this.setDeviceOnlineState(devices[thisDevice].Serial,  'reconnect');
+                                adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'reconnect');
                             });
 
                             devices[thisDevice].mqttClient.on('close', function () {
                                 adapterLog.debug(devices[thisDevice].Serial + ' - MQTT disconnected.');
-                                this.clearIntervalHandle(updateIntervalHandle);
-                                this.setDeviceOnlineState(devices[thisDevice].Serial,  'disconnected');
+                                adapter.clearIntervalHandle(updateIntervalHandle);
+                                adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'disconnected');
                             });
 
                             devices[thisDevice].mqttClient.on('offline', function () {
                                 adapterLog.debug(devices[thisDevice].Serial + ' - MQTT offline.');
-                                this.clearIntervalHandle(updateIntervalHandle);
-                                this.setDeviceOnlineState(devices[thisDevice].Serial,  'offline');
+                                adapter.clearIntervalHandle(updateIntervalHandle);
+                                adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'offline');
                             });
 
                             devices[thisDevice].mqttClient.on('end', function () {
                                 adapterLog.debug(devices[thisDevice].Serial + ' - MQTT ended.');
-                                this.clearIntervalHandle(updateIntervalHandle);
+                                adapter.clearIntervalHandle(updateIntervalHandle);
                             });
                         })
                         .catch((error) => {
@@ -827,6 +823,7 @@ class dysonAirPurifier extends utils.Adapter {
         try {
             // Terminate adapter after first start because configuration is not yet received
             // Adapter is restarted automatically when config page is closed
+            adapter = this; // preserve adapter reference to address functions etc. correctly later
             await dysonUtils.checkAdapterConfig(this)
                 .then(() => {
                     // configisValid! Now decrypt password
@@ -905,12 +902,12 @@ class dysonAirPurifier extends utils.Adapter {
     }
 
     /**
-      * Function getDatapoint
-      * 
-      * returns the configDetails for any datapoint
-      *
-      * @param searchValue {string} dysonCode to search for.
-      */
+    * Function getDatapoint
+    *
+    * returns the configDetails for any datapoint
+    *
+    * @param searchValue {string} dysonCode to search for.
+    */
     async getDatapoint( searchValue ){
         this.log.debug("getDatapoint("+searchValue+")");
         for(let row=0; row < datapoints.length; row++){

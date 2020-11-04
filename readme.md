@@ -183,7 +183,7 @@ Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD
 | fpwr | Main Power | ON, OFF | |
 | fnst | Fan Status | ON , OFF, FAN | |
 | fnsp | Fan speed | 0001 - 0010, AUTO | |
-| fdir | Fandirection / ON=Front, OFF=Back | ON, OFF | |
+| fdir | Fandirection aka. Jet focus/ ON=Front, OFF=Back | ON, OFF | |
 | ffoc | JetFocus | ON, OFF |
 | nmod | Night mode | ON , OFF | |
 | oson | Oscillation | ON , OFF , OIOF| |
