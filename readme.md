@@ -90,6 +90,7 @@ You can also install older release versions using this methods (by pointing to a
 * (jpwenzel)   New: Removing crypto from package dependency list (using Node.js provided version)
 * (jpwenzel)   New: Introducing unit tests
 * (jpwenzel)   Fix: general overhaul of readme
+* (jpwenzel)   Fix: Code refactoring
 * (grizzelbee) Fix: fixed some datafield names - please delete the whole device folder and get them newly created.
 * (grizzelbee) Fix: [#18](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/18) - Fixed creating the indexes when there is no according sensor
 * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Displaying Filter life value in hours again
@@ -194,10 +195,10 @@ Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD
 | rhtm | Continious Monitoring | ON, OFF | |
 | auto | AutomaticMode | ON, OFF | |
 | nmdv | NightMode Max Fanspeed? | 0004 | |
-| cflr | Status Coalfilter  | 0000 - 0100 | Percent |
+| cflr | Status Carbonfilter  | 0000 - 0100 | Percent |
 | cflt | Carbonfilter | CARF | |
 | hflr | Status HEPA-Filter | 0000 - 0100 | Percent |
-| hflt | HEPAfilter | GHEP | |
+| hflt | HEPA-Filter | GHEP | |
 | sltm | Sleeptimer | ON, OFF ||
 | hmod | Heating Mode | HEAT | |
 | hmax | Target temperature for heating | 0 .. 5000 | K |
@@ -205,11 +206,12 @@ Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD
 | haut | Target Humidifier Dehumidifier State| |
 | humt | Relative Humidity Humidifier Threshold| |
 | wacd | WarningCode? | NONE... | |
-| bril |  AirQualityIndex?| 0002 | LuQx |  
+| bril |  | 0002 |  |  
 | corf |  | ON, OFF | |
 | psta | [HP0x] Unknown |  | |
 | hsta | [HP0x] Unknown |  | |
 | tilt | [HP0x] Unknown |  | |
+| dial | [DP0x] Unknown |  | |
 
 |Error-Codes| Meaning |
 | ----- | ----- |
