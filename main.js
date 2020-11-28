@@ -49,7 +49,7 @@ const datapoints = [
     ["filf" , "FilterLife"                , "Estimated remaining filter life in hours."                                     , "number", "false", "value.lifetime"        , "hours" ],
     ["fmod" , "Mode"                      , "Mode of device"                                                                , "string", "false", "value"                       ,"", {'FAN':'Fan', 'AUTO':'Auto'} ],
     ["fnsp" , "FanSpeed"                  , "Current fan speed"                                                             , "string", "true",  "value.fanspeed"              ,"", {'AUTO':'Auto', '0001':'1', '0002':'2', '0003':'3', '0004':'4', '0005':'5', '0006':'6', '0007':'7', '0008':'8', '0009':'9', '0010':'10' } ],
-    ["fnst" , "FanStatus"                 , "Current Fan state"                                                              , "string", "true",  "state.fan"                   ,"", {'FAN':'Fan', 'OFF':'OFF', 'ON':'ON'} ],
+    ["fnst" , "FanStatus"                 , "Current Fan state"                                                             , "string", "true",  "state.fan"                   ,"", {'FAN':'Fan', 'OFF':'OFF', 'ON':'ON'} ],
     ["nmod" , "Nightmode"                 , "Night mode state"                                                              , "string", "true",  "indicator.nightmode"         ,"", {'OFF':'OFF', 'ON':'ON'} ],
     ["oson" , "Oscillation"               , "Oscillation of fan."                                                           , "string", "true",  "state.oscillation"           ,"", {'OFF':'OFF', 'ON':'ON'} ],
     ["qtar" , "AirQualityTarget"          , "Target Air quality for Auto Mode."                                             , "string", "false", "value"                       ,"" ],
@@ -130,8 +130,14 @@ class dysonAirPurifier extends utils.Adapter {
             // you can use the ack flag to detect if it is status (true) or command (false)
             // get the whole data field array
             let dysonAction = await this.getDatapoint( action );
-            // pick the dyson internal Action
-            dysonAction = dysonAction[0];
+            if ( typeof dysonAction === 'undefined' ) {
+                // if dysonAction is undefined it's an adapter internal action and has to be handled with the given Name
+                dysonAction = action;
+            } else {
+                // pick the dyson internal Action from the result row
+                dysonAction = dysonAction[0];
+            }
+            this.log.debug('onStateChange: Using dysonAction: [' + dysonAction + ']');
             let messageData = {[dysonAction]: state.val};
             switch (dysonAction) {
                 case 'fnsp' :
@@ -157,8 +163,39 @@ class dysonAirPurifier extends utils.Adapter {
                     }
                     messageData = {[dysonAction]: dysonUtils.zeroFill(value, 4)};
                     break;
+                case "osal" :
+                    await this.getStateAsync(thisDevice + '.OscillationOpeningAngle')
+                        .then((result) => {
+                            messageData = {[dysonAction]: dysonUtils.zeroFill(state.val, 4)};
+                            messageData.osau = dysonUtils.zeroFill(Number( Number.parseInt(state.val) + Number.parseInt(result.val) ), 4);
+                            messageData.ancp = 'CUST';
+                            this.log.debug('CHANGE Oscillation-left: result.val=' + result.val);
+                            this.log.debug('CHANGE Oscillation-left: state.val=' + state.val);
+                            this.log.debug('CHANGE Oscillation-left: messageData=' + stringify(messageData));
+
+                        })
+                        .catch((error) => {
+                            this.log.warn(error);
+                        });
+                    break;
+                case 'OscillationOpeningAngle':
+                    // OscillationOpeningAngle
+                    let left = await this.getStateAsync('system.adapter.dysonairpurifier.0.' + thisDevice + '.OscillationLeft');
+                    this.log.debug('OscillationOpeningAngle: thisDevice=' + thisDevice);
+                    this.log.debug('OscillationOpeningAngle: left=' + stringify(left));
+                    left = Number.parseInt(left.val);
+                    // subtract half opening angle from left value to spread angle equally in both directions
+                    this.log.debug('OscillationOpeningAngle: left=' + left);
+                    this.log.debug('OscillationOpeningAngle: state.val=' + state.val);
+                    this.log.debug('OscillationOpeningAngle: Num(state.val)=' + Number.parseInt(state.val));
+                    this.log.debug('OscillationOpeningAngle: Floor: state.val=' + Math.floor(Number.parseInt(state.val) / 2));
+                    this.log.debug('OscillationOpeningAngle: left - state.val/2=' + left - Math.floor(Number.parseInt(state.val) / 2));
+                    messageData = {'osal': dysonUtils.zeroFill((left - Math.floor(Number.parseInt(state.val) / 2)), 4)};
+                    messageData.osau = dysonUtils.zeroFill((left + state.val), 4);
+                    messageData.ancp = 'CUST';
+                break;
             }
-            this.log.info('SENDING this data to device: ' + JSON.stringify(messageData));
+          this.log.info('SENDING this data to device (' + thisDevice + '): ' + JSON.stringify(messageData));
             // build the message to be send to the device
             let message = {"msg": "STATE-SET",
                            "time": new Date().toISOString(),
@@ -894,24 +931,28 @@ class dysonAirPurifier extends utils.Adapter {
     */
     createOrExtendObject(id, objData, value, callback) {
         const self = this;
+        function setState(id, value){
+            self.setState(id, value, true);
+        }
         this.getObject(id, function (err, oldObj) {
             if (!err && oldObj) {
                 self.log.debug('Updating existing object [' + id +'] with value: ['+ value+']');
-                self.extendObject(id, objData, callback);
+                self.extendObject(id, objData, setState);
             } else {
                 self.log.debug('Creating new object [' + id +'] with value: ['+ value+']');
-                self.setObjectNotExists(id, objData, callback);
+                self.setObjectNotExists(id, objData, setState);
             }
-            self.setState(id, value, true);
         });
     }
 
     /**
-    * Function getDatapoint
+    * getDatapoint
     *
     * returns the configDetails for any datapoint
     *
     * @param searchValue {string} dysonCode to search for.
+    *
+    * @returns {string} returns the configDetails for any given datapoint or undefined if searchValue can't be resolved.
     */
     async getDatapoint( searchValue ){
         this.log.debug("getDatapoint("+searchValue+")");
