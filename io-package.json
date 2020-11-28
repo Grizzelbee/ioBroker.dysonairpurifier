@@ -150,7 +150,6 @@
         "type": "climate-control",
         "compact": true,
         "materialize": true,
-        "materializeTab": true,
         "supportCustoms": false,
         "connectionType": "local",
         "dataSource": "pull",
