@@ -64,19 +64,6 @@ module.exports.checkAdapterConfig = async function (adapter) {
 };
 
 /**
- * 
- * Decrypt passwords
- * 
- */
-module.exports.decrypt = function (key, value) {
-    let result = '';
-    for (let i = 0; i < value.length; ++i) {
-        result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
-    }
-    return result;
-};
-
-/**
  * Function decryptMqttPasswd
  * decrypts the fans local mqtt password and returns a value you can connect with
  *
