@@ -155,16 +155,19 @@
         "dataSource": "pull",
         "dependencies": [
             {
-                "js-controller": ">=1.4.2"
+                "js-controller": ">=3.0.0",
+                "admin": ">=4.0.9"
             }
         ]
     },
     "native": {
         "email": "",
-        "Password": "",
         "country": "",
         "pollInterval": 30,
         "temperatureUnit": "C"
+    },
+    "encryptedNative": {
+        "Password": ""
     },
     "objects": [],
     "instanceObjects": []
