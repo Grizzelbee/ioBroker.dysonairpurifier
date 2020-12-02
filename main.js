@@ -868,21 +868,8 @@ class dysonAirPurifier extends utils.Adapter {
             adapter = this; // preserve adapter reference to address functions etc. correctly later
             await dysonUtils.checkAdapterConfig(this)
                 .then(() => {
-                    // configisValid! Now decrypt password
-                    this.getForeignObject('system.config', (err, obj) => {
-                        if (obj && obj.native && obj.native.secret) {
-                            //noinspection JSUnresolvedVariable
-                            this.log.debug('System secret resolved. Using for decryption.');
-                            this.config.Password = dysonUtils.decrypt(obj.native.secret, this.config.Password);
-                        } else {
-                            //noinspection JSUnresolvedVariable
-                            this.log.debug('System secret rejected. Using SALT for decryption.');
-                            this.config.Password = dysonUtils.decrypt('3eezLO2gNPrt1ww0pcWNhqPZxMjfb3br', this.config.Password);
-                        }
-
-                        // config is valid and password is decrypted -> run main() function
-                        this.main();
-                    });
+                    // configisValid! No password decryption needed since it is handeled by the adapter prototype
+                   this.main();
                 })
                 .catch((error) => {
                     this.log.error('Error during config validation: ' + error);
