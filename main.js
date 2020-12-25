@@ -23,6 +23,7 @@ const dysonUtils = require('./dyson-utils.js');
 
 // Variable definitions
 let adapter = null;
+let updateIntervalHandle;
 let devices=[]; // Array that contains all local devices
 // const ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
 const apiUri = 'https://appapi.cp.dyson.com';
@@ -683,7 +684,6 @@ class dysonAirPurifier extends utils.Adapter {
     * It's the main routine of the adapter
     */
     async main() {
-        let updateIntervalHandle;
         const adapterLog = this.log;
         try {
             let myAccount;
