@@ -21,22 +21,6 @@
 
 
 		// Create secrect for encrypted password storage
-		var secret;
-		function encrypt(key, value) {
-			var result = '';
-			for(var i = 0; i < value.length; ++i) {
-				result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
-			}
-			return result;
-		}
-		function decrypt(key, value) {
-			var result = '';
-			for(var i = 0; i < value.length; ++i) {
-				result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
-			}
-			return result;
-		}
-
         function load(settings, onChange) {
             if (!settings) return;
             $('.value').each(function () {
@@ -57,16 +41,6 @@
                     });
                 }
             });
-            socket.emit('getObject', 'system.config', function (err, obj) {
-                secret = (obj.native ? obj.native.secret : '') || '3eezLO2gNPrt1ww0pcWNhqPZxMjfb3br';
-                var $key = $('#Password');
-                settings['Password'] = decrypt(secret, settings['Password']);
-                $key.val(settings['Password']).change(function () {
-                    onChange();
-                }).keyup(function () {
-                    onChange();
-                });
-            });
 
             onChange(false);
             // (re)initialize all the Materialize labels on the page
@@ -83,9 +57,6 @@
                     obj[id] = $this.prop('checked');
                 } else {
                     let value = $this.val();
-                    if ( id === 'Password') {
-                        value = encrypt(secret, value);
-                    }
                     obj[id] = value;
                 }
             });

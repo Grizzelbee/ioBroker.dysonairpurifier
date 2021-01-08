@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "0.6.0",
+        "version": "0.7.0",
         "news": {
+            "0.7.0": {
+                "en": "Breaking-change - Many bugfixes and improvements - Refer to changelog for details.",
+                "de": "Breaking-Change - Viele Bugfixes und Verbesserungen - Weitere Informationen finden Sie im Changelog.",
+                "ru": "Критические изменения - Многие исправления и улучшения - Подробности см. В журнале изменений.",
+                "pt": "Breaking-change - Muitas correções de bugs e melhorias - Consulte o changelog para detalhes.",
+                "nl": "Breaking-change - Veel bugfixes en verbeteringen - Raadpleeg het changelog voor details.",
+                "fr": "Breaking-change - De nombreuses corrections de bogues et améliorations - Reportez-vous au journal des modifications pour plus de détails.",
+                "it": "Cambiamento decisivo - Molte correzioni di bug e miglioramenti - Fare riferimento al registro delle modifiche per i dettagli.",
+                "es": "Cambio rotundo: muchas correcciones de errores y mejoras: consulte el registro de cambios para obtener más detalles.",
+                "pl": "Przełomowa zmiana - Wiele poprawek i ulepszeń - Szczegółowe informacje można znaleźć w dzienniku zmian.",
+                "zh-cn": "重大更改-许多错误修正和改进-有关详细信息，请参阅更改日志。"
+            },
             "0.6.0": {
                 "en": "minor bugfix and small improvements.",
                 "de": "kleiner Bugfix und kleine Verbesserungen.",
@@ -150,22 +162,24 @@
         "type": "climate-control",
         "compact": true,
         "materialize": true,
-        "materializeTab": true,
         "supportCustoms": false,
         "connectionType": "local",
         "dataSource": "pull",
         "dependencies": [
             {
-                "js-controller": ">=1.4.2"
+                "js-controller": ">=3.0.0",
+                "admin": ">=4.0.9"
             }
         ]
     },
     "native": {
         "email": "",
-        "Password": "",
         "country": "",
         "pollInterval": 30,
         "temperatureUnit": "C"
+    },
+    "encryptedNative": {
+        "Password": ""
     },
     "objects": [],
     "instanceObjects": []
