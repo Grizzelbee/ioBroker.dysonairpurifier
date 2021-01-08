@@ -86,11 +86,11 @@ You can also install older release versions using this methods (by pointing to a
 
 * No automatic IP detection of devices
 
-### 0.7.0 (2021-01-xx) (Afraid of the dark)
+### 0.7.0 (2021-01-08) (Afraid of the dark)
 
 * (jpwenzel)   New: Removing crypto from package dependency list (using Node.js provided version)
 * (jpwenzel)   New: Introducing unit tests
-* (jpwenzel)   Fix: general overhaul of readme
+* (jpwenzel)   Fix: General overhaul of readme
 * (jpwenzel)   Fix: Code refactoring
 * (jpwenzel)   New: At least NodeJs 10.0.0 is required
 * (grizzelbee) Fix: fixed some datafield names - please delete the whole device folder and get them newly created.
@@ -98,7 +98,7 @@ You can also install older release versions using this methods (by pointing to a
 * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Displaying Filter life value in hours again
 * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Creating additional Filter life value in percent
 * (grizzelbee) New: [#23](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/23) - Introduced new data field AirQuality which represents the worst value of all present indexes.
-* (grizzelbee) Fix: removed materilizeTab from ioPackage
+* (grizzelbee) Fix: removed materializeTab from ioPackage
 * (grizzelbee) Fix: calling setState now as callback in createOrExtendObject
 * (grizzelbee) New: BREAKING CHANGE! - switched over to the adapter-prototype build-in password encryption. Therefore you'll need to enter your password again in config.
 * (grizzelbee) New: At least js-controller 3.0.0 is required
