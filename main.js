@@ -24,17 +24,17 @@ const dysonUtils = require('./dyson-utils.js');
 // Variable definitions
 let adapter = null;
 let updateIntervalHandle;
-let devices=[]; // Array that contains all local devices
+const devices=[]; // Array that contains all local devices
 // const ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
 const apiUri = 'https://appapi.cp.dyson.com';
 const supportedProductTypes = ['358', '438', '455', '469', '475', '520', '527'];
 const products = {  '358':'Dyson Pure Humidify+Cool',
-                    '438':'Dyson Pure Cool Tower',
-                    '455':'Dyson Pure Hot+Cool Link',
-                    '469':'Dyson Pure Cool Link Desk',
-                    '475':'Dyson Pure Cool Link Tower',
-                    '520':'Dyson Pure Cool Desk',
-                    '527':'Dyson Pure Hot+Cool'};
+    '438':'Dyson Pure Cool Tower',
+    '455':'Dyson Pure Hot+Cool Link',
+    '469':'Dyson Pure Cool Link Desk',
+    '475':'Dyson Pure Cool Link Tower',
+    '520':'Dyson Pure Cool Desk',
+    '527':'Dyson Pure Hot+Cool'};
 let NO2  = 0; // Numeric representation of current NO2Index
 let VOC  = 0; // Numeric representation of current VOCIndex
 let PM25 = 0; // Numeric representation of current PM25Index
@@ -45,47 +45,47 @@ let Dust = 0; // Numeric representation of current DustIndex
 // data structure to determine readable names, etc for any datapoint
 // Every row is one state in a dyson message. Format: [ dysonCode, Name of Datapoint, Description, datatype, writable, role, unit, possible values for data field]
 const datapoints = [
-    ["channel" , "WIFIchannel"            , "Number of the used WIFI channel."                                              , "number", "false", "value.wifiChannel"           ,"" ],
-    ["ercd" , "LastErrorCode"             , "Error code of the last error occurred on this device"                          , "string", "false", "value.error"                 ,"" ],
-    ["filf" , "FilterLife"                , "Estimated remaining filter life in hours."                                     , "number", "false", "value.lifetime"        , "hours" ],
-    ["fmod" , "Mode"                      , "Mode of device"                                                                , "string", "false", "value"                       ,"", {'FAN':'Fan', 'AUTO':'Auto'} ],
-    ["fnsp" , "FanSpeed"                  , "Current fan speed"                                                             , "string", "true",  "value.fanspeed"              ,"", {'AUTO':'Auto', '0001':'1', '0002':'2', '0003':'3', '0004':'4', '0005':'5', '0006':'6', '0007':'7', '0008':'8', '0009':'9', '0010':'10' } ],
-    ["fnst" , "FanStatus"                 , "Current Fan state"                                                             , "string", "true",  "state.fan"                   ,"", {'FAN':'Fan', 'OFF':'OFF', 'ON':'ON'} ],
-    ["nmod" , "Nightmode"                 , "Night mode state"                                                              , "string", "true",  "indicator.nightmode"         ,"", {'OFF':'OFF', 'ON':'ON'} ],
-    ["oson" , "Oscillation"               , "Oscillation of fan."                                                           , "string", "true",  "state.oscillation"           ,"", {'OFF':'OFF', 'ON':'ON'} ],
-    ["qtar" , "AirQualityTarget"          , "Target Air quality for Auto Mode."                                             , "string", "false", "value"                       ,"" ],
-    ["rhtm" , "ContinuousMonitoring"      , "Continuous Monitoring of environmental sensors even if device is off."         , "string", "true",  "state.continuousMonitoring"  ,"", {'OFF':'OFF', 'ON':'ON'} ],
-    ["fpwr" , "MainPower"                 , "Main Power of fan."                                                            , "string", "true",  "state.power"                 ,"", {'OFF':'OFF', 'ON':'ON'} ],
-    ["auto" , "AutomaticMode"             , "Fan is in automatic mode."                                                     , "string", "true",  "state.automatic"             ,"", {'OFF':'OFF', 'ON':'ON'} ],
-    ["oscs" , "OscillationActive"         , "Fan is currently oscillating."                                                 , "string", "false", "indicator.oscillation"       ,"", {'IDLE':'Idle', 'OFF':'OFF', 'ON':'ON'} ],
-    ["nmdv" , "NightModeMaxFan"           , "Maximum fan speed in night mode."                                              , "number", "false", "value"                       ,"" ],
-    ["cflr" , "CarbonfilterLifetime"      , "Remaining lifetime of activated carbon filter."                                , "number", "false", "state.carbonfilter" 	 	  ,"%" ],
-    ["fdir" , "Fandirection"              , "Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)"                , "string", "true",  "indicator.fandirection"      ,"", {'OFF': 'Back', 'ON': 'Front'} ],
-    ["ffoc" , "Jetfocus"                  , "Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)"                , "string", "true",  "indicator.fandirection"      ,"", {'OFF': 'Back', 'ON': 'Front'} ],
-    ["hflr" , "HEPA-FilterLifetime"       , "Remaining lifetime of HEPA-Filter."                                            , "number", "false", "state.hepaFilter"           ,"%" ],
-    ["cflt" , "Carbonfilter"              , "Filter type installed in carbon filter port."                                  , "string", "false", "value"                       ,"" ],
-    ["hflt" , "HEPA-Filter"               , "Filter type installed in HEPA-filter port."                                    , "string", "false", "value"                       ,"" ],
-    ["sltm" , "Sleeptimer"                , "Sleep timer."                                                                  , "string", "false", "indicator.sleeptimer"        ,"" ],
-    ["osal" , "OscillationLeft"           , "Maximum oscillation to the left. Relative to Anchorpoint."                     , "string", "true",  "value"                      ,"°" ],
-    ["osau" , "OscillationRight"          , "Maximum oscillation to the right. Relative to Anchorpoint."                    , "string", "true",  "value"                      ,"°" ],
-    ["ancp" , "Anchorpoint"               , "Anchorpoint for oscillation. By default the dyson logo on the bottom plate."   , "string", "true",  "value.anchor"               ,"°" ],
-    ["rssi" , "RSSI"                      , "Received Signal Strength Indication. Quality indicator for WIFI signal."       , "number", "false", "value.rssi"               ,"dBm" ],
-    ["pact" , "Dust"                      , "Dust"                                                                          , "number", "false", "value.dust"                  ,"" ],
-    ["hact" , "Humidity"                  , "Humidity"                                                                      , "number", "false", "value.humidity"             ,"%" ],
-    ["sltm" , "Sleeptimer"                , "Sleep timer"                                                                   , "number", "false", "value.timer"              ,"Min" ],
-    ["tact" , "Temperature"               , "Temperature"                                                                   , "number", "false", "value.temperature"           ,"" ],
-    ["vact" , "VOC"                       , "VOC - Volatile Organic Compounds"                                              , "number", "false", "value.voc"                   ,"" ],
-    ["pm25" , "PM25"                      , "PM2.5 - Particulate Matter 2.5µm"                                              , "number", "false", "value.PM25"             ,"µg/m³" ],
-    ["pm10" , "PM10"                      , "PM10 - Particulate Matter 10µm"                                                , "number", "false", "value.PM10"             ,"µg/m³" ],
-    ["va10" , "VOC"                       , "VOC - Volatile Organic Compounds (inside)"                                     , "number", "false", "value.VOC"                   ,"" ],
-    ["noxl" , "NO2"                       , "NO2 - Nitrogen dioxide (inside)"                                               , "number", "false", "value.NO2"                   ,"" ],
-    ["p25r" , "PM25R"                     , "PM-2.5R - Particulate Matter 2.5µm"                                            , "number", "false", "value.PM25"             ,"µg/m³" ],
-    ["p10r" , "PM10R"                     , "PM-10R - Particulate Matter 10µm"                                              , "number", "false", "value.PM10"             ,"µg/m³" ],
-    ["hmod" , "HeatingMode"               , "Heating Mode [ON/OFF]"                                                         , "string", "true",  "indicator.heating"           ,"", {'OFF': 'OFF', 'ON': 'ON'} ],
-    ["hmax" , "HeatingTargetTemp"         , "Target temperature for heating"                                                , "string", "true",  "value.temperature"           ,"" ],
-    ["hume" , "DehumidifierState"         , "Dehumidifier State [ON/OFF]"                                                   , "string", "false", "value"                       ,"" ],
-    ["haut" , "TargetHumidifierState"     , "Target Humidifier Dehumidifier State"                                          , "string", "false", "value"                       ,"" ],
-    ["humt" , "RelativeHumidityThreshold" , "Relative Humidity Humidifier Threshold"                                        , "string", "false", "value"                       ,"" ]
+    ['channel' , 'WIFIchannel'            , 'Number of the used WIFI channel.'                                              , 'number', 'false', 'value'        ,''  ],
+    ['ercd' , 'LastErrorCode'             , 'Error code of the last error occurred on this device'                          , 'string', 'false', 'value'        ,''  ],
+    ['filf' , 'FilterLife'                , 'Estimated remaining filter life in hours.'                                     , 'number', 'false', 'value'        , 'hours' ],
+    ['fmod' , 'Mode'                      , 'Mode of device'                                                                , 'string', 'false', 'value'        ,'', {'FAN':'Fan', 'AUTO':'Auto'} ],
+    ['fnsp' , 'FanSpeed'                  , 'Current fan speed'                                                             , 'string', 'true',  'value'        ,'', {'AUTO':'Auto', '0001':'1', '0002':'2', '0003':'3', '0004':'4', '0005':'5', '0006':'6', '0007':'7', '0008':'8', '0009':'9', '0010':'10' } ],
+    ['fnst' , 'FanStatus'                 , 'Current Fan state'                                                             , 'string', 'true',  'state'        ,'', {'FAN':'Fan', 'OFF':'OFF', 'ON':'ON'} ],
+    ['nmod' , 'Nightmode'                 , 'Night mode state'                                                              , 'string', 'true',  'indicator'    ,'', {'OFF':'OFF', 'ON':'ON'} ],
+    ['oson' , 'Oscillation'               , 'Oscillation of fan.'                                                           , 'string', 'true',  'state'        ,'', {'OFF':'OFF', 'ON':'ON'} ],
+    ['qtar' , 'AirQualityTarget'          , 'Target Air quality for Auto Mode.'                                             , 'string', 'false', 'value'        ,''  ],
+    ['rhtm' , 'ContinuousMonitoring'      , 'Continuous Monitoring of environmental sensors even if device is off.'         , 'string', 'true',  'state'        ,'', {'OFF':'OFF', 'ON':'ON'} ],
+    ['fpwr' , 'MainPower'                 , 'Main Power of fan.'                                                            , 'string', 'true',  'state.power'  ,'', {'OFF':'OFF', 'ON':'ON'} ],
+    ['auto' , 'AutomaticMode'             , 'Fan is in automatic mode.'                                                     , 'string', 'true',  'state'        ,'', {'OFF':'OFF', 'ON':'ON'} ],
+    ['oscs' , 'OscillationActive'         , 'Fan is currently oscillating.'                                                 , 'string', 'false', 'indicator'    ,'', {'IDLE':'Idle', 'OFF':'OFF', 'ON':'ON'} ],
+    ['nmdv' , 'NightModeMaxFan'           , 'Maximum fan speed in night mode.'                                              , 'number', 'false', 'value'        ,''  ],
+    ['cflr' , 'CarbonfilterLifetime'      , 'Remaining lifetime of activated carbon filter.'                                , 'number', 'false', 'state' 	 	,'%' ],
+    ['fdir' , 'Fandirection'              , 'Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)'                , 'string', 'true',  'indicator'    ,'', {'OFF': 'Back', 'ON': 'Front'} ],
+    ['ffoc' , 'Jetfocus'                  , 'Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)'                , 'string', 'true',  'indicator'    ,'', {'OFF': 'Back', 'ON': 'Front'} ],
+    ['hflr' , 'HEPA-FilterLifetime'       , 'Remaining lifetime of HEPA-Filter.'                                            , 'number', 'false', 'state'        ,'%' ],
+    ['cflt' , 'Carbonfilter'              , 'Filter type installed in carbon filter port.'                                  , 'string', 'false', 'value'        ,''  ],
+    ['hflt' , 'HEPA-Filter'               , 'Filter type installed in HEPA-filter port.'                                    , 'string', 'false', 'value'        ,''  ],
+    ['sltm' , 'Sleeptimer'                , 'Sleep timer.'                                                                  , 'string', 'false', 'indicator'    ,''  ],
+    ['osal' , 'OscillationLeft'           , 'Maximum oscillation to the left. Relative to Anchorpoint.'                     , 'string', 'true',  'value'        ,'°' ],
+    ['osau' , 'OscillationRight'          , 'Maximum oscillation to the right. Relative to Anchorpoint.'                    , 'string', 'true',  'value'        ,'°' ],
+    ['ancp' , 'Anchorpoint'               , 'Anchorpoint for oscillation. By default the dyson logo on the bottom plate.'   , 'string', 'true',  'value'        ,'°' ],
+    ['rssi' , 'RSSI'                      , 'Received Signal Strength Indication. Quality indicator for WIFI signal.'       , 'number', 'false', 'value'        ,'dBm' ],
+    ['pact' , 'Dust'                      , 'Dust'                                                                          , 'number', 'false', 'value'        ,''  ],
+    ['hact' , 'Humidity'                  , 'Humidity'                                                                      , 'number', 'false', 'value'        ,'%' ],
+    ['sltm' , 'Sleeptimer'                , 'Sleep timer'                                                                   , 'number', 'false', 'value'        ,'Min' ],
+    ['tact' , 'Temperature'               , 'Temperature'                                                                   , 'number', 'false', 'value.temperature' ,'' ],
+    ['vact' , 'VOC'                       , 'VOC - Volatile Organic Compounds'                                              , 'number', 'false', 'value'             ,'' ],
+    ['pm25' , 'PM25'                      , 'PM2.5 - Particulate Matter 2.5µm'                                              , 'number', 'false', 'value'             ,'µg/m³' ],
+    ['pm10' , 'PM10'                      , 'PM10 - Particulate Matter 10µm'                                                , 'number', 'false', 'value'             ,'µg/m³' ],
+    ['va10' , 'VOC'                       , 'VOC - Volatile Organic Compounds (inside)'                                     , 'number', 'false', 'value'             ,'' ],
+    ['noxl' , 'NO2'                       , 'NO2 - Nitrogen dioxide (inside)'                                               , 'number', 'false', 'value'             ,'' ],
+    ['p25r' , 'PM25R'                     , 'PM-2.5R - Particulate Matter 2.5µm'                                            , 'number', 'false', 'value'             ,'µg/m³' ],
+    ['p10r' , 'PM10R'                     , 'PM-10R - Particulate Matter 10µm'                                              , 'number', 'false', 'value'             ,'µg/m³' ],
+    ['hmod' , 'HeatingMode'               , 'Heating Mode [ON/OFF]'                                                         , 'string', 'true',  'indicator'         ,'', {'OFF': 'OFF', 'ON': 'ON'} ],
+    ['hmax' , 'HeatingTargetTemp'         , 'Target temperature for heating'                                                , 'string', 'true',  'value'             ,'' ],
+    ['hume' , 'DehumidifierState'         , 'Dehumidifier State [ON/OFF]'                                                   , 'string', 'false', 'value'             ,'' ],
+    ['haut' , 'TargetHumidifierState'     , 'Target Humidifier Dehumidifier State'                                          , 'string', 'false', 'value'             ,'' ],
+    ['humt' , 'RelativeHumidityThreshold' , 'Relative Humidity Humidifier Threshold'                                        , 'string', 'false', 'value'             ,'' ]
 /* removed until further use // unknown data fields will be logged to the logfile
     ["psta" , "psta"                      , "[HP0x] Unknown"                                                                , "string", "false", "value"                       ,"" ],
     ["hsta" , "hsta"                      , "[HP0x] Unknown"                                                                , "string", "false", "value"                       ,"" ],
@@ -124,8 +124,8 @@ class dysonAirPurifier extends utils.Adapter {
     * @param state {object} new state-object of the datapoint after change
     */
     async onStateChange(id, state) {
-        let thisDevice = id.split('.')[2];
-        let action = id.split('.').pop();
+        const thisDevice = id.split('.')[2];
+        const action = id.split('.').pop();
         // Warning, state can be null if it was deleted
         if (state && !state.ack) {
             // you can use the ack flag to detect if it is status (true) or command (false)
@@ -143,9 +143,9 @@ class dysonAirPurifier extends utils.Adapter {
             switch (dysonAction) {
                 case 'fnsp' :
                     // when AUTO set AUTO to true also
-                    if (state.val === "AUTO") {
+                    if (state.val === 'AUTO') {
                         // add second value to message to get auto mode working
-                        messageData.auto = "ON";
+                        messageData.auto = 'ON';
                     }
                     break;
                 case 'hmax':
@@ -164,7 +164,7 @@ class dysonAirPurifier extends utils.Adapter {
                     }
                     messageData = {[dysonAction]: dysonUtils.zeroFill(value, 4)};
                     break;
-                case "osal" :
+                case 'osal' :
                     await this.getStateAsync(thisDevice + '.OscillationOpeningAngle')
                         .then((result) => {
                             messageData = {[dysonAction]: dysonUtils.zeroFill(state.val, 4)};
@@ -190,20 +190,20 @@ class dysonAirPurifier extends utils.Adapter {
                     this.log.debug('OscillationOpeningAngle: state.val=' + state.val);
                     this.log.debug('OscillationOpeningAngle: Num(state.val)=' + Number.parseInt(state.val));
                     this.log.debug('OscillationOpeningAngle: Floor: state.val=' + Math.floor(Number.parseInt(state.val) / 2));
-                    this.log.debug('OscillationOpeningAngle: left - state.val/2=' + left - Math.floor(Number.parseInt(state.val) / 2));
+                    this.log.debug('OscillationOpeningAngle: left - state.val/2=' + (left - Math.floor(Number.parseInt(state.val) / 2)));
                     messageData = {'osal': dysonUtils.zeroFill((left - Math.floor(Number.parseInt(state.val) / 2)), 4)};
                     messageData.osau = dysonUtils.zeroFill((left + state.val), 4);
                     messageData.ancp = 'CUST';
-                break;
+                    break;
             }
-          this.log.info('SENDING this data to device (' + thisDevice + '): ' + JSON.stringify(messageData));
+            this.log.info('SENDING this data to device (' + thisDevice + '): ' + JSON.stringify(messageData));
             // build the message to be send to the device
-            let message = {"msg": "STATE-SET",
-                           "time": new Date().toISOString(),
-                           "mode-reason": "LAPP",
-                           "data": messageData
-                };
-            for (let mqttDevice in devices){
+            const message = {'msg': 'STATE-SET',
+                'time': new Date().toISOString(),
+                'mode-reason': 'LAPP',
+                'data': messageData
+            };
+            for (const mqttDevice in devices){
                 if (devices[mqttDevice].Serial === thisDevice){
                     this.log.debug('CHANGE: device [' + thisDevice + '] -> [' + action +'] -> [' + state.val + ']');
                     devices[mqttDevice].mqttClient.publish(
@@ -221,14 +221,14 @@ class dysonAirPurifier extends utils.Adapter {
                     type: 'state',
                     common: {
                         name: 'Overall AirQuality (worst value of all indexes)',
-                        "read": true,
-                        "write": false,
-                        "role": "value",
-                        "type": "number",
-                        "states" : {0:'Good', 1:'Medium', 2:'Bad', 3:'very Bad', 4:'extremely Bad', 5:'worrying'}
+                        'read': true,
+                        'write': false,
+                        'role': 'value',
+                        'type': 'number',
+                        'states' : {0:'Good', 1:'Medium', 2:'Bad', 3:'very Bad', 4:'extremely Bad', 5:'worrying'}
                     },
                     native: {}
-                }, Math.max(NO2, VOC, Dust, PM25, PM10), null);
+                }, Math.max(NO2, VOC, Dust, PM25, PM10));
             }
         // OscillationOpeningAngle
         }
@@ -244,88 +244,88 @@ class dysonAirPurifier extends utils.Adapter {
     async CreateOrUpdateDevice(device){
         try {
             // create device folder
-            this.log.debug("Creating device folder.");
+            this.log.debug('Creating device folder.');
             this.createOrExtendObject(device.Serial, {
                 type: 'device',
                 common: {name: products[device.ProductType]},
                 native: {}
-            }, null, null);
+            }, null);
             this.createOrExtendObject(device.Serial + '.Firmware', {
                 type: 'channel',
-                common: {name: 'Information on device\'s firmware', "read": true, "write": false},
+                common: {name: 'Information on device\'s firmware', 'read': true, 'write': false},
                 native: {}
-            }, null, null);
+            }, null);
             this.createOrExtendObject(device.Serial + '.Firmware.Version', {
                 type: 'state',
                 common: {
                     name: 'Current firmware version',
-                    "read": true,
-                    "write": false,
-                    "role": "value",
-                    "type": "string"
+                    'read': true,
+                    'write': false,
+                    'role': 'value',
+                    'type': 'string'
                 },
                 native: {}
-            }, device.Version, null);
+            }, device.Version);
             this.createOrExtendObject(device.Serial + '.Firmware.Autoupdate', {
                 type: 'state',
                 common: {
                     name: 'Shows whether the device updates it\'s firmware automatically if update is available.',
-                    "read": true,
-                    "write": true,
-                    "role": "indicator.autoupdate",
-                    "type": "boolean"
+                    'read': true,
+                    'write': true,
+                    'role': 'indicator',
+                    'type': 'boolean'
                 },
                 native: {}
-            }, device.AutoUpdate, null);
+            }, device.AutoUpdate);
             this.createOrExtendObject(device.Serial + '.Firmware.NewVersionAvailable', {
                 type: 'state',
                 common: {
                     name: 'Shows whether a firmware update for this device is available online.',
-                    "read": true,
-                    "write": false,
-                    "role": "indicator.firmwareupdate",
-                    "type": "boolean"
+                    'read': true,
+                    'write': false,
+                    'role': 'indicator',
+                    'type': 'boolean'
                 },
                 native: {}
-            }, device.NewVersionAvailable, null);
+            }, device.NewVersionAvailable);
             this.createOrExtendObject(device.Serial + '.ProductType', {
                 type: 'state',
                 common: {
                     name: 'dyson internal productType.',
-                    "read": true,
-                    "write": false,
-                    "role": "value",
-                    "type": "number"
+                    'read': true,
+                    'write': false,
+                    'role': 'value',
+                    'type': 'number'
                 },
                 native: {}
-            }, device.ProductType, null);
+            }, device.ProductType);
             this.createOrExtendObject(device.Serial + '.ConnectionType', {
                 type: 'state',
                 common: {
                     name: 'Type of connection.',
-                    "read": true,
-                    "write": false,
-                    "role": "value",
-                    "type": "string"
+                    'read': true,
+                    'write': false,
+                    'role': 'value',
+                    'type': 'string'
                 },
                 native: {}
-            }, device.ConnectionType, null);
+            }, device.ConnectionType);
             this.createOrExtendObject(device.Serial + '.Name', {
                 type: 'state',
-                common: {name: 'Name of device.', "read": true, "write": true, "role": "value", "type": "string"},
+                common: {name: 'Name of device.', 'read': true, 'write': true, 'role': 'value', 'type': 'string'},
                 native: {}
-            }, device.Name, null);
+            }, device.Name);
             this.createOrExtendObject(device.Serial + '.MqttCredentials', {
                 type: 'state',
                 common: {
                     name: 'Local MQTT password of device.',
-                    "read": true,
-                    "write": false,
-                    "role": "value",
-                    "type": "string"
+                    'read': true,
+                    'write': false,
+                    'role': 'value',
+                    'type': 'string'
                 },
                 native: {}
-            }, device.mqttPassword, null);
+            }, device.mqttPassword);
             this.log.debug('Querying Host-Address of device: ' + device.Serial);
             await this.getStateAsync(device.Serial + '.Hostaddress')
                 .then((state) => {
@@ -336,36 +336,36 @@ class dysonAirPurifier extends utils.Adapter {
                             type: 'state',
                             common: {
                                 name: 'Local host address (IP) of device.',
-                                "read": true,
-                                "write": true,
-                                "role": "value",
-                                "type": "string"
+                                'read': true,
+                                'write': true,
+                                'role': 'value',
+                                'type': 'string'
                             },
                             native: {}
-                        }, device.hostAddress, null);
+                        }, device.hostAddress);
                     } else {
                         // No valid IP address of device found. Without we can't proceed. So terminate adapter.
                         this.createOrExtendObject(device.Serial + '.Hostaddress', {
                             type: 'state',
                             common: {
                                 name: 'Local host address (IP) of device.',
-                                "read": true,
-                                "write": true,
-                                "role": "value",
-                                "type": "string"
+                                'read': true,
+                                'write': true,
+                                'role': 'value',
+                                'type': 'string'
                             },
                             native: {}
-                        }, undefined, null);
+                        }, undefined);
                         this.log.error('IP-Address of device ['+ device.Serial +'] is invalid. Please enter the valid IP of this device in your LAN to the device tree.');
                         this.setState('info.connection', false);
                         this.terminate('Terminating Adapter due to missing or invalid device IP.', 11);
                     }
                 })
                 .catch( (error) => {
-                    this.log.error("[CreateOrUpdateDevice-getSateAsync] Error: " + error + ", Callstack: " + error.stack);
+                    this.log.error('[CreateOrUpdateDevice-getSateAsync] Error: ' + error + ', Callstack: ' + error.stack);
                 });
         } catch(error){
-            this.log.error("[CreateOrUpdateDevice] Error: " + error + ", Callstack: " + error.stack);
+            this.log.error('[CreateOrUpdateDevice] Error: ' + error + ', Callstack: ' + error.stack);
         }
     }
 
@@ -379,15 +379,15 @@ class dysonAirPurifier extends utils.Adapter {
      * @param message {object} Current State of the device. Message is send by device via mqtt due to request or state change.
      */
     async processMsg( device, path, message ) {
-        for (let row in message){
+        for (const row in message){
             // Is this a "product-state" message?
-            if ( row === "product-state"){
-                await this.processMsg(device, "", message[row]);
+            if ( row === 'product-state'){
+                await this.processMsg(device, '', message[row]);
                 continue;
             }
             // Is this a "data" message?
-            if ( row === "data"){
-                await this.processMsg(device, ".Sensor", message[row]);
+            if ( row === 'data'){
+                await this.processMsg(device, '.Sensor', message[row]);
                 if ( message[row].hasOwnProperty('pm25') ) {
                     this.createPM25(message, row, device);
                 }
@@ -409,15 +409,15 @@ class dysonAirPurifier extends utils.Adapter {
             this.log.debug('Processing Message: ' + ((typeof message === 'object')? JSON.stringify(message) : message) );
             const helper = await this.getDatapoint(row);
             if ( helper === undefined){
-                this.log.info("Skipped creating unknown data field for: [" + row + "] Value: |-> " + ((typeof( message[row] ) === "object")? JSON.stringify(message[row]) : message[row]) );
+                this.log.info('Skipped creating unknown data field for: [' + row + '] Value: |-> ' + ((typeof( message[row] ) === 'object')? JSON.stringify(message[row]) : message[row]) );
                 continue;
             }
             // strip leading zeros from numbers
             let value;
-            if (helper[3]==="number"){
+            if (helper[3]==='number'){
                 // convert temperature to configured unit
                 value = Number.parseInt(message[helper[0]], 10);
-                if (helper[5] === "value.temperature") {
+                if (helper[5] === 'value.temperature') {
                     switch (this.config.temperatureUnit) {
                         case 'K' : value /= 10;
                             break;
@@ -435,13 +435,13 @@ class dysonAirPurifier extends utils.Adapter {
                     // create additional data field filterlifePercent converting value from hours to percent; 4300 is the estimated lifetime in hours by dyson
                     value = Number(value * 100/4300);
                     helper[5] = '%';
-                    this.createOrExtendObject( device.Serial + path + '.FilterLifePercent', { type: 'state', common: {name: helper[2], "read":true, "write": helper[4]==="true", "role": helper[5], "type":helper[3], "unit":helper[6], "states": helper[7]}, native: {} }, value, null );
+                    this.createOrExtendObject( device.Serial + path + '.FilterLifePercent', { type: 'state', common: {name: helper[2], 'read':true, 'write': helper[4]==='true', 'role': helper[5], 'type':helper[3], 'unit':helper[6], 'states': helper[7]}, native: {} }, value);
                 }
             } else {
                 value = message[helper[0]];
             }
             // during state-change message only changed values are being updated
-            if (typeof (value) === "object") {
+            if (typeof (value) === 'object') {
                 if (value[0] === value[1]) {
                     this.log.debug('Values for [' + helper[1] + '] are equal. No update required. Skipping.');
                     continue;
@@ -456,7 +456,9 @@ class dysonAirPurifier extends utils.Adapter {
                 const left  = await this.getStateAsync(device.Serial + path + '.OscillationLeft');
                 const right = await this.getStateAsync(device.Serial + path + '.OscillationRight');
                 if (null != left && null !=right) {
-                    this.createOrExtendObject( device.Serial + path + '.OscillationOpeningAngle', { type: 'state', common: {name: 'Opening angle for oscillation', "read":true, "write": true, "role": "value.oscillationangle", "type":"number", "unit":"°", "states":{0:"0", 15:"15", 30:"30", 45:"45", 90:"90", 180:"180", 270:"270", 350:"350"} }, native: {} }, Number.parseInt(right.val)-Number.parseInt(left.val), null );
+                    this.createOrExtendObject( device.Serial + path + '.OscillationOpeningAngle',
+                        { type: 'state', common: {name: 'Opening angle for oscillation', 'read':true, 'write': true, 'role': 'value', 'type':'number', 'unit':'°', 'states':{0:'0', 15:'15', 30:'30', 45:'45', 90:'90', 180:'180', 270:'270', 350:'350'}}, native: {} },
+                        (Number.parseInt(right.val)-Number.parseInt(left.val)));
                     this.subscribeStates(device.Serial + path + '.OscillationOpeningAngle' );
                 } else {
                     this.log.debug('Oscillation angle left/right missing in data.');
@@ -464,12 +466,12 @@ class dysonAirPurifier extends utils.Adapter {
             }
             // helper.length>7 means the data field has predefined states attached, that need to be handled
             if (helper.length > 7) {
-                this.createOrExtendObject( device.Serial + path + '.'+ helper[1], { type: 'state', common: {name: helper[2], "read":true, "write": helper[4]==="true", "role": helper[5], "type":helper[3], "unit":helper[6], "states": helper[7]}, native: {} }, value, null );
+                this.createOrExtendObject( device.Serial + path + '.'+ helper[1], { type: 'state', common: {name: helper[2], 'read':true, 'write': helper[4]==='true', 'role': helper[5], 'type':helper[3], 'unit':helper[6], 'states': helper[7]}, native: {} }, value);
             } else {
-                this.createOrExtendObject( device.Serial + path + '.'+ helper[1], { type: 'state', common: {name: helper[2], "read":true, "write": helper[4]==="true", "role": helper[5], "type":helper[3], "unit":helper[6] }, native: {} }, value, null );
+                this.createOrExtendObject( device.Serial + path + '.'+ helper[1], { type: 'state', common: {name: helper[2], 'read':true, 'write': helper[4]==='true', 'role': helper[5], 'type':helper[3], 'unit':helper[6] }, native: {} }, value);
             }
             // helper[4]=true -> data field is editable, so subscribe for state changes
-            if (helper[4]==="true") {
+            if (helper[4]==='true') {
                 this.log.debug('Subscribing for state changes on :' + device.Serial + path + '.'+ helper[1] );
                 this.subscribeStates(device.Serial + path + '.'+ helper[1] );
             }
@@ -502,14 +504,14 @@ class dysonAirPurifier extends utils.Adapter {
             type: 'state',
             common: {
                 name: 'NO2 QualityIndex. 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad',
-                "read": true,
-                "write": false,
-                "role": "value",
-                "type": "number",
-                "states" : {0:'Good', 1:'Medium', 2:'Bad', 3:'very Bad', 4:'extremely Bad', 5:'worrying'}
+                'read': true,
+                'write': false,
+                'role': 'value',
+                'type': 'number',
+                'states' : {0:'Good', 1:'Medium', 2:'Bad', 3:'very Bad', 4:'extremely Bad', 5:'worrying'}
             },
             native: {}
-        }, NO2Index, null);
+        }, NO2Index);
         NO2 = NO2Index;
         this.subscribeStates(device.Serial + '.Sensor.NO2Index' );
     }
@@ -540,14 +542,14 @@ class dysonAirPurifier extends utils.Adapter {
             type: 'state',
             common: {
                 name: 'VOC QualityIndex. 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad',
-                "read": true,
-                "write": false,
-                "role": "value",
-                "type": "number",
-                "states" : {0:'Good', 1:'Medium', 2:'Bad', 3:'very Bad', 4:'extremely Bad', 5:'worrying'}
+                'read': true,
+                'write': false,
+                'role': 'value',
+                'type': 'number',
+                'states' : {0:'Good', 1:'Medium', 2:'Bad', 3:'very Bad', 4:'extremely Bad', 5:'worrying'}
             },
             native: {}
-        }, VOCIndex, null);
+        }, VOCIndex);
         VOC = VOCIndex;
         this.subscribeStates(device.Serial + '.Sensor.VOCIndex' );
     }
@@ -582,14 +584,14 @@ class dysonAirPurifier extends utils.Adapter {
             type: 'state',
             common: {
                 name: 'PM10 QualityIndex. 0-50: Good, 51-75: Medium, 76-100, Bad, 101-350: very Bad, 351-420: extremely Bad, >421 worrying',
-                "read": true,
-                "write": false,
-                "role": "value",
-                "type": "number",
-                "states" : {0:'Good', 1:'Medium', 2:'Bad', 3:'very Bad', 4:'extremely Bad', 5:'worrying'}
+                'read': true,
+                'write': false,
+                'role': 'value',
+                'type': 'number',
+                'states' : {0:'Good', 1:'Medium', 2:'Bad', 3:'very Bad', 4:'extremely Bad', 5:'worrying'}
             },
             native: {}
-        }, PM10Index, null);
+        }, PM10Index);
         PM10 = PM10Index;
         this.subscribeStates(device.Serial + '.Sensor.PM10Index' );
     }
@@ -624,14 +626,14 @@ class dysonAirPurifier extends utils.Adapter {
             type: 'state',
             common: {
                 name: 'Dust QualityIndex. 0-50: Good, 51-75: Medium, 76-100, Bad, 101-350: very Bad, 351-420: extremely Bad, >421 worrying',
-                "read": true,
-                "write": false,
-                "role": "value",
-                "type": "number",
-                "states" : {0:'Good', 1:'Medium', 2:'Bad', 3:'very Bad', 4:'extremely Bad', 5:'worrying'}
+                'read': true,
+                'write': false,
+                'role': 'value',
+                'type': 'number',
+                'states' : {0:'Good', 1:'Medium', 2:'Bad', 3:'very Bad', 4:'extremely Bad', 5:'worrying'}
             },
             native: {}
-        }, dustIndex, null);
+        }, dustIndex);
         Dust = dustIndex;
         this.subscribeStates(device.Serial + '.Sensor.DustIndex' );
     }
@@ -666,14 +668,14 @@ class dysonAirPurifier extends utils.Adapter {
             type: 'state',
             common: {
                 name: 'PM2.5 QualityIndex. 0-35: Good, 36-53: Medium, 54-70: Bad, 71-150: very Bad, 151-250: extremely Bad, >251 worrying',
-                "read": true,
-                "write": false,
-                "role": "value",
-                "type": "number",
-                "states" : {0:'Good', 1:'Medium', 2:'Bad', 3:'very Bad', 4:'extremely Bad', 5:'worrying'}
+                'read': true,
+                'write': false,
+                'role': 'value',
+                'type': 'number',
+                'states' : {0:'Good', 1:'Medium', 2:'Bad', 3:'very Bad', 4:'extremely Bad', 5:'worrying'}
             },
             native: {}
-        }, PM25Index, null);
+        }, PM25Index);
         PM25 = PM25Index;
         this.subscribeStates(device.Serial + '.Sensor.PM25Index' );
     }
@@ -721,12 +723,12 @@ class dysonAirPurifier extends utils.Adapter {
                     }
                     adapterLog.error('[error.config]:' + JSON.stringify(error.config));
                     this.terminate('Terminating Adapter due to error during querying dyson API. Most common errors are missing or bad dyson credentials.', 11);
-                })
+                });
             if (typeof myAccount !== 'undefined'){
                 adapterLog.debug('Querying devices from dyson API.');
                 await this.dysonGetDevicesFromApi(myAccount)
                     .then( (response) => {
-                        for (let thisDevice in response.data) {
+                        for (const thisDevice in response.data) {
                             adapterLog.debug('Data received from dyson API: ' + JSON.stringify(response.data[thisDevice]));
                             // 1. create datapoints if device is supported
                             if (!supportedProductTypes.some(function (t) {
@@ -739,17 +741,18 @@ class dysonAirPurifier extends utils.Adapter {
                                 response.data[thisDevice].hostAddress  = undefined;
                                 response.data[thisDevice].mqttClient   = null;
                                 response.data[thisDevice].mqttPassword = dysonUtils.decryptMqttPasswd(response.data[thisDevice].LocalCredentials);
+                                response.data[thisDevice].updateIntervalHandle = null;
                                 devices.push(response.data[thisDevice]);
                             }
                         }
                     })
                     .catch( (error) => {
                         adapterLog.error('[dysonGetDevicesFromApi] Error: ('+error.statuscode+')' + error + ', Callstack: ' + error.stack);
-                    })
+                    });
                 // 2. Search Network for IP-Address of current thisDevice
                 // 2a. Store IP-Address in additional persistent data field
                 // 3. query local data from each thisDevice
-                for (let thisDevice in devices) {
+                for (const thisDevice in devices) {
                     await this.CreateOrUpdateDevice(devices[thisDevice])
                         .then(() => {
                             // Initializes the MQTT client for local communication with the thisDevice
@@ -769,50 +772,50 @@ class dysonAirPurifier extends utils.Adapter {
                                 // Subscribes to the status topic to receive updates
                                 devices[thisDevice].mqttClient.subscribe(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/status/current', function () {
 
-                                // Sends an initial request for the current state
-                                devices[thisDevice].mqttClient.publish(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/command', JSON.stringify({
-                                    msg: 'REQUEST-CURRENT-STATE',
-                                    time: new Date().toISOString()
-                                }));
-                            })
-                            // Sets the interval for status updates
-                            adapterLog.info('Starting Polltimer with a ' + adapter.config.pollInterval + ' seconds interval.');
-                            // start refresh scheduler with interval from adapters config
-                            updateIntervalHandle = setTimeout(function schedule() {
-                                adapterLog.debug("Updating device [" + devices[thisDevice].Serial + "] (polling API scheduled).");
-                                try {
+                                    // Sends an initial request for the current state
                                     devices[thisDevice].mqttClient.publish(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/command', JSON.stringify({
                                         msg: 'REQUEST-CURRENT-STATE',
                                         time: new Date().toISOString()
                                     }));
-                                } catch (error) {
-                                    adapterLog.error(devices[thisDevice].Serial + ' - MQTT interval error: ' + error);
-                                }
-                                updateIntervalHandle = setTimeout(schedule, adapter.config.pollInterval * 1000);
-                            }, 10);
+                                });
+                                // Sets the interval for status updates
+                                adapterLog.info('Starting Polltimer with a ' + adapter.config.pollInterval + ' seconds interval.');
+                                // start refresh scheduler with interval from adapters config
+                                devices[thisDevice].updateIntervalHandle = setTimeout(function schedule() {
+                                    adapterLog.debug('Updating device [' + devices[thisDevice].Serial + '] (polling API scheduled).');
+                                    try {
+                                        devices[thisDevice].mqttClient.publish(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/command', JSON.stringify({
+                                            msg: 'REQUEST-CURRENT-STATE',
+                                            time: new Date().toISOString()
+                                        }));
+                                    } catch (error) {
+                                        adapterLog.error(devices[thisDevice].Serial + ' - MQTT interval error: ' + error);
+                                    }
+                                    devices[thisDevice].updateIntervalHandle = setTimeout(schedule, adapter.config.pollInterval * 1000);
+                                }, 10);
                             });
                             devices[thisDevice].mqttClient.on('message', function (_, payload) {
                                 // change dataType from Buffer to JSON object
                                 payload = JSON.parse(payload.toString());
-                                adapterLog.debug("MessageType: " + payload.msg);
+                                adapterLog.debug('MessageType: ' + payload.msg);
                                 switch (payload.msg) {
-                                    case "CURRENT-STATE" :
-                                        adapter.processMsg(devices[thisDevice], "", payload);
+                                    case 'CURRENT-STATE' :
+                                        adapter.processMsg(devices[thisDevice], '', payload);
                                         break;
-                                    case "ENVIRONMENTAL-CURRENT-SENSOR-DATA" :
+                                    case 'ENVIRONMENTAL-CURRENT-SENSOR-DATA' :
                                         adapter.createOrExtendObject(devices[thisDevice].Serial + '.Sensor', {
                                             type: 'channel',
                                             common: {
                                                 name: 'Information from device\'s sensors',
-                                                "read": true,
-                                                "write": false
+                                                'read': true,
+                                                'write': false
                                             },
                                             native: {}
-                                        }, null, null);
-                                        adapter.processMsg(devices[thisDevice], ".Sensor", payload);
+                                        }, null);
+                                        adapter.processMsg(devices[thisDevice], '.Sensor', payload);
                                         break;
-                                    case "STATE-CHANGE":
-                                        adapter.processMsg(devices[thisDevice], "", payload);
+                                    case 'STATE-CHANGE':
+                                        adapter.processMsg(devices[thisDevice], '', payload);
                                         break;
                                 }
                                 adapterLog.debug(devices[thisDevice].Serial + ' - MQTT message received: ' + JSON.stringify(payload));
@@ -831,19 +834,19 @@ class dysonAirPurifier extends utils.Adapter {
 
                             devices[thisDevice].mqttClient.on('close', function () {
                                 adapterLog.debug(devices[thisDevice].Serial + ' - MQTT disconnected.');
-                                adapter.clearIntervalHandle(updateIntervalHandle);
+                                adapter.clearIntervalHandle(devices[thisDevice].updateIntervalHandle);
                                 adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'disconnected');
                             });
 
                             devices[thisDevice].mqttClient.on('offline', function () {
                                 adapterLog.debug(devices[thisDevice].Serial + ' - MQTT offline.');
-                                adapter.clearIntervalHandle(updateIntervalHandle);
+                                adapter.clearIntervalHandle(devices[thisDevice].updateIntervalHandle);
                                 adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'offline');
                             });
 
                             devices[thisDevice].mqttClient.on('end', function () {
                                 adapterLog.debug(devices[thisDevice].Serial + ' - MQTT ended.');
-                                adapter.clearIntervalHandle(updateIntervalHandle);
+                                adapter.clearIntervalHandle(devices[thisDevice].updateIntervalHandle);
                             });
                         })
                         .catch((error) => {
@@ -869,7 +872,7 @@ class dysonAirPurifier extends utils.Adapter {
             await dysonUtils.checkAdapterConfig(this)
                 .then(() => {
                     // configisValid! No password decryption needed since it is handeled by the adapter prototype
-                   this.main();
+                    this.main();
                 })
                 .catch((error) => {
                     this.log.error('Error during config validation: ' + error);
@@ -897,13 +900,13 @@ class dysonAirPurifier extends utils.Adapter {
             type: 'state',
             common: {
                 name: 'Indicator whether device if online or offline.',
-                "read": true,
-                "write": false,
-                "role": "indicator.reachable",
-                "type": "boolean"
+                'read': true,
+                'write': false,
+                'role': 'indicator.reachable',
+                'type': 'boolean'
             },
             native: {}
-        }, state === 'online', null);
+        }, state === 'online');
     }
 
     /**
@@ -916,18 +919,15 @@ class dysonAirPurifier extends utils.Adapter {
     * @param value {any} value of the datapoint
     * @param callback {callback} callback function
     */
-    createOrExtendObject(id, objData, value, callback) {
+    createOrExtendObject(id, objData, value) {
         const self = this;
-        function setState(id, value){
-            self.setState(id, value, true);
-        }
         this.getObject(id, function (err, oldObj) {
             if (!err && oldObj) {
                 self.log.debug('Updating existing object [' + id +'] with value: ['+ value+']');
-                self.extendObject(id, objData, setState);
+                self.extendObject(id, objData, () => {self.setState(id, value, true);});
             } else {
                 self.log.debug('Creating new object [' + id +'] with value: ['+ value+']');
-                self.setObjectNotExists(id, objData, setState);
+                self.setObjectNotExists(id, objData, () => {self.setState(id, value, true);});
             }
         });
     }
@@ -942,10 +942,10 @@ class dysonAirPurifier extends utils.Adapter {
     * @returns {string} returns the configDetails for any given datapoint or undefined if searchValue can't be resolved.
     */
     async getDatapoint( searchValue ){
-        this.log.debug("getDatapoint("+searchValue+")");
+        this.log.debug('getDatapoint('+searchValue+')');
         for(let row=0; row < datapoints.length; row++){
             if (datapoints[row].find( element => element === searchValue)){
-                this.log.debug("FOUND: " + datapoints[row]);
+                this.log.debug('FOUND: ' + datapoints[row]);
                 return datapoints[row];
             }
         }
@@ -981,7 +981,7 @@ class dysonAirPurifier extends utils.Adapter {
     async dysonAPILogIn(config) {
         this.log.debug('Signing in into Dyson API...');
         // Sends the login request to the API
-        return axios.post(apiUri + "/v1/userregistration/authenticate?country=" + config.country,
+        return axios.post(apiUri + '/v1/userregistration/authenticate?country=' + config.country,
             {
                 Email: config.email,
                 Password: config.Password
@@ -1003,7 +1003,10 @@ class dysonAirPurifier extends utils.Adapter {
     // Exit adapter
     onUnload(callback) {
         try {
-            for (let thisDevice in devices) devices[thisDevice].mqttClient.close();
+            for (const thisDevice in devices)  {
+                clearTimeout(devices[thisDevice].updateIntervalHandle);
+                this.log.info('Cleaned up timeout for ' + devices[thisDevice].Serial + '.');
+            }
             this.log.info('Cleaned up everything...');
             callback();
         } catch (e) {

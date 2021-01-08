@@ -81,13 +81,12 @@ You can also install older release versions using this methods (by pointing to a
 
 * detect IP of devices automatically
 * collect more mqtt message acronym meanings
-* test with more different devices
 
 ### Known issues
 
 * No automatic IP detection of devices
 
-### 0.7.0 (2020-11-xx) (Afraid of the dark)
+### 0.7.0 (2021-01-xx) (Afraid of the dark)
 
 * (jpwenzel)   New: Removing crypto from package dependency list (using Node.js provided version)
 * (jpwenzel)   New: Introducing unit tests
@@ -104,9 +103,14 @@ You can also install older release versions using this methods (by pointing to a
 * (grizzelbee) New: BREAKING CHANGE! - switched over to the adapter-prototype build-in password encryption. Therefore you'll need to enter your password again in config.
 * (grizzelbee) New: At least js-controller 3.0.0 is required
 * (grizzelbee) New: At least admin 4.0.9 is required
+* (grizzelbee) Fix: Removed non compliant values for ROLE
+* (grizzelbee) Fix: calling setState in callback of set/createObject now
+* (grizzelbee) Fix: ensuring to clear all timeouts in onUnload-function
 
 
-### 0.6.0 (2020-10-29) (Rage before the storm)
+
+
+#K## 0.6.0 (2020-10-29) (Rage before the storm)
 
 * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Filter life value is now displayed in percent not in hours
 * (grizzelbee) New: [#17](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/17) - Added online-indicator for each device
