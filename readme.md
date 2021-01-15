@@ -86,6 +86,9 @@ You can also install older release versions using this methods (by pointing to a
 
 * No automatic IP detection of devices
 
+### 0.7.1 (2021-01-xx) (Horizons)
+* (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) Filterlifetime is now correctly displayed in hours and percent for devices supporting this
+
 ### 0.7.0 (2021-01-08) (Afraid of the dark)
 
 * (jpwenzel)   New: Removing crypto from package dependency list (using Node.js provided version)

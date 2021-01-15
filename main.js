@@ -23,7 +23,6 @@ const dysonUtils = require('./dyson-utils.js');
 
 // Variable definitions
 let adapter = null;
-let updateIntervalHandle;
 const devices=[]; // Array that contains all local devices
 // const ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
 const apiUri = 'https://appapi.cp.dyson.com';
@@ -148,7 +147,7 @@ class dysonAirPurifier extends utils.Adapter {
                         messageData.auto = 'ON';
                     }
                     break;
-                case 'hmax':
+                case 'hmax':{
                     // Target temperature for heating in KELVIN!
                     // convert temperature to configured unit
                     let value = Number.parseInt(state.val, 10);
@@ -164,6 +163,7 @@ class dysonAirPurifier extends utils.Adapter {
                     }
                     messageData = {[dysonAction]: dysonUtils.zeroFill(value, 4)};
                     break;
+                }
                 case 'osal' :
                     await this.getStateAsync(thisDevice + '.OscillationOpeningAngle')
                         .then((result) => {
@@ -179,7 +179,7 @@ class dysonAirPurifier extends utils.Adapter {
                             this.log.warn(error);
                         });
                     break;
-                case 'OscillationOpeningAngle':
+                case 'OscillationOpeningAngle':{
                     // OscillationOpeningAngle
                     let left = await this.getStateAsync('system.adapter.dysonairpurifier.0.' + thisDevice + '.OscillationLeft');
                     this.log.debug('OscillationOpeningAngle: thisDevice=' + thisDevice);
@@ -195,6 +195,7 @@ class dysonAirPurifier extends utils.Adapter {
                     messageData.osau = dysonUtils.zeroFill((left + state.val), 4);
                     messageData.ancp = 'CUST';
                     break;
+                }
             }
             this.log.info('SENDING this data to device (' + thisDevice + '): ' + JSON.stringify(messageData));
             // build the message to be send to the device
@@ -388,19 +389,19 @@ class dysonAirPurifier extends utils.Adapter {
             // Is this a "data" message?
             if ( row === 'data'){
                 await this.processMsg(device, '.Sensor', message[row]);
-                if ( message[row].hasOwnProperty('pm25') ) {
+                if (Object.prototype.hasOwnProperty.call(message[row], 'pm25')) {
                     this.createPM25(message, row, device);
                 }
-                if ( message[row].hasOwnProperty('pm10') ) {
+                if (Object.prototype.hasOwnProperty.call(message[row], 'pm10')) {
                     this.createPM10(message, row, device);
                 }
-                if ( message[row].hasOwnProperty('pact') ) {
+                if (Object.prototype.hasOwnProperty.call(message[row], 'pact')) {
                     this.createDust(message, row, device);
                 }
-                if ( message[row].hasOwnProperty('va10') ) {
+                if (Object.prototype.hasOwnProperty.call(message[row], 'va10')) {
                     this.createVOC(message, row, device);
                 }
-                if ( message[row].hasOwnProperty('noxl') ) {
+                if (Object.prototype.hasOwnProperty.call(message[row], 'noxl')) {
                     this.createNO2(message, row, device);
                 }
                 continue;
@@ -434,8 +435,7 @@ class dysonAirPurifier extends utils.Adapter {
                 if (helper[0] === 'filf') {
                     // create additional data field filterlifePercent converting value from hours to percent; 4300 is the estimated lifetime in hours by dyson
                     value = Number(value * 100/4300);
-                    helper[5] = '%';
-                    this.createOrExtendObject( device.Serial + path + '.FilterLifePercent', { type: 'state', common: {name: helper[2], 'read':true, 'write': helper[4]==='true', 'role': helper[5], 'type':helper[3], 'unit':helper[6], 'states': helper[7]}, native: {} }, value);
+                    this.createOrExtendObject( device.Serial + path + '.FilterLifePercent', { type: 'state', common: {name: helper[2], 'read':true, 'write': helper[4]==='true', 'role': helper[5], 'type':helper[3], 'unit':'%', 'states': helper[7]}, native: {} }, value);
                 }
             } else {
                 value = message[helper[0]];
@@ -444,7 +444,6 @@ class dysonAirPurifier extends utils.Adapter {
             if (typeof (value) === 'object') {
                 if (value[0] === value[1]) {
                     this.log.debug('Values for [' + helper[1] + '] are equal. No update required. Skipping.');
-                    continue;
                 } else {
                     value = value[1];
                 }
