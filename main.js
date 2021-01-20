@@ -49,7 +49,7 @@ const datapoints = [
     ['filf' , 'FilterLife'                , 'Estimated remaining filter life in hours.'                                     , 'number', 'false', 'value'        , 'hours' ],
     ['fmod' , 'Mode'                      , 'Mode of device'                                                                , 'string', 'false', 'value'        ,'', {'FAN':'Fan', 'AUTO':'Auto'} ],
     ['fnsp' , 'FanSpeed'                  , 'Current fan speed'                                                             , 'string', 'true',  'value'        ,'', {'AUTO':'Auto', '0001':'1', '0002':'2', '0003':'3', '0004':'4', '0005':'5', '0006':'6', '0007':'7', '0008':'8', '0009':'9', '0010':'10' } ],
-    ['fnst' , 'FanStatus'                 , 'Current Fan state'                                                             , 'string', 'true',  'state'        ,'', {'FAN':'Fan', 'OFF':'OFF', 'ON':'ON'} ],
+    ['fnst' , 'FanStatus'                 , 'Current Fan state; correlating to Auto-mode'                                   , 'string', 'false', 'state'        ,'' ],
     ['nmod' , 'Nightmode'                 , 'Night mode state'                                                              , 'string', 'true',  'indicator'    ,'', {'OFF':'OFF', 'ON':'ON'} ],
     ['oson' , 'Oscillation'               , 'Oscillation of fan.'                                                           , 'string', 'true',  'state'        ,'', {'OFF':'OFF', 'ON':'ON'} ],
     ['qtar' , 'AirQualityTarget'          , 'Target Air quality for Auto Mode.'                                             , 'string', 'false', 'value'        ,''  ],
@@ -179,21 +179,30 @@ class dysonAirPurifier extends utils.Adapter {
                             this.log.warn(error);
                         });
                     break;
-                case 'OscillationOpeningAngle':{
+                case 'OscillationOpeningAngle': {
                     // OscillationOpeningAngle
-                    let left = await this.getStateAsync('system.adapter.dysonairpurifier.0.' + thisDevice + '.OscillationLeft');
-                    this.log.debug('OscillationOpeningAngle: thisDevice=' + thisDevice);
-                    this.log.debug('OscillationOpeningAngle: left=' + stringify(left));
-                    left = Number.parseInt(left.val);
-                    // subtract half opening angle from left value to spread angle equally in both directions
-                    this.log.debug('OscillationOpeningAngle: left=' + left);
-                    this.log.debug('OscillationOpeningAngle: state.val=' + state.val);
-                    this.log.debug('OscillationOpeningAngle: Num(state.val)=' + Number.parseInt(state.val));
-                    this.log.debug('OscillationOpeningAngle: Floor: state.val=' + Math.floor(Number.parseInt(state.val) / 2));
-                    this.log.debug('OscillationOpeningAngle: left - state.val/2=' + (left - Math.floor(Number.parseInt(state.val) / 2)));
-                    messageData = {'osal': dysonUtils.zeroFill((left - Math.floor(Number.parseInt(state.val) / 2)), 4)};
-                    messageData.osau = dysonUtils.zeroFill((left + state.val), 4);
-                    messageData.ancp = 'CUST';
+                    await this.getStateAsync(thisDevice + '.OscillationLeft').then(
+                        (result) => {
+                            this.log.debug('OscillationOpeningAngle: thisDevice=' + thisDevice);
+                            this.log.debug('OscillationOpeningAngle: left=' + stringify(result));
+                            let left  = Number.parseInt(result.val);
+                            const angle = (Math.floor(Number.parseInt(state.val)/2));
+                            // subtract half opening angle from left value to spread angle equally to both directions
+                            this.log.debug('OscillationOpeningAngle: left=' + left);
+                            // this.log.debug('OscillationOpeningAngle: state.val=' + state.val);
+                            // this.log.debug('OscillationOpeningAngle: Num(state.val)=' + Number.parseInt(state.val));
+                            left -= angle;
+                            this.log.debug('OscillationOpeningAngle: Floor(angle/2): angle=' + angle );
+                            this.log.debug('OscillationOpeningAngle: left - angle/2=' + left  );
+                            messageData = {'osal': dysonUtils.zeroFill(left, 4)};
+                            messageData.osau = dysonUtils.zeroFill((left + state.val), 4);
+                            messageData.ancp = 'CUST';
+                        }
+                    ).catch(
+                        (error) => {
+                            this.log.error(JSON.stringify(error));
+                        }
+                    );
                     break;
                 }
             }
@@ -202,6 +211,7 @@ class dysonAirPurifier extends utils.Adapter {
             const message = {'msg': 'STATE-SET',
                 'time': new Date().toISOString(),
                 'mode-reason': 'LAPP',
+                'state-reason':'MODE',
                 'data': messageData
             };
             for (const mqttDevice in devices){
@@ -408,42 +418,42 @@ class dysonAirPurifier extends utils.Adapter {
             }
             // Handle all other message types
             this.log.debug('Processing Message: ' + ((typeof message === 'object')? JSON.stringify(message) : message) );
-            const helper = await this.getDatapoint(row);
-            if ( helper === undefined){
+            const deviceConfig = await this.getDatapoint(row);
+            if ( deviceConfig === undefined){
                 this.log.info('Skipped creating unknown data field for: [' + row + '] Value: |-> ' + ((typeof( message[row] ) === 'object')? JSON.stringify(message[row]) : message[row]) );
                 continue;
             }
             // strip leading zeros from numbers
             let value;
-            if (helper[3]==='number'){
+            if (deviceConfig[3]==='number'){
                 // convert temperature to configured unit
-                value = Number.parseInt(message[helper[0]], 10);
-                if (helper[5] === 'value.temperature') {
+                value = Number.parseInt(message[deviceConfig[0]], 10);
+                if (deviceConfig[5] === 'value.temperature') {
                     switch (this.config.temperatureUnit) {
                         case 'K' : value /= 10;
                             break;
                         case 'C' :
-                            helper[6] = '°' + this.config.temperatureUnit;
+                            deviceConfig[6] = '°' + this.config.temperatureUnit;
                             value = Number((value/10) - 273.15).toFixed(2);
                             break;
                         case 'F' :
-                            helper[6] = '°' + this.config.temperatureUnit;
+                            deviceConfig[6] = '°' + this.config.temperatureUnit;
                             value = Number(((value/10) - 273.15) * (9/5) + 32).toFixed(2);
                             break;
                     }
                 }
-                if (helper[0] === 'filf') {
+                if (deviceConfig[0] === 'filf') {
                     // create additional data field filterlifePercent converting value from hours to percent; 4300 is the estimated lifetime in hours by dyson
                     value = Number(value * 100/4300);
-                    this.createOrExtendObject( device.Serial + path + '.FilterLifePercent', { type: 'state', common: {name: helper[2], 'read':true, 'write': helper[4]==='true', 'role': helper[5], 'type':helper[3], 'unit':'%', 'states': helper[7]}, native: {} }, value);
+                    this.createOrExtendObject( device.Serial + path + '.FilterLifePercent', { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':'%', 'states': deviceConfig[7]}, native: {} }, value);
                 }
             } else {
-                value = message[helper[0]];
+                value = message[deviceConfig[0]];
             }
             // during state-change message only changed values are being updated
             if (typeof (value) === 'object') {
                 if (value[0] === value[1]) {
-                    this.log.debug('Values for [' + helper[1] + '] are equal. No update required. Skipping.');
+                    this.log.debug('Values for [' + deviceConfig[1] + '] are equal. No update required. Skipping.');
                 } else {
                     value = value[1];
                 }
@@ -451,7 +461,7 @@ class dysonAirPurifier extends utils.Adapter {
             // check whether fan supports oscillation and add OscillationOpeningAngle if necessary
             // testing oson is not possible, because it exists on fans without oscillation also (e.g. DP01).
             // Testing OscillationAngleLeft (osal) instead
-            if (helper[0] === 'osal'){
+            if (deviceConfig[0] === 'osal'){
                 const left  = await this.getStateAsync(device.Serial + path + '.OscillationLeft');
                 const right = await this.getStateAsync(device.Serial + path + '.OscillationRight');
                 if (null != left && null !=right) {
@@ -463,16 +473,16 @@ class dysonAirPurifier extends utils.Adapter {
                     this.log.debug('Oscillation angle left/right missing in data.');
                 }
             }
-            // helper.length>7 means the data field has predefined states attached, that need to be handled
-            if (helper.length > 7) {
-                this.createOrExtendObject( device.Serial + path + '.'+ helper[1], { type: 'state', common: {name: helper[2], 'read':true, 'write': helper[4]==='true', 'role': helper[5], 'type':helper[3], 'unit':helper[6], 'states': helper[7]}, native: {} }, value);
+            // deviceConfig.length>7 means the data field has predefined states attached, that need to be handled
+            if (deviceConfig.length > 7) {
+                this.createOrExtendObject( device.Serial + path + '.'+ deviceConfig[1], { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':deviceConfig[6], 'states': deviceConfig[7]}, native: {} }, value);
             } else {
-                this.createOrExtendObject( device.Serial + path + '.'+ helper[1], { type: 'state', common: {name: helper[2], 'read':true, 'write': helper[4]==='true', 'role': helper[5], 'type':helper[3], 'unit':helper[6] }, native: {} }, value);
+                this.createOrExtendObject( device.Serial + path + '.'+ deviceConfig[1], { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':deviceConfig[6] }, native: {} }, value);
             }
-            // helper[4]=true -> data field is editable, so subscribe for state changes
-            if (helper[4]==='true') {
-                this.log.debug('Subscribing for state changes on :' + device.Serial + path + '.'+ helper[1] );
-                this.subscribeStates(device.Serial + path + '.'+ helper[1] );
+            // deviceConfig[4]=true -> data field is editable, so subscribe for state changes
+            if (deviceConfig[4]==='true') {
+                this.log.debug('Subscribing for state changes on :' + device.Serial + path + '.'+ deviceConfig[1] );
+                this.subscribeStates(device.Serial + path + '.'+ deviceConfig[1] );
             }
         }
     }
