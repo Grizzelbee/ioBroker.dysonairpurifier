@@ -75,22 +75,44 @@ You can also install older release versions using this methods (by pointing to a
 >
 > Then stop the adapter, enter the IP(s) into the Hostaddress field(s) and restart the adapter. After that your Dyson devices in the device tree should be populated with data.
 
-## Changelog
+## Controlling your device(s)
+This adapter is currently able to control the following states of your devices:
+* FanSpeed                  , Current fan speed
+* Nightmode                 , Night mode state
+* Oscillation               , Oscillation of fan.
+* ContinuousMonitoring      , Continuous Monitoring of environmental sensors even if device is off.
+* MainPower                 , Main Power of fan.
+* AutomaticMode             , Fan is in automatic mode.
+* Fandirection              , Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)
+* Jetfocus                  , Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)
+* OscillationLeft           , Maximum oscillation to the left. Relative to Anchorpoint.
+* OscillationRight          , Maximum oscillation to the right. Relative to Anchorpoint.
+* Anchorpoint               , Anchorpoint for oscillation. By default the dyson logo on the bottom plate.
+* HeatingMode               , Heating Mode [ON/OFF]
+* HeatingTargetTemp         , Target temperature for heating
+
+Possible values for these states are documented below, as far as known.
+Fan speed only allows values from 1 to 10 and Auto. If you like to set your fan speed down to 0 you'll need to power off the main power.
+Which is what the dyson app does also.
 
 ### Todo
-
 * detect IP of devices automatically
 * collect more mqtt message acronym meanings
+* subscribe changes of IP. OnChange reInit Adapter.
+* Add symbols for each fantype in object-view like tradfri or alexa
 
 ### Known issues
-
 * No automatic IP detection of devices
+* Adapter is currently not able to detect whether a mqtt connection has been properly established or not.
+
+## Changelog
 
 ### 0.7.1 (2021-01-xx) (Horizons)
 * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) Filterlifetime is now correctly displayed in hours and percent for devices supporting this
+* (grizzelbee) Fix: Removed option to control Fanstate since it corresponds to the state of the fan in auto-mode. Controlling it is senseless.
+* (grizzelbee) Upd: Added topic "Controlling your device(s)" to readme
 
 ### 0.7.0 (2021-01-08) (Afraid of the dark)
-
 * (jpwenzel)   New: Removing crypto from package dependency list (using Node.js provided version)
 * (jpwenzel)   New: Introducing unit tests
 * (jpwenzel)   Fix: General overhaul of readme
@@ -110,11 +132,7 @@ You can also install older release versions using this methods (by pointing to a
 * (grizzelbee) Fix: calling setState in callback of set/createObject now
 * (grizzelbee) Fix: ensuring to clear all timeouts in onUnload-function
 
-
-
-
-#K## 0.6.0 (2020-10-29) (Rage before the storm)
-
+### 0.6.0 (2020-10-29) (Rage before the storm)
 * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Filter life value is now displayed in percent not in hours
 * (grizzelbee) New: [#17](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/17) - Added online-indicator for each device
 * (grizzelbee) New: [#19](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/19) - Extended Password length from 15 characters to 32
@@ -122,11 +140,9 @@ You can also install older release versions using this methods (by pointing to a
 * (grizzelbee) Fix: Fixed typo within data field anchorpoint - please delete the old ancorpoint manually.
 
 ### 0.5.1 (2020-10-27) (Heart of the hurricance)
-
 * (grizzelbee) Fix: Added missing clearTimeout
 
 ### 0.5.0 (2020-10-27) (Heart of the hurricance)
-
 * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Filter life value is now displayed in percent not in hours
 * (grizzelbee) Fix: [#6](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/6) - Changing the fanspeed does now fully work.  
 * (grizzelbee) New: Editable data fields have now appropiate value lists
@@ -134,7 +150,6 @@ You can also install older release versions using this methods (by pointing to a
 * (grizzelbee) New: Target temperature of heater can now be set - **in the configured unit!**
 
 ### 0.4.1 (2020-10-16) (unbroken)
-
 * (grizzelbee) New: [#8](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/8) - Documented ProductTypes for better overview and user experience in ReadMe
 * (grizzelbee) New: [#9](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/9) - Added some Hot&Cool specific datafields
 * (grizzelbee) New: Logging of from devices, when shutting down the adapter
