@@ -85,11 +85,9 @@ This adapter is currently able to control the following states of your devices:
 * AutomaticMode             , Fan is in automatic mode.
 * Fandirection              , Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)
 * Jetfocus                  , Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)
-* OscillationLeft           , Maximum oscillation to the left. Relative to Anchorpoint.
-* OscillationRight          , Maximum oscillation to the right. Relative to Anchorpoint.
-* Anchorpoint               , Anchorpoint for oscillation. By default the dyson logo on the bottom plate.
 * HeatingMode               , Heating Mode [ON/OFF]
 * HeatingTargetTemp         , Target temperature for heating
+* AirQualityTarget          , Target air quality for auto mode.
 
 Possible values for these states are documented below, as far as known.
 Fan speed only allows values from 1 to 10 and Auto. If you like to set your fan speed down to 0 you'll need to power off the main power.
@@ -99,7 +97,7 @@ Which is what the dyson app does also.
 * detect IP of devices automatically
 * collect more mqtt message acronym meanings
 * subscribe changes of IP. OnChange reInit Adapter.
-* Add symbols for each fantype in object-view like tradfri or alexa
+* Add symbols for each fan type in object-view like tradfri or alexa
 
 ### Known issues
 * No automatic IP detection of devices
@@ -109,7 +107,8 @@ Which is what the dyson app does also.
 
 ### 0.7.1 (2021-01-xx) (Horizons)
 * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) Filterlifetime is now correctly displayed in hours and percent for devices supporting this
-* (grizzelbee) Fix: Removed option to control Fanstate since it corresponds to the state of the fan in auto-mode. Controlling it is senseless.
+* (grizzelbee) Fix: [#48](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/48) Fixed countrycodes for UK and USA
+* (grizzelbee) Fix: Removed option to control Fan state since it corresponds to the state of the fan in auto-mode. Controlling it is senseless.
 * (grizzelbee) Upd: Added topic "Controlling your device(s)" to readme
 
 ### 0.7.0 (2021-01-08) (Afraid of the dark)
@@ -222,7 +221,7 @@ Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD
 | osau | Oscilation right degrees | 0005 - 355 | °  (degrees)|
 | oscs | OscillationActive | ON, OFF, IDLE | |
 | ancp | Ancorpoint for oscilation ?  | CUST, 0180 |° (degrees)|
-| qtar | Air Quality target | 0001 , 0003... | |
+| qtar | Air Quality target | 0001=Good, 0002=Normal, 0003=Bad, 0004=Very bad | |
 | rhtm | Continious Monitoring | ON, OFF | |
 | auto | AutomaticMode | ON, OFF | |
 | nmdv | NightMode Max Fanspeed? | 0004 | |
@@ -237,18 +236,59 @@ Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD
 | haut | Target Humidifier Dehumidifier State| |
 | humt | Relative Humidity Humidifier Threshold| |
 | wacd | WarningCode? | NONE... | |
+| rstf | reset filter lifecycle | |
 | bril |  | 0002 |  |  
 | corf |  | ON, OFF | |
 | psta | [HP0x] Unknown |  | |
 | hsta | [HP0x] Unknown |  | |
 | tilt | [HP0x] Unknown |  | |
 | dial | [DP0x] Unknown |  | |
+cdrr' for 'Clean Duration Remaining
+humt' field for 'Manual Humidification Target
+rect' for 'Auto Humidification target
+cltr' field for 'Time Remaining to Next Clean
+wath' field for Water Hardness
+
+    @SerializedName("auto")
+    private String mAutoMode;
+    @SerializedName("fmod")
+    private String mFanMode;
+    @SerializedName("fnsp")
+    private String mFanSpeed;
+    @SerializedName("fdir")
+    private String mFlowDirection;
+    @SerializedName("ffoc")
+    private String mFlowFocus;
+    @SerializedName("hmod")
+    private String mHeaterMode;
+    @SerializedName("humt")
+    private String mHumidificationLevel;
+    @SerializedName("hume")
+    private String mHumidificationMode;
+    @SerializedName("haut")
+    private String mHumidifyAutoMode;
+    @SerializedName("nmod")
+    private String mNightMode;
+    @SerializedName("oson")
+    private String mOscillation;
+    @SerializedName("ancp")
+    private String mOscillationAngle;
+    @SerializedName("osal")
+    private String mOscillationAngleLowerBoundary;
+    @SerializedName("osau")
+    private String mOscillationAngleUpperBoundary;
+    @SerializedName("hmax")
+    private Integer mTemperatureTarget;
+
+
+
+
 
 |Error-Codes| Meaning |
 | ----- | ----- |
 | NONE | There is no error active |
 |57C2| unknown |
-|11E1| Oscilation has been disabled. Please press Button "Oscilation" on your remote to continue.|
+|11E1| Oscillation has been disabled. Please press Button "Oscillation" on your remote to continue.|
 
 #### scheduler
 
