@@ -538,13 +538,13 @@ class dysonAirPurifier extends utils.Adapter {
         // VOC QualityIndex
         // 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad
         let VOCIndex = 0;
-        if (message[row].va10 < 4) {
+        if (message[row].va10 < 40) {
             VOCIndex = 0;
-        } else if (message[row].va10 >= 4 && message[row].va10 <= 6) {
+        } else if (message[row].va10 >= 40 && message[row].va10 < 70) {
             VOCIndex = 1;
-        } else if (message[row].va10 >= 7 && message[row].va10 <= 8) {
+        } else if (message[row].va10 >= 70 && message[row].va10 < 90) {
             VOCIndex = 2;
-        } else if (message[row].va10 >= 9) {
+        } else if (message[row].va10 >= 90) {
             VOCIndex = 3;
         }
         this.createOrExtendObject(device.Serial + '.Sensor.VOCIndex', {
