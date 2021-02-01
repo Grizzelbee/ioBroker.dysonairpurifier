@@ -165,7 +165,7 @@ class dysonAirPurifier extends utils.Adapter {
                     break;
                 }
                 case 'osal' :
-                    await this.getStateAsync(thisDevice + '.OscillationOpeningAngle')
+                    this.getStateAsync(thisDevice + '.OscillationOpeningAngle')
                         .then((result) => {
                             messageData = {[dysonAction]: dysonUtils.zeroFill(state.val, 4)};
                             messageData.osau = dysonUtils.zeroFill(Number( Number.parseInt(state.val) + Number.parseInt(result.val) ), 4);
@@ -181,7 +181,7 @@ class dysonAirPurifier extends utils.Adapter {
                     break;
                 case 'OscillationOpeningAngle': {
                     // OscillationOpeningAngle
-                    await this.getStateAsync(thisDevice + '.OscillationLeft').then(
+                    this.getStateAsync(thisDevice + '.OscillationLeft').then(
                         (result) => {
                             this.log.debug('OscillationOpeningAngle: thisDevice=' + thisDevice);
                             this.log.debug('OscillationOpeningAngle: left=' + stringify(result));
@@ -338,7 +338,7 @@ class dysonAirPurifier extends utils.Adapter {
                 native: {}
             }, device.mqttPassword);
             this.log.debug('Querying Host-Address of device: ' + device.Serial);
-            await this.getStateAsync(device.Serial + '.Hostaddress')
+            this.getStateAsync(device.Serial + '.Hostaddress')
                 .then((state) => {
                     if (state  && state.val !== '') {
                         this.log.debug('Found valid Host-Address.val [' + state.val + '] for device: ' + device.Serial);
@@ -698,7 +698,7 @@ class dysonAirPurifier extends utils.Adapter {
         const adapterLog = this.log;
         try {
             let myAccount;
-            await this.dysonAPILogIn(this.config)
+            this.dysonAPILogIn(this.config)
                 .then( (response) => {
                     this.log.debug('Successful logged in with the Dyson API.');
                     // Creates the authorization header for further use
@@ -735,7 +735,7 @@ class dysonAirPurifier extends utils.Adapter {
                 });
             if (typeof myAccount !== 'undefined'){
                 adapterLog.debug('Querying devices from dyson API.');
-                await this.dysonGetDevicesFromApi(myAccount)
+                this.dysonGetDevicesFromApi(myAccount)
                     .then( (response) => {
                         for (const thisDevice in response.data) {
                             adapterLog.debug('Data received from dyson API: ' + JSON.stringify(response.data[thisDevice]));
@@ -762,10 +762,14 @@ class dysonAirPurifier extends utils.Adapter {
                 // 2a. Store IP-Address in additional persistent data field
                 // 3. query local data from each thisDevice
                 for (const thisDevice in devices) {
-                    await this.CreateOrUpdateDevice(devices[thisDevice])
+                    this.CreateOrUpdateDevice(devices[thisDevice])
                         .then(() => {
                             // Initializes the MQTT client for local communication with the thisDevice
                             adapterLog.debug('Trying to connect device [' + devices[thisDevice].Serial + '] to mqtt.');
+                            if (devices[thisDevice].hostAddress === undefined) {
+                                adapterLog.info('No host address given. Trying to connect to the device with it\'s default hostname [' + devices[thisDevice].Serial + ']. This should work if you haven\'t changed it.');
+                                devices[thisDevice].hostAddress = devices[thisDevice].Serial;
+                            };
                             devices[thisDevice].mqttClient = mqtt.connect('mqtt://' + devices[thisDevice].hostAddress, {
                                 username: devices[thisDevice].Serial,
                                 password: devices[thisDevice].mqttPassword,
@@ -878,7 +882,7 @@ class dysonAirPurifier extends utils.Adapter {
             // Terminate adapter after first start because configuration is not yet received
             // Adapter is restarted automatically when config page is closed
             adapter = this; // preserve adapter reference to address functions etc. correctly later
-            await dysonUtils.checkAdapterConfig(this)
+            dysonUtils.checkAdapterConfig(this)
                 .then(() => {
                     // configisValid! No password decryption needed since it is handeled by the adapter prototype
                     this.main();
@@ -908,7 +912,7 @@ class dysonAirPurifier extends utils.Adapter {
         this.createOrExtendObject(device + '.Online', {
             type: 'state',
             common: {
-                name: 'Indicator whether device if online or offline.',
+                name: 'Indicator whether device is online or offline.',
                 'read': true,
                 'write': false,
                 'role': 'indicator.reachable',
