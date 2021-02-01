@@ -45,32 +45,32 @@ let Dust = 0; // Numeric representation of current DustIndex
 // Every row is one state in a dyson message. Format: [ dysonCode, Name of Datapoint, Description, datatype, writable, role, unit, possible values for data field]
 const datapoints = [
     ['channel' , 'WIFIchannel'            , 'Number of the used WIFI channel.'                                              , 'number', 'false', 'value'        ,''  ],
-    ['ercd' , 'LastErrorCode'             , 'Error code of the last error occurred on this device'                          , 'string', 'false', 'value'        ,''  ],
+    ['ercd' , 'LastErrorCode'             , 'Error code of the last error occurred on this device'                          , 'string', 'false', 'text'        ,''  ],
     ['filf' , 'FilterLife'                , 'Estimated remaining filter life in hours.'                                     , 'number', 'false', 'value'        , 'hours' ],
-    ['fmod' , 'Mode'                      , 'Mode of device'                                                                , 'string', 'false', 'value'        ,'', {'FAN':'Fan', 'AUTO':'Auto'} ],
-    ['fnsp' , 'FanSpeed'                  , 'Current fan speed'                                                             , 'string', 'true',  'value'        ,'', {'AUTO':'Auto', '0001':'1', '0002':'2', '0003':'3', '0004':'4', '0005':'5', '0006':'6', '0007':'7', '0008':'8', '0009':'9', '0010':'10' } ],
-    ['fnst' , 'FanStatus'                 , 'Current Fan state; correlating to Auto-mode'                                   , 'string', 'false', 'state'        ,'' ],
-    ['nmod' , 'Nightmode'                 , 'Night mode state'                                                              , 'string', 'true',  'indicator'    ,'', {'OFF':'OFF', 'ON':'ON'} ],
-    ['oson' , 'Oscillation'               , 'Oscillation of fan.'                                                           , 'string', 'true',  'state'        ,'', {'OFF':'OFF', 'ON':'ON'} ],
-    ['qtar' , 'AirQualityTarget'          , 'Target Air quality for Auto Mode.'                                             , 'string', 'false', 'value'        ,''  ],
-    ['rhtm' , 'ContinuousMonitoring'      , 'Continuous Monitoring of environmental sensors even if device is off.'         , 'string', 'true',  'state'        ,'', {'OFF':'OFF', 'ON':'ON'} ],
-    ['fpwr' , 'MainPower'                 , 'Main Power of fan.'                                                            , 'string', 'true',  'state.power'  ,'', {'OFF':'OFF', 'ON':'ON'} ],
-    ['auto' , 'AutomaticMode'             , 'Fan is in automatic mode.'                                                     , 'string', 'true',  'state'        ,'', {'OFF':'OFF', 'ON':'ON'} ],
-    ['oscs' , 'OscillationActive'         , 'Fan is currently oscillating.'                                                 , 'string', 'false', 'indicator'    ,'', {'IDLE':'Idle', 'OFF':'OFF', 'ON':'ON'} ],
+    ['fmod' , 'Mode'                      , 'Mode of device'                                                                , 'string', 'false', 'text'        ,'', {'FAN':'Fan', 'AUTO':'Auto'} ],
+    ['fnsp' , 'FanSpeed'                  , 'Current fan speed'                                                             , 'string', 'true',  'switch'        ,'', {'AUTO':'Auto', '0001':'1', '0002':'2', '0003':'3', '0004':'4', '0005':'5', '0006':'6', '0007':'7', '0008':'8', '0009':'9', '0010':'10' } ],
+    ['fnst' , 'FanStatus'                 , 'Current Fan state; correlating to Auto-mode'                                   , 'string', 'false', 'text'        ,'' ],
+    ['nmod' , 'Nightmode'                 , 'Night mode state'                                                              , 'string', 'true',  'switch.mode.moonlight'    ,'', {'OFF':'OFF', 'ON':'ON'} ],
+    ['oson' , 'Oscillation'               , 'Oscillation of fan.'                                                           , 'string', 'true',  'switch'        ,'', {'OFF':'OFF', 'ON':'ON'} ],
+    ['qtar' , 'AirQualityTarget'          , 'Target Air quality for Auto Mode.'                                             , 'string', 'false', 'text'        ,''  ],
+    ['rhtm' , 'ContinuousMonitoring'      , 'Continuous Monitoring of environmental sensors even if device is off.'         , 'string', 'true',  'switch'        ,'', {'OFF':'OFF', 'ON':'ON'} ],
+    ['fpwr' , 'MainPower'                 , 'Main Power of fan.'                                                            , 'string', 'true',  'switch.power'  ,'', {'OFF':'OFF', 'ON':'ON'} ],
+    ['auto' , 'AutomaticMode'             , 'Fan is in automatic mode.'                                                     , 'string', 'true',  'switch'        ,'', {'OFF':'OFF', 'ON':'ON'} ],
+    ['oscs' , 'OscillationActive'         , 'Fan is currently oscillating.'                                                 , 'string', 'false', 'text'    ,'', {'IDLE':'Idle', 'OFF':'OFF', 'ON':'ON'} ],
     ['nmdv' , 'NightModeMaxFan'           , 'Maximum fan speed in night mode.'                                              , 'number', 'false', 'value'        ,''  ],
-    ['cflr' , 'CarbonfilterLifetime'      , 'Remaining lifetime of activated carbon filter.'                                , 'number', 'false', 'state' 	 	,'%' ],
-    ['fdir' , 'Fandirection'              , 'Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)'                , 'string', 'true',  'indicator'    ,'', {'OFF': 'Back', 'ON': 'Front'} ],
-    ['ffoc' , 'Jetfocus'                  , 'Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)'                , 'string', 'true',  'indicator'    ,'', {'OFF': 'Back', 'ON': 'Front'} ],
-    ['hflr' , 'HEPA-FilterLifetime'       , 'Remaining lifetime of HEPA-Filter.'                                            , 'number', 'false', 'state'        ,'%' ],
-    ['cflt' , 'Carbonfilter'              , 'Filter type installed in carbon filter port.'                                  , 'string', 'false', 'value'        ,''  ],
-    ['hflt' , 'HEPA-Filter'               , 'Filter type installed in HEPA-filter port.'                                    , 'string', 'false', 'value'        ,''  ],
-    ['sltm' , 'Sleeptimer'                , 'Sleep timer.'                                                                  , 'string', 'false', 'indicator'    ,''  ],
-    ['osal' , 'OscillationLeft'           , 'Maximum oscillation to the left. Relative to Anchorpoint.'                     , 'string', 'true',  'value'        ,'°' ],
-    ['osau' , 'OscillationRight'          , 'Maximum oscillation to the right. Relative to Anchorpoint.'                    , 'string', 'true',  'value'        ,'°' ],
-    ['ancp' , 'Anchorpoint'               , 'Anchorpoint for oscillation. By default the dyson logo on the bottom plate.'   , 'string', 'true',  'value'        ,'°' ],
+    ['cflr' , 'CarbonfilterLifetime'      , 'Remaining lifetime of activated carbon filter.'                                , 'number', 'false', 'value' 	 	,'%' ],
+    ['fdir' , 'Fandirection'              , 'Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)'                , 'string', 'true',  'switch'    ,'', {'OFF': 'Back', 'ON': 'Front'} ],
+    ['ffoc' , 'Jetfocus'                  , 'Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)'                , 'string', 'true',  'switch'    ,'', {'OFF': 'Back', 'ON': 'Front'} ],
+    ['hflr' , 'HEPA-FilterLifetime'       , 'Remaining lifetime of HEPA-Filter.'                                            , 'number', 'false', 'value'        ,'%' ],
+    ['cflt' , 'Carbonfilter'              , 'Filter type installed in carbon filter port.'                                  , 'string', 'false', 'text'        ,''  ],
+    ['hflt' , 'HEPA-Filter'               , 'Filter type installed in HEPA-filter port.'                                    , 'string', 'false', 'text'        ,''  ],
+    ['sltm' , 'Sleeptimer'                , 'Sleep timer.'                                                                  , 'string', 'false', 'text'    ,''  ],
+    ['osal' , 'OscillationLeft'           , 'Maximum oscillation to the left. Relative to Anchorpoint.'                     , 'string', 'true',  'text'        ,'°' ],
+    ['osau' , 'OscillationRight'          , 'Maximum oscillation to the right. Relative to Anchorpoint.'                    , 'string', 'true',  'text'        ,'°' ],
+    ['ancp' , 'Anchorpoint'               , 'Anchorpoint for oscillation. By default the dyson logo on the bottom plate.'   , 'string', 'true',  'text'        ,'°' ],
     ['rssi' , 'RSSI'                      , 'Received Signal Strength Indication. Quality indicator for WIFI signal.'       , 'number', 'false', 'value'        ,'dBm' ],
     ['pact' , 'Dust'                      , 'Dust'                                                                          , 'number', 'false', 'value'        ,''  ],
-    ['hact' , 'Humidity'                  , 'Humidity'                                                                      , 'number', 'false', 'value'        ,'%' ],
+    ['hact' , 'Humidity'                  , 'Humidity'                                                                      , 'number', 'false', 'value.humidity'        ,'%' ],
     ['sltm' , 'Sleeptimer'                , 'Sleep timer'                                                                   , 'number', 'false', 'value'        ,'Min' ],
     ['tact' , 'Temperature'               , 'Temperature'                                                                   , 'number', 'false', 'value.temperature' ,'' ],
     ['vact' , 'VOC'                       , 'VOC - Volatile Organic Compounds'                                              , 'number', 'false', 'value'             ,'' ],
@@ -80,11 +80,11 @@ const datapoints = [
     ['noxl' , 'NO2'                       , 'NO2 - Nitrogen dioxide (inside)'                                               , 'number', 'false', 'value'             ,'' ],
     ['p25r' , 'PM25R'                     , 'PM-2.5R - Particulate Matter 2.5µm'                                            , 'number', 'false', 'value'             ,'µg/m³' ],
     ['p10r' , 'PM10R'                     , 'PM-10R - Particulate Matter 10µm'                                              , 'number', 'false', 'value'             ,'µg/m³' ],
-    ['hmod' , 'HeatingMode'               , 'Heating Mode [ON/OFF]'                                                         , 'string', 'true',  'indicator'         ,'', {'OFF': 'OFF', 'ON': 'ON'} ],
-    ['hmax' , 'HeatingTargetTemp'         , 'Target temperature for heating'                                                , 'string', 'true',  'value'             ,'' ],
-    ['hume' , 'DehumidifierState'         , 'Dehumidifier State [ON/OFF]'                                                   , 'string', 'false', 'value'             ,'' ],
-    ['haut' , 'TargetHumidifierState'     , 'Target Humidifier Dehumidifier State'                                          , 'string', 'false', 'value'             ,'' ],
-    ['humt' , 'RelativeHumidityThreshold' , 'Relative Humidity Humidifier Threshold'                                        , 'string', 'false', 'value'             ,'' ]
+    ['hmod' , 'HeatingMode'               , 'Heating Mode [ON/OFF]'                                                         , 'string', 'true',  'switch'         ,'', {'OFF': 'OFF', 'ON': 'ON'} ],
+    ['hmax' , 'HeatingTargetTemp'         , 'Target temperature for heating'                                                , 'string', 'true',  'text'             ,'' ],
+    ['hume' , 'DehumidifierState'         , 'Dehumidifier State [ON/OFF]'                                                   , 'string', 'false', 'text'             ,'' ],
+    ['haut' , 'TargetHumidifierState'     , 'Target Humidifier Dehumidifier State'                                          , 'string', 'false', 'text'             ,'' ],
+    ['humt' , 'RelativeHumidityThreshold' , 'Relative Humidity Humidifier Threshold'                                        , 'string', 'false', 'text'             ,'' ]
 /* removed until further use // unknown data fields will be logged to the logfile
     ["psta" , "psta"                      , "[HP0x] Unknown"                                                                , "string", "false", "value"                       ,"" ],
     ["hsta" , "hsta"                      , "[HP0x] Unknown"                                                                , "string", "false", "value"                       ,"" ],
@@ -107,10 +107,10 @@ class dysonAirPurifier extends utils.Adapter {
     constructor(options) {
         super({...options, name: adapterName});
 
-        this.on('ready', this.onReady.bind(this));
         // this.on('objectChange', this.onObjectChange.bind(this));
-        this.on('stateChange', this.onStateChange.bind(this));
         // this.on('message', this.onMessage.bind(this));
+        this.on('ready', this.onReady.bind(this));
+        this.on('stateChange', this.onStateChange.bind(this));
         this.on('unload', this.onUnload.bind(this));
     }
 
