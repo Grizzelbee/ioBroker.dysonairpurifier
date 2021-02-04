@@ -9,24 +9,23 @@ const utils = require('@iobroker/adapter-core');
 const adapterName = require('./package.json').name.split('.').pop();
 
 // Load additional modules
-const axios  = require('axios');
 const mqtt   = require('mqtt');
-const {stringify} = require('flatted');
-const path = require('path');
-const https = require('https');
-const rootCas = require('ssl-root-cas').create();
-rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
-const httpsAgent = new https.Agent({ca: rootCas});
+// const {stringify} = require('flatted');
+// const path = require('path');
+// const https = require('https');
+// const rootCas = require('ssl-root-cas').create();
+// rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
+// const httpsAgent = new https.Agent({ca: rootCas});
 
 // Load utils for this adapter
 const dysonUtils = require('./dyson-utils.js');
 
 // Variable definitions
 let adapter = null;
-const devices=[]; // Array that contains all local devices
+let adapterIsSetUp = false;
+// const devices=[]; // Array that contains all local devices
 // const ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-const apiUri = 'https://appapi.cp.dyson.com';
-const supportedProductTypes = ['358', '438', '455', '469', '475', '520', '527'];
+
 const products = {  '358':'Dyson Pure Humidify+Cool',
     '438':'Dyson Pure Cool Tower',
     '455':'Dyson Pure Hot+Cool Link',
@@ -326,6 +325,7 @@ class dysonAirPurifier extends utils.Adapter {
                 common: {name: 'Name of device.', 'read': true, 'write': true, 'role': 'value', 'type': 'string'},
                 native: {}
             }, device.Name);
+            /*
             this.createOrExtendObject(device.Serial + '.MqttCredentials', {
                 type: 'state',
                 common: {
@@ -337,6 +337,7 @@ class dysonAirPurifier extends utils.Adapter {
                 },
                 native: {}
             }, device.mqttPassword);
+            */
             this.log.debug('Querying Host-Address of device: ' + device.Serial);
             this.getStateAsync(device.Serial + '.Hostaddress')
                 .then((state) => {
@@ -346,7 +347,7 @@ class dysonAirPurifier extends utils.Adapter {
                         this.createOrExtendObject(device.Serial + '.Hostaddress', {
                             type: 'state',
                             common: {
-                                name: 'Local host address (IP) of device.',
+                                name: 'Local host address (or IP) of device.',
                                 'read': true,
                                 'write': true,
                                 'role': 'value',
@@ -697,67 +698,10 @@ class dysonAirPurifier extends utils.Adapter {
     async main() {
         const adapterLog = this.log;
         try {
-            let myAccount;
-            this.dysonAPILogIn(this.config)
-                .then( (response) => {
-                    this.log.debug('Successful logged in with the Dyson API.');
-                    // Creates the authorization header for further use
-                    myAccount = 'Basic ' + Buffer.from(response.data.Account + ':' + response.data.Password).toString('base64');
-                    adapterLog.debug('[dysonAPILogIn]: Statuscode from Axios: [' + response.status + ']');
-                    adapterLog.debug('[dysonAPILogIn]: Statustext from Axios [' + response.statusText+ ']');
-                })
-                .catch( (error) => {
-                    this.log.error('Error during dyson API login:' + error + ', Callstack: ' + error.stack);
-                    if (error.response) {
-                        // The request was made and the server responded with a status code
-                        // that falls out of the range of 2xx
-                        switch (error.response.status){
-                            case 401 : // unauthorized
-                                adapterLog.error('Error: Unable to authenticate user! Your credentials are invalid. Please double check and fix them. This adapter has a maximum Pwd length of 32 chars.');
-                                break;
-                            default:
-                                adapterLog.error('[error.response.data]: '    + ( (typeof error.response.data    === 'object')? stringify(error.response.data):error.response.data ) );
-                                adapterLog.error('[error.response.status]: '  + ( (typeof error.response.status  === 'object')? stringify(error.response.status):error.response.status ) );
-                                adapterLog.error('[error.response.headers]: ' + ( (typeof error.response.headers === 'object')? stringify(error.response.headers):error.response.headers ) );
-                                break;
-                        }
-                    } else if (error.request) {
-                        // The request was made but no response was received
-                        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                        // http.ClientRequest in node.js
-                        adapterLog.error('[error.request]: ' + ((typeof error.request === 'object')? stringify(error.request):error.request ) );
-                    } else {
-                        // Something happened in setting up the request that triggered an Error
-                        adapterLog.error('[Error]: ' + error.message);
-                    }
-                    adapterLog.error('[error.config]:' + JSON.stringify(error.config));
-                    this.terminate('Terminating Adapter due to error during querying dyson API. Most common errors are missing or bad dyson credentials.', 11);
-                });
+            const myAccount = await dysonUtils.getMqttCredentials(adapter);
             if (typeof myAccount !== 'undefined'){
                 adapterLog.debug('Querying devices from dyson API.');
-                this.dysonGetDevicesFromApi(myAccount)
-                    .then( (response) => {
-                        for (const thisDevice in response.data) {
-                            adapterLog.debug('Data received from dyson API: ' + JSON.stringify(response.data[thisDevice]));
-                            // 1. create datapoints if device is supported
-                            if (!supportedProductTypes.some(function (t) {
-                                return t === response.data[thisDevice].ProductType;
-                            })) {
-                                adapterLog.warn('Device with serial number [' + response.data[thisDevice].Serial + '] not added, hence it is not supported by this adapter. Product type: [' + response.data[thisDevice].ProductType + ']');
-                                adapterLog.warn('Please open an Issue on github if you think your device should be supported.');
-                            } else {
-                                // productType is supported: Push to Array and create in devicetree
-                                response.data[thisDevice].hostAddress  = undefined;
-                                response.data[thisDevice].mqttClient   = null;
-                                response.data[thisDevice].mqttPassword = dysonUtils.decryptMqttPasswd(response.data[thisDevice].LocalCredentials);
-                                response.data[thisDevice].updateIntervalHandle = null;
-                                devices.push(response.data[thisDevice]);
-                            }
-                        }
-                    })
-                    .catch( (error) => {
-                        adapterLog.error('[dysonGetDevicesFromApi] Error: ('+error.statuscode+')' + error + ', Callstack: ' + error.stack);
-                    });
+                const devices = await dysonUtils.getDevices(myAccount, adapter);
                 // 2. Search Network for IP-Address of current thisDevice
                 // 2a. Store IP-Address in additional persistent data field
                 // 3. query local data from each thisDevice
@@ -769,7 +713,7 @@ class dysonAirPurifier extends utils.Adapter {
                             if (devices[thisDevice].hostAddress === undefined) {
                                 adapterLog.info('No host address given. Trying to connect to the device with it\'s default hostname [' + devices[thisDevice].Serial + ']. This should work if you haven\'t changed it.');
                                 devices[thisDevice].hostAddress = devices[thisDevice].Serial;
-                            };
+                            }
                             devices[thisDevice].mqttClient = mqtt.connect('mqtt://' + devices[thisDevice].hostAddress, {
                                 username: devices[thisDevice].Serial,
                                 password: devices[thisDevice].mqttPassword,
@@ -796,6 +740,7 @@ class dysonAirPurifier extends utils.Adapter {
                                 // start refresh scheduler with interval from adapters config
                                 devices[thisDevice].updateIntervalHandle = setTimeout(function schedule() {
                                     adapterLog.debug('Updating device [' + devices[thisDevice].Serial + '] (polling API scheduled).');
+                                    adapterIsSetUp = true;
                                     try {
                                         devices[thisDevice].mqttClient.publish(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/command', JSON.stringify({
                                             msg: 'REQUEST-CURRENT-STATE',
@@ -866,6 +811,9 @@ class dysonAirPurifier extends utils.Adapter {
                             adapterLog.error(`[main/CreateOrUpdateDevice] error: ${error.message}, stack: ${error.stack}`);
                         });
                 }
+            } else{
+                adapterLog.error(`[main()] error: myAccount is: [` + myAccount + ']');
+                this.terminate('Terminating Adapter due to error with the mqtt credentials.', 11);
             }
         } catch (error) {
             adapterLog.error(`[main()] error: ${error.message}, stack: ${error.stack}`);
@@ -882,7 +830,7 @@ class dysonAirPurifier extends utils.Adapter {
             // Terminate adapter after first start because configuration is not yet received
             // Adapter is restarted automatically when config page is closed
             adapter = this; // preserve adapter reference to address functions etc. correctly later
-            dysonUtils.checkAdapterConfig(this)
+            dysonUtils.checkAdapterConfig(adapter)
                 .then(() => {
                     // configisValid! No password decryption needed since it is handeled by the adapter prototype
                     this.main();
@@ -933,16 +881,20 @@ class dysonAirPurifier extends utils.Adapter {
     * @param callback {callback} callback function
     */
     createOrExtendObject(id, objData, value) {
-        const self = this;
-        this.getObject(id, function (err, oldObj) {
-            if (!err && oldObj) {
-                self.log.debug('Updating existing object [' + id +'] with value: ['+ value+']');
-                self.extendObject(id, objData, () => {self.setState(id, value, true);});
-            } else {
-                self.log.debug('Creating new object [' + id +'] with value: ['+ value+']');
-                self.setObjectNotExists(id, objData, () => {self.setState(id, value, true);});
-            }
-        });
+        if (adapterIsSetUp) {
+            this.setState(id, value, true);
+        } else {
+            const self = this;
+            this.getObject(id, function (err, oldObj) {
+                if (!err && oldObj) {
+                    self.log.debug('Updating existing object [' + id +'] with value: ['+ value+']');
+                    self.extendObject(id, objData, () => {self.setState(id, value, true);});
+                } else {
+                    self.log.debug('Creating new object [' + id +'] with value: ['+ value+']');
+                    self.setObjectNotExists(id, objData, () => {self.setState(id, value, true);});
+                }
+            });
+        }
     }
 
     /**
@@ -984,34 +936,7 @@ class dysonAirPurifier extends utils.Adapter {
     * dyson API functions                         *
     ***********************************************/
     
-    /**
-     * dysonAPILogin
-     *
-     * @param config {object} Object which contains all the adapter config
-     *
-     * @returns promise {Promise} Promise that fulfills when dyson login worked and rejects on any http error.
-     */
-    async dysonAPILogIn(config) {
-        this.log.debug('Signing in into Dyson API...');
-        // Sends the login request to the API
-        return axios.post(apiUri + '/v1/userregistration/authenticate?country=' + config.country,
-            {
-                Email: config.email,
-                Password: config.Password
-            },
-            { httpsAgent });
-    }
 
-    async dysonGetDevicesFromApi(auth) {
-        // Sends a request to the API to get all devices of the user
-        return axios.get(apiUri + '/v2/provisioningservice/manifest',
-            {
-                httpsAgent,
-                headers: { 'Authorization': auth },
-                json: true
-            }
-        );
-    }
 
     // Exit adapter
     onUnload(callback) {

@@ -106,10 +106,16 @@ Which is what the dyson app does also.
 ## Changelog
 
 ### 0.7.1 (2021-01-xx) (Horizons)
+* (grizzelbee) New: When no host address is given - adapter tries to connect via default hostname of the device
 * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) Filterlifetime is now correctly displayed in hours and percent for devices supporting this
 * (grizzelbee) Fix: [#48](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/48) Fixed countrycodes for UK and USA
+* (grizzelbee) Fix: [#52](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/52) Fixed VOCIndex
 * (grizzelbee) Fix: Removed option to control Fan state since it corresponds to the state of the fan in auto-mode. Controlling it is senseless.
 * (grizzelbee) Upd: Added topic "Controlling your device(s)" to readme
+* (grizzelbee) Fix: Fixed await..then anti pattern
+* (grizzelbee) Fix: Fixed undefined roles
+* (grizzelbee) Fix: Fixed some bad promises and moved code to dysonUtils
+
 
 ### 0.7.0 (2021-01-08) (Afraid of the dark)
 * (jpwenzel)   New: Removing crypto from package dependency list (using Node.js provided version)
