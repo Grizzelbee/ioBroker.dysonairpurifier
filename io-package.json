@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "0.7.0",
+        "version": "0.7.1",
         "news": {
+            "0.7.1": {
+                "en": "Many bugfixes and improvements - Refer to changelog for details.",
+                "de": "Viele Bugfixes und Verbesserungen - Einzelheiten finden Sie im Änderungsprotokoll.",
+                "ru": "Множество исправлений и улучшений - подробности см. В журнале изменений.",
+                "pt": "Muitas correções de bugs e melhorias - Consulte o changelog para detalhes.",
+                "nl": "Veel bugfixes en verbeteringen - Raadpleeg het changelog voor details.",
+                "fr": "De nombreuses corrections de bugs et améliorations - Reportez-vous au journal des modifications pour plus de détails.",
+                "it": "Molte correzioni di bug e miglioramenti - Fare riferimento al log delle modifiche per i dettagli.",
+                "es": "Muchas correcciones de errores y mejoras: consulte el registro de cambios para obtener más detalles.",
+                "pl": "Wiele poprawek i ulepszeń - szczegóły w dzienniku zmian.",
+                "zh-cn": "许多错误修正和改进-有关详细信息，请参考changelog。"
+            },
             "0.7.0": {
                 "en": "Breaking-change - Many bugfixes and improvements - Refer to changelog for details.",
                 "de": "Breaking-Change - Viele Bugfixes und Verbesserungen - Weitere Informationen finden Sie im Changelog.",

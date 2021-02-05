@@ -121,6 +121,7 @@ Which is what the dyson app does also.
 * (grizzelbee) Fix: Fixed encrypting password using js-controller 3.0 build-in routine
 * (grizzelbee) Upd: Added topic "Controlling your device(s)" to readme
 * (grizzelbee) Upd: Removed unnecessary saving of MQTT password
+* (grizzelbee) Upd: [#9](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/9) Added some more dyson codes for heaters and humidifiers
 
 
 ### 0.7.0 (2021-01-08) (Afraid of the dark)
