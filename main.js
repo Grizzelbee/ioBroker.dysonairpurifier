@@ -10,12 +10,7 @@ const adapterName = require('./package.json').name.split('.').pop();
 
 // Load additional modules
 const mqtt   = require('mqtt');
-// const {stringify} = require('flatted');
-// const path = require('path');
-// const https = require('https');
-// const rootCas = require('ssl-root-cas').create();
-// rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
-// const httpsAgent = new https.Agent({ca: rootCas});
+const {stringify} = require('flatted');
 
 // Load utils for this adapter
 const dysonUtils = require('./dyson-utils.js');
@@ -23,8 +18,7 @@ const dysonUtils = require('./dyson-utils.js');
 // Variable definitions
 let adapter = null;
 let adapterIsSetUp = false;
-// const devices=[]; // Array that contains all local devices
-// const ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+
 
 const products = {  '358':'Dyson Pure Humidify+Cool',
     '438':'Dyson Pure Cool Tower',
@@ -325,19 +319,6 @@ class dysonAirPurifier extends utils.Adapter {
                 common: {name: 'Name of device.', 'read': true, 'write': true, 'role': 'value', 'type': 'string'},
                 native: {}
             }, device.Name);
-            /*
-            this.createOrExtendObject(device.Serial + '.MqttCredentials', {
-                type: 'state',
-                common: {
-                    name: 'Local MQTT password of device.',
-                    'read': true,
-                    'write': false,
-                    'role': 'value',
-                    'type': 'string'
-                },
-                native: {}
-            }, device.mqttPassword);
-            */
             this.log.debug('Querying Host-Address of device: ' + device.Serial);
             this.getStateAsync(device.Serial + '.Hostaddress')
                 .then((state) => {
@@ -368,7 +349,7 @@ class dysonAirPurifier extends utils.Adapter {
                             },
                             native: {}
                         }, undefined);
-                        this.log.error('IP-Address of device ['+ device.Serial +'] is invalid. Please enter the valid IP of this device in your LAN to the device tree.');
+                        this.log.error(`IP-Address (${device.hostAddress}) of device [${device.Serial}] is invalid or can't be resolved. Please enter the valid IP of this device in your LAN to the device tree.`);
                         this.setState('info.connection', false);
                         this.terminate('Terminating Adapter due to missing or invalid device IP.', 11);
                     }
@@ -711,7 +692,7 @@ class dysonAirPurifier extends utils.Adapter {
                             // Initializes the MQTT client for local communication with the thisDevice
                             adapterLog.debug('Trying to connect device [' + devices[thisDevice].Serial + '] to mqtt.');
                             if (devices[thisDevice].hostAddress === undefined) {
-                                adapterLog.info('No host address given. Trying to connect to the device with it\'s default hostname [' + devices[thisDevice].Serial + ']. This should work if you haven\'t changed it.');
+                                adapterLog.info('No host address given. Trying to connect to the device with it\'s default hostname [' + devices[thisDevice].Serial + ']. This should work if you haven\'t changed it and if you\' running a DNS.');
                                 devices[thisDevice].hostAddress = devices[thisDevice].Serial;
                             }
                             devices[thisDevice].mqttClient = mqtt.connect('mqtt://' + devices[thisDevice].hostAddress, {
