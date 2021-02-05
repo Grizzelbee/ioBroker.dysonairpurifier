@@ -470,7 +470,7 @@ class dysonAirPurifier extends utils.Adapter {
         this.createOrExtendObject(device.Serial + '.Sensor.VOCIndex', {
             type: 'state',
             common: {
-                name: 'VOC QualityIndex. 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad',
+                name: 'VOC QualityIndex. 0-39: Good, 40-69: Medium, 70-89: Bad, >90: very Bad',
                 'read': true,
                 'write': false,
                 'role': 'value',
