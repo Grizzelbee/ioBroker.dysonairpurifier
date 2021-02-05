@@ -36,13 +36,13 @@ let Dust = 0; // Numeric representation of current DustIndex
 // data structure to determine readable names, etc for any datapoint
 // Every row is one state in a dyson message. Format: [ dysonCode, Name of Datapoint, Description, datatype, writable, role, unit, possible values for data field]
 const datapoints = [
-    ['channel' , 'WIFIchannel'            , 'Number of the used WIFI channel.'                                              , 'number', 'false', 'value'        ,''  ],
-    ['ercd' , 'LastErrorCode'             , 'Error code of the last error occurred on this device'                          , 'string', 'false', 'text'        ,''  ],
-    ['filf' , 'FilterLife'                , 'Estimated remaining filter life in hours.'                                     , 'number', 'false', 'value'        , 'hours' ],
-    ['fmod' , 'FanMode'                   , 'Mode of device'                                                                , 'string', 'false', 'text'        ,'', {'FAN':'Fan', 'AUTO':'Auto'} ],
+    ['channel' , 'WIFIchannel'            , 'Number of the used WIFI channel.'                                              , 'number', 'false', 'value'         ,''  ],
+    ['ercd' , 'LastErrorCode'             , 'Error code of the last error occurred on this device'                          , 'string', 'false', 'text'          ,''  ],
+    ['filf' , 'FilterLife'                , 'Estimated remaining filter life in hours.'                                     , 'number', 'false', 'value'         , 'hours' ],
+    ['fmod' , 'FanMode'                   , 'Mode of device'                                                                , 'string', 'false', 'switch'        ,'', {'FAN':'Fan', 'AUTO':'Auto'} ],
     ['fnsp' , 'FanSpeed'                  , 'Current fan speed'                                                             , 'string', 'true',  'switch'        ,'', {'AUTO':'Auto', '0001':'1', '0002':'2', '0003':'3', '0004':'4', '0005':'5', '0006':'6', '0007':'7', '0008':'8', '0009':'9', '0010':'10' } ],
-    ['fnst' , 'FanStatus'                 , 'Current Fan state; correlating to Auto-mode'                                   , 'string', 'false', 'text'        ,'' ],
-    ['nmod' , 'Nightmode'                 , 'Night mode state'                                                              , 'string', 'true',  'switch.mode.moonlight'    ,'', {'OFF':'OFF', 'ON':'ON'} ],
+    ['fnst' , 'FanStatus'                 , 'Current Fan state; correlating to Auto-mode'                                   , 'string', 'false', 'text'          ,'' ],
+    ['nmod' , 'Nightmode'                 , 'Night mode state'                                                              , 'string', 'true',  'switch.mode.moonlight'  ,'', {'OFF':'OFF', 'ON':'ON'} ],
     ['qtar' , 'AirQualityTarget'          , 'Target Air quality for Auto Mode.'                                             , 'string', 'false', 'text'          ,''  ],
     ['rhtm' , 'ContinuousMonitoring'      , 'Continuous Monitoring of environmental sensors even if device is off.'         , 'string', 'true',  'switch'        ,'', {'OFF':'OFF', 'ON':'ON'} ],
     ['fpwr' , 'MainPower'                 , 'Main Power of fan.'                                                            , 'string', 'true',  'switch.power'  ,'', {'OFF':'OFF', 'ON':'ON'} ],
@@ -55,8 +55,8 @@ const datapoints = [
     ['cflt' , 'Carbonfilter'              , 'Filter type installed in carbon filter port.'                                  , 'string', 'false', 'text'          ,''  ],
     ['hflt' , 'HEPA-Filter'               , 'Filter type installed in HEPA-filter port.'                                    , 'string', 'false', 'text'              ,''  ],
     ['sltm' , 'Sleeptimer'                , 'Sleep timer.'                                                                  , 'string', 'false', 'text'              ,''  ],
-    ['oscs' , 'OscillationActive'         , 'Fan is currently oscillating.'                                                 , 'string', 'false', 'text'          ,'', {'IDLE':'Idle', 'OFF':'OFF', 'ON':'ON'} ],
-    ['oson' , 'Oscillation'               , 'Oscillation of fan.'                                                           , 'string', 'true',  'switch'        ,'', {'OFF':'OFF', 'ON':'ON'} ],
+    ['oscs' , 'OscillationActive'         , 'Fan is currently oscillating.'                                                 , 'string', 'false', 'text'              ,'', {'IDLE':'Idle', 'OFF':'OFF', 'ON':'ON'} ],
+    ['oson' , 'Oscillation'               , 'Oscillation of fan.'                                                           , 'string', 'true',  'switch'            ,'', {'OFF':'OFF', 'ON':'ON'} ],
     ['osal' , 'OscillationLeft'           , 'OscillationAngle Lower Boundary'                                               , 'string', 'true',  'text'              ,'°' ],
     ['osau' , 'OscillationRight'          , 'OscillationAngle Upper Boundary'                                               , 'string', 'true',  'text'              ,'°' ],
     ['ancp' , 'OscillationAngle'          , 'OscillationAngle'                                                              , 'string', 'true',  'text'              ,'°' ],
@@ -73,9 +73,9 @@ const datapoints = [
     ['p25r' , 'PM25R'                     , 'PM-2.5R - Particulate Matter 2.5µm'                                            , 'number', 'false', 'value'             ,'µg/m³' ],
     ['p10r' , 'PM10R'                     , 'PM-10R - Particulate Matter 10µm'                                              , 'number', 'false', 'value'             ,'µg/m³' ],
     ['hmod' , 'HeaterMode'                , 'Heating Mode [ON/OFF]'                                                         , 'string', 'true',  'switch'            ,'', {'OFF': 'OFF', 'ON': 'ON'} ],
-    ['hmax' , 'TemperatureTarget'         , 'Target temperature for heating'                                                , 'number', 'true',  'value'              ,'°' ],
-    ['hume' , 'HumidificationMode'        , 'HumidificationMode Switch [ON/OFF]'                                            , 'string', 'true', 'switch'            ,'', {'OFF': 'OFF', 'ON': 'ON'} ],
-    ['haut' , 'HumidifyAutoMode'          , 'Humidify AutoMode [ON/OFF]'                                                    , 'string', 'true', 'switch'            ,'', {'OFF': 'OFF', 'ON': 'ON'} ],
+    ['hmax' , 'TemperatureTarget'         , 'Target temperature for heating'                                                , 'number', 'true',  'value'             ,'°' ],
+    ['hume' , 'HumidificationMode'        , 'HumidificationMode Switch [ON/OFF]'                                            , 'string', 'true', 'switch'             ,'', {'OFF': 'OFF', 'ON': 'ON'} ],
+    ['haut' , 'HumidifyAutoMode'          , 'Humidify AutoMode [ON/OFF]'                                                    , 'string', 'true', 'switch'             ,'', {'OFF': 'OFF', 'ON': 'ON'} ],
     ['humt' , 'HumidificationTarget'      , 'Manual Humidification Target'                                                  , 'string', 'false', 'text'              ,'' ],
     ['cdrr' , 'CleanDurationRemaining'    , 'Clean Duration Remaining'                                                      , 'string', 'false', 'text'              ,'' ],
     ['rect' , 'AutoHumidificationTarget'  , 'Auto Humidification target'                                                    , 'string', 'false', 'text'              ,'' ],
@@ -201,8 +201,10 @@ class dysonAirPurifier extends utils.Adapter {
                 'data': messageData
             };
             for (const mqttDevice in devices){
+                //noinspection JSUnresolvedVariable
                 if (devices[mqttDevice].Serial === thisDevice){
                     this.log.debug('MANUAL CHANGE: device [' + thisDevice + '] -> [' + action +'] -> [' + state.val + ']');
+                    //noinspection JSUnresolvedVariable
                     devices[mqttDevice].mqttClient.publish(
                         devices[mqttDevice].ProductType + '/' + thisDevice + '/command',
                         JSON.stringify(message)
@@ -691,16 +693,20 @@ class dysonAirPurifier extends utils.Adapter {
                                 protocolVersion: 3,
                                 protocolId: 'MQIsdp'
                             });
+                            //noinspection JSUnresolvedVariable
                             adapterLog.debug(devices[thisDevice].Serial + ' - MQTT connection requested for [' + devices[thisDevice].hostAddress + '].');
 
                             // Subscribes for events of the MQTT client
                             devices[thisDevice].mqttClient.on('connect', function () {
+                                //noinspection JSUnresolvedVariable
                                 adapterLog.debug(devices[thisDevice].Serial + ' - MQTT connection established.');
 
                                 // Subscribes to the status topic to receive updates
+                                //noinspection JSUnresolvedVariable
                                 devices[thisDevice].mqttClient.subscribe(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/status/current', function () {
 
                                     // Sends an initial request for the current state
+                                    //noinspection JSUnresolvedVariable
                                     devices[thisDevice].mqttClient.publish(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/command', JSON.stringify({
                                         msg: 'REQUEST-CURRENT-STATE',
                                         time: new Date().toISOString()
@@ -710,13 +716,16 @@ class dysonAirPurifier extends utils.Adapter {
                                 adapterLog.info('Starting Polltimer with a ' + adapter.config.pollInterval + ' seconds interval.');
                                 // start refresh scheduler with interval from adapters config
                                 devices[thisDevice].updateIntervalHandle = setTimeout(function schedule() {
+                                    //noinspection JSUnresolvedVariable
                                     adapterLog.debug('Updating device [' + devices[thisDevice].Serial + '] (polling API scheduled).');
                                     try {
+                                        //noinspection JSUnresolvedVariable
                                         devices[thisDevice].mqttClient.publish(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/command', JSON.stringify({
                                             msg: 'REQUEST-CURRENT-STATE',
                                             time: new Date().toISOString()
                                         }));
                                     } catch (error) {
+                                        //noinspection JSUnresolvedVariable
                                         adapterLog.error(devices[thisDevice].Serial + ' - MQTT interval error: ' + error);
                                     }
                                     // expect adapter has created all data points after first 20 secs of run.
@@ -733,6 +742,7 @@ class dysonAirPurifier extends utils.Adapter {
                                         adapter.processMsg(devices[thisDevice], '', payload);
                                         break;
                                     case 'ENVIRONMENTAL-CURRENT-SENSOR-DATA' :
+                                        //noinspection JSUnresolvedVariable
                                         adapter.createOrExtendObject(devices[thisDevice].Serial + '.Sensor', {
                                             type: 'channel',
                                             common: {
@@ -748,33 +758,44 @@ class dysonAirPurifier extends utils.Adapter {
                                         adapter.processMsg(devices[thisDevice], '', payload);
                                         break;
                                 }
+                                //noinspection JSUnresolvedVariable
                                 adapterLog.debug(devices[thisDevice].Serial + ' - MQTT message received: ' + JSON.stringify(payload));
+                                //noinspection JSUnresolvedVariable
                                 adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'online');
                             });
 
                             devices[thisDevice].mqttClient.on('error', function (error) {
+                                //noinspection JSUnresolvedVariable
                                 adapterLog.debug(devices[thisDevice].Serial + ' - MQTT error: ' + error);
+                                //noinspection JSUnresolvedVariable
                                 adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'error');
                             });
 
                             devices[thisDevice].mqttClient.on('reconnect', function () {
+                                //noinspection JSUnresolvedVariable
                                 adapterLog.debug(devices[thisDevice].Serial + ' - MQTT reconnecting.');
+                                //noinspection JSUnresolvedVariable
                                 adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'reconnect');
                             });
 
                             devices[thisDevice].mqttClient.on('close', function () {
+                                //noinspection JSUnresolvedVariable
                                 adapterLog.debug(devices[thisDevice].Serial + ' - MQTT disconnected.');
                                 adapter.clearIntervalHandle(devices[thisDevice].updateIntervalHandle);
+                                //noinspection JSUnresolvedVariable
                                 adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'disconnected');
                             });
 
                             devices[thisDevice].mqttClient.on('offline', function () {
+                                //noinspection JSUnresolvedVariable
                                 adapterLog.debug(devices[thisDevice].Serial + ' - MQTT offline.');
                                 adapter.clearIntervalHandle(devices[thisDevice].updateIntervalHandle);
+                                //noinspection JSUnresolvedVariable
                                 adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'offline');
                             });
 
                             devices[thisDevice].mqttClient.on('end', function () {
+                                //noinspection JSUnresolvedVariable
                                 adapterLog.debug(devices[thisDevice].Serial + ' - MQTT ended.');
                                 adapter.clearIntervalHandle(devices[thisDevice].updateIntervalHandle);
                             });
