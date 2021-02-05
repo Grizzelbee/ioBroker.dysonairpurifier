@@ -115,10 +115,12 @@ Which is what the dyson app does also.
 * (grizzelbee) Fix: [#48](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/48) Fixed countrycodes for UK and USA
 * (grizzelbee) Fix: [#52](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/52) Fixed VOCIndex
 * (grizzelbee) Fix: Removed option to control Fan state since it corresponds to the state of the fan in auto-mode. Controlling it is senseless.
-* (grizzelbee) Upd: Added topic "Controlling your device(s)" to readme
 * (grizzelbee) Fix: Fixed await..then anti pattern
 * (grizzelbee) Fix: Fixed undefined roles
 * (grizzelbee) Fix: Fixed some bad promises and moved code to dysonUtils
+* (grizzelbee) Fix: Fixed encrypting password using js-controller 3.0 build-in routine
+* (grizzelbee) Upd: Added topic "Controlling your device(s)" to readme
+* (grizzelbee) Upd: Removed unnecessary saving of MQTT password
 
 
 ### 0.7.0 (2021-01-08) (Afraid of the dark)

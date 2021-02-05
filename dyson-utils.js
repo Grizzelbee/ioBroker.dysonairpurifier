@@ -49,10 +49,7 @@ module.exports.zeroFill = function (number, width) {
  * @param config {Adapter} ioBroker adapter which contains the configuration that should be checked
  */
 module.exports.checkAdapterConfig = async function (adapter) {
-    adapter.log.debug('Entering function [checkAdapterConfig]...');
-    
     const config = adapter.config;
-
     // Masking sensitive fields (password) for logging configuration (creating a deep copy of the config)
     const logConfig = JSON.parse(JSON.stringify(config));
     logConfig.Password = '(***)';
@@ -194,9 +191,9 @@ module.exports.getMqttCredentials = function(adapter) {
                     // that falls out of the range of 2xx
                     switch (error.response.status) {
                         case 401 : // unauthorized
-                            adapter.log.error('Error: Unable to authenticate user! Your credentials are invalid. Please double check and fix them. This adapter has a maximum Pwd length of 32 chars.');
+                            adapter.log.error('Error: Unable to authenticate user! Your credentials are invalid. Please double check and fix them.');
                             break;
-                        case 429: // endpoint currently not avaliable
+                        case 429: // endpoint currently not available
                             adapter.log.error('Error: Endpoint: ' + apiUri + '/v1/userregistration/authenticate?country=' + adapter.config.country);
                         default:
                             adapter.log.error('[error.response.data]: ' + ((typeof error.response.data === 'object') ? stringify(error.response.data) : error.response.data));
@@ -213,9 +210,7 @@ module.exports.getMqttCredentials = function(adapter) {
                     // Something happened in setting up the request that triggered an Error
                     adapter.log.error('[Error]: ' + error.message);
                 }
-                adapter.log.error('[error.config]:' + JSON.stringify(error.config));
-                // reject('Error during dyson API login:' + error + ', Callstack: ' + error.stack);
-                this.terminate('Terminating Adapter due to an error during querying dyson API. Most common errors are missing or bad dyson credentials.', 11);
+                reject('Error during dyson API login:' + error );
             });
     });
 };

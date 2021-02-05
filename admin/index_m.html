@@ -1,31 +1,61 @@
-    <html>
-
+<html>
 <head>
+    <!-- Load ioBroker scripts and styles-->
+    <link href="../../css/adapter.css" rel="stylesheet" type="text/css"/>
+    <link href="../../lib/css/materialize.css" rel="stylesheet" type="text/css">
 
-	<!-- Load ioBroker scripts and styles-->
-	<link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
-	<link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+    <script src="../../lib/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+    <script src="../../socket.io/socket.io.js" type="text/javascript"></script>
 
-	<script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+    <script src="../../js/translate.js" type="text/javascript"></script>
+    <script src="../../lib/js/materialize.js" type="text/javascript"></script>
+    <script src="../../js/adapter-settings.js" type="text/javascript"></script>
 
-	<script type="text/javascript" src="../../js/translate.js"></script>
-	<script type="text/javascript" src="../../lib/js/materialize.js"></script>
-	<script type="text/javascript" src="../../js/adapter-settings.js"></script>
+    <!-- Load our own files -->
+    <link href="style.css" rel="stylesheet" type="text/css"/>
+    <script src="words.js" type="text/javascript"></script>
 
-	<!-- Load our own files -->
-	<link rel="stylesheet" type="text/css" href="style.css" />
-	<script type="text/javascript" src="words.js"></script>
+    <script type="text/javascript">
+        var secret;
 
-	<script type="text/javascript">
+        if (!encrypt || typeof encrypt !== 'function') {
+            function encrypt(key, value) {
+                if (value === undefined) {
+                    value = key;
+                    key = secret;
+                }
+                var result = '';
+                for (var i = 0; i < value.length; ++i) {
+                    result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
+                }
+                return result;
+            }
+        }
+        if (!decrypt || typeof decrypt !== 'function') {
+            function decrypt(key, value) {
+                if (value === undefined) {
+                    value = key;
+                    key = secret;
+                }
+                var result = '';
+                for (var i = 0; i < value.length; ++i) {
+                    result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
+                }
+                return result;
+            }
+        }
 
-
-		// Create secrect for encrypted password storage
-        function load(settings, onChange) {
+        // the function loadSettings has to exist ...
+        function loadHelper(settings, onChange) {
+            // example: select elements with id=key and class=value and insert value
             if (!settings) return;
+
             $('.value').each(function () {
                 var $key = $(this);
                 var id = $key.attr('id');
+                if (id === 'Password' && (typeof supportsFeature !== 'function' || !supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE'))) {
+                    settings[id] = decrypt(secret, settings[id]);
+                }
 
                 if ($key.attr('type') === 'checkbox') {
                     // do not call onChange direct, because onChange could expect some arguments
@@ -41,89 +71,105 @@
                     });
                 }
             });
-
             onChange(false);
-            // (re)initialize all the Materialize labels on the page
-            M.updateTextFields();
+            M.updateTextFields();  // function Materialize.updateTextFields(); to reinitialize all the Materialize labels on the page if you are dynamically adding inputs.
         }
 
+        // the function loadSettings has to exist ...
+        function load(settings, onChange) {
+            socket.emit('getObject', 'system.config', function (err, obj) {
+                secret = (obj.native ? obj.native.secret : '') || 'Zgfr56gFe87jJOM';
+                loadHelper(settings, onChange);
+            });
+
+            onChange(false);
+        }
+
+        // ... and the function save has to exist.
+        // you have to make sure the callback is called with the settings object as first param!
         function save(callback) {
-            let obj = {};
+            // example: select elements with class=value and build settings object
+            var obj = {};
             $('.value').each(function () {
-                let $this = $(this);
-                let id = $this.attr('id');
+                var $this = $(this);
+                var id = $this.attr('id');
 
                 if ($this.attr('type') === 'checkbox') {
                     obj[id] = $this.prop('checked');
                 } else {
-                    let value = $this.val();
+                    var value = $this.val();
+                    if (id === 'Password' && (typeof supportsFeature !== 'function' || !supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE'))) {
+                        value = encrypt(secret, value);
+                    }
                     obj[id] = value;
                 }
             });
+            obj.electricityPollingIntervalReChecked = true;
+
             callback(obj);
         }
-	</script>
+    </script>
 
 </head>
 
 <body>
 
-    <div class="m adapter-container">
+<div class="m adapter-container">
 
-        <div class="row">
-            <div class="col s12 m4 l2">
-                <img src="dyson_logo.svg" class="logo">
-            </div>
-        </div>
-
-        <!-- Put your content here -->
-
-        <!-- For example columns with settings: -->
-        <div class="row">
-            <div class="input-field col s12 m4">
-                <input class="value" id="email" type="text">
-                <label for="email" class="translate">Lbl_email</label>
-                <span class="translate">email_desc</span>
-            </div>
-            <div class="input-field col s12 m4">
-                <input class="value" id="Password" type="password" maxlength="32">
-                <label for="Password" class="translate">Lbl_Password</label>
-                <span class="translate">password_desc</span>
-            </div>
-            <div class="input-field col s12 m4">
-                <select class="value" id="country">
-                    <option value='de' class="translate">germany</option>
-                    <option value='at' class="translate">austria</option>
-                    <option value='fr' class="translate">france</option>
-                    <option value='pl' class="translate">Poland</option>
-                    <option value='nl' class="translate">Netherlands</option>
-                    <option value='be' class="translate">Belgium</option>
-                    <option value='us' class="translate">United States of America</option>
-                    <option value='gb' class="translate">Great Britain</option>
-                    <option value='ie' class="translate">Ireland</option>
-                    <option value='ca' class="translate">Canada</option>
-                    <option value='ru' class="translate">Russia</option>
-                    <option value='cn' class="translate">China</option>
-                </select>
-                <label for="country" class="translate">Lbl_country</label>
-                <span class="translate">country_desc</span>
-            </div>
-            <div class="input-field col s12 m4">
-                <select class="value" id="temperatureUnit">
-                    <option value='C' class="translate">Celsius</option>
-                    <option value='F' class="translate">Fahrenheit</option>
-                    <option value='K' class="translate">Kelvin</option>
-                </select>
-                <label for="temperatureUnit" class="translate">Lbl_temperatureUnit</label>
-                <span class="translate">temperatureUnit_desc</span>
-            </div>
-            <div class="col s6 m4 input-field">
-                <input type="text" class="value" id="pollInterval" />
-                <label for="pollInterval" class="translate">Poll_Interval</label>
-                <span class="translate">Poll_Interval_desc</span>
-            </div>
+    <div class="row">
+        <div class="col s12 m4 l2">
+            <img class="logo" src="dyson_logo.svg">
         </div>
     </div>
+
+    <!-- Put your content here -->
+
+    <!-- For example columns with settings: -->
+    <div class="row">
+        <div class="input-field col s12 m4">
+            <input class="value" id="email" type="text">
+            <label class="translate" for="email">Lbl_email</label>
+            <span class="translate">email_desc</span>
+        </div>
+        <div class="input-field col s12 m4">
+            <input class="value" id="Password" maxlength="32" type="password">
+            <label class="translate" for="Password">Lbl_Password</label>
+            <span class="translate">password_desc</span>
+        </div>
+        <div class="input-field col s12 m4">
+            <select class="value" id="country">
+                <option class="translate" value='de'>germany</option>
+                <option class="translate" value='at'>austria</option>
+                <option class="translate" value='fr'>france</option>
+                <option class="translate" value='pl'>Poland</option>
+                <option class="translate" value='nl'>Netherlands</option>
+                <option class="translate" value='be'>Belgium</option>
+                <option class="translate" value='us'>United States of America</option>
+                <option class="translate" value='gb'>Great Britain</option>
+                <option class="translate" value='ie'>Ireland</option>
+                <option class="translate" value='ca'>Canada</option>
+                <option class="translate" value='ru'>Russia</option>
+                <option class="translate" value='cn'>China</option>
+            </select>
+            <label class="translate" for="country">Lbl_country</label>
+            <span class="translate">country_desc</span>
+        </div>
+        <div class="input-field col s12 m4">
+            <select class="value" id="temperatureUnit">
+                <option class="translate" value='C'>Celsius</option>
+                <option class="translate" value='F'>Fahrenheit</option>
+                <option class="translate" value='K'>Kelvin</option>
+            </select>
+            <label class="translate" for="temperatureUnit">Lbl_temperatureUnit</label>
+            <span class="translate">temperatureUnit_desc</span>
+        </div>
+        <div class="col s6 m4 input-field">
+            <input class="value" id="pollInterval" type="text"/>
+            <label class="translate" for="pollInterval">Poll_Interval</label>
+            <span class="translate">Poll_Interval_desc</span>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>

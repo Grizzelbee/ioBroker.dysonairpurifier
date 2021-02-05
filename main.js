@@ -18,8 +18,7 @@ const dysonUtils = require('./dyson-utils.js');
 // Variable definitions
 let adapter = null;
 let adapterIsSetUp = false;
-
-
+let devices = [];
 const products = {  '358':'Dyson Pure Humidify+Cool',
     '438':'Dyson Pure Cool Tower',
     '455':'Dyson Pure Hot+Cool Link',
@@ -209,7 +208,7 @@ class dysonAirPurifier extends utils.Adapter {
             };
             for (const mqttDevice in devices){
                 if (devices[mqttDevice].Serial === thisDevice){
-                    this.log.debug('CHANGE: device [' + thisDevice + '] -> [' + action +'] -> [' + state.val + ']');
+                    this.log.debug('MANUAL CHANGE: device [' + thisDevice + '] -> [' + action +'] -> [' + state.val + ']');
                     devices[mqttDevice].mqttClient.publish(
                         devices[mqttDevice].ProductType + '/' + thisDevice + '/command',
                         JSON.stringify(message)
@@ -682,17 +681,14 @@ class dysonAirPurifier extends utils.Adapter {
             const myAccount = await dysonUtils.getMqttCredentials(adapter);
             if (typeof myAccount !== 'undefined'){
                 adapterLog.debug('Querying devices from dyson API.');
-                const devices = await dysonUtils.getDevices(myAccount, adapter);
-                // 2. Search Network for IP-Address of current thisDevice
-                // 2a. Store IP-Address in additional persistent data field
-                // 3. query local data from each thisDevice
+                devices = await dysonUtils.getDevices(myAccount, adapter);
                 for (const thisDevice in devices) {
                     this.CreateOrUpdateDevice(devices[thisDevice])
                         .then(() => {
                             // Initializes the MQTT client for local communication with the thisDevice
                             adapterLog.debug('Trying to connect device [' + devices[thisDevice].Serial + '] to mqtt.');
                             if (devices[thisDevice].hostAddress === undefined) {
-                                adapterLog.info('No host address given. Trying to connect to the device with it\'s default hostname [' + devices[thisDevice].Serial + ']. This should work if you haven\'t changed it and if you\' running a DNS.');
+                                adapterLog.info('No host address given. Trying to connect to the device with it\'s default hostname [' + devices[thisDevice].Serial + ']. This should work if you haven\'t changed it and if you\'re running a DNS.');
                                 devices[thisDevice].hostAddress = devices[thisDevice].Serial;
                             }
                             devices[thisDevice].mqttClient = mqtt.connect('mqtt://' + devices[thisDevice].hostAddress, {
@@ -813,8 +809,19 @@ class dysonAirPurifier extends utils.Adapter {
             adapter = this; // preserve adapter reference to address functions etc. correctly later
             dysonUtils.checkAdapterConfig(adapter)
                 .then(() => {
-                    // configisValid! No password decryption needed since it is handeled by the adapter prototype
-                    this.main();
+                    // configisValid! Decrypt password now
+                    adapter.getForeignObject('system.config', (err, obj) => {
+                        if (!adapter.supportsFeature || !adapter.supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
+                            if (obj && obj.native && obj.native.secret) {
+                                //noinspection JSUnresolvedVariable
+                                adapter.config.Password = this.decrypt(obj.native.secret, adapter.config.Password);
+                            } else {
+                                //noinspection JSUnresolvedVariable
+                                adapter.config.Password = this.decrypt('Zgfr56gFe87jJOM', adapter.config.Password);
+                            }
+                        }
+                        this.main();
+                    });
                 })
                 .catch((error) => {
                     this.log.error('Error during config validation: ' + error);
@@ -913,9 +920,13 @@ class dysonAirPurifier extends utils.Adapter {
         }
     }
 
-    /***********************************************
-    * dyson API functions                         *
-    ***********************************************/
+    decrypt(key, value) {
+        let result = '';
+        for (let i = 0; i < value.length; ++i) {
+            result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
+        }
+        return result;
+    }
     
 
 
