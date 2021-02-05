@@ -69,9 +69,13 @@ You can also install older release versions using this methods (by pointing to a
 
 *Please note*: Due to early development state and a non conform mDNS implementation by Dyson you'll need to provide the local IP of the device *after the first run*.
 
+*Additional Note*: Since Version 0.7.1 the adapter tries to connect to the device by it's hostname (serialnumber) when no host address/IP ist given. This will work under two prerequisites:
+1. There is a DNS Server running in your LAN. Either in your router (e.g. FritzBoxes have a DNS running) or a dedicated one.
+2. You haven't changed the default devicename.
+
 > On the first start of this adapter the Dyson API is queried for all your devices and all supported devices will be created in the devicetree -- with their basic information provided by the API and an additional field "Hostaddress".
 >
-> So please run the adapter once and your Dyson devices will be created in the device tree with their basic settings.
+> So please run the adapter once, and your Dyson devices will be created in the device tree with their basic settings.
 >
 > Then stop the adapter, enter the IP(s) into the Hostaddress field(s) and restart the adapter. After that your Dyson devices in the device tree should be populated with data.
 
