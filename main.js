@@ -10,7 +10,7 @@ const adapterName = require('./package.json').name.split('.').pop();
 
 // Load additional modules
 const mqtt   = require('mqtt');
-const {stringify} = require('flatted');
+// const {stringify} = require('flatted');
 
 // Load utils for this adapter
 const dysonUtils = require('./dyson-utils.js');
@@ -59,7 +59,7 @@ const datapoints = [
     ['oson' , 'Oscillation'               , 'Oscillation of fan.'                                                           , 'string', 'true',  'switch'            ,'', {'OFF':'OFF', 'ON':'ON'} ],
     ['osal' , 'OscillationLeft'           , 'OscillationAngle Lower Boundary'                                               , 'string', 'true',  'text'              ,'°' ],
     ['osau' , 'OscillationRight'          , 'OscillationAngle Upper Boundary'                                               , 'string', 'true',  'text'              ,'°' ],
-    ['ancp' , 'OscillationAngle'          , 'OscillationAngle'                                                              , 'string', 'true',  'text'              ,'°' ],
+    ['ancp' , 'OscillationAngle'          , 'OscillationAngle'                                                              , 'string', 'true',  'text'              ,'°', {0:'0', 15:'15', 30:'30', 45:'45', 90:'90', 180:'180', 270:'270', 350:'350', 'CUST':'CUST'} ],
     ['rssi' , 'RSSI'                      , 'Received Signal Strength Indication. Quality indicator for WIFI signal.'       , 'number', 'false', 'value'             ,'dBm' ],
     ['pact' , 'Dust'                      , 'Dust'                                                                          , 'number', 'false', 'value'             ,''  ],
     ['hact' , 'Humidity'                  , 'Humidity'                                                                      , 'number', 'false', 'value.humidity'    ,'%' ],
@@ -85,7 +85,7 @@ const datapoints = [
 
 /**
  * Main class of dyson AirPurifier adapter for ioBroker
- */ 
+ */
 class dysonAirPurifier extends utils.Adapter {
     /**
      * @param {Partial<utils.AdapterOptions>} [options={}]
@@ -101,13 +101,13 @@ class dysonAirPurifier extends utils.Adapter {
     }
 
     /**
-    * onStateChange
-    * 
-    * Sends the control mqtt message to your device in case you changed a value
-    *
-    * @param id    {string} id of the datapoint that was changed
-    * @param state {object} new state-object of the datapoint after change
-    */
+     * onStateChange
+     *
+     * Sends the control mqtt message to your device in case you changed a value
+     *
+     * @param id    {string} id of the datapoint that was changed
+     * @param state {object} new state-object of the datapoint after change
+     */
     async onStateChange(id, state) {
         const thisDevice = id.split('.')[2];
         const action = id.split('.').pop();
@@ -150,47 +150,6 @@ class dysonAirPurifier extends utils.Adapter {
                     messageData = {[dysonAction]: dysonUtils.zeroFill(value, 4)};
                     break;
                 }
-                case 'osal' :
-                    this.getStateAsync(thisDevice + '.OscillationOpeningAngle')
-                        .then((result) => {
-                            messageData = {[dysonAction]: dysonUtils.zeroFill(state.val, 4)};
-                            messageData.osau = dysonUtils.zeroFill(Number( Number.parseInt(state.val) + Number.parseInt(result.val) ), 4);
-                            messageData.ancp = 'CUST';
-                            this.log.debug('CHANGE Oscillation-left: result.val=' + result.val);
-                            this.log.debug('CHANGE Oscillation-left: state.val=' + state.val);
-                            this.log.debug('CHANGE Oscillation-left: messageData=' + stringify(messageData));
-
-                        })
-                        .catch((error) => {
-                            this.log.warn(error);
-                        });
-                    break;
-                case 'OscillationOpeningAngle': {
-                    // OscillationOpeningAngle
-                    this.getStateAsync(thisDevice + '.OscillationLeft').then(
-                        (result) => {
-                            this.log.debug('OscillationOpeningAngle: thisDevice=' + thisDevice);
-                            this.log.debug('OscillationOpeningAngle: left=' + stringify(result));
-                            let left  = Number.parseInt(result.val);
-                            const angle = (Math.floor(Number.parseInt(state.val)/2));
-                            // subtract half opening angle from left value to spread angle equally to both directions
-                            this.log.debug('OscillationOpeningAngle: left=' + left);
-                            // this.log.debug('OscillationOpeningAngle: state.val=' + state.val);
-                            // this.log.debug('OscillationOpeningAngle: Num(state.val)=' + Number.parseInt(state.val));
-                            left -= angle;
-                            this.log.debug('OscillationOpeningAngle: Floor(angle/2): angle=' + angle );
-                            this.log.debug('OscillationOpeningAngle: left - angle/2=' + left  );
-                            messageData = {'osal': dysonUtils.zeroFill(left, 4)};
-                            messageData.osau = dysonUtils.zeroFill((left + state.val), 4);
-                            messageData.ancp = 'CUST';
-                        }
-                    ).catch(
-                        (error) => {
-                            this.log.error(JSON.stringify(error));
-                        }
-                    );
-                    break;
-                }
             }
             this.log.info('SENDING this data to device (' + thisDevice + '): ' + JSON.stringify(messageData));
             // build the message to be send to the device
@@ -229,15 +188,14 @@ class dysonAirPurifier extends utils.Adapter {
                     native: {}
                 }, Math.max(NO2, VOC, Dust, PM25, PM10));
             }
-        // OscillationOpeningAngle
         }
     }
 
     /**
      * CreateOrUpdateDevice
-     * 
+     *
      * Creates the base device information
-     * 
+     *
      * @param device  {object} data for the current device which are not provided by Web-API (IP-Address, MQTT-Password)
      */
     async CreateOrUpdateDevice(device){
@@ -359,7 +317,7 @@ class dysonAirPurifier extends utils.Adapter {
 
     /**
      * processMsg
-     * 
+     *
      * Processes the current received message and updates relevant data fields
      *
      * @param device  {object} additional data for the current device which are not provided by Web-API (IP-Address, MQTT-Password)
@@ -435,21 +393,6 @@ class dysonAirPurifier extends utils.Adapter {
                     value = value[1];
                 }
             }
-            // check whether fan supports oscillation and add OscillationOpeningAngle if necessary
-            // testing oson is not possible, because it exists on fans without oscillation also (e.g. DP01).
-            // Testing OscillationAngleLeft (osal) instead
-            if (deviceConfig[0] === 'osal'){
-                const left  = await this.getStateAsync(device.Serial + path + '.OscillationLeft');
-                const right = await this.getStateAsync(device.Serial + path + '.OscillationRight');
-                if (null != left && null !=right) {
-                    this.createOrExtendObject( device.Serial + path + '.OscillationOpeningAngle',
-                        { type: 'state', common: {name: 'Opening angle for oscillation', 'read':true, 'write': true, 'role': 'value', 'type':'number', 'unit':'°', 'states':{0:'0', 15:'15', 30:'30', 45:'45', 90:'90', 180:'180', 270:'270', 350:'350'}}, native: {} },
-                        (Number.parseInt(right.val)-Number.parseInt(left.val)));
-                    this.subscribeStates(device.Serial + path + '.OscillationOpeningAngle' );
-                } else {
-                    this.log.debug('Oscillation angle left/right missing in data.');
-                }
-            }
             // deviceConfig.length>7 means the data field has predefined states attached, that need to be handled
             if (deviceConfig.length > 7) {
                 this.createOrExtendObject( device.Serial + path + '.'+ deviceConfig[1], { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':deviceConfig[6], 'states': deviceConfig[7]}, native: {} }, value);
@@ -466,7 +409,7 @@ class dysonAirPurifier extends utils.Adapter {
 
     /**
      * createNO2
-     * 
+     *
      * creates the data fields for the values itself and the index if the device has a NO2 sensor
      *
      * @param message {object} the received mqtt message
@@ -504,7 +447,7 @@ class dysonAirPurifier extends utils.Adapter {
 
     /**
      * createVOC
-     * 
+     *
      * creates the data fields for the values itself and the index if the device has a VOC sensor
      *
      * @param message {object} the received mqtt message
@@ -542,7 +485,7 @@ class dysonAirPurifier extends utils.Adapter {
 
     /**
      * createPM10
-     * 
+     *
      * creates the data fields for the values itself and the index if the device has a PM 10 sensor
      *
      * @param message {object} the received mqtt message
@@ -584,7 +527,7 @@ class dysonAirPurifier extends utils.Adapter {
 
     /**
      * createDust
-     * 
+     *
      * creates the data fields for the values itself and the index if the device has a simple dust sensor
      *
      * @param message {object} the received mqtt message
@@ -626,7 +569,7 @@ class dysonAirPurifier extends utils.Adapter {
 
     /**
      * createPM25
-     * 
+     *
      * creates the data fields for the values itself and the index if the device has a PM 2,5 sensor
      *
      * @param message {object} the received mqtt message
@@ -667,10 +610,10 @@ class dysonAirPurifier extends utils.Adapter {
     }
 
     /**
-    * main
-    * 
-    * It's the main routine of the adapter
-    */
+     * main
+     *
+     * It's the main routine of the adapter
+     */
     async main() {
         const adapterLog = this.log;
         try {
@@ -814,10 +757,10 @@ class dysonAirPurifier extends utils.Adapter {
     }
 
     /**
-    * onReady
-    * 
-    * Is called when databases are connected and adapter received configuration.
-    */
+     * onReady
+     *
+     * Is called when databases are connected and adapter received configuration.
+     */
     async onReady() {
         try {
             // Terminate adapter after first start because configuration is not yet received
@@ -851,15 +794,15 @@ class dysonAirPurifier extends utils.Adapter {
 
     /***********************************************
      * Misc helper functions                       *
-    ***********************************************/
+     ***********************************************/
 
     /**
-    * Function setDeviceOnlineState
-    * Sets an indicator whether the device is reachable via mqtt
-    *
-    * @param device {string} path to the device incl. Serial
-    * @param state  {string} state to set (online, offline, reconnecting, ...)
-    */
+     * Function setDeviceOnlineState
+     * Sets an indicator whether the device is reachable via mqtt
+     *
+     * @param device {string} path to the device incl. Serial
+     * @param state  {string} state to set (online, offline, reconnecting, ...)
+     */
     setDeviceOnlineState(device,  state) {
         this.createOrExtendObject(device + '.Online', {
             type: 'state',
@@ -875,15 +818,15 @@ class dysonAirPurifier extends utils.Adapter {
     }
 
     /**
-    * Function Create or extend object
-    * 
-    * Updates an existing object (id) or creates it if not existing.
-    *
-    * @param id {string} path/id of datapoint to create
-    * @param objData {object} details to the datapoint to be created (Device, channel, state, ...)
-    * @param value {any} value of the datapoint
-    * @param callback {callback} callback function
-    */
+     * Function Create or extend object
+     *
+     * Updates an existing object (id) or creates it if not existing.
+     *
+     * @param id {string} path/id of datapoint to create
+     * @param objData {object} details to the datapoint to be created (Device, channel, state, ...)
+     * @param value {any} value of the datapoint
+     * @param callback {callback} callback function
+     */
     createOrExtendObject(id, objData, value) {
         if (adapterIsSetUp) {
             this.setState(id, value, true);
@@ -902,14 +845,14 @@ class dysonAirPurifier extends utils.Adapter {
     }
 
     /**
-    * getDatapoint
-    *
-    * returns the configDetails for any datapoint
-    *
-    * @param searchValue {string} dysonCode to search for.
-    *
-    * @returns {string} returns the configDetails for any given datapoint or undefined if searchValue can't be resolved.
-    */
+     * getDatapoint
+     *
+     * returns the configDetails for any datapoint
+     *
+     * @param searchValue {string} dysonCode to search for.
+     *
+     * @returns {string} returns the configDetails for any given datapoint or undefined if searchValue can't be resolved.
+     */
     async getDatapoint( searchValue ){
         this.log.debug('getDatapoint('+searchValue+')');
         for(let row=0; row < datapoints.length; row++){
@@ -922,7 +865,7 @@ class dysonAirPurifier extends utils.Adapter {
 
     /**
      * Function clearIntervalHandle
-     * 
+     *
      * sets an intervalHandle (timeoutHandle) to null if it's existing to clear it
      *
      * @param updateIntervalHandle  {any} timeOutHandle to be checked and cleared
@@ -943,7 +886,7 @@ class dysonAirPurifier extends utils.Adapter {
         }
         return result;
     }
-    
+
 
 
     // Exit adapter
