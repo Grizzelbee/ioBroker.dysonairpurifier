@@ -229,10 +229,10 @@ Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD
 | ffoc | JetFocus | ON, OFF |
 | nmod | Night mode | ON , OFF | |
 | oson | Oscillation | ON , OFF| |
-| osal | Oscilation left degrees | 0005 - 355| °  (degrees)|
-| osau | Oscilation right degrees | 0005 - 355 | °  (degrees)|
+| osal | OscillationAngle Lower Boundary | 0005 - 355| °  (degrees)|
+| osau | OscillationAngle Upper Boundary | 0005 - 355 | °  (degrees)|
 | oscs | OscillationActive | ON, OFF, IDLE | |
-| ancp | Ancorpoint for oscilation ?  | CUST, 0180 |° (degrees)|
+| ancp | OscillationAngle  | CUST, 0180 |° (degrees)|
 | qtar | Air Quality target | 0001=Good, 0002=Normal, 0003=Bad, 0004=Very bad | |
 | rhtm | Continious Monitoring | ON, OFF | |
 | auto | AutomaticMode | ON, OFF | |
@@ -242,58 +242,25 @@ Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD
 | hflr | Status HEPA-Filter | 0000 - 0100 | Percent |
 | hflt | HEPA-Filter | GHEP | |
 | sltm | Sleeptimer | ON, OFF ||
-| hmod | Heating Mode | HEAT | |
+| hmod | Heater Mode [ON/OFF] | HEAT | |
 | hmax | Target temperature for heating | 0 .. 5000 | K |
-| hume | Humidifier State     | ON, OFF, |
-| haut | Target Humidifier Dehumidifier State| |
-| humt | Relative Humidity Humidifier Threshold| |
-| wacd | WarningCode? | NONE... | |
-| rstf | reset filter lifecycle | |
-| bril |  | 0002 |  |  
-| corf |  | ON, OFF | |
-| psta | [HP0x] Unknown |  | |
-| hsta | [HP0x] Unknown |  | |
-| tilt | [HP0x] Unknown |  | |
-| dial | [DP0x] Unknown |  | |
-cdrr' for 'Clean Duration Remaining
-humt' field for 'Manual Humidification Target
-rect' for 'Auto Humidification target
-cltr' field for 'Time Remaining to Next Clean
-wath' field for Water Hardness
-
-    @SerializedName("auto")
-    private String mAutoMode;
-    @SerializedName("fmod")
-    private String mFanMode;
-    @SerializedName("fnsp")
-    private String mFanSpeed;
-    @SerializedName("fdir")
-    private String mFlowDirection;
-    @SerializedName("ffoc")
-    private String mFlowFocus;
-    @SerializedName("hmod")
-    private String mHeaterMode;
-    @SerializedName("humt")
-    private String mHumidificationLevel;
-    @SerializedName("hume")
-    private String mHumidificationMode;
-    @SerializedName("haut")
-    private String mHumidifyAutoMode;
-    @SerializedName("nmod")
-    private String mNightMode;
-    @SerializedName("oson")
-    private String mOscillation;
-    @SerializedName("ancp")
-    private String mOscillationAngle;
-    @SerializedName("osal")
-    private String mOscillationAngleLowerBoundary;
-    @SerializedName("osau")
-    private String mOscillationAngleUpperBoundary;
-    @SerializedName("hmax")
-    private Integer mTemperatureTarget;
-
-
-
+| hume | HumidificationMode     | ON, OFF, |
+| haut | Humidify Auto Mode| |
+| humt | Humidification Target| |
+| cdrr | CleanDurationRemaining| |  
+| rect | AutoHumidificationTarget| |
+| cltr | TimeRemainingToNextClean| |
+| wath | WaterHardness| |
+| wacd | WarningCode? | NONE... | 
+| rstf | reset filter lifecycle | 
+| bril |  | 0002 |    
+| corf |  | ON, OFF | 
+| psta | [HP0x] Unknown |  | 
+| hsta | [HP0x] Unknown |  | 
+| tilt | [HP0x] Unknown |  | 
+| dial | [DP0x] Unknown |  | 
+| fqhp | fqhp||
+| msta | msta||
 
 
 |Error-Codes| Meaning |
