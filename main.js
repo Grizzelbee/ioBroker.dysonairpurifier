@@ -73,7 +73,7 @@ const datapoints = [
     ['p25r' , 'PM25R'                     , 'PM-2.5R - Particulate Matter 2.5µm'                                            , 'number', 'false', 'value'             ,'µg/m³' ],
     ['p10r' , 'PM10R'                     , 'PM-10R - Particulate Matter 10µm'                                              , 'number', 'false', 'value'             ,'µg/m³' ],
     ['hmod' , 'HeaterMode'                , 'Heating Mode [ON/OFF]'                                                         , 'string', 'true',  'switch'            ,'', {'OFF': 'OFF', 'ON': 'ON'} ],
-    ['hmax' , 'TemperatureTarget'         , 'Target temperature for heating'                                                , 'number', 'true',  'value'             ,'°' ],
+    ['hmax' , 'TemperatureTarget'         , 'Target temperature for heating'                                                , 'number', 'true',  'value.temperature' ,'' ],
     ['hume' , 'HumidificationMode'        , 'HumidificationMode Switch [ON/OFF]'                                            , 'string', 'true', 'switch'             ,'', {'OFF': 'OFF', 'ON': 'ON'} ],
     ['haut' , 'HumidifyAutoMode'          , 'Humidify AutoMode [ON/OFF]'                                                    , 'string', 'true', 'switch'             ,'', {'OFF': 'OFF', 'ON': 'ON'} ],
     ['humt' , 'HumidificationTarget'      , 'Manual Humidification Target'                                                  , 'string', 'false', 'text'              ,'' ],
