@@ -2,6 +2,15 @@
 
 const _ = require('lodash');
 const crypto = require('crypto');
+const axios  = require('axios');
+const path = require('path');
+const https = require('https');
+const rootCas = require('ssl-root-cas').create();
+const {stringify} = require('flatted');
+const httpsAgent = new https.Agent({ca: rootCas});
+const supportedProductTypes = ['358', '438', '455', '469', '475', '520', '527'];
+const apiUri = 'https://appapi.cp.dyson.com';
+rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
 
 // class DysonUtils {
 //     DysonUtils() {}
@@ -40,10 +49,7 @@ module.exports.zeroFill = function (number, width) {
  * @param config {Adapter} ioBroker adapter which contains the configuration that should be checked
  */
 module.exports.checkAdapterConfig = async function (adapter) {
-    adapter.log.debug('Entering function [checkAdapterConfig]...');
-    
     const config = adapter.config;
-
     // Masking sensitive fields (password) for logging configuration (creating a deep copy of the config)
     const logConfig = JSON.parse(JSON.stringify(config));
     logConfig.Password = '(***)';
@@ -68,8 +74,10 @@ module.exports.checkAdapterConfig = async function (adapter) {
  * decrypts the fans local mqtt password and returns a value you can connect with
  *
  * @param LocalCredentials  {string} encrypted mqtt password
+ *
+ * @returns {string} The decrypted MQTT password
  */
-module.exports.decryptMqttPasswd = function (LocalCredentials) {
+module.exports.decryptMqttPasswd = function(LocalCredentials) {
     // Gets the MQTT credentials from the thisDevice (see https://github.com/CharlesBlonde/libpurecoollink/blob/master/libpurecoollink/utils.py)
     const key = Uint8Array.from(Array(32), (_, index) => index + 1);
     const initializationVector = new Uint8Array(16);
@@ -77,6 +85,134 @@ module.exports.decryptMqttPasswd = function (LocalCredentials) {
     const decryptedPasswordString = decipher.update(LocalCredentials, 'base64', 'utf8') + decipher.final('utf8');
     const decryptedPasswordJson = JSON.parse(decryptedPasswordString);
     return decryptedPasswordJson.apPasswordHash;
+};
+
+/**
+ * Function getDevices
+ * Queries the devices stored in a given dyson online account
+ *
+ * @param myAccount  {Object} JSON Object containing your dyson account details
+ * @param adapterLog {Object} link to the adapters log-output to get proper log entries
+ * @returns {ANY}
+ *      resolves with a List of dyson devices connected to the given account
+ *      rejects with an error message
+ */
+module.exports.getDevices = async function(myAccount, adapter) {
+    return new Promise((resolve, reject) => {
+        this.dysonGetDevicesFromApi(myAccount)
+            .then((response) => {
+                const devices = [];
+                for (const thisDevice in response.data) {
+                    adapter.log.debug('Data received from dyson API: ' + JSON.stringify(response.data[thisDevice]));
+                    // TODO Try to switch from supportedProductTypes-array to products-object
+                    if (!supportedProductTypes.some(function (t) {
+                        return t === response.data[thisDevice].ProductType;
+                    })) {
+                        adapter.log.warn('Device with serial number [' + response.data[thisDevice].Serial + '] not added, hence it is not supported by this adapter. Product type: [' + response.data[thisDevice].ProductType + ']');
+                        adapter.log.warn('Please open an Issue on github if you think your device should be supported.');
+                    } else {
+                        // productType is supported: Push to Array and create in devicetree
+                        response.data[thisDevice].hostAddress = undefined;
+                        response.data[thisDevice].mqttClient = null;
+                        response.data[thisDevice].mqttPassword = this.decryptMqttPasswd(response.data[thisDevice].LocalCredentials);
+                        response.data[thisDevice].updateIntervalHandle = null;
+                        devices.push(response.data[thisDevice]);
+                    }
+                }
+                resolve(devices);
+            })
+            .catch((error) => {
+                // adapterLog.error('[dysonGetDevicesFromApi] Error: (' + error.statuscode + ') ' + error + ', Callstack: ' + error.stack);
+                reject('[dysonGetDevicesFromApi] Error: (' + error.statuscode + ') ' + error + ', Callstack: ' + error.stack);
+            });
+    });
+};
+
+/**
+ * dysonAPILogin
+ *
+ * @param adapter {object} Object which contains a reference to the adapter
+ *
+ * @returns {Promise} 
+ *      resolves when dyson login worked
+ *      rejects on any http error.
+ */
+module.exports.dysonAPILogIn = async function(adapter) {
+    adapter.log.debug('Signing in into Dyson API...');
+    // Sends the login request to the API
+    return await axios.post(apiUri + '/v1/userregistration/authenticate?country=' + adapter.config.country,
+        {
+            Email: adapter.config.email,
+            Password: adapter.config.Password
+        },
+        { httpsAgent });
+};
+
+/**
+ * dysonGetDevicesFromApi
+ *
+ * @param auth {object} Object which contains required authentication data
+ *
+ * @returns {Promise}
+ *      resolves with dysons device data
+ *      rejects on any http error.
+ */module.exports.dysonGetDevicesFromApi = async function(auth) {
+    // Sends a request to the API to get all devices of the user
+    return await axios.get(apiUri + '/v2/provisioningservice/manifest',
+        {
+            httpsAgent,
+            headers: { 'Authorization': auth },
+            json: true
+        }
+    );
+};
+
+/**
+ * Function getMqttCredentials
+ *
+ *
+ * @param adapterLog {Object} link to the adapters log-output to get proper log entries
+ * @returns Promise  {string} resolves with the MQTT Basic-Auth of the device, rejects with the error which occurred.
+ */
+module.exports.getMqttCredentials = function(adapter) {
+    return new Promise((resolve, reject) => {
+        this.dysonAPILogIn(adapter)
+            .then((response) => {
+                adapter.log.debug('Successful logged in into the Dyson API.');
+                adapter.log.debug('[dysonAPILogIn]: Statuscode from Axios: [' + response.status + ']');
+                adapter.log.debug('[dysonAPILogIn]: Statustext from Axios [' + response.statusText + ']');
+                // Creates the authorization header for further use
+                resolve( 'Basic ' + Buffer.from(response.data.Account + ':' + response.data.Password).toString('base64'));
+            })
+            .catch((error) => {
+                adapter.log.error('Error during dyson API login:' + error + ', Callstack: ' + error.stack);
+                if (error.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    switch (error.response.status) {
+                        case 401 : // unauthorized
+                            adapter.log.error('Error: Unable to authenticate user! Your credentials are invalid. Please double check and fix them.');
+                            break;
+                        case 429: // endpoint currently not available
+                            adapter.log.error('Error: Endpoint: ' + apiUri + '/v1/userregistration/authenticate?country=' + adapter.config.country);
+                        default:
+                            adapter.log.error('[error.response.data]: ' + ((typeof error.response.data === 'object') ? stringify(error.response.data) : error.response.data));
+                            adapter.log.error('[error.response.status]: ' + ((typeof error.response.status === 'object') ? stringify(error.response.status) : error.response.status));
+                            adapter.log.error('[error.response.headers]: ' + ((typeof error.response.headers === 'object') ? stringify(error.response.headers) : error.response.headers));
+                            break;
+                    }
+                } else if (error.request) {
+                    // The request was made but no response was received
+                    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                    // http.ClientRequest in node.js
+                    adapter.log.error('[error.request]: ' + ((typeof error.request === 'object') ? stringify(error.request) : error.request));
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    adapter.log.error('[Error]: ' + error.message);
+                }
+                reject('Error during dyson API login:' + error );
+            });
+    });
 };
 
 /**

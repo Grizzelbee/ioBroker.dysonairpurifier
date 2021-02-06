@@ -69,69 +69,99 @@ You can also install older release versions using this methods (by pointing to a
 
 *Please note*: Due to early development state and a non conform mDNS implementation by Dyson you'll need to provide the local IP of the device *after the first run*.
 
+*Additional Note*: Since Version 0.7.1 the adapter tries to connect to the device by it's hostname (serialnumber) when no host address/IP ist given. This will work under two prerequisites:
+1. There is a DNS Server running in your LAN. Either in your router (e.g. FritzBoxes have a DNS running) or a dedicated one.
+2. You haven't changed the default devicename.
+
 > On the first start of this adapter the Dyson API is queried for all your devices and all supported devices will be created in the devicetree -- with their basic information provided by the API and an additional field "Hostaddress".
 >
-> So please run the adapter once and your Dyson devices will be created in the device tree with their basic settings.
+> So please run the adapter once, and your Dyson devices will be created in the device tree with their basic settings.
 >
 > Then stop the adapter, enter the IP(s) into the Hostaddress field(s) and restart the adapter. After that your Dyson devices in the device tree should be populated with data.
 
-## Changelog
+## Controlling your device(s)
+This adapter is currently able to control the following states of your devices:
+* FanSpeed                  , Current fan speed
+* Nightmode                 , Night mode state
+* Oscillation               , Oscillation of fan.
+* ContinuousMonitoring      , Continuous Monitoring of environmental sensors even if device is off.
+* MainPower                 , Main Power of fan.
+* AutomaticMode             , Fan is in automatic mode.
+* Fandirection              , Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)
+* Jetfocus                  , Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)
+* HeatingMode               , Heating Mode [ON/OFF]
+* HeatingTargetTemp         , Target temperature for heating
+* AirQualityTarget          , Target air quality for auto mode.
+
+Possible values for these states are documented below, as far as known.
+Fan speed only allows values from 1 to 10 and Auto. If you like to set your fan speed down to 0 you'll need to power off the main power.
+Which is what the dyson app does also.
 
 ### Todo
-
 * detect IP of devices automatically
 * collect more mqtt message acronym meanings
+* subscribe changes of IP. OnChange reInit Adapter.
+* Add symbols for each fan type in object-view like tradfri or alexa
 
 ### Known issues
-
 * No automatic IP detection of devices
+* Adapter is currently not able to detect whether a mqtt connection has been properly established or not.
+
+## Changelog
+
+### 0.7.1 (2021-01-xx) (Horizons)
+* (grizzelbee) New: When no host address is given - adapter tries to connect via default hostname of the device
+* (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) Filterlifetime is now correctly displayed in hours and percent for devices supporting this
+* (grizzelbee) Fix: [#48](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/48) Fixed countrycodes for UK and USA
+* (grizzelbee) Fix: [#52](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/52) Fixed VOCIndex
+* (grizzelbee) Fix: Removed option to control Fan state since it corresponds to the state of the fan in auto-mode. Controlling it is senseless.
+* (grizzelbee) Fix: Fixed await..then anti pattern
+* (grizzelbee) Fix: Fixed undefined roles
+* (grizzelbee) Fix: Fixed some bad promises and moved code to dysonUtils
+* (grizzelbee) Fix: Fixed encrypting password using js-controller 3.0 build-in routine
+* (grizzelbee) Upd: Added topic "Controlling your device(s)" to readme
+* (grizzelbee) Upd: Removed unnecessary saving of MQTT password
+* (grizzelbee) Upd: [#9](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/9) Added some more dyson codes for heaters and humidifiers
+
 
 ### 0.7.0 (2021-01-08) (Afraid of the dark)
-
 * (jpwenzel)   New: Removing crypto from package dependency list (using Node.js provided version)
 * (jpwenzel)   New: Introducing unit tests
+* (jpwenzel)   New: At least NodeJs 10.0.0 is required
+* (grizzelbee) New: [#23](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/23) - Introduced new data field AirQuality which represents the worst value of all present indexes.
+* (grizzelbee) New: BREAKING CHANGE! - switched over to the adapter-prototype build-in password encryption. Therefore you'll need to enter your password again in config.
+* (grizzelbee) New: At least js-controller 3.0.0 is required
+* (grizzelbee) New: At least admin 4.0.9 is required
 * (jpwenzel)   Fix: General overhaul of readme
 * (jpwenzel)   Fix: Code refactoring
-* (jpwenzel)   New: At least NodeJs 10.0.0 is required
 * (grizzelbee) Fix: fixed some datafield names - please delete the whole device folder and get them newly created.
 * (grizzelbee) Fix: [#18](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/18) - Fixed creating the indexes when there is no according sensor
 * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Displaying Filter life value in hours again
 * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Creating additional Filter life value in percent
-* (grizzelbee) New: [#23](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/23) - Introduced new data field AirQuality which represents the worst value of all present indexes.
 * (grizzelbee) Fix: removed materializeTab from ioPackage
 * (grizzelbee) Fix: calling setState now as callback in createOrExtendObject
-* (grizzelbee) New: BREAKING CHANGE! - switched over to the adapter-prototype build-in password encryption. Therefore you'll need to enter your password again in config.
-* (grizzelbee) New: At least js-controller 3.0.0 is required
-* (grizzelbee) New: At least admin 4.0.9 is required
 * (grizzelbee) Fix: Removed non compliant values for ROLE
 * (grizzelbee) Fix: calling setState in callback of set/createObject now
 * (grizzelbee) Fix: ensuring to clear all timeouts in onUnload-function
 
-
-
-
-#K## 0.6.0 (2020-10-29) (Rage before the storm)
-
-* (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Filter life value is now displayed in percent not in hours
+### 0.6.0 (2020-10-29) (Rage before the storm)
 * (grizzelbee) New: [#17](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/17) - Added online-indicator for each device
 * (grizzelbee) New: [#19](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/19) - Extended Password length from 15 characters to 32
 * (grizzelbee) New: [#20](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/20) - Improved errorhandling on http communication with Dyson API
 * (grizzelbee) Fix: Fixed typo within data field anchorpoint - please delete the old ancorpoint manually.
+* (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Filter life value is now displayed in percent not in hours
 
 ### 0.5.1 (2020-10-27) (Heart of the hurricance)
-
 * (grizzelbee) Fix: Added missing clearTimeout
 
 ### 0.5.0 (2020-10-27) (Heart of the hurricance)
-
-* (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Filter life value is now displayed in percent not in hours
-* (grizzelbee) Fix: [#6](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/6) - Changing the fanspeed does now fully work.  
 * (grizzelbee) New: Editable data fields have now appropiate value lists
 * (grizzelbee) New: Added more country codes
 * (grizzelbee) New: Target temperature of heater can now be set - **in the configured unit!**
+* (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Filter life value is now displayed in percent not in hours
+* (grizzelbee) Fix: [#6](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/6) - Changing the fanspeed does now fully work.  
 
 ### 0.4.1 (2020-10-16) (unbroken)
-
 * (grizzelbee) New: [#8](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/8) - Documented ProductTypes for better overview and user experience in ReadMe
 * (grizzelbee) New: [#9](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/9) - Added some Hot&Cool specific datafields
 * (grizzelbee) New: Logging of from devices, when shutting down the adapter
@@ -200,11 +230,11 @@ Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD
 | ffoc | JetFocus | ON, OFF |
 | nmod | Night mode | ON , OFF | |
 | oson | Oscillation | ON , OFF| |
-| osal | Oscilation left degrees | 0005 - 355| °  (degrees)|
-| osau | Oscilation right degrees | 0005 - 355 | °  (degrees)|
+| osal | OscillationAngle Lower Boundary | 0005 - 355| °  (degrees)|
+| osau | OscillationAngle Upper Boundary | 0005 - 355 | °  (degrees)|
 | oscs | OscillationActive | ON, OFF, IDLE | |
-| ancp | Ancorpoint for oscilation ?  | CUST, 0180 |° (degrees)|
-| qtar | Air Quality target | 0001 , 0003... | |
+| ancp | OscillationAngle  | CUST, 0180 |° (degrees)|
+| qtar | Air Quality target | 0001=Good, 0002=Normal, 0003=Bad, 0004=Very bad | |
 | rhtm | Continious Monitoring | ON, OFF | |
 | auto | AutomaticMode | ON, OFF | |
 | nmdv | NightMode Max Fanspeed? | 0004 | |
@@ -213,24 +243,32 @@ Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD
 | hflr | Status HEPA-Filter | 0000 - 0100 | Percent |
 | hflt | HEPA-Filter | GHEP | |
 | sltm | Sleeptimer | ON, OFF ||
-| hmod | Heating Mode | HEAT | |
+| hmod | Heater Mode [ON/OFF] | HEAT | |
 | hmax | Target temperature for heating | 0 .. 5000 | K |
-| hume | Humidifier State     | ON, OFF, |
-| haut | Target Humidifier Dehumidifier State| |
-| humt | Relative Humidity Humidifier Threshold| |
-| wacd | WarningCode? | NONE... | |
-| bril |  | 0002 |  |  
-| corf |  | ON, OFF | |
-| psta | [HP0x] Unknown |  | |
-| hsta | [HP0x] Unknown |  | |
-| tilt | [HP0x] Unknown |  | |
-| dial | [DP0x] Unknown |  | |
+| hume | HumidificationMode     | ON, OFF, |
+| haut | Humidify Auto Mode| |
+| humt | Humidification Target| |
+| cdrr | CleanDurationRemaining| |  
+| rect | AutoHumidificationTarget| |
+| cltr | TimeRemainingToNextClean| |
+| wath | WaterHardness| |
+| wacd | WarningCode? | NONE... | 
+| rstf | reset filter lifecycle | 
+| bril |  | 0002 |    
+| corf |  | ON, OFF | 
+| psta | [HP0x] Unknown |  | 
+| hsta | [HP0x] Unknown |  | 
+| tilt | [HP0x] Unknown |  | 
+| dial | [DP0x] Unknown |  | 
+| fqhp | fqhp||
+| msta | msta||
+
 
 |Error-Codes| Meaning |
 | ----- | ----- |
 | NONE | There is no error active |
 |57C2| unknown |
-|11E1| Oscilation has been disabled. Please press Button "Oscilation" on your remote to continue.|
+|11E1| Oscillation has been disabled. Please press Button "Oscillation" on your remote to continue.|
 
 #### scheduler
 
