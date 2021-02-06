@@ -109,7 +109,7 @@ Which is what the dyson app does also.
 
 ## Changelog
 
-### 0.7.1 (2021-01-xx) (Horizons)
+### 0.7.1 (2021-02-06) (Horizons)
 * (grizzelbee) New: When no host address is given - adapter tries to connect via default hostname of the device
 * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) Filterlifetime is now correctly displayed in hours and percent for devices supporting this
 * (grizzelbee) Fix: [#48](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/48) Fixed countrycodes for UK and USA
