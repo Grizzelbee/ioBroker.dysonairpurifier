@@ -186,7 +186,7 @@
     },
     "native": {
         "email": "",
-        "country": "",
+        "country": "de",
         "pollInterval": 30,
         "temperatureUnit": "C"
     },
