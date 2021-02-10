@@ -109,6 +109,9 @@ Which is what the dyson app does also.
 
 ## Changelog
 
+### 0.7.3 (2021-02-xx) (When angels fall)
+
+
 ### 0.7.2 (2021-02-10) (Songs of love and death)
 * (grizzelbee) Fix: [#59](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/59) Fixed bug while loading/saving config which led to wrong values displayed for country and temperature unit
 * (grizzelbee) Upd: switched "Skipping unknown ..." message from info to debug 
