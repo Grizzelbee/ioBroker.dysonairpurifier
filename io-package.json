@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "0.7.3",
+        "version": "0.7.4",
         "news": {
+            "0.7.4": {
+                "en": "Bugfix release for some minor bugs",
+                "de": "Bugfix Release für einige kleinere Fehler",
+                "ru": "Выпуск исправлений для некоторых мелких ошибок",
+                "pt": "Lançamento de correção de bug para alguns pequenos bugs",
+                "nl": "Bugfix-uitgave voor enkele kleine bugs",
+                "fr": "Publication de correctifs pour certains bogues mineurs",
+                "it": "Rilascio di bugfix per alcuni bug minori",
+                "es": "Lanzamiento de corrección de errores para algunos errores menores",
+                "pl": "Wydanie poprawek dla kilku drobnych błędów",
+                "zh-cn": "修正了一些小错误"
+            },
             "0.7.3": {
                 "en": "Bugfix release for some bug and improvements - Refer to changelog for details.",
                 "de": "Bugfix-Version für einige Fehler und Verbesserungen - Einzelheiten finden Sie im Änderungsprotokoll.",
