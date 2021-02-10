@@ -50,20 +50,33 @@ module.exports.zeroFill = function (number, width) {
  */
 module.exports.checkAdapterConfig = async function (adapter) {
     const config = adapter.config;
-
     // Prepare masked Config for debuggging
     const logConfig = JSON.stringify(this.maskConfig(config));
 
     return new Promise(
         function (resolve, reject) {
-            // TODO Do more precise tests. This is very rough
             if ((!config.email || config.email === '')
                 || (!config.Password || config.Password === '')
                 || (!config.country || config.country === '')) {
-                adapter.log.debug(`Invalid configuration provided: ${logConfig}`);
+                adapter.log.error(`Invalid configuration provided: ${logConfig}`);
+                if (!config.email || config.email === '') {
+                    adapter.log.error(`Invalid configuration provided: eMail address is missing. Please enter your eMail address.`);
+                }
+                if (!config.Password || config.Password === '') {
+                    adapter.log.error(`Invalid configuration provided: password is missing. Please enter your password.`);
+                }
+                if (!config.country || config.country === '') {
+                    adapter.log.error(`Invalid configuration provided: Country is missing. Please select your Country.`);
+                }
+                if (!config.temperatureUnit || config.temperatureUnit === '') {
+                    adapter.log.error(`Invalid configuration provided: Temperature unit is missing. Please select a Temperature unit.`);
+                }
+                if (!config.pollInterval || config.pollInterval === '' || config.pollInterval < 1) {
+                    adapter.log.error(`Invalid configuration provided: Poll interval is not valid. Please enter a valid poll interval (> 0s).`);
+                }
                 reject('Given adapter config is invalid. Please fix.');
             } else {
-                resolve('Given config seems to be valid.');
+                resolve(true);
             }
         });
 };

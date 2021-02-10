@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "0.7.1",
+        "version": "0.7.2",
         "news": {
+            "0.7.2": {
+                "en": "Bugfix for config issue.",
+                "de": "Bugfix für Konfigurationsproblem.",
+                "ru": "Исправление проблемы с конфигурацией.",
+                "pt": "Correção de bug para problema de configuração.",
+                "nl": "Bugfix voor configuratieprobleem.",
+                "fr": "Correction de bug pour le problème de configuration.",
+                "it": "Bugfix per problema di configurazione.",
+                "es": "Corrección de errores para el problema de configuración.",
+                "pl": "Poprawka dotycząca problemu z konfiguracją.",
+                "zh-cn": "修正了配置问题。"
+            },
             "0.7.1": {
                 "en": "Many bugfixes and improvements - Refer to changelog for details.",
                 "de": "Viele Bugfixes und Verbesserungen - Einzelheiten finden Sie im Änderungsprotokoll.",

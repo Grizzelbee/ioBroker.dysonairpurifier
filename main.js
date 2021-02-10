@@ -355,7 +355,7 @@ class dysonAirPurifier extends utils.Adapter {
             this.log.debug('Processing Message: ' + ((typeof message === 'object')? JSON.stringify(message) : message) );
             const deviceConfig = await this.getDatapoint(row);
             if ( deviceConfig === undefined){
-                this.log.info('Skipped creating unknown data field for: [' + row + '] Value: |-> ' + ((typeof( message[row] ) === 'object')? JSON.stringify(message[row]) : message[row]) );
+                this.log.debug('Skipped creating unknown data field for: [' + row + '] Value: |-> ' + ((typeof( message[row] ) === 'object')? JSON.stringify(message[row]) : message[row]) );
                 continue;
             }
             // strip leading zeros from numbers
@@ -762,36 +762,29 @@ class dysonAirPurifier extends utils.Adapter {
      * Is called when databases are connected and adapter received configuration.
      */
     async onReady() {
-        try {
-            // Terminate adapter after first start because configuration is not yet received
-            // Adapter is restarted automatically when config page is closed
-            adapter = this; // preserve adapter reference to address functions etc. correctly later
-            dysonUtils.checkAdapterConfig(adapter)
-                .then(() => {
-                    // configisValid! Decrypt password now
-                    adapter.getForeignObject('system.config', (err, obj) => {
-                        if (!adapter.supportsFeature || !adapter.supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
-                            if (obj && obj.native && obj.native.secret) {
-                                //noinspection JSUnresolvedVariable
-                                adapter.config.Password = this.decrypt(obj.native.secret, adapter.config.Password);
-                            } else {
-                                //noinspection JSUnresolvedVariable
-                                adapter.config.Password = this.decrypt('Zgfr56gFe87jJOM', adapter.config.Password);
-                            }
+        // Terminate adapter after first start because configuration is not yet received
+        // Adapter is restarted automatically when config page is closed
+        adapter = this; // preserve adapter reference to address functions etc. correctly later
+        dysonUtils.checkAdapterConfig(adapter)
+            .then(() => {
+                adapter.getForeignObject('system.config', (err, obj) => {
+                    if (!adapter.supportsFeature || !adapter.supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
+                        if (obj && obj.native && obj.native.secret) {
+                            //noinspection JSUnresolvedVariable
+                            adapter.config.Password = this.decrypt(obj.native.secret, adapter.config.Password);
                         }
                         this.main();
-                    });
-                })
-                .catch((error) => {
-                    this.log.error('Error during config validation: ' + error);
-                    this.setState('info.connection', false);
-                    this.terminate('Terminating adapter until configuration is fixed.', 11);
+                    } else {
+                        throw new Error('This adapter requires at least js-controller V3.0.0. Your system is not compatible. Please update.');
+                    }
                 });
-        } catch (error) {
-            this.log.error(`[onReady] error: ${error.message}, stack: ${error.stack}`);
-        }
+            })
+            .catch( (error) => {
+                this.setState('info.connection', false);
+                this.log.error(`[onReady] error: ${error.message}, stack: ${error.stack}`);
+                this.terminate('Terminating adapter until configuration is fixed.', 11);
+            });
     }
-
     /***********************************************
      * Misc helper functions                       *
      ***********************************************/
@@ -867,7 +860,7 @@ class dysonAirPurifier extends utils.Adapter {
      * Function clearIntervalHandle
      *
      * sets an intervalHandle (timeoutHandle) to null if it's existing to clear it
-     *
+        *
      * @param updateIntervalHandle  {any} timeOutHandle to be checked and cleared
      */
     clearIntervalHandle(updateIntervalHandle){
