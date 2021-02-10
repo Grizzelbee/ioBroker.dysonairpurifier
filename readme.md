@@ -116,6 +116,9 @@ Which is what the dyson app does also.
 * (grizzelbee) New: added password to protectedNative in io-package.json
 * (grizzelbee) Fix: fixed showing password in config (leftover from testing/fixing)
 * (grizzelbee) Fix: fixed detection of needed js-controller features
+* (grizzelbee) Fix: fixed detection if IP is given or not
+* (grizzelbee) Upd: creating all data points with await 
+
 
 ### 0.7.2 (2021-02-10) (Songs of love and death)
 * (grizzelbee) Fix: [#59](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/59) Fixed bug while loading/saving config which led to wrong values displayed for country and temperature unit

@@ -202,17 +202,17 @@ class dysonAirPurifier extends utils.Adapter {
         try {
             // create device folder
             this.log.debug('Creating device folder.');
-            this.createOrExtendObject(device.Serial, {
+            await this.createOrExtendObject(device.Serial, {
                 type: 'device',
                 common: {name: products[device.ProductType]},
                 native: {}
             }, null);
-            this.createOrExtendObject(device.Serial + '.Firmware', {
+            await this.createOrExtendObject(device.Serial + '.Firmware', {
                 type: 'channel',
                 common: {name: 'Information on device\'s firmware', 'read': true, 'write': false},
                 native: {}
             }, null);
-            this.createOrExtendObject(device.Serial + '.Firmware.Version', {
+            await this.createOrExtendObject(device.Serial + '.Firmware.Version', {
                 type: 'state',
                 common: {
                     name: 'Current firmware version',
@@ -223,7 +223,7 @@ class dysonAirPurifier extends utils.Adapter {
                 },
                 native: {}
             }, device.Version);
-            this.createOrExtendObject(device.Serial + '.Firmware.Autoupdate', {
+            await this.createOrExtendObject(device.Serial + '.Firmware.Autoupdate', {
                 type: 'state',
                 common: {
                     name: 'Shows whether the device updates it\'s firmware automatically if update is available.',
@@ -234,7 +234,7 @@ class dysonAirPurifier extends utils.Adapter {
                 },
                 native: {}
             }, device.AutoUpdate);
-            this.createOrExtendObject(device.Serial + '.Firmware.NewVersionAvailable', {
+            await this.createOrExtendObject(device.Serial + '.Firmware.NewVersionAvailable', {
                 type: 'state',
                 common: {
                     name: 'Shows whether a firmware update for this device is available online.',
@@ -245,7 +245,7 @@ class dysonAirPurifier extends utils.Adapter {
                 },
                 native: {}
             }, device.NewVersionAvailable);
-            this.createOrExtendObject(device.Serial + '.ProductType', {
+            await this.createOrExtendObject(device.Serial + '.ProductType', {
                 type: 'state',
                 common: {
                     name: 'dyson internal productType.',
@@ -256,7 +256,7 @@ class dysonAirPurifier extends utils.Adapter {
                 },
                 native: {}
             }, device.ProductType);
-            this.createOrExtendObject(device.Serial + '.ConnectionType', {
+            await this.createOrExtendObject(device.Serial + '.ConnectionType', {
                 type: 'state',
                 common: {
                     name: 'Type of connection.',
@@ -267,49 +267,43 @@ class dysonAirPurifier extends utils.Adapter {
                 },
                 native: {}
             }, device.ConnectionType);
-            this.createOrExtendObject(device.Serial + '.Name', {
+            await this.createOrExtendObject(device.Serial + '.Name', {
                 type: 'state',
                 common: {name: 'Name of device.', 'read': true, 'write': true, 'role': 'value', 'type': 'string'},
                 native: {}
             }, device.Name);
             this.log.debug('Querying Host-Address of device: ' + device.Serial);
-            this.getStateAsync(device.Serial + '.Hostaddress')
-                .then((state) => {
-                    if (state  && state.val !== '') {
-                        this.log.debug('Found valid Host-Address.val [' + state.val + '] for device: ' + device.Serial);
-                        device.hostAddress = state.val;
-                        this.createOrExtendObject(device.Serial + '.Hostaddress', {
-                            type: 'state',
-                            common: {
-                                name: 'Local host address (or IP) of device.',
-                                'read': true,
-                                'write': true,
-                                'role': 'value',
-                                'type': 'string'
-                            },
-                            native: {}
-                        }, device.hostAddress);
-                    } else {
-                        // No valid IP address of device found. Without we can't proceed. So terminate adapter.
-                        this.createOrExtendObject(device.Serial + '.Hostaddress', {
-                            type: 'state',
-                            common: {
-                                name: 'Local host address (IP) of device.',
-                                'read': true,
-                                'write': true,
-                                'role': 'value',
-                                'type': 'string'
-                            },
-                            native: {}
-                        }, undefined);
-                        this.log.error(`IP-Address (${device.hostAddress}) of device [${device.Serial}] is invalid or can't be resolved. Please enter the valid IP of this device in your LAN to the device tree.`);
-                        this.setState('info.connection', false);
-                        this.terminate('Terminating Adapter due to missing or invalid device IP.', 11);
-                    }
-                })
-                .catch( (error) => {
-                    this.log.error('[CreateOrUpdateDevice-getSateAsync] Error: ' + error + ', Callstack: ' + error.stack);
-                });
+            const hostAddress = await this.getStateAsync(device.Serial + '.Hostaddress');
+            if (hostAddress  && hostAddress.val !== '') {
+                this.log.debug('Found valid Host-Address.val [' + hostAddress.val + '] for device: ' + device.Serial);
+                device.hostAddress = hostAddress.val;
+                this.createOrExtendObject(device.Serial + '.Hostaddress', {
+                    type: 'state',
+                    common: {
+                        name: 'Local host address (or IP) of device.',
+                        'read': true,
+                        'write': true,
+                        'role': 'value',
+                        'type': 'string'
+                    },
+                    native: {}
+                }, device.hostAddress);
+            } else {
+                // No valid IP address of device found. Without we can't proceed. So terminate adapter.
+                this.createOrExtendObject(device.Serial + '.Hostaddress', {
+                    type: 'state',
+                    common: {
+                        name: 'Local host address (IP) of device.',
+                        'read': true,
+                        'write': true,
+                        'role': 'value',
+                        'type': 'string'
+                    },
+                    native: {}
+                }, undefined);
+                adapter.log.info('No host address given. Trying to connect to the device with it\'s default hostname [' + device.Serial + ']. This should work if you haven\'t changed it and if you\'re running a DNS.');
+                device.hostAddress = device.Serial;
+            }
         } catch(error){
             this.log.error('[CreateOrUpdateDevice] Error: ' + error + ', Callstack: ' + error.stack);
         }
@@ -622,130 +616,121 @@ class dysonAirPurifier extends utils.Adapter {
                 adapterLog.debug('Querying devices from dyson API.');
                 devices = await dysonUtils.getDevices(myAccount, adapter);
                 for (const thisDevice in devices) {
-                    this.CreateOrUpdateDevice(devices[thisDevice])
-                        .then(() => {
-                            // Initializes the MQTT client for local communication with the thisDevice
-                            adapterLog.debug('Trying to connect device [' + devices[thisDevice].Serial + '] to mqtt.');
-                            if (devices[thisDevice].hostAddress === undefined) {
-                                adapterLog.info('No host address given. Trying to connect to the device with it\'s default hostname [' + devices[thisDevice].Serial + ']. This should work if you haven\'t changed it and if you\'re running a DNS.');
-                                devices[thisDevice].hostAddress = devices[thisDevice].Serial;
-                            }
-                            devices[thisDevice].mqttClient = mqtt.connect('mqtt://' + devices[thisDevice].hostAddress, {
-                                username: devices[thisDevice].Serial,
-                                password: devices[thisDevice].mqttPassword,
-                                protocolVersion: 3,
-                                protocolId: 'MQIsdp'
-                            });
+                    await this.CreateOrUpdateDevice(devices[thisDevice]);
+                    // Initializes the MQTT client for local communication with the thisDevice
+                    adapterLog.info('Trying to connect to device [' + devices[thisDevice].Serial + '] via MQTT.');
+                    devices[thisDevice].mqttClient = mqtt.connect('mqtt://' + devices[thisDevice].hostAddress, {
+                        username: devices[thisDevice].Serial,
+                        password: devices[thisDevice].mqttPassword,
+                        protocolVersion: 3,
+                        protocolId: 'MQIsdp'
+                    });
+                    //noinspection JSUnresolvedVariable
+                    adapterLog.info(devices[thisDevice].Serial + ' - MQTT connection requested for [' + devices[thisDevice].hostAddress + '].');
+
+                    // Subscribes for events of the MQTT client
+                    devices[thisDevice].mqttClient.on('connect', function () {
+                        //noinspection JSUnresolvedVariable
+                        adapterLog.info(devices[thisDevice].Serial + ' - MQTT connection established.');
+
+                        // Subscribes to the status topic to receive updates
+                        //noinspection JSUnresolvedVariable
+                        devices[thisDevice].mqttClient.subscribe(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/status/current', function () {
+
+                            // Sends an initial request for the current state
                             //noinspection JSUnresolvedVariable
-                            adapterLog.debug(devices[thisDevice].Serial + ' - MQTT connection requested for [' + devices[thisDevice].hostAddress + '].');
-
-                            // Subscribes for events of the MQTT client
-                            devices[thisDevice].mqttClient.on('connect', function () {
-                                //noinspection JSUnresolvedVariable
-                                adapterLog.debug(devices[thisDevice].Serial + ' - MQTT connection established.');
-
-                                // Subscribes to the status topic to receive updates
-                                //noinspection JSUnresolvedVariable
-                                devices[thisDevice].mqttClient.subscribe(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/status/current', function () {
-
-                                    // Sends an initial request for the current state
-                                    //noinspection JSUnresolvedVariable
-                                    devices[thisDevice].mqttClient.publish(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/command', JSON.stringify({
-                                        msg: 'REQUEST-CURRENT-STATE',
-                                        time: new Date().toISOString()
-                                    }));
-                                });
-                                // Sets the interval for status updates
-                                adapterLog.info('Starting Polltimer with a ' + adapter.config.pollInterval + ' seconds interval.');
-                                // start refresh scheduler with interval from adapters config
-                                devices[thisDevice].updateIntervalHandle = setTimeout(function schedule() {
-                                    //noinspection JSUnresolvedVariable
-                                    adapterLog.debug('Updating device [' + devices[thisDevice].Serial + '] (polling API scheduled).');
-                                    try {
-                                        //noinspection JSUnresolvedVariable
-                                        devices[thisDevice].mqttClient.publish(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/command', JSON.stringify({
-                                            msg: 'REQUEST-CURRENT-STATE',
-                                            time: new Date().toISOString()
-                                        }));
-                                    } catch (error) {
-                                        //noinspection JSUnresolvedVariable
-                                        adapterLog.error(devices[thisDevice].Serial + ' - MQTT interval error: ' + error);
-                                    }
-                                    // expect adapter has created all data points after first 20 secs of run.
-                                    setTimeout(()=> {adapterIsSetUp = true;}, 20000);
-                                    devices[thisDevice].updateIntervalHandle = setTimeout(schedule, adapter.config.pollInterval * 1000);
-                                }, 10);
-                            });
-                            devices[thisDevice].mqttClient.on('message', function (_, payload) {
-                                // change dataType from Buffer to JSON object
-                                payload = JSON.parse(payload.toString());
-                                adapterLog.debug('MessageType: ' + payload.msg);
-                                switch (payload.msg) {
-                                    case 'CURRENT-STATE' :
-                                        adapter.processMsg(devices[thisDevice], '', payload);
-                                        break;
-                                    case 'ENVIRONMENTAL-CURRENT-SENSOR-DATA' :
-                                        //noinspection JSUnresolvedVariable
-                                        adapter.createOrExtendObject(devices[thisDevice].Serial + '.Sensor', {
-                                            type: 'channel',
-                                            common: {
-                                                name: 'Information from device\'s sensors',
-                                                'read': true,
-                                                'write': false
-                                            },
-                                            native: {}
-                                        }, null);
-                                        adapter.processMsg(devices[thisDevice], '.Sensor', payload);
-                                        break;
-                                    case 'STATE-CHANGE':
-                                        adapter.processMsg(devices[thisDevice], '', payload);
-                                        break;
-                                }
-                                //noinspection JSUnresolvedVariable
-                                adapterLog.debug(devices[thisDevice].Serial + ' - MQTT message received: ' + JSON.stringify(payload));
-                                //noinspection JSUnresolvedVariable
-                                adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'online');
-                            });
-
-                            devices[thisDevice].mqttClient.on('error', function (error) {
-                                //noinspection JSUnresolvedVariable
-                                adapterLog.debug(devices[thisDevice].Serial + ' - MQTT error: ' + error);
-                                //noinspection JSUnresolvedVariable
-                                adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'error');
-                            });
-
-                            devices[thisDevice].mqttClient.on('reconnect', function () {
-                                //noinspection JSUnresolvedVariable
-                                adapterLog.debug(devices[thisDevice].Serial + ' - MQTT reconnecting.');
-                                //noinspection JSUnresolvedVariable
-                                adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'reconnect');
-                            });
-
-                            devices[thisDevice].mqttClient.on('close', function () {
-                                //noinspection JSUnresolvedVariable
-                                adapterLog.debug(devices[thisDevice].Serial + ' - MQTT disconnected.');
-                                adapter.clearIntervalHandle(devices[thisDevice].updateIntervalHandle);
-                                //noinspection JSUnresolvedVariable
-                                adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'disconnected');
-                            });
-
-                            devices[thisDevice].mqttClient.on('offline', function () {
-                                //noinspection JSUnresolvedVariable
-                                adapterLog.debug(devices[thisDevice].Serial + ' - MQTT offline.');
-                                adapter.clearIntervalHandle(devices[thisDevice].updateIntervalHandle);
-                                //noinspection JSUnresolvedVariable
-                                adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'offline');
-                            });
-
-                            devices[thisDevice].mqttClient.on('end', function () {
-                                //noinspection JSUnresolvedVariable
-                                adapterLog.debug(devices[thisDevice].Serial + ' - MQTT ended.');
-                                adapter.clearIntervalHandle(devices[thisDevice].updateIntervalHandle);
-                            });
-                        })
-                        .catch((error) => {
-                            adapterLog.error(`[main/CreateOrUpdateDevice] error: ${error.message}, stack: ${error.stack}`);
+                            devices[thisDevice].mqttClient.publish(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/command', JSON.stringify({
+                                msg: 'REQUEST-CURRENT-STATE',
+                                time: new Date().toISOString()
+                            }));
                         });
+                        // Sets the interval for status updates
+                        adapterLog.info('Starting Polltimer with a ' + adapter.config.pollInterval + ' seconds interval.');
+                        // start refresh scheduler with interval from adapters config
+                        devices[thisDevice].updateIntervalHandle = setTimeout(function schedule() {
+                            //noinspection JSUnresolvedVariable
+                            adapterLog.debug('Updating device [' + devices[thisDevice].Serial + '] (polling API scheduled).');
+                            try {
+                                //noinspection JSUnresolvedVariable
+                                devices[thisDevice].mqttClient.publish(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/command', JSON.stringify({
+                                    msg: 'REQUEST-CURRENT-STATE',
+                                    time: new Date().toISOString()
+                                }));
+                            } catch (error) {
+                                //noinspection JSUnresolvedVariable
+                                adapterLog.error(devices[thisDevice].Serial + ' - MQTT interval error: ' + error);
+                            }
+                            // expect adapter has created all data points after first 20 secs of run.
+                            setTimeout(()=> {adapterIsSetUp = true;}, 20000);
+                            devices[thisDevice].updateIntervalHandle = setTimeout(schedule, adapter.config.pollInterval * 1000);
+                        }, 10);
+                    });
+                    devices[thisDevice].mqttClient.on('message', function (_, payload) {
+                        // change dataType from Buffer to JSON object
+                        payload = JSON.parse(payload.toString());
+                        adapterLog.debug('MessageType: ' + payload.msg);
+                        switch (payload.msg) {
+                            case 'CURRENT-STATE' :
+                                adapter.processMsg(devices[thisDevice], '', payload);
+                                break;
+                            case 'ENVIRONMENTAL-CURRENT-SENSOR-DATA' :
+                                //noinspection JSUnresolvedVariable
+                                adapter.createOrExtendObject(devices[thisDevice].Serial + '.Sensor', {
+                                    type: 'channel',
+                                    common: {
+                                        name: 'Information from device\'s sensors',
+                                        'read': true,
+                                        'write': false
+                                    },
+                                    native: {}
+                                }, null);
+                                adapter.processMsg(devices[thisDevice], '.Sensor', payload);
+                                break;
+                            case 'STATE-CHANGE':
+                                adapter.processMsg(devices[thisDevice], '', payload);
+                                break;
+                        }
+                        //noinspection JSUnresolvedVariable
+                        adapterLog.debug(devices[thisDevice].Serial + ' - MQTT message received: ' + JSON.stringify(payload));
+                        //noinspection JSUnresolvedVariable
+                        adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'online');
+                    });
+
+                    devices[thisDevice].mqttClient.on('error', function (error) {
+                        //noinspection JSUnresolvedVariable
+                        adapterLog.debug(devices[thisDevice].Serial + ' - MQTT error: ' + error);
+                        //noinspection JSUnresolvedVariable
+                        adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'error');
+                    });
+
+                    devices[thisDevice].mqttClient.on('reconnect', function () {
+                        //noinspection JSUnresolvedVariable
+                        adapterLog.info(devices[thisDevice].Serial + ' - MQTT reconnecting.');
+                        //noinspection JSUnresolvedVariable
+                        adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'reconnect');
+                    });
+
+                    devices[thisDevice].mqttClient.on('close', function () {
+                        //noinspection JSUnresolvedVariable
+                        adapterLog.info(devices[thisDevice].Serial + ' - MQTT disconnected.');
+                        adapter.clearIntervalHandle(devices[thisDevice].updateIntervalHandle);
+                        //noinspection JSUnresolvedVariable
+                        adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'disconnected');
+                    });
+
+                    devices[thisDevice].mqttClient.on('offline', function () {
+                        //noinspection JSUnresolvedVariable
+                        adapterLog.info(devices[thisDevice].Serial + ' - MQTT offline.');
+                        adapter.clearIntervalHandle(devices[thisDevice].updateIntervalHandle);
+                        //noinspection JSUnresolvedVariable
+                        adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'offline');
+                    });
+
+                    devices[thisDevice].mqttClient.on('end', function () {
+                        //noinspection JSUnresolvedVariable
+                        adapterLog.debug(devices[thisDevice].Serial + ' - MQTT ended.');
+                        adapter.clearIntervalHandle(devices[thisDevice].updateIntervalHandle);
+                    });
                 }
             } else{
                 adapterLog.error(`[main()] error: myAccount is: [` + myAccount + ']');
