@@ -114,7 +114,7 @@ Which is what the dyson app does also.
 * (theimo1221) New: added function to mask password to dyson-utils.js
 * (grizzelbee) New: extended config test and error logging
 * (grizzelbee) New: added password to protectedNative in io-package.json
-
+* (grizzelbee) Fix: fixed showing password in config (leftover from testing/fixing)
 
 ### 0.7.2 (2021-02-10) (Songs of love and death)
 * (grizzelbee) Fix: [#59](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/59) Fixed bug while loading/saving config which led to wrong values displayed for country and temperature unit
