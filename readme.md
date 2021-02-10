@@ -109,7 +109,7 @@ Which is what the dyson app does also.
 
 ## Changelog
 
-### 0.7.3 (2021-02-xx) (When angels fall)
+### 0.7.3 (2021-02-10) (When angels fall)
 * (theimo1221) Fix: [#59](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/59) added default country
 * (theimo1221) New: added function to mask password to dyson-utils.js
 * (grizzelbee) New: extended config test and error logging
