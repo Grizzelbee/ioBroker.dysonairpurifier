@@ -737,6 +737,7 @@ class dysonAirPurifier extends utils.Adapter {
                 this.terminate('Terminating Adapter due to error with the mqtt credentials.', 11);
             }
         } catch (error) {
+            this.setState('info.connection', false);
             adapterLog.error(`[main()] error: ${error.message}, stack: ${error.stack}`);
         }
     }

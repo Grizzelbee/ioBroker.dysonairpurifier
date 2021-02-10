@@ -221,5 +221,19 @@
         "Password"
     ],
     "objects": [],
-    "instanceObjects": []
+    "instanceObjects": [
+        {
+            "_id": "info.connection",
+            "type": "state",
+            "common": {
+                "role": "indicator.connected",
+                "name": "If connected to dyson device",
+                "type": "boolean",
+                "read": true,
+                "write": false,
+                "def": false
+            },
+            "native": {}
+        }
+    ]
 }
