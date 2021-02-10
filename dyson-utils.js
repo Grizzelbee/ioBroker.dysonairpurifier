@@ -157,7 +157,11 @@ module.exports.dysonAPILogIn = async function(adapter) {
             Email: adapter.config.email,
             Password: adapter.config.Password
         },
-        { httpsAgent });
+        { httpsAgent,
+            headers: { 'User-Agent': 'android client' },
+            json: true,
+            rejectUnauthorized: false
+        });
 };
 
 /**
@@ -204,6 +208,7 @@ module.exports.getMqttCredentials = function(adapter) {
                     switch (error.response.status) {
                         case 401 : // unauthorized
                             adapter.log.error('Error: Unable to authenticate user! Your credentials are invalid. Please double check and fix them.');
+                            adapter.log.error(`Credentials used for login: User:[${adapter.config.email}] - Password:[${adapter.config.Password}] - Country:[${adapter.config.country}]`);
                             break;
                         case 429: // endpoint currently not available
                             adapter.log.error('Error: Endpoint: ' + apiUri + '/v1/userregistration/authenticate?country=' + adapter.config.country);
@@ -235,8 +240,8 @@ module.exports.maskConfig = function (unmaskedConfig) {
     // Masking sensitive fields (password) for logging configuration (creating a deep copy of the config)
     const maskedConfig = JSON.parse(JSON.stringify(unmaskedConfig));
     maskedConfig.Password = '(***)';
-    return maskedConfig
-}
+    return maskedConfig;
+};
 
 /**
  * Parse an incoming JSON message payload from the Dyson device

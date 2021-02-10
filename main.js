@@ -737,6 +737,7 @@ class dysonAirPurifier extends utils.Adapter {
                 this.terminate('Terminating Adapter due to error with the mqtt credentials.', 11);
             }
         } catch (error) {
+            this.setState('info.connection', false);
             adapterLog.error(`[main()] error: ${error.message}, stack: ${error.stack}`);
         }
     }
@@ -750,25 +751,23 @@ class dysonAirPurifier extends utils.Adapter {
         // Terminate adapter after first start because configuration is not yet received
         // Adapter is restarted automatically when config page is closed
         adapter = this; // preserve adapter reference to address functions etc. correctly later
-        dysonUtils.checkAdapterConfig(adapter)
-            .then(() => {
-                adapter.getForeignObject('system.config', (err, obj) => {
-                    if (adapter.supportsFeature && adapter.supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
-                        if (obj && obj.native && obj.native.secret) {
-                            //noinspection JSUnresolvedVariable
-                            adapter.config.Password = this.decrypt(obj.native.secret, adapter.config.Password);
-                        }
-                        this.main();
-                    } else {
-                        throw new Error('This adapter requires at least js-controller V3.0.0. Your system is not compatible. Please update.');
+        const configIsValid = await dysonUtils.checkAdapterConfig(adapter);
+        if (configIsValid) {
+            adapter.getForeignObject('system.config', (err, obj) => {
+                if (adapter.supportsFeature && adapter.supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
+                    if (obj && obj.native && obj.native.secret) {
+                        //noinspection JSUnresolvedVariable
+                        adapter.config.Password = this.decrypt(obj.native.secret, adapter.config.Password);
                     }
-                });
-            })
-            .catch( (error) => {
-                this.setState('info.connection', false);
-                this.log.error(`[onReady] error: ${error.message}, stack: ${error.stack}`);
-                this.terminate('Terminating adapter until configuration is fixed.', 11);
+                    this.main();
+                } else {
+                    throw new Error('This adapter requires at least js-controller V3.0.0. Your system is not compatible. Please update.');
+                }
             });
+        } else  {
+            this.setState('info.connection', false);
+            this.terminate('Terminating adapter until configuration is fixed.', 11);
+        }
     }
     /***********************************************
      * Misc helper functions                       *
