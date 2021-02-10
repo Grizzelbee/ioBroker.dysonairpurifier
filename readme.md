@@ -109,6 +109,10 @@ Which is what the dyson app does also.
 
 ## Changelog
 
+### 0.7.4 (2021-02-10) (Human)
+* (grizzelbee) Fix: fixed adapter traffic light for info.connection
+* (grizzelbee) Fix: Minor fixes
+
 ### 0.7.3 (2021-02-10) (When angels fall)
 * (theimo1221) Fix: [#59](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/59) added default country
 * (theimo1221) New: added function to mask password to dyson-utils.js
