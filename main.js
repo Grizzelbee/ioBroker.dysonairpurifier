@@ -768,7 +768,7 @@ class dysonAirPurifier extends utils.Adapter {
         dysonUtils.checkAdapterConfig(adapter)
             .then(() => {
                 adapter.getForeignObject('system.config', (err, obj) => {
-                    if (!adapter.supportsFeature || !adapter.supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
+                    if (adapter.supportsFeature && adapter.supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
                         if (obj && obj.native && obj.native.secret) {
                             //noinspection JSUnresolvedVariable
                             adapter.config.Password = this.decrypt(obj.native.secret, adapter.config.Password);
