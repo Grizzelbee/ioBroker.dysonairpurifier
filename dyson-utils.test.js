@@ -81,6 +81,31 @@ describe('dysonUtils => decryptMqttPasswd', () => {
     it.skip('should verify decrypt MQTT password mechanism', () => {});
 });
 
+
+describe('dysonUtils => maskConfig', () => {
+    it('should mask Password while not modifying the rest', () => {
+        const expectedTemperaturUnit = 'C';
+        const expectedPollInterval = 60;
+        const expectedCountry = 'DE';
+        const expectedEmail = 'me@example.com';
+
+        const config = {
+            temperatureUnit: expectedTemperaturUnit,
+            pollInterval: expectedPollInterval,
+            country: expectedCountry,
+            email: expectedEmail,
+            Password: 'SecretPassword'
+        };
+        const maskedConfig = dysonUtils.maskConfig(config);
+
+        expect(maskedConfig.Password).to.equal("(***)", "Password wasn't masked to expected value");
+        expect(maskedConfig.temperatureUnit).to.equal(expectedTemperaturUnit);
+        expect(maskedConfig.pollInterval).to.equal(expectedPollInterval);
+        expect(maskedConfig.country).to.equal(expectedCountry);
+        expect(maskedConfig.email).to.equal(expectedEmail);
+    });
+});
+
 describe('dysonUtils => parseDysonMsgPayload', () => {
     // TODO See adapter.processMsg() for now, considering migration to separate message parser later
 
