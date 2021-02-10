@@ -109,6 +109,17 @@ Which is what the dyson app does also.
 
 ## Changelog
 
+### 0.7.3 (2021-02-10) (When angels fall)
+* (theimo1221) Fix: [#59](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/59) added default country
+* (theimo1221) New: added function to mask password to dyson-utils.js
+* (grizzelbee) New: extended config test and error logging
+* (grizzelbee) New: added password to protectedNative in io-package.json
+* (grizzelbee) Fix: fixed showing password in config (leftover from testing/fixing)
+* (grizzelbee) Fix: fixed detection of needed js-controller features
+* (grizzelbee) Fix: fixed detection if IP is given or not
+* (grizzelbee) Upd: creating all data points with await 
+
+
 ### 0.7.2 (2021-02-10) (Songs of love and death)
 * (grizzelbee) Fix: [#59](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/59) Fixed bug while loading/saving config which led to wrong values displayed for country and temperature unit
 * (grizzelbee) Upd: switched "Skipping unknown ..." message from info to debug 
@@ -119,7 +130,7 @@ Which is what the dyson app does also.
 * (grizzelbee) Fix: [#48](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/48) Fixed countrycodes for UK and USA
 * (grizzelbee) Fix: [#52](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/52) Fixed VOCIndex
 * (grizzelbee) Fix: Removed option to control Fan state since it corresponds to the state of the fan in auto-mode. Controlling it is senseless.
-* (grizzelbee) Fix: Fixed await..then anti pattern
+* (grizzelbee) Fix: Fixed await...then antipattern.
 * (grizzelbee) Fix: Fixed undefined roles
 * (grizzelbee) Fix: Fixed some bad promises and moved code to dysonUtils
 * (grizzelbee) Fix: Fixed encrypting password using js-controller 3.0 build-in routine

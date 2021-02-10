@@ -50,11 +50,8 @@ module.exports.zeroFill = function (number, width) {
  */
 module.exports.checkAdapterConfig = async function (adapter) {
     const config = adapter.config;
-    // Masking sensitive fields (password) for logging configuration (creating a deep copy of the config)
-    let logConfig = JSON.parse(JSON.stringify(config));
-    // logConfig.Password = logConfig.Password.length > 0?'(***YourSecretPwd***)':'';
-    logConfig = JSON.stringify(logConfig);
-    // TODO Move to separate function for masking config wherever needed in this module
+    // Prepare masked Config for debuggging
+    const logConfig = JSON.stringify(this.maskConfig(config));
 
     return new Promise(
         function (resolve, reject) {
@@ -229,6 +226,17 @@ module.exports.getMqttCredentials = function(adapter) {
             });
     });
 };
+
+/**
+ * Returns a masked and cloned copy of provided config
+ * @param unmaskedConfig The unmasked config
+ */
+module.exports.maskConfig = function (unmaskedConfig) {
+    // Masking sensitive fields (password) for logging configuration (creating a deep copy of the config)
+    const maskedConfig = JSON.parse(JSON.stringify(unmaskedConfig));
+    maskedConfig.Password = '(***)';
+    return maskedConfig
+}
 
 /**
  * Parse an incoming JSON message payload from the Dyson device

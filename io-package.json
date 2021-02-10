@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "0.7.2",
+        "version": "0.7.3",
         "news": {
+            "0.7.3": {
+                "en": "Bugfix release for some bug and improvements - Refer to changelog for details.",
+                "de": "Bugfix-Version für einige Fehler und Verbesserungen - Einzelheiten finden Sie im Änderungsprotokoll.",
+                "ru": "Выпуск исправлений для некоторых ошибок и улучшений - подробности см. В журнале изменений.",
+                "pt": "Lançamento de correção de bug para alguns bugs e melhorias - Consulte o changelog para detalhes.",
+                "nl": "Bugfix-uitgave voor enkele bug en verbeteringen - Raadpleeg de changelog voor details.",
+                "fr": "Version de correctif pour certains bogues et améliorations - Reportez-vous au journal des modifications pour plus de détails.",
+                "it": "Rilascio di bugfix per alcuni bug e miglioramenti - Fare riferimento al log delle modifiche per i dettagli.",
+                "es": "Versión de corrección de errores para algunos errores y mejoras: consulte el registro de cambios para obtener más detalles.",
+                "pl": "Wydanie poprawek błędów i ulepszeń - szczegółowe informacje znajdują się w dzienniku zmian.",
+                "zh-cn": "Bugfix版本中的一些错误和改进-有关详细信息，请参考changelog。"
+            },
             "0.7.2": {
                 "en": "Bugfix for config issue.",
                 "de": "Bugfix für Konfigurationsproblem.",
@@ -198,13 +210,16 @@
     },
     "native": {
         "email": "",
-        "country": "",
+        "country": "de",
         "pollInterval": 30,
         "temperatureUnit": "C"
     },
-    "encryptedNative": {
-        "Password": ""
-    },
+    "encryptedNative": [
+        "Password"
+    ],
+    "protectedNative": [
+        "Password"
+    ],
     "objects": [],
     "instanceObjects": []
 }
