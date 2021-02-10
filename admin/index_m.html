@@ -63,8 +63,14 @@
                         onChange();
                     });
                 } else {
+                    $key.val(settings[id])
+                    
+                    if($key[0].tagName === "SELECT") {
+                        $key.select();
+                    }
+
                     // do not call onChange direct, because onChange could expect some arguments
-                    $key.val(settings[id]).change(function () {
+                    $key.change(function () {
                         onChange();
                     }).keyup(function () {
                         onChange();
