@@ -202,9 +202,12 @@
         "pollInterval": 30,
         "temperatureUnit": "C"
     },
-    "encryptedNative": {
-        "Password": ""
-    },
+    "encryptedNative": [
+        "Password"
+    ],
+    "protectedNative": [
+        "Password"
+    ],
     "objects": [],
     "instanceObjects": []
 }

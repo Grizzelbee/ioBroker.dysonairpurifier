@@ -113,6 +113,7 @@ Which is what the dyson app does also.
 * (theimo1221) Fix: [#59](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/59) added default country
 * (theimo1221) New: added function to mask password to dyson-utils.js
 * (grizzelbee) New: extended config test and error logging
+* (grizzelbee) New: added password to protectedNative in io-package.json
 
 
 ### 0.7.2 (2021-02-10) (Songs of love and death)
