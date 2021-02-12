@@ -99,15 +99,16 @@ Which is what the dyson app does also.
 
 ### Todo
 * detect IP of devices automatically
-* collect more mqtt message acronym meanings
-* subscribe changes of IP. OnChange reInit Adapter.
 * Add symbols for each fan type in object-view like tradfri or alexa
 
 ### Known issues
 * No automatic IP detection of devices
-* Adapter is currently not able to detect whether a mqtt connection has been properly established or not.
 
 ## Changelog
+
+### 0.7.5 (2021-02-12) (I won't surrender)
+* (grizzelbee) Fix: [#65](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/65) Adapter get online again after changes to dyson cloud API login procedure.
+* (grizzelbee) New: Adapter reconnects with new host address when it gets changed manually
 
 ### 0.7.4 (2021-02-10) (Human)
 * (grizzelbee) Fix: fixed adapter traffic light for info.connection

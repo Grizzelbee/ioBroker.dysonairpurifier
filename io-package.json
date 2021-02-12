@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "0.7.4",
+        "version": "0.7.5",
         "news": {
+            "0.7.5": {
+                "en": "Fix: Adapter get online again after changes to dyson cloud API login procedure.",
+                "de": "Fix: Der Adapter wird nach Änderungen am Anmeldeverfahren der Dyson Cloud API wieder online geschaltet.",
+                "ru": "Исправлено: Адаптер снова выходит в сеть после изменений в процедуре входа в облачный API dyson.",
+                "pt": "Correção: o adaptador fica online novamente após alterações no procedimento de login da API do dyson cloud.",
+                "nl": "Oplossing: adapter gaat weer online na wijzigingen in de aanmeldingsprocedure van de dyson cloud API.",
+                "fr": "Correction: l'adaptateur est de nouveau en ligne après les modifications apportées à la procédure de connexion de l'API Dyson Cloud.",
+                "it": "Correzione: l'adattatore torna online dopo le modifiche alla procedura di accesso all'API del cloud di dyson.",
+                "es": "Solución: el adaptador vuelve a estar en línea después de los cambios en el procedimiento de inicio de sesión de la API en la nube de dyson.",
+                "pl": "Poprawka: Adapter jest ponownie online po zmianie procedury logowania dyson Cloud API.",
+                "zh-cn": "修复：更改dyson cloud API登录过程后，适配器再次联机。"
+            },
             "0.7.4": {
                 "en": "Bugfix release for some minor bugs",
                 "de": "Bugfix Release für einige kleinere Fehler",
