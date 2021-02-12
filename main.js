@@ -274,8 +274,9 @@ class dysonAirPurifier extends utils.Adapter {
             }, device.Name);
             this.log.debug('Querying Host-Address of device: ' + device.Serial);
             const hostAddress = await this.getStateAsync(device.Serial + '.Hostaddress');
-            if (hostAddress  && hostAddress.val !== '') {
-                this.log.debug('Found valid Host-Address.val [' + hostAddress.val + '] for device: ' + device.Serial);
+            this.log.debug('Got Host-Address-object [' + JSON.stringify(hostAddress) + '] for device: ' + device.Serial);
+            if (hostAddress  && hostAddress.val &&hostAddress.val !== '') {
+                this.log.debug('Found valid Host-Address [' + hostAddress.val + '] for device: ' + device.Serial);
                 device.hostAddress = hostAddress.val;
                 this.createOrExtendObject(device.Serial + '.Hostaddress', {
                     type: 'state',
@@ -301,8 +302,6 @@ class dysonAirPurifier extends utils.Adapter {
                     },
                     native: {}
                 }, undefined);
-                adapter.log.info('No host address given. Trying to connect to the device with it\'s default hostname [' + device.Serial + ']. This should work if you haven\'t changed it and if you\'re running a DNS.');
-                device.hostAddress = device.Serial;
             }
         } catch(error){
             this.log.error('[CreateOrUpdateDevice] Error: ' + error + ', Callstack: ' + error.stack);
@@ -618,7 +617,11 @@ class dysonAirPurifier extends utils.Adapter {
                 for (const thisDevice in devices) {
                     await this.CreateOrUpdateDevice(devices[thisDevice]);
                     // Initializes the MQTT client for local communication with the thisDevice
-                    adapterLog.info('Trying to connect to device [' + devices[thisDevice].Serial + '] via MQTT.');
+                    if (!devices[thisDevice].hostAddress || devices[thisDevice].hostAddress === '' || devices[thisDevice].hostAddress === 'undefined' || typeof devices[thisDevice].hostAddress === undefined) {
+                        adapter.log.info('No host address given. Trying to connect to the device with it\'s default hostname [' + devices[thisDevice].Serial + ']. This should work if you haven\'t changed it and if you\'re running a DNS.');
+                        devices[thisDevice].hostAddress = devices[thisDevice].Serial;
+                    }
+                    adapterLog.info(`Trying to connect to device [${devices[thisDevice].Serial}] via MQTT on host address [${devices[thisDevice].hostAddress}].`);
                     devices[thisDevice].mqttClient = mqtt.connect('mqtt://' + devices[thisDevice].hostAddress, {
                         username: devices[thisDevice].Serial,
                         password: devices[thisDevice].mqttPassword,
@@ -632,6 +635,7 @@ class dysonAirPurifier extends utils.Adapter {
                     devices[thisDevice].mqttClient.on('connect', function () {
                         //noinspection JSUnresolvedVariable
                         adapterLog.info(devices[thisDevice].Serial + ' - MQTT connection established.');
+                        adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'online');
 
                         // Subscribes to the status topic to receive updates
                         //noinspection JSUnresolvedVariable
@@ -692,8 +696,6 @@ class dysonAirPurifier extends utils.Adapter {
                         }
                         //noinspection JSUnresolvedVariable
                         adapterLog.debug(devices[thisDevice].Serial + ' - MQTT message received: ' + JSON.stringify(payload));
-                        //noinspection JSUnresolvedVariable
-                        adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'online');
                     });
 
                     devices[thisDevice].mqttClient.on('error', function (error) {
@@ -792,6 +794,7 @@ class dysonAirPurifier extends utils.Adapter {
             },
             native: {}
         }, state === 'online');
+        this.setState('info.connection', state === 'online');
     }
 
     /**

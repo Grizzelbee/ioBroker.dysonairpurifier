@@ -150,17 +150,29 @@ module.exports.getDevices = async function(myAccount, adapter) {
  *      rejects on any http error.
  */
 module.exports.dysonAPILogIn = async function(adapter) {
-    adapter.log.debug('Signing in into Dyson API...');
+    adapter.log.info('Signing in into Dyson API...');
+    const headers = {
+        'User-Agent': 'DysonLink/29019 CFNetwork/1188 Darwin/20.0.0',
+        'Content-Type': 'application/json'
+    };
+    const payload = {
+        'Email': adapter.config.email,
+        'Password': adapter.config.Password
+    };
+
+    const response = await axios.get(apiUri + `/v1/userregistration/userstatus?country=${adapter.config.country}&email=${adapter.config.email}`,
+        { httpsAgent,
+            headers: headers,
+            json: true
+        });
+    adapter.log.info(`Result from API-Status request Account is: ${response.data.accountStatus}`);
+
     // Sends the login request to the API
     return await axios.post(apiUri + '/v1/userregistration/authenticate?country=' + adapter.config.country,
-        {
-            Email: adapter.config.email,
-            Password: adapter.config.Password
-        },
+        payload,
         { httpsAgent,
-            headers: { 'User-Agent': 'android client' },
-            json: true,
-            rejectUnauthorized: false
+            headers: headers,
+            json   : true
         });
 };
 

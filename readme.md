@@ -109,6 +109,9 @@ Which is what the dyson app does also.
 
 ## Changelog
 
+### 0.7.5 (2021-02-12) (I won't surrender)
+* (grizzelbee) Fix: [#65](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/65) Adapter get online again after changes to dyson cloud API login procedure.
+
 ### 0.7.4 (2021-02-10) (Human)
 * (grizzelbee) Fix: fixed adapter traffic light for info.connection
 * (grizzelbee) Fix: Minor fixes
