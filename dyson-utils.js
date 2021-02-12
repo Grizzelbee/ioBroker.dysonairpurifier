@@ -66,10 +66,10 @@ module.exports.checkAdapterConfig = async function (adapter) {
                     adapter.log.error(`Invalid configuration provided: password is missing. Please enter your password.`);
                 }
                 if (!config.country || config.country === '') {
-                    adapter.log.error(`Invalid configuration provided: Country is missing. Please select your Country.`);
+                    adapter.log.error(`Invalid configuration provided: Country is missing. Please select your country.`);
                 }
                 if (!config.temperatureUnit || config.temperatureUnit === '') {
-                    adapter.log.error(`Invalid configuration provided: Temperature unit is missing. Please select a Temperature unit.`);
+                    adapter.log.error(`Invalid configuration provided: Temperature unit is missing. Please select a temperature unit.`);
                 }
                 if (!config.pollInterval || config.pollInterval === '' || config.pollInterval < 1) {
                     adapter.log.error(`Invalid configuration provided: Poll interval is not valid. Please enter a valid poll interval (> 0s).`);
@@ -104,7 +104,7 @@ module.exports.decryptMqttPasswd = function(LocalCredentials) {
  * Queries the devices stored in a given dyson online account
  *
  * @param myAccount  {Object} JSON Object containing your dyson account details
- * @param adapterLog {Object} link to the adapters log-output to get proper log entries
+ * @param adapter {Object} link to the adapter
  * @returns {ANY}
  *      resolves with a List of dyson devices connected to the given account
  *      rejects with an error message
@@ -150,7 +150,7 @@ module.exports.getDevices = async function(myAccount, adapter) {
  *      rejects on any http error.
  */
 module.exports.dysonAPILogIn = async function(adapter) {
-    adapter.log.info('Signing in into Dyson API...');
+    adapter.log.info('Signing in into dyson cloud API ...');
     const headers = {
         'User-Agent': 'DysonLink/29019 CFNetwork/1188 Darwin/20.0.0',
         'Content-Type': 'application/json'
@@ -199,7 +199,7 @@ module.exports.dysonAPILogIn = async function(adapter) {
  * Function getMqttCredentials
  *
  *
- * @param adapterLog {Object} link to the adapters log-output to get proper log entries
+ * @param adapter {Object} link to the adapters
  * @returns Promise  {string} resolves with the MQTT Basic-Auth of the device, rejects with the error which occurred.
  */
 module.exports.getMqttCredentials = function(adapter) {
@@ -213,13 +213,13 @@ module.exports.getMqttCredentials = function(adapter) {
                 resolve( 'Basic ' + Buffer.from(response.data.Account + ':' + response.data.Password).toString('base64'));
             })
             .catch((error) => {
-                adapter.log.error('Error during dyson API login:' + error + ', Callstack: ' + error.stack);
+                adapter.log.error('Error during dyson cloud API login:' + error + ', Callstack: ' + error.stack);
                 if (error.response) {
                     // The request was made and the server responded with a status code
                     // that falls out of the range of 2xx
                     switch (error.response.status) {
                         case 401 : // unauthorized
-                            adapter.log.error('Error: Unable to authenticate user! Your credentials are invalid. Please double check and fix them.');
+                            adapter.log.error('Error: Unable to authenticate user! Your credentials seem to be invalid. Please double check and fix them.');
                             adapter.log.error(`Credentials used for login: User:[${adapter.config.email}] - Password:[${adapter.config.Password}] - Country:[${adapter.config.country}]`);
                             break;
                         case 429: // endpoint currently not available
@@ -239,7 +239,7 @@ module.exports.getMqttCredentials = function(adapter) {
                     // Something happened in setting up the request that triggered an Error
                     adapter.log.error('[Error]: ' + error.message);
                 }
-                reject('Error during dyson API login:' + error );
+                reject('Error during dyson cloud API login:' + error );
             });
     });
 };
