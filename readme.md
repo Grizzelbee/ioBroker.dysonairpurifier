@@ -106,6 +106,9 @@ Which is what the dyson app does also.
 
 ## Changelog
 
+### 0.8.0 (2021-02-xx) ()
+* (grizzelbee) New: Log as info if account is active on login; else log as warning. 
+
 ### 0.7.5 (2021-02-12) (I won't surrender)
 * (grizzelbee) Fix: [#65](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/65) Adapter get online again after changes to dyson cloud API login procedure.
 * (grizzelbee) New: Adapter reconnects with new host address when it gets changed manually
