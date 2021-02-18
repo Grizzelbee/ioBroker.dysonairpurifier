@@ -76,7 +76,7 @@ const datapoints = [
     ['hmax' , 'TemperatureTarget'         , 'Target temperature for heating'                                                , 'number', 'true',  'value.temperature' ,'' ],
     ['hume' , 'HumidificationMode'        , 'HumidificationMode Switch [ON/OFF]'                                            , 'string', 'true', 'switch'             ,'', {'OFF': 'OFF', 'HUMD': 'ON'} ],
     ['haut' , 'HumidifyAutoMode'          , 'Humidify AutoMode [ON/OFF]'                                                    , 'string', 'true', 'switch'             ,'', {'OFF': 'OFF', 'ON': 'ON'} ],
-    ['humt' , 'HumidificationTarget'      , 'Manual Humidification Target'                                                  , 'number', 'false', 'value'              ,'%' ],
+    ['humt' , 'HumidificationTarget'      , 'Manual Humidification Target'                                                  , 'number', 'true', 'value'              ,'%' ],
     ['cdrr' , 'CleanDurationRemaining'    , 'Clean Duration Remaining'                                                      , 'number', 'false', 'value'              ,'' ],
     ['rect' , 'AutoHumidificationTarget'  , 'Auto Humidification target'                                                    , 'number', 'true', 'value'              ,'%' ],
     ['cltr' , 'TimeRemainingToNextClean'  , 'Time Remaining to Next Clean'                                                  , 'number', 'false', 'value'              ,'hours' ],

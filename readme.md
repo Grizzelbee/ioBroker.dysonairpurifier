@@ -94,7 +94,8 @@ This adapter is currently able to control the following states of your devices:
 * AirQualityTarget          , Target air quality for auto mode.
 * HumidificationMode        , On / Off
 * HumidifyAutoMode          , Auto / Off
-* AutoHumidificationTarget  , 
+* AutoHumidificationTarget  , Auto HumidificationTarget
+* HumidificationTarget      , Manual HumidificationTarget
 * WaterHardness             , Soft, Medium, Hard
 
 Possible values for these states are documented below, as far as known.
@@ -110,7 +111,7 @@ Which is what the dyson app does also.
 
 ## Changelog
 
-### 0.8.0 (2021-02-xx) ()
+### 0.8.0 (2021-02-18) (Beyond the mirror)
 * (grizzelbee) New: Log as info if account is active on login; else log as warning. 
 * (grizzelbee) New: [#21](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/21) Improvement for humidifier support
 * (grizzelbee) Fix: [#67](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/67) Adapter sometimes wrote objects instead of values.
