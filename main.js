@@ -404,9 +404,12 @@ class dysonAirPurifier extends utils.Adapter {
             if (typeof (value) === 'object') {
                 if (value[0] === value[1]) {
                     this.log.debug('Values for [' + deviceConfig[1] + '] are equal. No update required. Skipping.');
+                    continue;
                 } else {
-                    value = value[1];
+                    value = value[1].valueOf();
                 }
+                this.log.debug(`Value is an object. Converting to value: [${JSON.stringify(value)}] --> [${value.valueOf()}]`);
+                value = value.valueOf();
             }
             // deviceConfig.length>7 means the data field has predefined states attached, that need to be handled
             if (deviceConfig.length > 7) {
@@ -789,7 +792,7 @@ class dysonAirPurifier extends utils.Adapter {
                     }
                     this.main();
                 } else {
-                    throw new Error('This adapter requires at least js-controller V3.0.0. Your system is not compatible. Please update.');
+                    throw new Error('This adapter requires at least js-controller V3.0.0. Your system is not compatible. Please update your system.');
                 }
             });
         } else  {
