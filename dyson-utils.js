@@ -165,8 +165,11 @@ module.exports.dysonAPILogIn = async function(adapter) {
             headers: headers,
             json: true
         });
-    adapter.log.info(`Result from API-Status request Account is: ${response.data.accountStatus}`);
-
+    if (response.data.accountStatus === 'ACTIVE') {
+        adapter.log.info(`Result from API-Status request -> Account is: ${response.data.accountStatus}`);
+    } else {
+        adapter.log.warn(`Result from API-Status request -> Account is: ${response.data.accountStatus}`);
+    }
     // Sends the login request to the API
     return await axios.post(apiUri + '/v1/userregistration/authenticate?country=' + adapter.config.country,
         payload,

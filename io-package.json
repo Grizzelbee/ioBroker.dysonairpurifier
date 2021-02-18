@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "0.7.5",
+        "version": "0.8.0-pre",
         "news": {
+            "0.8.0": {
+                "en": "Improved humidifier support and bugfixes.",
+                "de": "Verbesserte Luftbefeuchterunterstützung und Bugfixes.",
+                "ru": "Улучшенная поддержка увлажнителя и исправления.",
+                "pt": "Suporte para umidificador aprimorado e correções de bugs.",
+                "nl": "Verbeterde ondersteuning voor luchtbevochtigers en bugfixes.",
+                "fr": "Amélioration de la prise en charge de l'humidificateur et corrections de bogues.",
+                "it": "Supporto per umidificatore migliorato e correzioni di bug.",
+                "es": "Soporte mejorado del humidificador y corrección de errores.",
+                "pl": "Ulepszona obsługa nawilżacza i poprawki błędów.",
+                "zh-cn": "改进了加湿器支持和错误修正。"
+            },
             "0.7.5": {
                 "en": "Fix: Adapter get online again after changes to dyson cloud API login procedure.",
                 "de": "Fix: Der Adapter wird nach Änderungen am Anmeldeverfahren der Dyson Cloud API wieder online geschaltet.",

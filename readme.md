@@ -87,11 +87,16 @@ This adapter is currently able to control the following states of your devices:
 * ContinuousMonitoring      , Continuous Monitoring of environmental sensors even if device is off.
 * MainPower                 , Main Power of fan.
 * AutomaticMode             , Fan is in automatic mode.
-* Fandirection              , Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)
+* Flowdirection             , Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)
 * Jetfocus                  , Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)
 * HeatingMode               , Heating Mode [ON/OFF]
 * HeatingTargetTemp         , Target temperature for heating
 * AirQualityTarget          , Target air quality for auto mode.
+* HumidificationMode        , On / Off
+* HumidifyAutoMode          , Auto / Off
+* AutoHumidificationTarget  , Auto HumidificationTarget
+* HumidificationTarget      , Manual HumidificationTarget
+* WaterHardness             , Soft, Medium, Hard
 
 Possible values for these states are documented below, as far as known.
 Fan speed only allows values from 1 to 10 and Auto. If you like to set your fan speed down to 0 you'll need to power off the main power.
@@ -105,6 +110,12 @@ Which is what the dyson app does also.
 * No automatic IP detection of devices
 
 ## Changelog
+
+### 0.8.0 (2021-02-18) (Beyond the mirror)
+* (grizzelbee) New: Log as info if account is active on login; else log as warning. 
+* (grizzelbee) New: [#21](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/21) Improvement for humidifier support
+* (grizzelbee) Fix: [#67](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/67) Adapter sometimes wrote objects instead of values.
+
 
 ### 0.7.5 (2021-02-12) (I won't surrender)
 * (grizzelbee) Fix: [#65](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/65) Adapter get online again after changes to dyson cloud API login procedure.

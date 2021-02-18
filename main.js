@@ -74,13 +74,13 @@ const datapoints = [
     ['p10r' , 'PM10R'                     , 'PM-10R - Particulate Matter 10µm'                                              , 'number', 'false', 'value'             ,'µg/m³' ],
     ['hmod' , 'HeaterMode'                , 'Heating Mode [ON/OFF]'                                                         , 'string', 'true',  'switch'            ,'', {'OFF': 'OFF', 'ON': 'ON'} ],
     ['hmax' , 'TemperatureTarget'         , 'Target temperature for heating'                                                , 'number', 'true',  'value.temperature' ,'' ],
-    ['hume' , 'HumidificationMode'        , 'HumidificationMode Switch [ON/OFF]'                                            , 'string', 'true', 'switch'             ,'', {'OFF': 'OFF', 'ON': 'ON'} ],
+    ['hume' , 'HumidificationMode'        , 'HumidificationMode Switch [ON/OFF]'                                            , 'string', 'true', 'switch'             ,'', {'OFF': 'OFF', 'HUMD': 'ON'} ],
     ['haut' , 'HumidifyAutoMode'          , 'Humidify AutoMode [ON/OFF]'                                                    , 'string', 'true', 'switch'             ,'', {'OFF': 'OFF', 'ON': 'ON'} ],
-    ['humt' , 'HumidificationTarget'      , 'Manual Humidification Target'                                                  , 'string', 'false', 'text'              ,'' ],
-    ['cdrr' , 'CleanDurationRemaining'    , 'Clean Duration Remaining'                                                      , 'string', 'false', 'text'              ,'' ],
-    ['rect' , 'AutoHumidificationTarget'  , 'Auto Humidification target'                                                    , 'string', 'false', 'text'              ,'' ],
-    ['cltr' , 'TimeRemainingToNextClean'  , 'Time Remaining to Next Clean'                                                  , 'string', 'false', 'text'              ,'' ],
-    ['wath' , 'WaterHardness'             , 'Water Hardness'                                                                , 'string', 'false', 'text'              ,'' ]
+    ['humt' , 'HumidificationTarget'      , 'Manual Humidification Target'                                                  , 'number', 'true', 'value'              ,'%' ],
+    ['cdrr' , 'CleanDurationRemaining'    , 'Clean Duration Remaining'                                                      , 'number', 'false', 'value'              ,'' ],
+    ['rect' , 'AutoHumidificationTarget'  , 'Auto Humidification target'                                                    , 'number', 'true', 'value'              ,'%' ],
+    ['cltr' , 'TimeRemainingToNextClean'  , 'Time Remaining to Next Clean'                                                  , 'number', 'false', 'value'              ,'hours' ],
+    ['wath' , 'WaterHardness'             , 'Water Hardness'                                                                , 'number', 'true', 'value'              ,'', {675: 'Hard', 1350:'Medium', 2025:'Soft'}]
 ];
 
 /**
@@ -404,9 +404,12 @@ class dysonAirPurifier extends utils.Adapter {
             if (typeof (value) === 'object') {
                 if (value[0] === value[1]) {
                     this.log.debug('Values for [' + deviceConfig[1] + '] are equal. No update required. Skipping.');
+                    continue;
                 } else {
-                    value = value[1];
+                    value = value[1].valueOf();
                 }
+                this.log.debug(`Value is an object. Converting to value: [${JSON.stringify(value)}] --> [${value.valueOf()}]`);
+                value = value.valueOf();
             }
             // deviceConfig.length>7 means the data field has predefined states attached, that need to be handled
             if (deviceConfig.length > 7) {
@@ -789,7 +792,7 @@ class dysonAirPurifier extends utils.Adapter {
                     }
                     this.main();
                 } else {
-                    throw new Error('This adapter requires at least js-controller V3.0.0. Your system is not compatible. Please update.');
+                    throw new Error('This adapter requires at least js-controller V3.0.0. Your system is not compatible. Please update your system.');
                 }
             });
         } else  {
