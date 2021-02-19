@@ -19,13 +19,15 @@ const dysonUtils = require('./dyson-utils.js');
 let adapter = null;
 let adapterIsSetUp = false;
 let devices = [];
-const products = {  '358':'Dyson Pure Humidify+Cool',
-    '438':'Dyson Pure Cool Tower',
-    '455':'Dyson Pure Hot+Cool Link',
-    '469':'Dyson Pure Cool Link Desk',
-    '475':'Dyson Pure Cool Link Tower',
-    '520':'Dyson Pure Cool Desk',
-    '527':'Dyson Pure Hot+Cool'};
+const products = {
+    '358': {name:'Dyson Pure Humidify+Cool', icon:'icons/purifier-humidifiers.png'},
+    '438': {name:'Dyson Pure Cool Tower', icon:'icons/purifiers.png'},
+    '455': {name:'Dyson Pure Hot+Cool Link', icon:'icons/heaters.png'},
+    '469': {name:'Dyson Pure Cool Link Desk', icon:'icons/fans.png'},
+    '475': {name:'Dyson Pure Cool Link Tower', icon:'icons/purifiers.png'},
+    '520': {name:'Dyson Pure Cool Desk', icon:'icons/fans.png'},
+    '527': {name:'Dyson Pure Hot+Cool', icon:'icons/heaters.png'}
+};
 let NO2  = 0; // Numeric representation of current NO2Index
 let VOC  = 0; // Numeric representation of current VOCIndex
 let PM25 = 0; // Numeric representation of current PM25Index
@@ -226,7 +228,7 @@ class dysonAirPurifier extends utils.Adapter {
             this.log.debug('Creating device folder.');
             await this.createOrExtendObject(device.Serial, {
                 type: 'device',
-                common: {name: products[device.ProductType]},
+                common: {name: products[device.ProductType].name, icon: products[device.ProductType].icon},
                 native: {}
             }, null);
             await this.createOrExtendObject(device.Serial + '.Firmware', {
