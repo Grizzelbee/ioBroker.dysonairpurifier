@@ -19,6 +19,7 @@ const dysonUtils = require('./dyson-utils.js');
 let adapter = null;
 let adapterIsSetUp = false;
 let devices = [];
+const FILTERTYPES = {'GCOM':'Combined', 'GHEP':'HEPA', 'CARF':'Activated carbon'};
 const products = {
     '358': {name:'Dyson Pure Humidify+Cool', icon:'icons/purifier-humidifiers.png'},
     '438': {name:'Dyson Pure Cool Tower', icon:'icons/purifiers.png'},
@@ -38,24 +39,24 @@ let Dust = 0; // Numeric representation of current DustIndex
 // data structure to determine readable names, etc for any datapoint
 // Every row is one state in a dyson message. Format: [ dysonCode, Name of Datapoint, Description, datatype, writable, role, unit, possible values for data field]
 const datapoints = [
-    ['channel' , 'WIFIchannel'            , 'Number of the used WIFI channel.'                                              , 'number', 'false', 'value'         ,''  ],
-    ['ercd' , 'LastErrorCode'             , 'Error code of the last error occurred on this device'                          , 'string', 'false', 'text'          ,''  ],
-    ['filf' , 'FilterLife'                , 'Estimated remaining filter life in hours.'                                     , 'number', 'false', 'value'         , 'hours' ],
-    ['fmod' , 'FanMode'                   , 'Mode of device'                                                                , 'string', 'false', 'switch'        ,'', {'FAN':'Fan', 'AUTO':'Auto'} ],
-    ['fnsp' , 'FanSpeed'                  , 'Current fan speed'                                                             , 'string', 'true',  'switch'        ,'', {'AUTO':'Auto', '0001':'1', '0002':'2', '0003':'3', '0004':'4', '0005':'5', '0006':'6', '0007':'7', '0008':'8', '0009':'9', '0010':'10' } ],
-    ['fnst' , 'FanStatus'                 , 'Current Fan state; correlating to Auto-mode'                                   , 'string', 'false', 'text'          ,'' ],
+    ['channel' , 'WIFIchannel'            , 'Number of the used WIFI channel.'                                              , 'number', 'false', 'value'             ,''  ],
+    ['ercd' , 'LastErrorCode'             , 'Error code of the last error occurred on this device'                          , 'string', 'false', 'text'              ,''  ],
+    ['filf' , 'FilterLife'                , 'Estimated remaining filter life in hours.'                                     , 'number', 'false', 'value'             , 'hours' ],
+    ['fmod' , 'FanMode'                   , 'Mode of device'                                                                , 'string', 'false', 'switch'            ,'', {'FAN':'Fan', 'AUTO':'Auto'} ],
+    ['fnsp' , 'FanSpeed'                  , 'Current fan speed'                                                             , 'string', 'true',  'switch'            ,'', {'AUTO':'Auto', '0001':'1', '0002':'2', '0003':'3', '0004':'4', '0005':'5', '0006':'6', '0007':'7', '0008':'8', '0009':'9', '0010':'10' } ],
+    ['fnst' , 'FanStatus'                 , 'Current Fan state; correlating to Auto-mode'                                   , 'string', 'false', 'text'              ,'' ],
     ['nmod' , 'Nightmode'                 , 'Night mode state'                                                              , 'string', 'true',  'switch.mode.moonlight'  ,'', {'OFF':'OFF', 'ON':'ON'} ],
-    ['qtar' , 'AirQualityTarget'          , 'Target Air quality for Auto Mode.'                                             , 'string', 'false', 'text'          ,''  ],
-    ['rhtm' , 'ContinuousMonitoring'      , 'Continuous Monitoring of environmental sensors even if device is off.'         , 'string', 'true',  'switch'        ,'', {'OFF':'OFF', 'ON':'ON'} ],
-    ['fpwr' , 'MainPower'                 , 'Main Power of fan.'                                                            , 'string', 'true',  'switch.power'  ,'', {'OFF':'OFF', 'ON':'ON'} ],
-    ['auto' , 'AutomaticMode'             , 'Fan is in automatic mode.'                                                     , 'string', 'true',  'switch'        ,'', {'OFF':'OFF', 'ON':'ON'} ],
-    ['nmdv' , 'NightModeMaxFan'           , 'Maximum fan speed in night mode.'                                              , 'number', 'false', 'value'         ,''  ],
-    ['cflr' , 'CarbonfilterLifetime'      , 'Remaining lifetime of activated carbon filter.'                                , 'number', 'false', 'value' 	 	 ,'%' ],
-    ['fdir' , 'Flowdirection'             , 'Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)'                , 'string', 'true',  'switch'        ,'', {'OFF': 'Back', 'ON': 'Front'} ],
-    ['ffoc' , 'Flowfocus'                 , 'Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)'                , 'string', 'true',  'switch'        ,'', {'OFF': 'Back', 'ON': 'Front'} ],
-    ['hflr' , 'HEPA-FilterLifetime'       , 'Remaining lifetime of HEPA-Filter.'                                            , 'number', 'false', 'value'         ,'%' ],
-    ['cflt' , 'Carbonfilter'              , 'Filter type installed in carbon filter port.'                                  , 'string', 'false', 'text'          ,''  ],
-    ['hflt' , 'HEPA-Filter'               , 'Filter type installed in HEPA-filter port.'                                    , 'string', 'false', 'text'              ,''  ],
+    ['qtar' , 'AirQualityTarget'          , 'Target Air quality for Auto Mode.'                                             , 'string', 'false', 'text'              ,''  ],
+    ['rhtm' , 'ContinuousMonitoring'      , 'Continuous Monitoring of environmental sensors even if device is off.'         , 'string', 'true',  'switch'            ,'', {'OFF':'OFF', 'ON':'ON'} ],
+    ['fpwr' , 'MainPower'                 , 'Main Power of fan.'                                                            , 'string', 'true',  'switch.power'      ,'', {'OFF':'OFF', 'ON':'ON'} ],
+    ['auto' , 'AutomaticMode'             , 'Fan is in automatic mode.'                                                     , 'string', 'true',  'switch'            ,'', {'OFF':'OFF', 'ON':'ON'} ],
+    ['nmdv' , 'NightModeMaxFan'           , 'Maximum fan speed in night mode.'                                              , 'number', 'false', 'value'             ,''  ],
+    ['cflr' , 'CarbonfilterLifetime'      , 'Remaining lifetime of activated carbon filter.'                                , 'number', 'false', 'value' 	 	     ,'%' ],
+    ['fdir' , 'Flowdirection'             , 'Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)'                , 'string', 'true',  'switch'            ,'', {'OFF': 'Back', 'ON': 'Front'} ],
+    ['ffoc' , 'Flowfocus'                 , 'Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)'                , 'string', 'true',  'switch'            ,'', {'OFF': 'Back', 'ON': 'Front'} ],
+    ['hflr' , 'HEPA-FilterLifetime'       , 'Remaining lifetime of HEPA-Filter.'                                            , 'number', 'false', 'value'             ,'%' ],
+    ['cflt' , 'Carbonfilter'              , 'Filter type installed in carbon filter port.'                                  , 'string', 'false', 'text'              ,'', {'GCOM':'Combined', 'GHEP':'HEPA', 'CARF':'Activated carbon'}  ],
+    ['hflt' , 'HEPA-Filter'               , 'Filter type installed in HEPA-filter port.'                                    , 'string', 'false', 'text'              ,'', {'GCOM':'Combined', 'GHEP':'HEPA', 'CARF':'Activated carbon'}  ],
     ['sltm' , 'Sleeptimer'                , 'Sleep timer.'                                                                  , 'string', 'false', 'text'              ,''  ],
     ['oscs' , 'OscillationActive'         , 'Fan is currently oscillating.'                                                 , 'string', 'false', 'text'              ,'', {'IDLE':'Idle', 'OFF':'OFF', 'ON':'ON'} ],
     ['oson' , 'Oscillation'               , 'Oscillation of fan.'                                                           , 'string', 'true',  'switch'            ,'', {'OFF':'OFF', 'ON':'ON'} ],
