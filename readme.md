@@ -110,6 +110,7 @@ Which is what the dyson app does also.
 ### 0.8.1 (2021-02-19) (Fall into the flames)
 * (grizzelbee) New: added icons to each fan type in device tree
 * (grizzelbee) New: Showing Filter type correctly - not as code anymore
+* (grizzelbee) Upd: updated dependencies
 
 ### 0.8.0 (2021-02-18) (Beyond the mirror)
 * (grizzelbee) New: Log as info if account is active on login; else log as warning. 
