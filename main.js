@@ -39,7 +39,7 @@ let Dust = 0; // Numeric representation of current DustIndex
 // data structure to determine readable names, etc for any datapoint
 // Every row is one state in a dyson message. Format: [ dysonCode, Name of Datapoint, Description, datatype, writable, role, unit, possible values for data field]
 const datapoints = [
-    ['channel' , 'WIFIchannel'            , 'Number of the used WIFI channel.'                                              , 'number', 'false', 'value'             ,''  ],
+    ['channel', 'WIFIchannel'             , 'Number of the used WIFI channel.'                                              , 'number', 'false', 'value'             ,''  ],
     ['ercd' , 'LastErrorCode'             , 'Error code of the last error occurred on this device'                          , 'string', 'false', 'text'              ,''  ],
     ['filf' , 'FilterLife'                , 'Estimated remaining filter life in hours.'                                     , 'number', 'false', 'value'             , 'hours' ],
     ['fmod' , 'FanMode'                   , 'Mode of device'                                                                , 'string', 'false', 'switch'            ,'', {'FAN':'Fan', 'AUTO':'Auto'} ],
@@ -51,12 +51,12 @@ const datapoints = [
     ['fpwr' , 'MainPower'                 , 'Main Power of fan.'                                                            , 'string', 'true',  'switch.power'      ,'', {'OFF':'OFF', 'ON':'ON'} ],
     ['auto' , 'AutomaticMode'             , 'Fan is in automatic mode.'                                                     , 'string', 'true',  'switch'            ,'', {'OFF':'OFF', 'ON':'ON'} ],
     ['nmdv' , 'NightModeMaxFan'           , 'Maximum fan speed in night mode.'                                              , 'number', 'false', 'value'             ,''  ],
-    ['cflr' , 'CarbonfilterLifetime'      , 'Remaining lifetime of activated carbon filter.'                                , 'number', 'false', 'value' 	 	     ,'%' ],
+    ['cflr' , 'CarbonfilterLifetime'      , 'Remaining lifetime of filter installed in activated carbon filter port.'       , 'number', 'false', 'value' 	 	     ,'%' ],
     ['fdir' , 'Flowdirection'             , 'Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)'                , 'string', 'true',  'switch'            ,'', {'OFF': 'Back', 'ON': 'Front'} ],
     ['ffoc' , 'Flowfocus'                 , 'Direction the fan blows to. ON=Front; OFF=Back (aka Jet focus)'                , 'string', 'true',  'switch'            ,'', {'OFF': 'Back', 'ON': 'Front'} ],
-    ['hflr' , 'HEPA-FilterLifetime'       , 'Remaining lifetime of HEPA-Filter.'                                            , 'number', 'false', 'value'             ,'%' ],
-    ['cflt' , 'Carbonfilter'              , 'Filter type installed in carbon filter port.'                                  , 'string', 'false', 'text'              ,'', {'GCOM':'Combined', 'GHEP':'HEPA', 'CARF':'Activated carbon'}  ],
-    ['hflt' , 'HEPA-Filter'               , 'Filter type installed in HEPA-filter port.'                                    , 'string', 'false', 'text'              ,'', {'GCOM':'Combined', 'GHEP':'HEPA', 'CARF':'Activated carbon'}  ],
+    ['hflr' , 'HEPA-FilterLifetime'       , 'Remaining lifetime of filter installed in HEPA-Filter port.'                   , 'number', 'false', 'value'             ,'%' ],
+    ['cflt' , 'Carbonfilter'              , 'Filter type installed in carbon filter port.'                                  , 'string', 'false', 'text'              ,'', FILTERTYPES  ],
+    ['hflt' , 'HEPA-Filter'               , 'Filter type installed in HEPA-filter port.'                                    , 'string', 'false', 'text'              ,'', FILTERTYPES  ],
     ['sltm' , 'Sleeptimer'                , 'Sleep timer.'                                                                  , 'string', 'false', 'text'              ,''  ],
     ['oscs' , 'OscillationActive'         , 'Fan is currently oscillating.'                                                 , 'string', 'false', 'text'              ,'', {'IDLE':'Idle', 'OFF':'OFF', 'ON':'ON'} ],
     ['oson' , 'Oscillation'               , 'Oscillation of fan.'                                                           , 'string', 'true',  'switch'            ,'', {'OFF':'OFF', 'ON':'ON'} ],
