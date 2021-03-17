@@ -3,7 +3,7 @@
   "version": "0.8.1",
   "description": "ioBroker Adapter for dyson air purifiers and fans",
   "author": {
-    "name": "Hanjo Hingsen",
+    "name": "grizzelbee",
     "email": "hanjo@hingsen.de"
   },
   "homepage": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier",
