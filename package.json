@@ -4,7 +4,7 @@
   "description": "ioBroker Adapter for dyson air purifiers and fans",
   "author": {
     "name": "grizzelbee",
-    "email": "opensource@hingsen.de"
+    "email": "open.source@hingsen.de"
   },
   "homepage": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier",
   "license": "MIT",

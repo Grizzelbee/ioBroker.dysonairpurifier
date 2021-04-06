@@ -213,7 +213,7 @@
             "zh-cn": "将戴森空气净化器和风扇集成到ioBroker中"
         },
         "authors": [
-            "Hanjo Hingsen <hanjo@hingsen.de>"
+            "Hanjo Hingsen <open.source@hingsen.de>"
         ],
         "keywords": [
             "ioBroker",
@@ -227,7 +227,6 @@
         ],
         "license": "MIT",
         "platform": "Javascript/Node.js",
-        "main": "main.js",
         "icon": "dyson_logo.svg",
         "enabled": true,
         "extIcon": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier/blob/master/admin/dyson_logo.svg",
@@ -239,7 +238,7 @@
         "materialize": true,
         "supportCustoms": false,
         "connectionType": "local",
-        "dataSource": "pull",
+        "dataSource": "poll",
         "dependencies": [
             {
                 "js-controller": ">=3.0.0",
