@@ -52,7 +52,7 @@ Connects your Dyson fans, fan heaters, air purifiers, and air humidifiers to ioB
 
 #### Using npm
 
-Run ```npm install ioBroker.dysonairpurifier``` on your ioBroker installation to grab the latest version of this adapter from the npm repository.
+Run ```npm install iobroker.dysonairpurifier``` on your ioBroker installation to grab the latest version of this adapter from the npm repository.
 
 #### Alternative: Using GitHub URL
 
@@ -106,6 +106,10 @@ Which is what the dyson app does also.
 * No automatic IP detection of devices
 
 ## Changelog
+
+### 0.9.0 (2021-04-09) (Still breathing)
+* (grizzelbee) Fix: [#80](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/80) fixed npm install hint in documentation
+* (grizzelbee) Fix: [#82](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/82) fixed common.dataSource type with type >poll<
 
 ### 0.8.1 (2021-02-19) (Fall into the flames)
 * (grizzelbee) New: added icons to each fan type in device tree
