@@ -4,7 +4,16 @@
         "version": "0.9.0",
         "news": {
             "0.9.0": {
-                "en": "Support for new dyson login procedure and bugfixes."
+                "en": "Support for new dyson login procedure and bugfixes.",
+                "de": "Unterstützung für neue Dyson-Anmeldeverfahren und Bugfixes.",
+                "ru": "Поддержка новой процедуры входа в систему dyson и исправления.",
+                "pt": "Suporte para novo procedimento de login dyson e correções de bugs.",
+                "nl": "Ondersteuning voor nieuwe dyson-inlogprocedure en bugfixes.",
+                "fr": "Prise en charge de la nouvelle procédure de connexion dyson et corrections de bogues.",
+                "it": "Supporto per la nuova procedura di accesso a Dyson e correzioni di bug.",
+                "es": "Soporte para el nuevo procedimiento de inicio de sesión de Dyson y correcciones de errores.",
+                "pl": "Wsparcie dla nowej procedury logowania dyson i poprawek błędów.",
+                "zh-cn": "支持新的dyson登录过程和错误修正。"
             },
             "0.8.0": {
                 "en": "Improved humidifier support and bugfixes.",
