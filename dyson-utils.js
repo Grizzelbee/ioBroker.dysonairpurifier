@@ -8,7 +8,7 @@ const https = require('https');
 const rootCas = require('ssl-root-cas').create();
 const {stringify} = require('flatted');
 const httpsAgent = new https.Agent({ca: rootCas});
-const supportedProductTypes = ['358', '438', '455', '469', '475', '520', '527'];
+const supportedProductTypes = ['358', '438', '455', '469', '475', '520', '527', '527E'];
 const apiUri = 'https://appapi.cp.dyson.com';
 rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
 
