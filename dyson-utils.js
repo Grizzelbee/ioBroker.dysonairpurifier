@@ -46,11 +46,11 @@ module.exports.zeroFill = function (number, width) {
  *           resolves if the config is valid
  *           rejects if the config is invalid
  *
- * @param config {Adapter} ioBroker adapter which contains the configuration that should be checked
+ * @param adapter {object} ioBroker adapter which contains the configuration that should be checked
  */
 module.exports.checkAdapterConfig = async function (adapter) {
     const config = adapter.config;
-    // Prepare masked Config for debuggging
+    // Prepare masked Config for debugging
     const logConfig = JSON.stringify(this.maskConfig(config));
 
     return new Promise(
@@ -227,6 +227,7 @@ module.exports.getMqttCredentials = function(adapter) {
                             break;
                         case 429: // endpoint currently not available
                             adapter.log.error('Error: Endpoint: ' + apiUri + '/v1/userregistration/authenticate?country=' + adapter.config.country);
+                            break;
                         default:
                             adapter.log.error('[error.response.data]: ' + ((typeof error.response.data === 'object') ? stringify(error.response.data) : error.response.data));
                             adapter.log.error('[error.response.status]: ' + ((typeof error.response.status === 'object') ? stringify(error.response.status) : error.response.status));
@@ -264,7 +265,7 @@ module.exports.maskConfig = function (unmaskedConfig) {
  * @param msg Incoming JSON message
  */
 module.exports.parseDysonMessage = function (msg) {
-    if (null == msg || '' == msg) return;
+    if (null == msg || '' === msg) return;
 
     // TODO incomplete
 
