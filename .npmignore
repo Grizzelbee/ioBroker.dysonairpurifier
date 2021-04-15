@@ -28,3 +28,7 @@ admin/i18n
 
 # maintenance scripts
 maintenance/**
+
+# CorelDraw files
+*.cdr
+*.bak
