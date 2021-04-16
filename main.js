@@ -27,7 +27,8 @@ const products = {
     '469': {name:'Dyson Pure Cool Link Desk', icon:'icons/fans.png'},
     '475': {name:'Dyson Pure Cool Link Tower', icon:'icons/purifiers.png'},
     '520': {name:'Dyson Pure Cool Desk', icon:'icons/fans.png'},
-    '527': {name:'Dyson Pure Hot+Cool', icon:'icons/heaters.png'}
+    '527': {name:'Dyson Pure Hot+Cool', icon:'icons/heaters.png'},
+    '527E': {name:'Dyson Pure Hot+Cool', icon:'icons/heaters.png'}
 };
 let NO2  = 0; // Numeric representation of current NO2Index
 let VOC  = 0; // Numeric representation of current VOCIndex
