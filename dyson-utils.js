@@ -8,8 +8,8 @@ const https = require('https');
 const rootCas = require('ssl-root-cas').create();
 const {stringify} = require('flatted');
 const httpsAgent = new https.Agent({ca: rootCas});
-const supportedProductTypes = ['358', '438', '455', '469', '475', '520', '527', '527E'];
 const apiUri = 'https://appapi.cp.dyson.com';
+const dysonConstants = require('./dysonConstants.js');
 rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
 
 // class DysonUtils {
@@ -117,7 +117,7 @@ module.exports.getDevices = async function(myAccount, adapter) {
                 for (const thisDevice in response.data) {
                     adapter.log.debug('Data received from dyson API: ' + JSON.stringify(response.data[thisDevice]));
                     // TODO Try to switch from supportedProductTypes-array to products-object
-                    if (!supportedProductTypes.some(function (t) {
+                    if (!dysonConstants.supportedProductTypes.some(function (t) {
                         return t === response.data[thisDevice].ProductType;
                     })) {
                         adapter.log.warn('Device with serial number [' + response.data[thisDevice].Serial + '] not added, hence it is not supported by this adapter. Product type: [' + response.data[thisDevice].ProductType + ']');
