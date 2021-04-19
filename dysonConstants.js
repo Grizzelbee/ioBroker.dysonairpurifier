@@ -4,9 +4,9 @@
 'use strict';
 
 
-module.exports.FILTERTYPES = {'GCOM':'Combined', 'GHEP':'HEPA', 'CARF':'Activated carbon'};
-module.exports.supportedProductTypes = ['358', '438', '455', '469', '475', '520', '527', '527E'];
-module.exports.products = {
+const FILTERTYPES = {'GCOM':'Combined', 'GHEP':'HEPA', 'CARF':'Activated carbon'};
+module.exports.SUPPORTED_PRODUCT_TYPES = ['358', '438', '455', '469', '475', '520', '527', '527E'];
+module.exports.PRODUCTS = {
     '358': {name:'Dyson Pure Humidify+Cool', icon:'icons/purifier-humidifiers.png'},
     '438': {name:'Dyson Pure Cool Tower', icon:'icons/purifiers.png'},
     '455': {name:'Dyson Pure Hot+Cool Link', icon:'icons/heaters.png'},
@@ -19,7 +19,7 @@ module.exports.products = {
 
 // data structure to determine readable names, etc for any datapoint
 // Every row is one state in a dyson message. Format: [ dysonCode, Name of Datapoint, Description, datatype, writable, role, unit, possible values for data field]
-module.exports.datapoints = [
+module.exports.DATAPOINTS = [
     ['channel', 'WIFIchannel'             , 'Number of the used WIFI channel.'                                              , 'number', 'false', 'value'             ,''  ],
     ['ercd' , 'LastErrorCode'             , 'Error code of the last error occurred on this device'                          , 'string', 'false', 'text'              ,''  ],
     ['filf' , 'FilterLife'                , 'Estimated remaining filter life in hours.'                                     , 'number', 'false', 'value'             , 'hours' ],

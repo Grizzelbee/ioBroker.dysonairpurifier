@@ -172,7 +172,7 @@ class dysonAirPurifier extends utils.Adapter {
             this.log.debug('Creating device folder.');
             await this.createOrExtendObject(device.Serial, {
                 type: 'device',
-                common: {name: dysonConstants.products[device.ProductType].name, icon: dysonConstants.products[device.ProductType].icon},
+                common: {name: dysonConstants.PRODUCTS[device.ProductType].name, icon: dysonConstants.PRODUCTS[device.ProductType].icon},
                 native: {}
             }, null);
             await this.createOrExtendObject(device.Serial + '.Firmware', {
@@ -810,10 +810,10 @@ class dysonAirPurifier extends utils.Adapter {
      */
     async getDatapoint( searchValue ){
         this.log.debug('getDatapoint('+searchValue+')');
-        for(let row=0; row < dysonConstants.datapoints.length; row++){
-            if (dysonConstants.datapoints[row].find( element => element === searchValue)){
-                this.log.debug('FOUND: ' + dysonConstants.datapoints[row]);
-                return dysonConstants.datapoints[row];
+        for(let row=0; row < dysonConstants.DATAPOINTS.length; row++){
+            if (dysonConstants.DATAPOINTS[row].find(element => element === searchValue)){
+                this.log.debug('FOUND: ' + dysonConstants.DATAPOINTS[row]);
+                return dysonConstants.DATAPOINTS[row];
             }
         }
     }
