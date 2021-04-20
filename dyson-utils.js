@@ -2,19 +2,16 @@
 
 const _ = require('lodash');
 const crypto = require('crypto');
+const {stringify} = require('flatted');
+const dysonConstants = require('./dysonConstants.js');
 const axios  = require('axios');
 const path = require('path');
 const https = require('https');
 const rootCas = require('ssl-root-cas').create();
-const {stringify} = require('flatted');
 const httpsAgent = new https.Agent({ca: rootCas});
-const apiUri = 'https://appapi.cp.dyson.com';
-const dysonConstants = require('./dysonConstants.js');
 rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
 
-// class DysonUtils {
-//     DysonUtils() {}
-// }
+
 
 /**
  * Function zeroFill
@@ -159,25 +156,29 @@ module.exports.dysonAPILogIn = async function(adapter) {
         'Email': adapter.config.email,
         'Password': adapter.config.Password
     };
+    const config = {
+        httpsAgent,
+        headers : headers,
+        json:true
+    };
 
-    const response = await axios.get(apiUri + `/v1/userregistration/userstatus?country=${adapter.config.country}&email=${adapter.config.email}`,
-        { httpsAgent,
-            headers: headers,
-            json: true
-        });
+    const response = await axios.get(dysonConstants.API_URI + `/v1/userregistration/userstatus?country=${adapter.config.country}&email=${adapter.config.email}`,
+        config);
     if (response.data.accountStatus === 'ACTIVE') {
         adapter.log.info(`Result from API-Status request -> Account is: ${response.data.accountStatus}`);
     } else {
         adapter.log.warn(`Result from API-Status request -> Account is: ${response.data.accountStatus}`);
     }
     // Sends the login request to the API
-    return await axios.post(apiUri + '/v1/userregistration/authenticate?country=' + adapter.config.country,
+    return await axios.post(dysonConstants.API_URI + '/v1/userregistration/authenticate?country=' + adapter.config.country,
         payload,
         { httpsAgent,
             headers: headers,
             json   : true
         });
 };
+
+
 
 /**
  * dysonGetDevicesFromApi
@@ -189,7 +190,7 @@ module.exports.dysonAPILogIn = async function(adapter) {
  *      rejects on any http error.
  */module.exports.dysonGetDevicesFromApi = async function(auth) {
     // Sends a request to the API to get all devices of the user
-    return await axios.get(apiUri + '/v2/provisioningservice/manifest',
+    return await axios.get(dysonConstants.API_URI + '/v2/provisioningservice/manifest',
         {
             httpsAgent,
             headers: { 'Authorization': auth },
@@ -226,7 +227,7 @@ module.exports.getMqttCredentials = function(adapter) {
                             adapter.log.error(`Credentials used for login: User:[${adapter.config.email}] - Password:[${adapter.config.Password}] - Country:[${adapter.config.country}]`);
                             break;
                         case 429: // endpoint currently not available
-                            adapter.log.error('Error: Endpoint: ' + apiUri + '/v1/userregistration/authenticate?country=' + adapter.config.country);
+                            adapter.log.error('Error: Endpoint: ' + dysonConstants.API_URI + '/v1/userregistration/authenticate?country=' + adapter.config.country);
                             break;
                         default:
                             adapter.log.error('[error.response.data]: ' + ((typeof error.response.data === 'object') ? stringify(error.response.data) : error.response.data));

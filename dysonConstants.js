@@ -3,6 +3,7 @@
 /*jslint node: true */
 'use strict';
 
+module.exports.API_URI = 'https://appapi.cp.dyson.com';
 
 const FILTERTYPES = {'GCOM':'Combined', 'GHEP':'HEPA', 'CARF':'Activated carbon'};
 module.exports.SUPPORTED_PRODUCT_TYPES = ['358', '438', '455', '469', '475', '520', '527', '527E'];

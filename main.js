@@ -502,17 +502,17 @@ class dysonAirPurifier extends utils.Adapter {
         // PM10 QualityIndex
         // 0-50: Good, 51-75: Medium, 76-100, Bad, 101-350: very Bad, 351-420: extremely Bad, >421 worrying
         let dustIndex = 0;
-        if (message[row].pm10 < 51) {
+        if (message[row].pact < 51) {
             dustIndex = 0;
-        } else if (message[row].pm10 >= 51 && message[row].pm10 <= 75) {
+        } else if (message[row].pact >= 51 && message[row].pact <= 75) {
             dustIndex = 1;
-        } else if (message[row].pm10 >= 76 && message[row].pm10 <= 100) {
+        } else if (message[row].pact >= 76 && message[row].pact <= 100) {
             dustIndex = 2;
-        } else if (message[row].pm10 >= 101 && message[row].pm10 <= 350) {
+        } else if (message[row].pact >= 101 && message[row].pact <= 350) {
             dustIndex =3;
-        } else if (message[row].pm10 >= 351 && message[row].pm10 <= 420) {
+        } else if (message[row].pact >= 351 && message[row].pact <= 420) {
             dustIndex = 4;
-        } else if (message[row].pm10 >= 421) {
+        } else if (message[row].pact >= 421) {
             dustIndex = 5;
         }
         this.createOrExtendObject(device.Serial + '.Sensor.DustIndex', {
