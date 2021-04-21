@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "0.8.1",
+        "version": "0.8.2",
         "news": {
+            "0.8.2": {
+                "en": "Support for new dyson login procedure and bugfixes.",
+                "de": "Unterstützung für neue Dyson-Anmeldeverfahren und Bugfixes.",
+                "ru": "Поддержка новой процедуры входа в систему dyson и исправления.",
+                "pt": "Suporte para novo procedimento de login dyson e correções de bugs.",
+                "nl": "Ondersteuning voor nieuwe dyson-inlogprocedure en bugfixes.",
+                "fr": "Prise en charge de la nouvelle procédure de connexion dyson et corrections de bogues.",
+                "it": "Supporto per la nuova procedura di accesso a Dyson e correzioni di bug.",
+                "es": "Soporte para el nuevo procedimiento de inicio de sesión de Dyson y correcciones de errores.",
+                "pl": "Wsparcie dla nowej procedury logowania dyson i poprawek błędów.",
+                "zh-cn": "支持新的dyson登录过程和错误修正。"
+            },
             "0.8.0": {
                 "en": "Improved humidifier support and bugfixes.",
                 "de": "Verbesserte Luftbefeuchterunterstützung und Bugfixes.",
@@ -210,7 +222,7 @@
             "zh-cn": "将戴森空气净化器和风扇集成到ioBroker中"
         },
         "authors": [
-            "Hanjo Hingsen <hanjo@hingsen.de>"
+            "Hanjo Hingsen <open.source@hingsen.de>"
         ],
         "keywords": [
             "ioBroker",
@@ -224,7 +236,6 @@
         ],
         "license": "MIT",
         "platform": "Javascript/Node.js",
-        "main": "main.js",
         "icon": "dyson_logo.svg",
         "enabled": true,
         "extIcon": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier/blob/master/admin/dyson_logo.svg",
@@ -236,7 +247,7 @@
         "materialize": true,
         "supportCustoms": false,
         "connectionType": "local",
-        "dataSource": "pull",
+        "dataSource": "poll",
         "dependencies": [
             {
                 "js-controller": ">=3.0.0",
