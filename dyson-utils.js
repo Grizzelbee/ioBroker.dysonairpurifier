@@ -12,7 +12,12 @@ const httpsAgent = new https.Agent({ca: rootCas});
 rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
 
 
+/*
+module.exports.getDyson2faMail(email, passwd, country, locale){
+    adapter.log.error('getDyson2faMail - Here we Go!');
 
+}
+*/
 /**
  * Function zeroFill
  *

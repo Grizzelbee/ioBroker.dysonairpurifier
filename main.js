@@ -46,6 +46,24 @@ class dysonAirPurifier extends utils.Adapter {
         this.on('unload', this.onUnload.bind(this));
     }
 
+
+    async getDyson2faMail(msg, callback=null){
+        // adapter.log.error('getDyson2faMail - Here we Go!');
+        this.log.debug('getDyson2faMail: ' + JSON.stringify(msg));
+        if (msg.callback) this.adapter.sendTo(msg.from, msg.command, this.countdownInfo, msg.callback);
+        if (callback) callback(JSON.parse(JSON.stringify(this.countdownInfo)));
+
+    }
+
+    /*
+    this.getCountdownInfo = function(msg,callback=null) {
+        this.log.silly('getCountdownInfo ' + JSON.stringify(msg));
+        if (msg.callback) this.adapter.sendTo(msg.from, msg.command, this.countdownInfo, msg.callback);
+        if (callback) callback(JSON.parse(JSON.stringify(this.countdownInfo)));
+    }
+*/
+
+
     /**
      * onStateChange
      *
