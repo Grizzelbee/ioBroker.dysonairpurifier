@@ -108,6 +108,9 @@ Which is what the dyson app does also.
 
 ## Changelog
 
+### V0.8.3 (2021-04-26) (Still breathing)
+* (grizzelbee) New: Added ioBroker sentry plugin to report errors automatically 
+
 ### V0.8.2 (2021-04-09) (Still breathing)
 * (grizzelbee) Fix: [#80](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/80) fixed npm install hint in documentation
 * (grizzelbee) Fix: [#82](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/82) fixed common.dataSource type with type >poll<

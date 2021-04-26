@@ -253,7 +253,12 @@
                 "js-controller": ">=3.0.0",
                 "admin": ">=4.0.9"
             }
-        ]
+        ],
+        "plugins": {
+            "sentry": {
+                "dsn": "https://1016f555431c4acfb16b2481019aa1aa@o505019.ingest.sentry.io/5735771"
+            }
+        }
     },
     "native": {
         "email": "",
