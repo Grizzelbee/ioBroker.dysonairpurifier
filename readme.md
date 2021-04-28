@@ -24,6 +24,7 @@ Fan-Icon in Logo created by [Freepik](https://www.flaticon.com/de/autoren/freepi
 
 * Dyson Pure Cool Link Tower (TP02, ProductType 475)
 * Dyson Pure Cool Tower, 2018 model (TP04, ProductType 438)
+* Dyson Pure Cool Tower, 2018 model (TP07, ProductType 438E)
 * Dyson Pure Cool Link Desk (DP01, ProductType 469)
 * Dyson Pure Cool Desk, 2018 model (DP04, ProductType 520)
 * Dyson Pure Hot+Cool Link (HP02, ProductType 455)
@@ -116,6 +117,7 @@ Which is what the dyson app does also.
 
 ### V0.8.3 (2021-04-26) (Still breathing)
 * (grizzelbee) New: Added ioBroker sentry plugin to report errors automatically 
+* (grizzelbee) New: Added support for Dyson Pure Cool TP07 (438E) 
 
 ### V0.8.2 (2021-04-09) (Still breathing)
 * (grizzelbee) Fix: [#80](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/80) fixed npm install hint in documentation

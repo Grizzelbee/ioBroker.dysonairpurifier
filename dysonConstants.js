@@ -6,15 +6,16 @@
 module.exports.API_URI = 'https://appapi.cp.dyson.com';
 
 const FILTERTYPES = {'GCOM':'Combined', 'GHEP':'HEPA', 'CARF':'Activated carbon'};
-module.exports.SUPPORTED_PRODUCT_TYPES = ['358', '438', '455', '469', '475', '520', '527', '527E'];
+module.exports.SUPPORTED_PRODUCT_TYPES = ['358', '438', '438E', '455', '469', '475', '520', '527', '527E'];
 module.exports.PRODUCTS = {
-    '358': {name:'Dyson Pure Humidify+Cool', icon:'icons/purifier-humidifiers.png'},
-    '438': {name:'Dyson Pure Cool Tower', icon:'icons/purifiers.png'},
-    '455': {name:'Dyson Pure Hot+Cool Link', icon:'icons/heaters.png'},
-    '469': {name:'Dyson Pure Cool Link Desk', icon:'icons/fans.png'},
-    '475': {name:'Dyson Pure Cool Link Tower', icon:'icons/purifiers.png'},
-    '520': {name:'Dyson Pure Cool Desk', icon:'icons/fans.png'},
-    '527': {name:'Dyson Pure Hot+Cool', icon:'icons/heaters.png'},
+    '358' : {name:'Dyson Pure Humidify+Cool', icon:'icons/purifier-humidifiers.png'},
+    '438' : {name:'Dyson Pure Cool Tower', icon:'icons/purifiers.png'},
+    '438E': {name:'Dyson Pure Cool Tower', icon:'icons/purifiers.png'},
+    '455' : {name:'Dyson Pure Hot+Cool Link', icon:'icons/heaters.png'},
+    '469' : {name:'Dyson Pure Cool Link Desk', icon:'icons/fans.png'},
+    '475' : {name:'Dyson Pure Cool Link Tower', icon:'icons/purifiers.png'},
+    '520' : {name:'Dyson Pure Cool Desk', icon:'icons/fans.png'},
+    '527' : {name:'Dyson Pure Hot+Cool', icon:'icons/heaters.png'},
     '527E': {name:'Dyson Pure Hot+Cool', icon:'icons/heaters.png'}
 };
 
