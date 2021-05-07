@@ -248,6 +248,8 @@
         "supportCustoms": false,
         "connectionType": "local",
         "dataSource": "poll",
+        "messagebox": true,
+        "subscribe": "messagebox",
         "dependencies": [
             {
                 "js-controller": ">=3.0.0",
@@ -265,13 +267,16 @@
         "Password": "",
         "country": "de",
         "pollInterval": 30,
-        "temperatureUnit": "C"
+        "temperatureUnit": "C",
+        "token": ""
     },
     "encryptedNative": [
-        "Password"
+        "Password",
+        "token"
     ],
     "protectedNative": [
-        "Password"
+        "Password",
+        "token"
     ],
     "objects": [],
     "instanceObjects": [
