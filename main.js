@@ -1,6 +1,8 @@
-// @ts-nocheck
-/* jshint -W097 */// jshint strict:false
-/*jslint node: true */
+/* jshint -W097 */
+/* jshint -W030 */
+/* jshint strict:true */
+/* jslint esversion: 6 */
+/* jslint node: true */
 'use strict';
 
 // The adapter-core module gives you access to the core ioBroker functions
@@ -40,28 +42,25 @@ class dysonAirPurifier extends utils.Adapter {
         super({...options, name: adapterName});
 
         // this.on('objectChange', this.onObjectChange.bind(this));
-        // this.on('message', this.onMessage.bind(this));
+        this.on('message', this.onMessage.bind(this));
         this.on('ready', this.onReady.bind(this));
         this.on('stateChange', this.onStateChange.bind(this));
         this.on('unload', this.onUnload.bind(this));
     }
 
 
-    async getDyson2faMail(msg, callback=null){
-        // adapter.log.error('getDyson2faMail - Here we Go!');
-        this.log.debug('getDyson2faMail: ' + JSON.stringify(msg));
-        if (msg.callback) this.adapter.sendTo(msg.from, msg.command, this.countdownInfo, msg.callback);
-        if (callback) callback(JSON.parse(JSON.stringify(this.countdownInfo)));
-
+    async onMessage(msg){
+        this.log.debug('OnMessage: ' + JSON.stringify(msg));
+        if (msg && msg.command === 'getDyson2faMail' ){
+            this.log.debug('OnMessage: ' + JSON.stringify(msg.message));
+            this.log.debug('OnMessage: Mail: ' + msg.message.email);
+            this.log.debug('OnMessage: Pwd: ' + msg.message.pwd);
+            this.log.debug('OnMessage: locale: ' + msg.message.country);
+            await dysonUtils.getDyson2faMail(this, msg.message.email, msg.message.pwd, msg.message.country, 'de-DE');
+            // const otp=
+        }
     }
 
-    /*
-    this.getCountdownInfo = function(msg,callback=null) {
-        this.log.silly('getCountdownInfo ' + JSON.stringify(msg));
-        if (msg.callback) this.adapter.sendTo(msg.from, msg.command, this.countdownInfo, msg.callback);
-        if (callback) callback(JSON.parse(JSON.stringify(this.countdownInfo)));
-    }
-*/
 
 
     /**
@@ -732,7 +731,7 @@ class dysonAirPurifier extends utils.Adapter {
                 this.terminate('Terminating Adapter due to error with the mqtt credentials.', 11);
             }
         } catch (error) {
-            this.setState('info.connection', false);
+            this.setState('info.connection', false, true);
             adapterLog.error(`[main()] error: ${error.message}, stack: ${error.stack}`);
         }
     }
@@ -746,22 +745,27 @@ class dysonAirPurifier extends utils.Adapter {
         // Terminate adapter after first start because configuration is not yet received
         // Adapter is restarted automatically when config page is closed
         adapter = this; // preserve adapter reference to address functions etc. correctly later
-        const configIsValid = await dysonUtils.checkAdapterConfig(adapter);
-        if (configIsValid) {
-            adapter.getForeignObject('system.config', (err, obj) => {
-                if (adapter.supportsFeature && adapter.supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
-                    if (obj && obj.native && obj.native.secret) {
+        try{
+            const configIsValid = await dysonUtils.checkAdapterConfig(adapter);
+            if (configIsValid) {
+                adapter.getForeignObject('system.config', (err, obj) => {
+                    if (adapter.supportsFeature && adapter.supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
+                        if (obj && obj.native && obj.native.secret) {
                         //noinspection JSUnresolvedVariable
-                        adapter.config.Password = this.decrypt(obj.native.secret, adapter.config.Password);
+                            adapter.config.Password = this.decrypt(obj.native.secret, adapter.config.Password);
+                        }
+                        this.main();
+                    } else {
+                        throw new Error('This adapter requires at least js-controller V3.0.0. Your system is not compatible. Please update your system.');
                     }
-                    this.main();
-                } else {
-                    throw new Error('This adapter requires at least js-controller V3.0.0. Your system is not compatible. Please update your system.');
-                }
-            });
-        } else  {
-            this.setState('info.connection', false);
+                });
+            }
+        } catch(error)  {
+            adapter.log.warn('This adapter has no or no valid configuration. Starting anyway to give you the opportunity to configure it properly.');
+            this.setState('info.connection', false, true);
+            /*
             this.terminate('Terminating adapter until configuration is fixed.', 11);
+             */
         }
     }
     /***********************************************
@@ -787,7 +791,7 @@ class dysonAirPurifier extends utils.Adapter {
             },
             native: {}
         }, state === 'online');
-        this.setState('info.connection', state === 'online');
+        this.setState('info.connection', state === 'online', true);
     }
 
     /**

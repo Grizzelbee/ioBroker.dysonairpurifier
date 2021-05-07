@@ -1,3 +1,8 @@
+/* jshint -W097 */
+/* jshint -W030 */
+/* jshint strict:true */
+/* jslint esversion: 6 */
+/* jslint node: true */
 'use strict';
 
 const _ = require('lodash');
@@ -11,13 +16,89 @@ const rootCas = require('ssl-root-cas').create();
 const httpsAgent = new https.Agent({ca: rootCas});
 rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
 
+/**
+ *
+ * @param {object} adapter - link to the adapter instance
+ * @param {string} email - email address as registered at dyson cloud
+ * @param {string} passwd - password according to dyson cloud account
+ * @param {string} country - country the account is registered in
+ * @param {string} locale - locale according to country
+ * */
+module.exports.getDyson2faMail = async function(adapter, email, passwd, country, locale){
+    adapter.log.debug('Utils: getDyson2faMail!');
+    const headers = {
+        'User-Agent': 'Dalvik/2.1.0 (Linux; U; Android 8.1.0; Google Build/OPM6.171019.030.E1)',
+        'Content-Type': 'application/json' //,
+        // 'Access-Control-Allow-Origin': 'https://appapi.cp.dyson.com/v3/userregistration/email/userstatus',
+        // 'Access-Control-Request-Method': 'POST',
+        //'Access-Control-Request-Headers': 'X-PINGOTHER, Content-Type'
+    };
+    const payload = {
+        'Email': email,
+        'Password': passwd
+    };
+    try{
+        const result = await axios.post(dysonConstants.API_URI + `/v3/userregistration/email/userstatus?country=${country}`,
+            payload,
+            {httpsAgent,
+                headers: headers,
+                json: true,
+            });
+        if (result.data && result.data.accountStatus != 'ACTIVE'){
+            throw new Error(`This account : ${email} is ${result.data.accountStatus}. Please fix this and set this account to active.`);
+        } else {
+            adapter.log.debug('Result: ' + JSON.stringify(result.data));
+        }
 
-/*
-module.exports.getDyson2faMail(email, passwd, country, locale){
-    adapter.log.error('getDyson2faMail - Here we Go!');
 
-}
-*/
+    } catch(err){
+        adapter.log.error(err);
+    }
+
+
+    /*
+                let response = await axios.get(API_URI + `v3/userregistration/email/userstatus?country=${$(this).attr('country')}`,
+                    {httpsAgent,
+                        headers: headers,
+                        json: true,
+                        data:payload
+                    });
+                // {
+                // "accountStatus":"ACTIVE",
+                // "authenticationMethod":"EMAIL_PWD_2FA"
+                // }
+                console.log(`Result from API-Status request -> Account is: ${response.accountStatus}`);
+                if (response.accountStatus === 'ACTIVE') {
+                    // Sends the login request to the API
+
+                    // Method: POST
+                    // Content-Type: application/json
+                    // URL: https://appapi.cp.dyson.com/v3/userregistration/email/auth?country=GB&culture=en-US
+                    //
+                    // Body:
+                    //
+                    // {"email":"emailaddress"}
+                    //
+                    // Expected Response:
+                    //
+                    // {"challengeId":"challengeIdHere"}
+
+
+
+                    response = await axios.post(dysonConstants.API_URI + `/v3/userregistration/email/auth?country=${country}&culture=de-DE` ,
+                        payload,
+                        { dysonConstants.httpsAgent,
+                            headers: headers,
+                            json   : true
+                        });
+                    console.log(`Result from API-Status request -> challengeId is: ${response.challengeId}`);
+                }
+    */
+};
+
+
+
+
 /**
  * Function zeroFill
  *
@@ -52,15 +133,12 @@ module.exports.zeroFill = function (number, width) {
  */
 module.exports.checkAdapterConfig = async function (adapter) {
     const config = adapter.config;
-    // Prepare masked Config for debugging
-    const logConfig = JSON.stringify(this.maskConfig(config));
 
     return new Promise(
         function (resolve, reject) {
             if ((!config.email || config.email === '')
                 || (!config.Password || config.Password === '')
                 || (!config.country || config.country === '')) {
-                adapter.log.error(`Invalid configuration provided: ${logConfig}`);
                 if (!config.email || config.email === '') {
                     adapter.log.error(`Invalid configuration provided: eMail address is missing. Please enter your eMail address.`);
                 }
