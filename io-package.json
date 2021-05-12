@@ -271,6 +271,7 @@
         "country": "de",
         "pollInterval": 30,
         "temperatureUnit": "C",
+        "keepValues": false,
         "challengeId": "",
         "dyson_code": "",
         "token": ""
