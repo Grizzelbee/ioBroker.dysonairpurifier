@@ -127,6 +127,7 @@
                     } else if (response.challengeId){
                         console.log(`Setting challengeId [${response.challengeId}] to input.`);
                         $('input[id=challengeId]').val(response.challengeId).change();
+                        if (M) M.updateTextFields();
                         showError('Received challengeId from dyson. Please check your eMails now and enter the code you received from dyson to the according field. When done click "finish".');
                     }
                 });
@@ -147,6 +148,7 @@
                     } else if (response.token){
                         console.log(`Setting token [${JSON.stringify(response)}] to input.`);
                         $('input[id=token]').val(response.token).change();
+                        if (M) M.updateTextFields();
                     }
                 });
             };
@@ -209,6 +211,7 @@
                     <span class="translate">Poll_Interval_desc</span>
                 </div>
                 <div class="input field col s6 m4">
+                    </br></br>
                     <input type="checkbox" id="keepValues" class="value"/>
                     <span for="keepValues"  class="translate">keepValues</span>
                     </br>
@@ -216,13 +219,11 @@
                 </div>
             </div>
             <div class="row">
-                <!--div class="col s12 m6 l6 input-field"-->
-                    <div class="col s12 m12"> <!--s12 m4 l2 -->
-                        <button class="waves-effect waves-light btn btn-iobroker col s4 m3 l3" onclick="getDyson2faMail()"><span class="translate">Get 2 FA code</span></button>
-                        </br></br></br><div>
-                        <span class="translate">btn_2fa_desc</span></div>
-                    </div>
-                <!--/div-->
+                <div class="col s12 m12"> <!--s12 m4 l2 -->
+                    <button class="waves-effect waves-light btn btn-iobroker col s4 m3 l3" onclick="getDyson2faMail()"><span class="translate">Get 2 FA code</span></button>
+                    </br></br></br><div>
+                    <span class="translate">btn_2fa_desc</span></div>
+                </div>
             </div>
             <div class="row">
                 <div class="input-field col s12 m4">
@@ -235,9 +236,9 @@
                     <label class="translate" for="dyson_code">Lbl_dyson_code</label>
                     <span class="translate">dyson_code_desc</span>
                 </div>
-                <div class="input-field col s12 m4">
-                    <input class="value" id="token" type="text">
-                    <label class="translate" for="token">Lbl_token</label>
+                <div class="input-field col s12 m4 hide">
+                    <input class="value hide" id="token" type="text">
+                    <label class="translate hide" for="token">Lbl_token</label>
                 </div>
 
             </div>
