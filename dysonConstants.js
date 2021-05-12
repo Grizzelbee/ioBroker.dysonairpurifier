@@ -3,7 +3,13 @@
 /*jslint node: true */
 'use strict';
 
-module.exports.API_URI = 'https://appapi.cp.dyson.com';
+module.exports.API_BASE_URI = 'https://appapi.cp.dyson.com';
+module.exports.HTTP_HEADERS = {
+    'User-Agent': 'Dalvik/2.1.0 (Linux; U; Android 8.1.0; Google Build/OPM6.171019.030.E1)',
+    'Content-Type': 'application/json'
+};
+
+
 
 const FILTERTYPES = {'GCOM':'Combined', 'GHEP':'HEPA', 'CARF':'Activated carbon'};
 module.exports.SUPPORTED_PRODUCT_TYPES = ['358', '438', '438E', '455', '469', '475', '520', '527', '527E'];
