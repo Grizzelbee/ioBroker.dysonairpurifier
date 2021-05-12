@@ -1,8 +1,11 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "0.8.2",
+        "version": "0.9.0",
         "news": {
+            "0.9.0": {
+                "en": "Support for new dyson 2 factor login procedure, new features and bugfixes."
+            },
             "0.8.2": {
                 "en": "Support for new dyson login procedure and bugfixes.",
                 "de": "Unterstützung für neue Dyson-Anmeldeverfahren und Bugfixes.",
