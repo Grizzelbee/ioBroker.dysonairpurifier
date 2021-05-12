@@ -364,6 +364,9 @@ class dysonAirPurifier extends utils.Adapter {
             // strip leading zeros from numbers
             let value;
             if (deviceConfig[3]==='number'){
+                // TP02: When continuous monitoring is off and the fan ist switched off - temperature and humidity loose their values.
+                // test whether the values are invalid and config.keepValues is true to prevent the old values from beeing destroyed
+                if ( message[deviceConfig[0] === 'OFF' && adapter.config.keepValues ) continue;
                 // convert temperature to configured unit
                 value = Number.parseInt(message[deviceConfig[0]], 10);
                 if (deviceConfig[5] === 'value.temperature') {
@@ -382,8 +385,7 @@ class dysonAirPurifier extends utils.Adapter {
                 }
                 if (deviceConfig[0] === 'filf') {
                     // create additional data field filterlifePercent converting value from hours to percent; 4300 is the estimated lifetime in hours by dyson
-                    value = Number(value * 100/4300);
-                    this.createOrExtendObject( device.Serial + path + '.FilterLifePercent', { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':'%', 'states': deviceConfig[7]}, native: {} }, value);
+                    this.createOrExtendObject( device.Serial + path + '.FilterLifePercent', { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':'%', 'states': deviceConfig[7]}, native: {} }, Number(value * 100/4300));
                 }
             } else {
                 value = message[deviceConfig[0]];
