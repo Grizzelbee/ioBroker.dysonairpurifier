@@ -4,7 +4,16 @@
         "version": "0.9.0",
         "news": {
             "0.9.0": {
-                "en": "Support for new dyson 2 factor login procedure, new features and bugfixes."
+                "en": "Support for new dyson 2 factor login procedure, new features and bugfixes.",
+                "de": "Unterstützung für neues Dyson 2-Faktor-Anmeldeverfahren, neue Funktionen und Bugfixes.",
+                "ru": "Поддержка новой двухфакторной процедуры входа в систему Dyson, новых функций и исправлений.",
+                "pt": "Suporte para novo procedimento de login do fator dyson 2, novos recursos e correções de bugs.",
+                "nl": "Ondersteuning voor nieuwe aanmeldingsprocedure voor dyson 2-factoren, nieuwe functies en bugfixes.",
+                "fr": "Prise en charge de la nouvelle procédure de connexion dyson 2 factor, de nouvelles fonctionnalités et de corrections de bogues.",
+                "it": "Supporto per la nuova procedura di accesso a 2 fattori di dyson, nuove funzionalità e correzioni di bug.",
+                "es": "Soporte para el nuevo procedimiento de inicio de sesión de factor de Dyson 2, nuevas funciones y correcciones de errores.",
+                "pl": "Wsparcie dla nowej procedury logowania dyson 2, nowe funkcje i poprawki błędów.",
+                "zh-cn": "支持新的dyson 2 factor登录过程，新功能和错误修正。"
             },
             "0.8.2": {
                 "en": "Support for new dyson login procedure and bugfixes.",
