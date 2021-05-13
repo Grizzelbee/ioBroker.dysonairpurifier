@@ -1,13 +1,12 @@
 os:
   - linux
-  - osx
   - windows
 
 language: node_js
 node_js:
-  - '10'
   - '12'
-  - 'node'
+  - '14'
+  - '16'
 
 env:
   - CXX=g++-4.8

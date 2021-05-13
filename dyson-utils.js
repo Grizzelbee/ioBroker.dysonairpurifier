@@ -1,3 +1,8 @@
+/* jshint -W097 */
+/* jshint -W030 */
+/* jshint strict:true */
+/* jslint esversion: 6 */
+/* jslint node: true */
 'use strict';
 
 const _ = require('lodash');
@@ -12,18 +17,97 @@ const httpsAgent = new https.Agent({ca: rootCas});
 rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
 
 
-/*
-module.exports.getDyson2faMail(email, passwd, country, locale){
-    adapter.log.error('getDyson2faMail - Here we Go!');
 
-}
-*/
+/**
+ * getDyson2faMail
+ *
+ * Does the first part of the dyson 2FA. Requests the one-time-password from the API
+ *
+ * @param {object} adapter link to the adapter instance
+ * @param {string} email email address as registered at dyson cloud
+ * @param {string} passwd password according to dyson cloud account
+ * @param {string} country country the account is registered in
+ * @param {string} locale locale according to country
+ *
+ * @returns {object} response.data - data part of the dyson API  response
+ * */
+module.exports.getDyson2faMail = async function(adapter, email, passwd, country, locale){
+    adapter.log.debug('Utils: getDyson2faMail!');
+    const payload = {
+        'Email': email,
+        'Password': passwd
+    };
+    try{
+        const result = await axios.post(dysonConstants.API_BASE_URI + `/v3/userregistration/email/userstatus?country=${country}`,
+            payload,
+            {httpsAgent,
+                headers: dysonConstants.HTTP_HEADERS,
+                json: true,
+            });
+        if (result.data && result.data.accountStatus !== 'ACTIVE'){
+            return {error : `This account : ${email} is ${result.data.accountStatus} but needs to be ACTIVE. Please fix this first and set this account to active using the dyson smartphone app or website.`};
+        } else {
+            adapter.log.debug('Result: ' + JSON.stringify(result.data));
+            if (result.data.authenticationMethod === 'EMAIL_PWD_2FA'){
+                const response = await axios.post(dysonConstants.API_BASE_URI + `/v3/userregistration/email/auth?country=${country}&culture=${locale}` ,
+                    payload,
+                    {httpsAgent,
+                        headers: dysonConstants.HTTP_HEADERS,
+                        json: true,
+                    });
+                adapter.log.debug(`Result from API-Status request -> challengeId is: ${response.data.challengeId}`);
+                adapter.log.debug(stringify(response.data));
+                return response.data;
+            } else {
+                return {error : `Received unexpected authentication-method from dyson API. Expecting: [EMAIL_PWD_2FA], received: [${result.data.authenticationMethod}].`};
+            }
+        }
+    } catch(err){
+        adapter.log.error('getDyson2faMail' + err);
+    }
+};
+
+
+/**
+ * getDysonToken
+ *
+ * @param adapter link to the adapter instance
+ * @param {string} email email address as registered at dyson cloud
+ * @param {string} passwd password according to dyson cloud account* @param challengeId
+ * @param {string} country country the account is registered in
+ * @param {string} challengeId
+ * @param {string} PIN
+ *
+ * @returns {Promise<string, any>}
+ */
+module.exports.getDysonToken = async function(adapter, email, passwd, country,  challengeId, PIN) {
+    adapter.log.debug('Utils: getDysonToken!');
+    const payload = {
+        'Email': email,
+        'Password': passwd,
+        'challengeId': challengeId,
+        'otpCode': PIN
+    };
+    try{
+        const response = await axios.post(dysonConstants.API_BASE_URI + `/v3/userregistration/email/verify?country=${country}`,
+            payload,
+            {httpsAgent,
+                headers: dysonConstants.HTTP_HEADERS,
+                json: true,
+            });
+        return response.data;
+    } catch(err){
+        adapter.log.error('getDysonToken: ' + err);
+    }
+};
+
+
 /**
  * Function zeroFill
  *
  * Formats a number as a string with leading zeros
  *
- * @param number {string} Value thats needs to be filled up with leading zeros
+ * @param number {string} Value that needs to be filled up with leading zeros
  * @param width  {number} width of the complete new string incl. number and zeros
  *
  * @returns The given number filled up with leading zeros to a given width (excluding the negative sign), returns empty string if number is not an actual number.
@@ -52,15 +136,12 @@ module.exports.zeroFill = function (number, width) {
  */
 module.exports.checkAdapterConfig = async function (adapter) {
     const config = adapter.config;
-    // Prepare masked Config for debugging
-    const logConfig = JSON.stringify(this.maskConfig(config));
 
     return new Promise(
         function (resolve, reject) {
             if ((!config.email || config.email === '')
                 || (!config.Password || config.Password === '')
                 || (!config.country || config.country === '')) {
-                adapter.log.error(`Invalid configuration provided: ${logConfig}`);
                 if (!config.email || config.email === '') {
                     adapter.log.error(`Invalid configuration provided: eMail address is missing. Please enter your eMail address.`);
                 }
@@ -105,15 +186,15 @@ module.exports.decryptMqttPasswd = function(LocalCredentials) {
  * Function getDevices
  * Queries the devices stored in a given dyson online account
  *
- * @param myAccount  {Object} JSON Object containing your dyson account details
+ * @param token  {string}  your dyson account token
  * @param adapter {Object} link to the adapter
- * @returns {ANY}
+ * @returns {Promise<object>}
  *      resolves with a List of dyson devices connected to the given account
  *      rejects with an error message
  */
-module.exports.getDevices = async function(myAccount, adapter) {
+module.exports.getDevices = async function(token, adapter) {
     return new Promise((resolve, reject) => {
-        this.dysonGetDevicesFromApi(myAccount)
+        this.dysonGetDevicesFromApi(token)
             .then((response) => {
                 const devices = [];
                 for (const thisDevice in response.data) {
@@ -136,51 +217,9 @@ module.exports.getDevices = async function(myAccount, adapter) {
                 resolve(devices);
             })
             .catch((error) => {
-                // adapterLog.error('[dysonGetDevicesFromApi] Error: (' + error.statuscode + ') ' + error + ', Callstack: ' + error.stack);
                 reject('[dysonGetDevicesFromApi] Error: (' + error.statuscode + ') ' + error + ', Callstack: ' + error.stack);
             });
     });
-};
-
-/**
- * dysonAPILogin
- *
- * @param adapter {object} Object which contains a reference to the adapter
- *
- * @returns {Promise} 
- *      resolves when dyson login worked
- *      rejects on any http error.
- */
-module.exports.dysonAPILogIn = async function(adapter) {
-    adapter.log.info('Signing in into dyson cloud API ...');
-    const headers = {
-        'User-Agent': 'DysonLink/29019 CFNetwork/1188 Darwin/20.0.0',
-        'Content-Type': 'application/json'
-    };
-    const payload = {
-        'Email': adapter.config.email,
-        'Password': adapter.config.Password
-    };
-    const config = {
-        httpsAgent,
-        headers : headers,
-        json:true
-    };
-
-    const response = await axios.get(dysonConstants.API_URI + `/v1/userregistration/userstatus?country=${adapter.config.country}&email=${adapter.config.email}`,
-        config);
-    if (response.data.accountStatus === 'ACTIVE') {
-        adapter.log.info(`Result from API-Status request -> Account is: ${response.data.accountStatus}`);
-    } else {
-        adapter.log.warn(`Result from API-Status request -> Account is: ${response.data.accountStatus}`);
-    }
-    // Sends the login request to the API
-    return await axios.post(dysonConstants.API_URI + '/v1/userregistration/authenticate?country=' + adapter.config.country,
-        payload,
-        { httpsAgent,
-            headers: headers,
-            json   : true
-        });
 };
 
 
@@ -188,71 +227,24 @@ module.exports.dysonAPILogIn = async function(adapter) {
 /**
  * dysonGetDevicesFromApi
  *
- * @param auth {object} Object which contains required authentication data
+ * @param token {string} contains required authentication token
  *
  * @returns {Promise}
  *      resolves with dysons device data
  *      rejects on any http error.
- */module.exports.dysonGetDevicesFromApi = async function(auth) {
+ */
+module.exports.dysonGetDevicesFromApi = async function(token) {
     // Sends a request to the API to get all devices of the user
-    return await axios.get(dysonConstants.API_URI + '/v2/provisioningservice/manifest',
+    return await axios.get(dysonConstants.API_BASE_URI + '/v2/provisioningservice/manifest',
         {
             httpsAgent,
-            headers: { 'Authorization': auth },
+            headers: { 'Authorization': 'Bearer ' + token },
             json: true
         }
     );
 };
 
-/**
- * Function getMqttCredentials
- *
- *
- * @param adapter {Object} link to the adapters
- * @returns Promise  {string} resolves with the MQTT Basic-Auth of the device, rejects with the error which occurred.
- */
-module.exports.getMqttCredentials = function(adapter) {
-    return new Promise((resolve, reject) => {
-        this.dysonAPILogIn(adapter)
-            .then((response) => {
-                adapter.log.debug('Successful logged in into the Dyson API.');
-                adapter.log.debug('[dysonAPILogIn]: Statuscode from Axios: [' + response.status + ']');
-                adapter.log.debug('[dysonAPILogIn]: Statustext from Axios [' + response.statusText + ']');
-                // Creates the authorization header for further use
-                resolve( 'Basic ' + Buffer.from(response.data.Account + ':' + response.data.Password).toString('base64'));
-            })
-            .catch((error) => {
-                adapter.log.error('Error during dyson cloud API login:' + error + ', Callstack: ' + error.stack);
-                if (error.response) {
-                    // The request was made and the server responded with a status code
-                    // that falls out of the range of 2xx
-                    switch (error.response.status) {
-                        case 401 : // unauthorized
-                            adapter.log.error('Error: Unable to authenticate user! Your credentials seem to be invalid. Please double check and fix them.');
-                            adapter.log.error(`Credentials used for login: User:[${adapter.config.email}] - Password:[${adapter.config.Password}] - Country:[${adapter.config.country}]`);
-                            break;
-                        case 429: // endpoint currently not available
-                            adapter.log.error('Error: Endpoint: ' + dysonConstants.API_URI + '/v1/userregistration/authenticate?country=' + adapter.config.country);
-                            break;
-                        default:
-                            adapter.log.error('[error.response.data]: ' + ((typeof error.response.data === 'object') ? stringify(error.response.data) : error.response.data));
-                            adapter.log.error('[error.response.status]: ' + ((typeof error.response.status === 'object') ? stringify(error.response.status) : error.response.status));
-                            adapter.log.error('[error.response.headers]: ' + ((typeof error.response.headers === 'object') ? stringify(error.response.headers) : error.response.headers));
-                            break;
-                    }
-                } else if (error.request) {
-                    // The request was made but no response was received
-                    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                    // http.ClientRequest in node.js
-                    adapter.log.error('[error.request]: ' + ((typeof error.request === 'object') ? stringify(error.request) : error.request));
-                } else {
-                    // Something happened in setting up the request that triggered an Error
-                    adapter.log.error('[Error]: ' + error.message);
-                }
-                reject('Error during dyson cloud API login:' + error );
-            });
-    });
-};
+
 
 /**
  * Returns a masked and cloned copy of provided config

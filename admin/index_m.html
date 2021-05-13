@@ -1,144 +1,254 @@
 <html>
-<head>
-    <!-- Load ioBroker scripts and styles-->
-    <link href="../../css/adapter.css" rel="stylesheet" type="text/css"/>
-    <link href="../../lib/css/materialize.css" rel="stylesheet" type="text/css">
+    <head>
+        <!-- Load ioBroker scripts and styles-->
+        <link href="../../css/adapter.css" rel="stylesheet" type="text/css"/>
+        <link href="../../lib/css/materialize.css" rel="stylesheet" type="text/css">
 
-    <script src="../../lib/js/jquery-3.2.1.min.js" type="text/javascript"></script>
-    <script src="../../socket.io/socket.io.js" type="text/javascript"></script>
+        <script src="../../lib/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+        <script src="../../socket.io/socket.io.js" type="text/javascript"></script>
 
-    <script src="../../js/translate.js" type="text/javascript"></script>
-    <script src="../../lib/js/materialize.js" type="text/javascript"></script>
-    <script src="../../js/adapter-settings.js" type="text/javascript"></script>
+        <script src="../../js/translate.js" type="text/javascript"></script>
+        <script src="../../lib/js/materialize.js" type="text/javascript"></script>
+        <script src="../../js/adapter-settings.js" type="text/javascript"></script>
 
-    <!-- Load our own files -->
-    <link href="style.css" rel="stylesheet" type="text/css"/>
-    <script src="words.js" type="text/javascript"></script>
+        <!-- Load our own files -->
+        <link href="style.css" rel="stylesheet" type="text/css"/>
+        <script src="words.js" type="text/javascript"></script>
+        <script src="./dyson-utils.js" type="text/javascript"></script>
 
-    <script type="text/javascript">
-        if (typeof supportsFeature !== 'function' || !supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
-            alert('This adapter requires at least js-controller V3.0.0. Your system is not compatible. Please update.');
-            throw new Error('This adapter requires at least js-controller V3.0.0. Your system is not compatible. Please update.');
-        };
-        let secret = '';
+        <script type="text/javascript">
+            if (typeof supportsFeature !== 'function' || !supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
+                showError('This adapter requires at least js-controller V3.0.0. Your system is not compatible. Please update.');
+                throw new Error('This adapter requires at least js-controller V3.0.0. Your system is not compatible. Please update.');
+            };
+            let secret = '';
 
-        // This will be called by the admin adapter when the settings page loads
-        function load(settings, onChange) {
-            // example: select elements with id=key and class=value and insert value
-            if (!settings) return;
+            // This will be called by the admin adapter when the settings page loads
+            function load(settings, onChange) {
+                // example: select elements with id=key and class=value and insert value
+                if (!settings) return;
 
-            $('.value').each(function () {
-                var $key = $(this);
-                var id = $key.attr('id');
+                $('.value').each(function () {
+                    var $key = $(this);
+                    var id = $key.attr('id');
 
-                if ($key.attr('type') === 'checkbox') {
-                    // do not call onChange direct, because onChange could expect some arguments
-                    $key.prop('checked', settings[id])
-                        .on('change', () => onChange());
-                } else {
-                    if (id === 'Password') {
-                        // get the system secret for pwd de-/encryption
-                        socket.emit('getObject', 'system.config', function (err, obj) {
-                            secret = (obj.native ? obj.native.secret : '');
-                            settings[id] = decrypt(secret, settings[id]);
-                            $key.val(settings[id]).on('change', () => onChange());
-                        });
-                    }
-                    // do not call onChange direct, because onChange could expect some arguments
-                    $key.val(settings[id])
-                        .on('change', () => onChange())
-                        .on('keyup', () => onChange());
-                }
-            });
-            onChange(false);
-            // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
-            if (M) M.updateTextFields();
-        }
-
-        // This will be called by the admin adapter when the user presses the save button
-        function save(callback) {
-            // example: select elements with class=value and build settings object
-            var obj = {};
-            $('.value').each(function () {
-                var $this = $(this);
-                var id = $this.attr('id');
-
-                if ($this.attr('type') === 'checkbox') {
-                    obj[id] = $this.prop('checked');
-                } else if ($this.attr('type') === 'number') {
-                    obj[id] = parseFloat($this.val());
-                } else {
-                    if (id === 'Password') {
-                        obj[id] = encrypt(secret, $this.val());
+                    if ($key.attr('type') === 'checkbox') {
+                        // do not call onChange direct, because onChange could expect some arguments
+                        $key.prop('checked', settings[id])
+                            .on('change', () => onChange());
                     } else {
-                        obj[id] = $this.val();
+                        if (id === 'Password') {
+                            // get the system secret for pwd de-/encryption
+                            socket.emit('getObject', 'system.config', function (err, obj) {
+                                secret = (obj.native ? obj.native.secret : '');
+                                settings[id] = decrypt(secret, settings[id]);
+                                $key.val(settings[id]).on('change', () => onChange());
+                            });
+                        }
+                        // do not call onChange direct, because onChange could expect some arguments
+                        $key.val(settings[id])
+                            .on('change', () => onChange())
+                            .on('keyup', () => onChange());
                     }
+                });
+                onChange(false);
+
+                getIsAdapterAlive((alive) => {
+                    if (!alive) {
+                        showError(_('Adapter must be running to configure it. Please start the adapter.'));
+                        $('.progress').addClass('hide');
+                        return;
+                    }
+                });
+
+                // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
+                if (M) M.updateTextFields();
+            }
+
+            // This will be called by the admin adapter when the user presses the save button
+            function save(callback) {
+                // example: select elements with class=value and build settings object
+                var obj = {};
+                $('.value').each(function () {
+                    var $this = $(this);
+                    var id = $this.attr('id');
+
+                    if ($this.attr('type') === 'checkbox') {
+                        obj[id] = $this.prop('checked');
+                    } else if ($this.attr('type') === 'number') {
+                        obj[id] = parseFloat($this.val());
+                    } else {
+                        if (id === 'Password') {
+                            obj[id] = encrypt(secret, $this.val());
+                        } else {
+                            obj[id] = $this.val();
+                        }
+                    }
+                });
+                callback(obj);
+            }
+
+            async function getDyson2faMail(){
+                let payload = {};
+                payload.email    = document.getElementById("email").value;
+                payload.password = document.getElementById("Password").value;
+                payload.country  = document.getElementById("country").value;
+                switch (payload.country){
+                    case 'DE': payload.locale = 'de-DE';
+                    break;
+                    case 'AT': payload.locale = 'de-AT';
+                        break;
+                    case 'FR': payload.locale = 'fr-FR';
+                        break;
+                    case 'PL': payload.locale = 'pl-PL';
+                        break;
+                    case 'NL': payload.locale = 'nl-NL';
+                        break;
+                    case 'BE': payload.locale = 'fr-BE';
+                        break;
+                    case 'US': payload.locale = 'en-US';
+                        break;
+                    case 'GB': payload.locale = 'en-GB';
+                        break;
+                    case 'IE': payload.locale = 'en-IE';
+                        break;
+                    case 'CA': payload.locale = 'en-CA';
+                        break;
+                    case 'RU': payload.locale = 'ru-RU';
+                        break;
+                    case 'CN': payload.locale = 'cn-CN';
+                        break;
                 }
-            });
-            callback(obj);
-        }
-    </script>
+                sendTo(null, 'getDyson2faMail', payload, (response) => {
+                    if (response.error) {
+                        showError(response.error);
+                        $('.progress').addClass('hide');
+                        return;
+                    } else if (response.challengeId){
+                        console.log(`Setting challengeId [${response.challengeId}] to input.`);
+                        $('input[id=challengeId]').val(response.challengeId).change();
+                        if (M) M.updateTextFields();
+                        showError('Received challengeId from dyson. Please check your eMails now and enter the code you received from dyson to the according field. When done click "finish".');
+                    }
+                });
+            };
 
-</head>
+            async function getDysonToken(){
+                let payload = {};
+                payload.email    = document.getElementById("email").value;
+                payload.password = document.getElementById("Password").value;
+                payload.country  = document.getElementById("country").value;
+                payload.challengeId  = document.getElementById("challengeId").value;
+                payload.PIN  = document.getElementById("dyson_code").value;
+                sendTo(null, 'getDysonToken', payload, (response) => {
+                    if (response.error) {
+                        showError(response.error);
+                        $('.progress').addClass('hide');
+                        return;
+                    } else if (response.token){
+                        console.log(`Setting token [${JSON.stringify(response)}] to input.`);
+                        $('input[id=token]').val(response.token).change();
+                        if (M) M.updateTextFields();
+                    }
+                });
+            };
+        </script>
+    </head>
 
-<body>
+    <body>
+        <div class="m adapter-container">
 
-<div class="m adapter-container">
+            <div class="row">
+                <div class="col s12 m4 l2">
+                    <img class="logo" src="dyson_logo.svg">
+                </div>
+            </div>
 
-    <div class="row">
-        <div class="col s12 m4 l2">
-            <img class="logo" src="dyson_logo.svg">
+            <!-- Put your content here -->
+
+            <!-- For example columns with settings: -->
+            <div class="row">
+                <div class="input-field col s12 m4">
+                    <input class="value" id="email" type="text">
+                    <label class="translate" for="email">Lbl_email</label>
+                    <span class="translate">email_desc</span>
+                </div>
+                <div class="input-field col s12 m4">
+                    <input class="value" id="Password" maxlength="32" type="password">
+                    <label class="translate" for="Password">Lbl_Password</label>
+                    <span class="translate">password_desc</span>
+                </div>
+                <div class="input-field col s12 m4">
+                    <select class="value" id="country">
+                        <option class="translate" value='DE'>germany</option>
+                        <option class="translate" value='AT'>austria</option>
+                        <option class="translate" value='FR'>france</option>
+                        <option class="translate" value='PL'>Poland</option>
+                        <option class="translate" value='NL'>Netherlands</option>
+                        <option class="translate" value='BE'>Belgium</option>
+                        <option class="translate" value='US'>United States of America</option>
+                        <option class="translate" value='GB'>Great Britain</option>
+                        <option class="translate" value='IE'>Ireland</option>
+                        <option class="translate" value='CA'>Canada</option>
+                        <option class="translate" value='RU'>Russia</option>
+                        <option class="translate" value='CN'>China</option>
+                    </select>
+                    <label class="translate" for="country">Lbl_country</label>
+                    <span class="translate">country_desc</span>
+                </div>
+                <div class="input-field col s12 m4">
+                    <select class="value" id="temperatureUnit">
+                        <option class="translate" value='C'>Celsius</option>
+                        <option class="translate" value='F'>Fahrenheit</option>
+                        <option class="translate" value='K'>Kelvin</option>
+                    </select>
+                    <label class="translate" for="temperatureUnit">Lbl_temperatureUnit</label>
+                    <span class="translate">temperatureUnit_desc</span>
+                </div>
+                <div class="col s6 m4 input-field">
+                    <input class="value" id="pollInterval" type="text"/>
+                    <label class="translate" for="pollInterval">Poll_Interval</label>
+                    <span class="translate">Poll_Interval_desc</span>
+                </div>
+                <div class="input field col s6 m4">
+                    </br></br>
+                    <input type="checkbox" id="keepValues" class="value"/>
+                    <span for="keepValues"  class="translate">keepValues</span>
+                    </br>
+                    <span class="translate">keepValues_desc</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 m12"> <!--s12 m4 l2 -->
+                    <button class="waves-effect waves-light btn btn-iobroker col s4 m3 l3" onclick="getDyson2faMail()"><span class="translate">Get 2 FA code</span></button>
+                    </br></br></br><div>
+                    <span class="translate">btn_2fa_desc</span></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m4">
+                    <input class="value" id="challengeId" type="text">
+                    <label class="translate" for="challengeId">Lbl_challengeId</label>
+                    <span class="translate">challengeId_desc</span>
+                </div>
+                <div class="input-field col s12 m4">
+                    <input class="value" id="dyson_code" maxlength="32" type="text">
+                    <label class="translate" for="dyson_code">Lbl_dyson_code</label>
+                    <span class="translate">dyson_code_desc</span>
+                </div>
+                <div class="input-field col s12 m4 hide">
+                    <input class="value hide" id="token" type="text">
+                    <label class="translate hide" for="token">Lbl_token</label>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col s12 m12"> <!--s12 m4 l2 -->
+                    <button class="waves-effect waves-light btn btn-iobroker col s4 m3 l3" onclick="getDysonToken()"><span class="translate">Finish</span></button>
+                    </br></br></br>
+                    <div><span class="translate">finish_desc</span></div>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <!-- Put your content here -->
-
-    <!-- For example columns with settings: -->
-    <div class="row">
-        <div class="input-field col s12 m4">
-            <input class="value" id="email" type="text">
-            <label class="translate" for="email">Lbl_email</label>
-            <span class="translate">email_desc</span>
-        </div>
-        <div class="input-field col s12 m4">
-            <input class="value" id="Password" maxlength="32" type="password">
-            <label class="translate" for="Password">Lbl_Password</label>
-            <span class="translate">password_desc</span>
-        </div>
-        <div class="input-field col s12 m4">
-            <select class="value" id="country">
-                <option class="translate" value='de'>germany</option>
-                <option class="translate" value='at'>austria</option>
-                <option class="translate" value='fr'>france</option>
-                <option class="translate" value='pl'>Poland</option>
-                <option class="translate" value='nl'>Netherlands</option>
-                <option class="translate" value='be'>Belgium</option>
-                <option class="translate" value='us'>United States of America</option>
-                <option class="translate" value='gb'>Great Britain</option>
-                <option class="translate" value='ie'>Ireland</option>
-                <option class="translate" value='ca'>Canada</option>
-                <option class="translate" value='ru'>Russia</option>
-                <option class="translate" value='cn'>China</option>
-            </select>
-            <label class="translate" for="country">Lbl_country</label>
-            <span class="translate">country_desc</span>
-        </div>
-        <div class="input-field col s12 m4">
-            <select class="value" id="temperatureUnit">
-                <option class="translate" value='C'>Celsius</option>
-                <option class="translate" value='F'>Fahrenheit</option>
-                <option class="translate" value='K'>Kelvin</option>
-            </select>
-            <label class="translate" for="temperatureUnit">Lbl_temperatureUnit</label>
-            <span class="translate">temperatureUnit_desc</span>
-        </div>
-        <div class="col s6 m4 input-field">
-            <input class="value" id="pollInterval" type="text"/>
-            <label class="translate" for="pollInterval">Poll_Interval</label>
-            <span class="translate">Poll_Interval_desc</span>
-        </div>
-    </div>
-</div>
-</body>
-
+    </body>
 </html>
