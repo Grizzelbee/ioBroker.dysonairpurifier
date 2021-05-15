@@ -132,7 +132,7 @@ Which is what the dyson app does also.
 
 ## Changelog
 
-### V0.9.0 (2021-04-26) (Still breathing)
+### V0.9.0 (2021-05-15) (Still breathing)
 * (grizzelbee) New: Added ioBroker sentry plugin to report errors automatically 
 * (grizzelbee) New: Added support for Dyson Pure Cool TP07 (438E)
 * (grizzelbee) New: Added support for Dyson 2-factor login method
