@@ -133,7 +133,7 @@ Which is what the dyson app does also.
 ## Changelog
 
 ### V0.9.1 (2021-05-17) (Still breathing)
-* (grizzelbee) New: [#105](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/105) TP05 and others supporting the fmod token are now able to switch from Off to Auto- and manual-mode
+* (grizzelbee) New: [#105](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/105) TP02, HP02 and others supporting the fmod token are now able to switch from Off to Auto- and manual-mode
 
 ### V0.9.0 (2021-05-15) (Still breathing)
 * (grizzelbee) New: Added ioBroker sentry plugin to report errors automatically 
