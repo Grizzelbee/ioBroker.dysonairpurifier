@@ -627,8 +627,6 @@ class dysonAirPurifier extends utils.Adapter {
     async main() {
         const adapterLog = this.log;
         try {
-            //const myAccount = await dysonUtils.getMqttCredentials(adapter);
-            //if (typeof myAccount !== 'undefined'){
             adapterLog.info('Querying devices from dyson API.');
             devices = await dysonUtils.getDevices(adapter.config.token, adapter);
             for (const thisDevice in devices) {
@@ -756,13 +754,6 @@ class dysonAirPurifier extends utils.Adapter {
                     adapter.clearIntervalHandle(devices[thisDevice].updateIntervalHandle);
                 });
             }
-            /*
-            } else{
-                adapterLog.error(`[main()] error: myAccount is: [` + myAccount + ']');
-                this.terminate('Terminating Adapter due to error with the mqtt credentials.', 11);
-            }
-            
-                 */
         } catch (error) {
             this.setState('info.connection', false, true);
             adapterLog.error(`[main()] error: ${error.message}, stack: ${error.stack}`);
@@ -792,13 +783,13 @@ class dysonAirPurifier extends utils.Adapter {
                         throw new Error('This adapter requires at least js-controller V3.0.0. Your system is not compatible. Please update your system.');
                     }
                 });
+            } else {
+                adapter.log.warn('This adapter has no or no valid configuration. Starting anyway to give you the opportunity to configure it properly.');
+                this.setState('info.connection', false, true);
             }
         } catch(error)  {
             adapter.log.warn('This adapter has no or no valid configuration. Starting anyway to give you the opportunity to configure it properly.');
             this.setState('info.connection', false, true);
-            /*
-            this.terminate('Terminating adapter until configuration is fixed.', 11);
-             */
         }
     }
     /***********************************************
