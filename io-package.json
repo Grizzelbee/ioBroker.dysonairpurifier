@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "0.9.0",
+        "version": "0.9.1",
         "news": {
+            "0.9.1": {
+                "en": "TP05 and others are now supporting the OFF state.",
+                "de": "TP05 und andere unterstützen jetzt den AUS-Zustand.",
+                "ru": "TP05 и другие теперь поддерживают состояние ВЫКЛ.",
+                "pt": "TP05 e outros agora suportam o estado OFF.",
+                "nl": "TP05 en anderen ondersteunen nu de UIT-status.",
+                "fr": "TP05 et d'autres prennent désormais en charge l'état OFF.",
+                "it": "TP05 e altri supportano ora lo stato OFF.",
+                "es": "TP05 y otros ahora admiten el estado APAGADO.",
+                "pl": "TP05 i inne obsługują teraz stan WYŁĄCZONY.",
+                "zh-cn": "TP05和其他设备现在支持OFF状态。"
+            },
             "0.9.0": {
                 "en": "Support for new dyson 2 factor login procedure, new features and bugfixes.",
                 "de": "Unterstützung für neues Dyson 2-Faktor-Anmeldeverfahren, neue Funktionen und Bugfixes.",
