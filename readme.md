@@ -291,7 +291,7 @@ Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD
 | ------------- | ----- | ----- | ----- |
 | ercd | Last Error Code | NONE , or some hexa values |  |
 | filf | remaining Filter life | 0000 - 4300 | hours|
-| fmod | Mode | FAN , AUTO | |
+| fmod | Mode | FAN , AUTO, OFF | |
 | fpwr | Main Power | ON, OFF | |
 | fnst | Fan Status | ON , OFF, FAN | |
 | fnsp | Fan speed | 0001 - 0010, AUTO | |
