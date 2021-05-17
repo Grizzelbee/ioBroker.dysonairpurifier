@@ -31,7 +31,7 @@ module.exports.DATAPOINTS = [
     ['channel', 'WIFIchannel'             , 'Number of the used WIFI channel.'                                              , 'number', 'false', 'value'             ,''  ],
     ['ercd' , 'LastErrorCode'             , 'Error code of the last error occurred on this device'                          , 'string', 'false', 'text'              ,''  ],
     ['filf' , 'FilterLife'                , 'Estimated remaining filter life in hours.'                                     , 'number', 'false', 'value'             , 'hours' ],
-    ['fmod' , 'FanMode'                   , 'Mode of device'                                                                , 'string', 'false', 'switch'            ,'', {'FAN':'Fan', 'AUTO':'Auto'} ],
+    ['fmod' , 'FanMode'                   , 'Mode of device'                                                                , 'string', 'true', 'switch'            ,'', {'FAN':'Manual', 'AUTO':'Auto', 'OFF':'Off'} ],
     ['fnsp' , 'FanSpeed'                  , 'Current fan speed'                                                             , 'string', 'true',  'switch'            ,'', {'AUTO':'Auto', '0001':'1', '0002':'2', '0003':'3', '0004':'4', '0005':'5', '0006':'6', '0007':'7', '0008':'8', '0009':'9', '0010':'10' } ],
     ['fnst' , 'FanStatus'                 , 'Current Fan state; correlating to Auto-mode'                                   , 'string', 'false', 'text'              ,'' ],
     ['nmod' , 'Nightmode'                 , 'Night mode state'                                                              , 'string', 'true',  'switch.mode.moonlight'  ,'', {'OFF':'OFF', 'ON':'ON'} ],

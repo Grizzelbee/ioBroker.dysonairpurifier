@@ -1,7 +1,7 @@
 {
   "name": "iobroker.dysonairpurifier",
-  "version": "0.9.0",
-  "description": "ioBroker Adapter for dyson air purifiers and fans",
+  "version": "0.9.1",
+  "description": "dyson air purifiers and fans",
   "author": {
     "name": "grizzelbee",
     "email": "open.source@hingsen.de"
