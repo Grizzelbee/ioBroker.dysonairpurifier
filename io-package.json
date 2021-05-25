@@ -246,7 +246,7 @@
             "zh-cn": "将戴森空气净化器和风扇集成到ioBroker中"
         },
         "authors": [
-            "Hanjo Hingsen <open.source@hingsen.de>"
+            "grizzelbee <open.source@hingsen.de>"
         ],
         "keywords": [
             "ioBroker",
