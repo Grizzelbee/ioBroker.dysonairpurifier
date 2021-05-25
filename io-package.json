@@ -4,16 +4,16 @@
         "version": "0.9.1",
         "news": {
             "0.9.1": {
-                "en": "TP05 and others are now supporting the OFF state.",
-                "de": "TP05 und andere unterstützen jetzt den AUS-Zustand.",
-                "ru": "TP05 и другие теперь поддерживают состояние ВЫКЛ.",
-                "pt": "TP05 e outros agora suportam o estado OFF.",
-                "nl": "TP05 en anderen ondersteunen nu de UIT-status.",
-                "fr": "TP05 et d'autres prennent désormais en charge l'état OFF.",
-                "it": "TP05 e altri supportano ora lo stato OFF.",
-                "es": "TP05 y otros ahora admiten el estado APAGADO.",
-                "pl": "TP05 i inne obsługują teraz stan WYŁĄCZONY.",
-                "zh-cn": "TP05和其他设备现在支持OFF状态。"
+                "en": "TP02, HP02  and others are now supporting the OFF state.",
+                "de": "TP02, HP02  und andere unterstützen jetzt den AUS-Zustand.",
+                "ru": "TP02, HP02  и другие теперь поддерживают состояние ВЫКЛ.",
+                "pt": "TP02, HP02  e outros agora suportam o estado OFF.",
+                "nl": "TP02, HP02  en anderen ondersteunen nu de UIT-status.",
+                "fr": "TP02, HP02  et d'autres prennent désormais en charge l'état OFF.",
+                "it": "TP02, HP02  e altri supportano ora lo stato OFF.",
+                "es": "TP02, HP02  y otros ahora admiten el estado APAGADO.",
+                "pl": "TP02, HP02  i inne obsługują teraz stan WYŁĄCZONY.",
+                "zh-cn": "TP02, HP02和其他设备现在支持OFF状态。"
             },
             "0.9.0": {
                 "en": "Support for new dyson 2 factor login procedure, new features and bugfixes.",
@@ -246,7 +246,7 @@
             "zh-cn": "将戴森空气净化器和风扇集成到ioBroker中"
         },
         "authors": [
-            "Hanjo Hingsen <open.source@hingsen.de>"
+            "grizzelbee <open.source@hingsen.de>"
         ],
         "keywords": [
             "ioBroker",
