@@ -32,6 +32,7 @@
     "finish_desc": "Cliquez sur ce bouton lorsque vous avez saisi le code de l'e-mail dyson.",
     "france": "France",
     "germany": "Allemagne",
+    "switzerland": "Suisse",
     "keepValues": "Conserver les valeurs des capteurs",
     "keepValues_desc": "conserver les anciennes valeurs de capteur lorsque la surveillance continue est désactivée.",
     "password_desc": "Mot de passe de votre compte dyson.",
