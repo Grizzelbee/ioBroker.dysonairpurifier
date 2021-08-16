@@ -35,5 +35,6 @@
     "keepValues": "保持传感器值",
     "keepValues_desc": "连续监控关闭时，请保留旧的传感器值。",
     "password_desc": "dyson帐户的密码。",
+    "switzerland": "瑞士",
     "temperatureUnit_desc": "显示温度的单位。"
 }

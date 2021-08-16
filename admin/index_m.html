@@ -95,7 +95,7 @@
                 payload.country  = document.getElementById("country").value;
                 switch (payload.country){
                     case 'DE': payload.locale = 'de-DE';
-                    break;
+                        break;
                     case 'AT': payload.locale = 'de-AT';
                         break;
                     case 'FR': payload.locale = 'fr-FR';
@@ -117,6 +117,8 @@
                     case 'RU': payload.locale = 'ru-RU';
                         break;
                     case 'CN': payload.locale = 'cn-CN';
+                        break;
+                    case 'CH': payload.locale = 'de-CH';
                         break;
                 }
                 sendTo(null, 'getDyson2faMail', payload, (response) => {
@@ -182,6 +184,7 @@
                     <select class="value" id="country">
                         <option class="translate" value='DE'>germany</option>
                         <option class="translate" value='AT'>austria</option>
+
                         <option class="translate" value='FR'>france</option>
                         <option class="translate" value='PL'>Poland</option>
                         <option class="translate" value='NL'>Netherlands</option>
@@ -192,6 +195,7 @@
                         <option class="translate" value='CA'>Canada</option>
                         <option class="translate" value='RU'>Russia</option>
                         <option class="translate" value='CN'>China</option>
+                        <option class="translate" value='CH'>switzerland</option>
                     </select>
                     <label class="translate" for="country">Lbl_country</label>
                     <span class="translate">country_desc</span>

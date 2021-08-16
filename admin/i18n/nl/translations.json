@@ -35,5 +35,6 @@
     "keepValues": "Bewaar sensorwaarden",
     "keepValues_desc": "bewaar oude sensorwaarden als continue bewaking is uitgeschakeld.",
     "password_desc": "Wachtwoord van uw dyson-account.",
+    "switzerland": "Zwitserland",
     "temperatureUnit_desc": "Eenheid om de temperatuur weer te geven."
 }
