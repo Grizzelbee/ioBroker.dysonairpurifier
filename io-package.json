@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "0.9.1",
+        "version": "0.9.2",
         "news": {
+            "0.9.2": {
+                "en": "Added support for switzerland and updated certificate as well as dependencies.",
+                "de": "Unterstützung für die Schweiz und aktualisierte Zertifikate sowie Abhängigkeiten hinzugefügt.",
+                "ru": "Добавлена ​​поддержка Швейцарии и обновлен сертификат, а также зависимости.",
+                "pt": "Adicionado suporte para suíça e certificado atualizado, bem como dependências.",
+                "nl": "Ondersteuning toegevoegd voor Zwitserland en bijgewerkt certificaat en afhankelijkheden.",
+                "fr": "Ajout de la prise en charge de la suisse et mise à jour du certificat ainsi que des dépendances.",
+                "it": "Aggiunto supporto per la Svizzera e certificato aggiornato e dipendenze.",
+                "es": "Se agregó soporte para Suiza y certificado actualizado, así como dependencias.",
+                "pl": "Dodano obsługę Szwajcarii i zaktualizowano certyfikat oraz zależności.",
+                "zh-cn": "添加了对瑞士和更新的证书以及依赖项的支持。"
+            },
             "0.9.1": {
                 "en": "TP02, HP02  and others are now supporting the OFF state.",
                 "de": "TP02, HP02  und andere unterstützen jetzt den AUS-Zustand.",

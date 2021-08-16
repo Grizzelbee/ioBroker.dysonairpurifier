@@ -32,9 +32,9 @@
     "finish_desc": "Klik op deze knop als je de code uit de dyson-e-mail hebt ingevoerd.",
     "france": "Frankrijk",
     "germany": "Duitsland",
-    "switzerland": "Zwitserland",
     "keepValues": "Bewaar sensorwaarden",
     "keepValues_desc": "bewaar oude sensorwaarden als continue bewaking is uitgeschakeld.",
     "password_desc": "Wachtwoord van uw dyson-account.",
+    "switzerland": "Zwitserland",
     "temperatureUnit_desc": "Eenheid om de temperatuur weer te geven."
 }

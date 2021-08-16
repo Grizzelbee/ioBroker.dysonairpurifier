@@ -32,9 +32,9 @@
     "finish_desc": "从dyson电子邮件中输入代码后，请单击此按钮。",
     "france": "法国",
     "germany": "德国",
-    "switzerland": "瑞士",
     "keepValues": "保持传感器值",
     "keepValues_desc": "连续监控关闭时，请保留旧的传感器值。",
     "password_desc": "dyson帐户的密码。",
+    "switzerland": "瑞士",
     "temperatureUnit_desc": "显示温度的单位。"
 }

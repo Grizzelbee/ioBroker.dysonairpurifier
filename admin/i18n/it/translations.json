@@ -32,9 +32,9 @@
     "finish_desc": "Fare clic su questo pulsante dopo aver inserito il codice dall'e-mail di dyson.",
     "france": "Francia",
     "germany": "Germania",
-    "switzerland": "Svizzera",
     "keepValues": "Mantieni i valori del sensore",
     "keepValues_desc": "mantenere i vecchi valori del sensore quando il monitoraggio continuo è disattivato.",
     "password_desc": "Password del tuo account dyson.",
+    "switzerland": "Svizzera",
     "temperatureUnit_desc": "Unità per visualizzare la temperatura."
 }
