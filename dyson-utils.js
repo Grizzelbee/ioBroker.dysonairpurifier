@@ -62,8 +62,17 @@ module.exports.getDyson2faMail = async function(adapter, email, passwd, country,
                 return {error : `Received unexpected authentication-method from dyson API. Expecting: [EMAIL_PWD_2FA], received: [${result.data.authenticationMethod}].`};
             }
         }
-    } catch(err){
-        adapter.log.error('getDyson2faMail' + err);
+    } catch(error){
+        adapter.log.error('getDyson2faMail: ' + error);
+        switch (error.response.status) {
+            case 401:
+                this.log.error(`Unable to login to dyson server (http error 401 - unauthorized). Please check your login data.`);
+                this.log.error(`OnMessage: Username: [${email}]`);
+                this.log.error(`OnMessage: Password: [${passwd}]`);
+                this.log.error(`OnMessage: country: [${country}]`);
+                this.log.error(`OnMessage: locale: [${locale}]`);
+                break;
+        }
     }
 };
 

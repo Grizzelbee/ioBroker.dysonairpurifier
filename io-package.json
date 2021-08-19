@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "0.9.2",
+        "version": "0.9.3",
         "news": {
+            "0.9.3": {
+                "en": "Added some debug code - no new features.",
+                "de": "Debug-Code hinzugefügt - keine neuen Funktionen.",
+                "ru": "Добавлен отладочный код - новых функций нет.",
+                "pt": "Adicionado algum código de depuração - sem novos recursos.",
+                "nl": "Wat debug-code toegevoegd - geen nieuwe functies.",
+                "fr": "Ajout de code de débogage - pas de nouvelles fonctionnalités.",
+                "it": "Aggiunto del codice di debug - nessuna nuova funzionalità.",
+                "es": "Se agregó un código de depuración, sin características nuevas.",
+                "pl": "Dodano trochę kodu debugowania - brak nowych funkcji.",
+                "zh-cn": "添加了一些调试代码 - 没有新功能。"
+            },
             "0.9.2": {
                 "en": "Added support for switzerland and updated certificate as well as dependencies.",
                 "de": "Unterstützung für die Schweiz und aktualisierte Zertifikate sowie Abhängigkeiten hinzugefügt.",
