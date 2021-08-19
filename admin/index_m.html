@@ -78,10 +78,11 @@
                     } else if ($this.attr('type') === 'number') {
                         obj[id] = parseFloat($this.val());
                     } else {
+                        let value = String.prototype.trim($this.val());
                         if (id === 'Password') {
-                            obj[id] = encrypt(secret, $this.val());
+                            obj[id] = encrypt(secret, value);
                         } else {
-                            obj[id] = $this.val();
+                            obj[id] = value;
                         }
                     }
                 });
