@@ -100,7 +100,7 @@ class dysonAirPurifier extends utils.Adapter {
         if (state && !state.ack) {
             // you can use the ack flag to detect if it is status (true) or command (false)
             // get the whole data field array
-            let dysonAction = await this.getDatapoint( action );
+            let dysonAction = this.getDatapoint( action );
             if ( typeof dysonAction === 'undefined' ) {
                 // if dysonAction is undefined it's an adapter internal action and has to be handled with the given Name
                 dysonAction = action;
@@ -353,7 +353,7 @@ class dysonAirPurifier extends utils.Adapter {
             }
             // Handle all other message types
             this.log.debug('Processing Message: ' + ((typeof message === 'object')? JSON.stringify(message) : message) );
-            const deviceConfig = await this.getDatapoint(row);
+            const deviceConfig = this.getDatapoint(row);
             if ( deviceConfig === undefined){
                 this.log.debug('Skipped creating unknown data field for: [' + row + '] Value: |-> ' + ((typeof( message[row] ) === 'object')? JSON.stringify(message[row]) : message[row]) );
                 continue;
@@ -362,7 +362,7 @@ class dysonAirPurifier extends utils.Adapter {
             let value;
             if (deviceConfig[3]==='number'){
                 // TP02: When continuous monitoring is off and the fan ist switched off - temperature and humidity loose their values.
-                // test whether the values are invalid and config.keepValues is true to prevent the old values from beeing destroyed
+                // test whether the values are invalid and config.keepValues is true to prevent the old values from being destroyed
                 if ( message[deviceConfig[0]] === 'OFF' && adapter.config.keepValues ) {
                     continue;
                 }
@@ -402,13 +402,16 @@ class dysonAirPurifier extends utils.Adapter {
             }
             // deviceConfig.length>7 means the data field has predefined states attached, that need to be handled
             if (deviceConfig.length > 7) {
+                if (deviceConfig[3]==='number'){
+                    this.log.debug(`This should be type number: ${typeof value}`);
+                }
                 this.createOrExtendObject( device.Serial + path + '.'+ deviceConfig[1], { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':deviceConfig[6], 'states': deviceConfig[7]}, native: {} }, value);
             } else {
                 this.createOrExtendObject( device.Serial + path + '.'+ deviceConfig[1], { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':deviceConfig[6] }, native: {} }, value);
             }
             // deviceConfig[4]=true -> data field is editable, so subscribe for state changes
             if (deviceConfig[4]==='true') {
-                this.log.debug('Subscribing for state changes on :' + device.Serial + path + '.'+ deviceConfig[1] );
+                //this.log.debug('Subscribing for state changes on :' + device.Serial + path + '.'+ deviceConfig[1] );
                 this.subscribeStates(device.Serial + path + '.'+ deviceConfig[1] );
             }
         }
@@ -686,17 +689,17 @@ class dysonAirPurifier extends utils.Adapter {
                             devices[thisDevice].updateIntervalHandle = setTimeout(schedule, adapter.config.pollInterval * 1000);
                         }, 10);
                     });
-                    devices[thisDevice].mqttClient.on('message', function (_, payload) {
+                    devices[thisDevice].mqttClient.on('message', async function (_, payload) {
                         // change dataType from Buffer to JSON object
                         payload = JSON.parse(payload.toString());
                         adapterLog.debug('MessageType: ' + payload.msg);
                         switch (payload.msg) {
                             case 'CURRENT-STATE' :
-                                adapter.processMsg(devices[thisDevice], '', payload);
+                                await adapter.processMsg(devices[thisDevice], '', payload);
                                 break;
                             case 'ENVIRONMENTAL-CURRENT-SENSOR-DATA' :
                                 //noinspection JSUnresolvedVariable
-                                adapter.createOrExtendObject(devices[thisDevice].Serial + '.Sensor', {
+                                await adapter.createOrExtendObject(devices[thisDevice].Serial + '.Sensor', {
                                     type: 'channel',
                                     common: {
                                         name: 'Information from device\'s sensors',
@@ -706,10 +709,10 @@ class dysonAirPurifier extends utils.Adapter {
                                     },
                                     native: {}
                                 }, null);
-                                adapter.processMsg(devices[thisDevice], '.Sensor', payload);
+                                await adapter.processMsg(devices[thisDevice], '.Sensor', payload);
                                 break;
                             case 'STATE-CHANGE':
-                                adapter.processMsg(devices[thisDevice], '', payload);
+                                await adapter.processMsg(devices[thisDevice], '', payload);
                                 break;
                         }
                         //noinspection JSUnresolvedVariable
@@ -855,10 +858,10 @@ class dysonAirPurifier extends utils.Adapter {
      * @returns {string} returns the configDetails for any given datapoint or undefined if searchValue can't be resolved.
      */
     async getDatapoint( searchValue ){
-        this.log.debug('getDatapoint('+searchValue+')');
+        // this.log.debug('getDatapoint('+searchValue+')');
         for(let row=0; row < dysonConstants.DATAPOINTS.length; row++){
             if (dysonConstants.DATAPOINTS[row].find(element => element === searchValue)){
-                this.log.debug('FOUND: ' + dysonConstants.DATAPOINTS[row]);
+                // this.log.debug('FOUND: ' + dysonConstants.DATAPOINTS[row]);
                 return dysonConstants.DATAPOINTS[row];
             }
         }
