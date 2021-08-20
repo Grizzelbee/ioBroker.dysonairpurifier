@@ -132,6 +132,11 @@ Which is what the dyson app does also.
 
 ## Changelog
 
+### V0.9.4 (2021-08-20) ()
+* (grizzelbee) New: [#124](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/124) Credentials won't get logged but shown in a popup in admin when failing 2FA process. 
+* (grizzelbee) New: Added adminUI tag to io-package
+* (grizzelbee) New: Cleanup of io-package
+
 ### V0.9.3 (2021-08-19) (Paralyzed)
 * (grizzelbee) New: [#124](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/124) Leading and trailing whitespaces will be removed from all config values when saving
 * (grizzelbee) New: [#124](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/124) Password will be logged in clear text in case of a http 401 (unauthorized) error during 2FA

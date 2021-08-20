@@ -14,7 +14,7 @@
         <!-- Load our own files -->
         <link href="style.css" rel="stylesheet" type="text/css"/>
         <script src="words.js" type="text/javascript"></script>
-        <script src="./dyson-utils.js" type="text/javascript"></script>
+        <!--script src="./dyson-utils.js" type="text/javascript"></script-->
 
         <script type="text/javascript">
             if (typeof supportsFeature !== 'function' || !supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
@@ -123,8 +123,10 @@
                         break;
                 }
                 sendTo(null, 'getDyson2faMail', payload, (response) => {
+                    JSON.stringify('Response: ' + response);
                     if (response.error) {
-                        showError(response.error);
+                        console.log('Error: ' + typeof response.error === 'object'? JSON.stringify(response.error): response.error);
+                        showError('Error: ' + typeof response.error === 'object'? JSON.stringify(response.error): response.error);
                         $('.progress').addClass('hide');
                         return;
                     } else if (response.challengeId){

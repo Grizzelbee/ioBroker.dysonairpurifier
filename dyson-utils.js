@@ -63,16 +63,8 @@ module.exports.getDyson2faMail = async function(adapter, email, passwd, country,
             }
         }
     } catch(error){
-        adapter.log.error('getDyson2faMail: ' + error);
-        switch (error.response.status) {
-            case 401:
-                this.log.error(`Unable to login to dyson server (http error 401 - unauthorized). Please check your login data.`);
-                this.log.error(`OnMessage: Username: [${email}]`);
-                this.log.error(`OnMessage: Password: [${passwd}]`);
-                this.log.error(`OnMessage: country: [${country}]`);
-                this.log.error(`OnMessage: locale: [${locale}]`);
-                break;
-        }
+        adapter.log.error('CATCH-getDyson2faMail: ' + stringify(error));
+        return {error : `Received error: [${error}] from dyson API.\n These credentials have been used during this request: Username: [${email}], Password: [${passwd}], country: [${country}], locale: [${locale}].\nIf these credentials are okay please contact the developer via iobroker forum or github.`};
     }
 };
 
