@@ -211,12 +211,12 @@ class dysonAirPurifier extends utils.Adapter {
             this.log.debug('Creating device folder.');
             await this.createOrExtendObject(device.Serial, {
                 type: 'device',
-                common: {name: dysonConstants.PRODUCTS[device.ProductType].name, icon: dysonConstants.PRODUCTS[device.ProductType].icon},
+                common: {name: dysonConstants.PRODUCTS[device.ProductType].name, icon: dysonConstants.PRODUCTS[device.ProductType].icon, type:'string'},
                 native: {}
             }, null);
             await this.createOrExtendObject(device.Serial + '.Firmware', {
                 type: 'channel',
-                common: {name: 'Information on device\'s firmware', 'read': true, 'write': false},
+                common: {name: 'Information on device\'s firmware', 'read': true, 'write': false, type:'string', role:'value'},
                 native: {}
             }, null);
             await this.createOrExtendObject(device.Serial + '.Firmware.Version', {
@@ -259,7 +259,7 @@ class dysonAirPurifier extends utils.Adapter {
                     'read': true,
                     'write': false,
                     'role': 'value',
-                    'type': 'number'
+                    'type': 'string'
                 },
                 native: {}
             }, device.ProductType);
