@@ -78,7 +78,8 @@
                     } else if ($this.attr('type') === 'number') {
                         obj[id] = parseFloat($this.val());
                     } else {
-                        let value = String.prototype.trim($this.val());
+                        let value = $this.val().trim();
+                        if (M) M.updateTextFields();
                         if (id === 'Password') {
                             obj[id] = encrypt(secret, value);
                         } else {
@@ -91,8 +92,8 @@
 
             async function getDyson2faMail(){
                 let payload = {};
-                payload.email    = document.getElementById("email").value;
-                payload.password = document.getElementById("Password").value;
+                payload.email    = document.getElementById("email").value.trim();
+                payload.password = document.getElementById("Password").value.trim();
                 payload.country  = document.getElementById("country").value;
                 switch (payload.country){
                     case 'DE': payload.locale = 'de-DE';
@@ -133,18 +134,18 @@
                         console.log(`Setting challengeId [${response.challengeId}] to input.`);
                         $('input[id=challengeId]').val(response.challengeId).change();
                         if (M) M.updateTextFields();
-                        showError('Received challengeId from dyson. Please check your eMails now and enter the code you received from dyson to the according field. When done click "finish".');
+                        showMessage('Received challengeId from dyson. Please check your eMails now and enter the code you received from dyson to the according field. When done click "finish".');
                     }
                 });
             };
 
             async function getDysonToken(){
                 let payload = {};
-                payload.email    = document.getElementById("email").value;
-                payload.password = document.getElementById("Password").value;
+                payload.email    = document.getElementById("email").value.trim();
+                payload.password = document.getElementById("Password").value.trim();
                 payload.country  = document.getElementById("country").value;
                 payload.challengeId  = document.getElementById("challengeId").value;
-                payload.PIN  = document.getElementById("dyson_code").value;
+                payload.PIN  = document.getElementById("dyson_code").value.trim();
                 sendTo(null, 'getDysonToken', payload, (response) => {
                     if (response.error) {
                         showError(response.error);
@@ -154,6 +155,7 @@
                         console.log(`Setting token [${JSON.stringify(response)}] to input.`);
                         $('input[id=token]').val(response.token).change();
                         if (M) M.updateTextFields();
+                        showMessage(`Received token [${JSON.stringify(response)}] from dyson and saved it to config.`);
                     }
                 });
             };
