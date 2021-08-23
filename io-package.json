@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "0.9.4",
+        "version": "0.9.5",
         "news": {
+            "0.9.5": {
+                "en": "Fixed some new and some old bugs.",
+                "de": "Einige neue und einige alte Fehler behoben.",
+                "ru": "Исправлены некоторые новые и некоторые старые ошибки.",
+                "pt": "Corrigido alguns bugs novos e antigos.",
+                "nl": "Enkele nieuwe en enkele oude bugs verholpen.",
+                "fr": "Correction de quelques nouveaux et anciens bugs.",
+                "it": "Risolti alcuni bug nuovi e alcuni vecchi.",
+                "es": "Se corrigieron algunos errores nuevos y algunos viejos.",
+                "pl": "Naprawiono kilka nowych i kilka starych błędów.",
+                "zh-cn": "修复了一些新的和一些旧的错误。"
+            },
             "0.9.4": {
                 "en": "Added some debug code - no new features.",
                 "de": "Debug-Code hinzugefügt - keine neuen Funktionen.",
@@ -106,7 +118,7 @@
         "platform": "Javascript/Node.js",
         "icon": "dyson_logo.svg",
         "adminUI": {
-            "config":"materialize"
+            "config": "materialize"
         },
         "enabled": true,
         "extIcon": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier/blob/master/admin/dyson_logo.svg",

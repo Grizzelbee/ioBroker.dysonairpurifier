@@ -100,7 +100,7 @@ class dysonAirPurifier extends utils.Adapter {
         if (state && !state.ack) {
             // you can use the ack flag to detect if it is status (true) or command (false)
             // get the whole data field array
-            let dysonAction = this.getDatapoint( action );
+            let dysonAction = await this.getDatapoint( action );
             if ( typeof dysonAction === 'undefined' ) {
                 // if dysonAction is undefined it's an adapter internal action and has to be handled with the given Name
                 dysonAction = action;
@@ -211,12 +211,12 @@ class dysonAirPurifier extends utils.Adapter {
             this.log.debug('Creating device folder.');
             await this.createOrExtendObject(device.Serial, {
                 type: 'device',
-                common: {name: dysonConstants.PRODUCTS[device.ProductType].name, icon: dysonConstants.PRODUCTS[device.ProductType].icon},
+                common: {name: dysonConstants.PRODUCTS[device.ProductType].name, icon: dysonConstants.PRODUCTS[device.ProductType].icon, type:'string'},
                 native: {}
             }, null);
             await this.createOrExtendObject(device.Serial + '.Firmware', {
                 type: 'channel',
-                common: {name: 'Information on device\'s firmware', 'read': true, 'write': false},
+                common: {name: 'Information on device\'s firmware', 'read': true, 'write': false, type:'string', role:'value'},
                 native: {}
             }, null);
             await this.createOrExtendObject(device.Serial + '.Firmware.Version', {
@@ -259,7 +259,7 @@ class dysonAirPurifier extends utils.Adapter {
                     'read': true,
                     'write': false,
                     'role': 'value',
-                    'type': 'number'
+                    'type': 'string'
                 },
                 native: {}
             }, device.ProductType);
@@ -329,7 +329,7 @@ class dysonAirPurifier extends utils.Adapter {
             // Is this a "product-state" message?
             if ( row === 'product-state'){
                 await this.processMsg(device, '', message[row]);
-                continue;
+                return;
             }
             // Is this a "data" message?
             if ( row === 'data'){
@@ -349,11 +349,11 @@ class dysonAirPurifier extends utils.Adapter {
                 if (Object.prototype.hasOwnProperty.call(message[row], 'noxl')) {
                     this.createNO2(message, row, device);
                 }
-                continue;
+                return;
             }
             // Handle all other message types
             this.log.debug('Processing Message: ' + ((typeof message === 'object')? JSON.stringify(message) : message) );
-            const deviceConfig = this.getDatapoint(row);
+            const deviceConfig = await this.getDatapoint(row);
             if ( deviceConfig === undefined){
                 this.log.debug('Skipped creating unknown data field for: [' + row + '] Value: |-> ' + ((typeof( message[row] ) === 'object')? JSON.stringify(message[row]) : message[row]) );
                 continue;
@@ -402,9 +402,6 @@ class dysonAirPurifier extends utils.Adapter {
             }
             // deviceConfig.length>7 means the data field has predefined states attached, that need to be handled
             if (deviceConfig.length > 7) {
-                if (deviceConfig[3]==='number'){
-                    this.log.debug(`This should be type number: ${typeof value}`);
-                }
                 this.createOrExtendObject( device.Serial + path + '.'+ deviceConfig[1], { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':deviceConfig[6], 'states': deviceConfig[7]}, native: {} }, value);
             } else {
                 this.createOrExtendObject( device.Serial + path + '.'+ deviceConfig[1], { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':deviceConfig[6] }, native: {} }, value);
