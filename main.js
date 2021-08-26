@@ -361,33 +361,41 @@ class dysonAirPurifier extends utils.Adapter {
             // strip leading zeros from numbers
             let value;
             if (deviceConfig[3]==='number'){
+                value = Number.parseInt(message[deviceConfig[0]], 10);
                 // TP02: When continuous monitoring is off and the fan ist switched off - temperature and humidity loose their values.
                 // test whether the values are invalid and config.keepValues is true to prevent the old values from being destroyed
                 if ( message[deviceConfig[0]] === 'OFF' && adapter.config.keepValues ) {
                     continue;
-                }
-                // convert temperature to configured unit
-                value = Number.parseInt(message[deviceConfig[0]], 10);
-                if (deviceConfig[5] === 'value.temperature') {
-                    switch (this.config.temperatureUnit) {
-                        case 'K' : value /= 10;
-                            break;
-                        case 'C' :
-                            deviceConfig[6] = '°' + this.config.temperatureUnit;
-                            value = Number((value/10) - 273.15).toFixed(2);
-                            break;
-                        case 'F' :
-                            deviceConfig[6] = '°' + this.config.temperatureUnit;
-                            value = Number(((value/10) - 273.15) * (9/5) + 32).toFixed(2);
-                            break;
-                    }
                 }
                 if (deviceConfig[0] === 'filf') {
                     // create additional data field filterlifePercent converting value from hours to percent; 4300 is the estimated lifetime in hours by dyson
                     this.createOrExtendObject( device.Serial + path + '.FilterLifePercent', { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':'%', 'states': deviceConfig[7]}, native: {} }, Number(value * 100/4300));
                 }
             } else {
-                value = message[deviceConfig[0]];
+                if (deviceConfig[5] === 'value.temperature') {
+                    // TP02: When continuous monitoring is off and the fan ist switched off - temperature and humidity loose their values.
+                    // test whether the values are invalid and config.keepValues is true to prevent the old values from being destroyed
+                    if ( message[deviceConfig[0]] === 'OFF' && adapter.config.keepValues ) {
+                        continue;
+                    }
+                    value = Number.parseInt(message[deviceConfig[0]], 10);
+                    // convert temperature to configured unit
+                    switch (this.config.temperatureUnit) {
+                        case 'K' :
+                            value /= 10;
+                            break;
+                        case 'C' :
+                            deviceConfig[6] = '°' + this.config.temperatureUnit;
+                            value = Number((value / 10) - 273.15).toFixed(2);
+                            break;
+                        case 'F' :
+                            deviceConfig[6] = '°' + this.config.temperatureUnit;
+                            value = Number(((value / 10) - 273.15) * (9 / 5) + 32).toFixed(2);
+                            break;
+                    }
+                } else{
+                    value = message[deviceConfig[0]];
+                }
             }
             // during state-change message only changed values are being updated
             if (typeof (value) === 'object') {

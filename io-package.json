@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "0.9.5",
+        "version": "1.0.0",
         "news": {
+            "1.0.0": {
+                "en": "Fixed \"wrong value for temperatures\" bug.",
+                "de": "Fehler \"falscher Wert für Temperaturen\" behoben.",
+                "ru": "Исправлена ​​ошибка \"неправильного значения температуры\".",
+                "pt": "Corrigido bug de \"valor errado para temperaturas\".",
+                "nl": "Bug \"verkeerde waarde voor temperaturen\" opgelost.",
+                "fr": "Correction d'un bug \"mauvaise valeur pour les températures\".",
+                "it": "Risolto bug \"valore errato per le temperature\".",
+                "es": "Se corrigió el error de \"valor incorrecto para las temperaturas\".",
+                "pl": "Naprawiono błąd \"niewłaściwej wartości temperatur\".",
+                "zh-cn": "修复了“错误的温度值”错误。"
+            },
             "0.9.5": {
                 "en": "Fixed some new and some old bugs.",
                 "de": "Einige neue und einige alte Fehler behoben.",
