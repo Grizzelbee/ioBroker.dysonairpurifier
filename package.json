@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^2.5.1",
-    "axios": "^0.21.1",
+    "axios": "^0.21.3",
     "flatted": "^3.2.2",
     "https": "^1.0.0",
     "lodash": "^4.17.21",
