@@ -139,6 +139,10 @@ Which is what the dyson app does also.
 
 ## Changelog
 
+### V1.0.1 (2021-09-xx) ()
+* (grizzelbee) New: Added correct tier-level to io-package
+
+
 ### V1.0.0 (2021-08-26) (Dim the spotlight)
 * (grizzelbee) Fix: [#130](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/130) Fixed the newly introduced bug showing wrong values for temperatures
 * (grizzelbee) Upd: Pushed to version 1.0.0
