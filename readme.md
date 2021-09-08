@@ -141,6 +141,7 @@ Which is what the dyson app does also.
 
 ### V1.0.1 (2021-09-xx) ()
 * (grizzelbee) New: Added correct tier-level to io-package
+* (grizzelbee) New: improved logging of unknown data
 
 
 ### V1.0.0 (2021-08-26) (Dim the spotlight)
