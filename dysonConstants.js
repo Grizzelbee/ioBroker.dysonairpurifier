@@ -67,7 +67,7 @@ module.exports.DATAPOINTS = [
     ['noxl' , 'NO2'                       , 'NO2 - Nitrogen dioxide (inside)'                                               , 'number', 'false', 'value'             ,'' ],
     ['p25r' , 'PM25R'                     , 'PM-2.5R - Particulate Matter 2.5µm'                                            , 'number', 'false', 'value'             ,'µg/m³' ],
     ['p10r' , 'PM10R'                     , 'PM-10R - Particulate Matter 10µm'                                              , 'number', 'false', 'value'             ,'µg/m³' ],
-    ['hcho' , 'Formaldehyde'              , 'Formaldehyde'                                                                  , 'number', 'false', 'value'             ,'mg/m³' ],
+    ['hcho' , 'Formaldehyde'              , 'Current formaldehyde level'                                                    , 'number', 'false', 'value'             ,'mg/m³' ],
     ['hmod' , 'HeaterMode'                , 'Heating Mode [ON/OFF]'                                                         , 'string', 'true',  'switch'            ,'', {'OFF': 'OFF', 'ON': 'ON'} ],
     ['hmax' , 'TemperatureTarget'         , 'Target temperature for heating'                                                , 'string', 'true',  'value.temperature' ,'' ],
     ['hume' , 'HumidificationMode'        , 'HumidificationMode Switch [ON/OFF]'                                            , 'string', 'true', 'switch'             ,'', {'OFF': 'OFF', 'HUMD': 'ON'} ],
@@ -75,6 +75,6 @@ module.exports.DATAPOINTS = [
     ['humt' , 'HumidificationTarget'      , 'Manual Humidification Target'                                                  , 'number', 'true', 'value'              ,'%' , {'0030':30, '0040':40, '0050':50, '0060':60, '0070':70}],
     ['cdrr' , 'CleanDurationRemaining'    , 'Clean Duration Remaining'                                                      , 'number', 'false', 'value'              ,'' ],
     ['rect' , 'AutoHumidificationTarget'  , 'Auto Humidification target'                                                    , 'number', 'true', 'value'              ,'%' ],
-    ['cltr' , 'TimeRemainingToNextClean'  , 'Time Remaining to Next deep clean cycle.'                                      , 'number', 'false', 'value'              ,'hours' ],
+    ['cltr' , 'TimeRemainingToNextClean'  , 'Time remaining to Next deep clean cycle.'                                      , 'number', 'false', 'value'              ,'hours' ],
     ['wath' , 'WaterHardness'             , 'Water Hardness'                                                                , 'number', 'true', 'value'              ,'', {675: 'Hard', 1350:'Medium', 2025:'Soft'}]
 ];
