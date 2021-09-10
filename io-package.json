@@ -1,8 +1,10 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "1.0.0",
+        "version": "1.1.0",
         "news": {
+            "1.1.0": {
+                "en": ""},
             "1.0.0": {
                 "en": "Fixed \"wrong value for temperatures\" bug.",
                 "de": "Fehler \"falscher Wert für Temperaturen\" behoben.",

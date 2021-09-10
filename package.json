@@ -1,6 +1,6 @@
 {
   "name": "iobroker.dysonairpurifier",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "dyson air purifiers and fans",
   "author": {
     "name": "grizzelbee",
@@ -28,6 +28,8 @@
     "flatted": "^3.2.2",
     "https": "^1.0.0",
     "lodash": "^4.17.21",
+    "mdns": "^2.7.2",
+    "mdns-js": "^1.0.3",
     "mqtt": "^4.2.8",
     "path": "^0.12.7",
     "snyk": "^1.689.0",
