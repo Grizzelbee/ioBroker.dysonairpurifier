@@ -3,21 +3,24 @@
 /*jslint node: true */
 'use strict';
 
+const dysonConstant= require('./dysonConstants');
+
 module.exports.API_BASE_URI = 'https://appapi.cp.dyson.com';
 module.exports.HTTP_HEADERS = {
     'User-Agent': 'Dalvik/2.1.0 (Linux; U; Android 8.1.0; Google Build/OPM6.171019.030.E1)',
     'Content-Type': 'application/json'
 };
 
-
-
 const FILTERTYPES = {'GCOM':'Combined', 'GHEP':'HEPA', 'CARF':'Activated carbon'};
-module.exports.SUPPORTED_PRODUCT_TYPES = ['358', '438', '438E', '455', '469', '475', '520', '527', '527E'];
+module.exports.LOAD_FROM_PRODUCTS=999;
+module.exports.SUPPORTED_PRODUCT_TYPES = ['358', '438', '438E', '455', '455A', '469', '475', '520', '527', '527E'];
+
 module.exports.PRODUCTS = {
-    '358' : {name:'Dyson Pure Humidify+Cool', icon:'icons/purifier-humidifiers.png'},
-    '438' : {name:'Dyson Pure Cool Tower', icon:'icons/purifiers.png'},
-    '438E': {name:'Dyson Pure Cool Tower', icon:'icons/purifiers.png'},
+    '358' : {name:'Dyson Pure Humidify+Cool', icon:'icons/purifier-humidifiers.png', 'ancp':{45:'45', 90:'90', 'BRZE':'Breeze'}},
+    '438' : {name:'Dyson Pure Cool Tower', icon:'icons/purifiers.png', 'ancp':{45:'45', 90:'90', 180:'180', 350:'350', 'CUST':'Custom'}},
+    '438E': {name:'Dyson Pure Cool Tower Formaldehyde', icon:'icons/purifiers.png', 'ancp':{45:'45', 90:'90', 180:'180', 350:'350', 'CUST':'Custom'}},
     '455' : {name:'Dyson Pure Hot+Cool Link', icon:'icons/heaters.png'},
+    '455A': {name:'Dyson Pure Hot+Cool Link', icon:'icons/heaters.png'},
     '469' : {name:'Dyson Pure Cool Link Desk', icon:'icons/fans.png'},
     '475' : {name:'Dyson Pure Cool Link Tower', icon:'icons/purifiers.png'},
     '520' : {name:'Dyson Pure Cool Desk', icon:'icons/fans.png'},
@@ -26,7 +29,7 @@ module.exports.PRODUCTS = {
 };
 
 // data structure to determine readable names, etc for any datapoint
-// Every row is one state in a dyson message. Format: [ dysonCode, Name of Datapoint, Description, datatype, writable, role, unit, possible values for data field]
+// Every row is one state in a dyson message. Format: [ dysonCode, Name of Datapoint, Description, datatype, writeable, role, unit, possible values for data field]
 module.exports.DATAPOINTS = [
     ['channel', 'WIFIchannel'             , 'Number of the used WIFI channel.'                                              , 'number', 'false', 'value'             ,''  ],
     ['ercd' , 'LastErrorCode'             , 'Error code of the last error occurred on this device'                          , 'string', 'false', 'text'              ,''  ],
@@ -51,7 +54,7 @@ module.exports.DATAPOINTS = [
     ['oson' , 'Oscillation'               , 'Oscillation of fan.'                                                           , 'string', 'true',  'switch'            ,'', {'OFF':'OFF', 'ON':'ON'} ],
     ['osal' , 'OscillationLeft'           , 'OscillationAngle Lower Boundary'                                               , 'string', 'true',  'text'              ,'°' ],
     ['osau' , 'OscillationRight'          , 'OscillationAngle Upper Boundary'                                               , 'string', 'true',  'text'              ,'°' ],
-    ['ancp' , 'OscillationAngle'          , 'OscillationAngle'                                                              , 'string', 'true',  'text'              ,'°', {0:'0', 15:'15', 30:'30', 45:'45', 90:'90', 180:'180', 270:'270', 350:'350', 'CUST':'CUST'} ],
+    ['ancp' , 'OscillationAngle'          , 'OscillationAngle'                                                              , 'string', 'true',  'text'              ,'°', dysonConstant.LOAD_FROM_PRODUCTS ],
     ['rssi' , 'RSSI'                      , 'Received Signal Strength Indication. Quality indicator for WIFI signal.'       , 'number', 'false', 'value'             ,'dBm' ],
     ['pact' , 'Dust'                      , 'Dust'                                                                          , 'number', 'false', 'value'             ,''  ],
     ['hact' , 'Humidity'                  , 'Humidity'                                                                      , 'number', 'false', 'value.humidity'    ,'%' ],
@@ -64,13 +67,14 @@ module.exports.DATAPOINTS = [
     ['noxl' , 'NO2'                       , 'NO2 - Nitrogen dioxide (inside)'                                               , 'number', 'false', 'value'             ,'' ],
     ['p25r' , 'PM25R'                     , 'PM-2.5R - Particulate Matter 2.5µm'                                            , 'number', 'false', 'value'             ,'µg/m³' ],
     ['p10r' , 'PM10R'                     , 'PM-10R - Particulate Matter 10µm'                                              , 'number', 'false', 'value'             ,'µg/m³' ],
+    ['hcho' , 'Formaldehyde'              , 'Formaldehyde'                                                                  , 'number', 'false', 'value'             ,'mg/m³' ],
     ['hmod' , 'HeaterMode'                , 'Heating Mode [ON/OFF]'                                                         , 'string', 'true',  'switch'            ,'', {'OFF': 'OFF', 'ON': 'ON'} ],
     ['hmax' , 'TemperatureTarget'         , 'Target temperature for heating'                                                , 'string', 'true',  'value.temperature' ,'' ],
     ['hume' , 'HumidificationMode'        , 'HumidificationMode Switch [ON/OFF]'                                            , 'string', 'true', 'switch'             ,'', {'OFF': 'OFF', 'HUMD': 'ON'} ],
     ['haut' , 'HumidifyAutoMode'          , 'Humidify AutoMode [ON/OFF]'                                                    , 'string', 'true', 'switch'             ,'', {'OFF': 'OFF', 'ON': 'ON'} ],
-    ['humt' , 'HumidificationTarget'      , 'Manual Humidification Target'                                                  , 'number', 'true', 'value'              ,'%' ],
+    ['humt' , 'HumidificationTarget'      , 'Manual Humidification Target'                                                  , 'number', 'true', 'value'              ,'%' , {'0030':30, '0040':40, '0050':50, '0060':60, '0070':70}],
     ['cdrr' , 'CleanDurationRemaining'    , 'Clean Duration Remaining'                                                      , 'number', 'false', 'value'              ,'' ],
     ['rect' , 'AutoHumidificationTarget'  , 'Auto Humidification target'                                                    , 'number', 'true', 'value'              ,'%' ],
-    ['cltr' , 'TimeRemainingToNextClean'  , 'Time Remaining to Next Clean'                                                  , 'number', 'false', 'value'              ,'hours' ],
+    ['cltr' , 'TimeRemainingToNextClean'  , 'Time Remaining to Next deep clean cycle.'                                      , 'number', 'false', 'value'              ,'hours' ],
     ['wath' , 'WaterHardness'             , 'Water Hardness'                                                                , 'number', 'true', 'value'              ,'', {675: 'Hard', 1350:'Medium', 2025:'Soft'}]
 ];
