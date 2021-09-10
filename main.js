@@ -204,6 +204,14 @@ class dysonAirPurifier extends utils.Adapter {
      * Creates the base device information
      *
      * @param device  {object} data for the current device which are not provided by Web-API (IP-Address, MQTT-Password)
+     * @param {string} device.Serial Serial number of the device
+     * @param {string} device.ProductType Product type of the device
+     * @param {string} device.Version
+     * @param {string} device.AutoUpdate
+     * @param {string} device.NewVersionAvailable
+     * @param {string} device.ConnectionType
+     * @param {string} device.Name
+     * @param {string} device.hostAddress
      */
     async CreateOrUpdateDevice(device){
         try {
@@ -440,6 +448,7 @@ class dysonAirPurifier extends utils.Adapter {
      * creates the data fields for the values itself and the index if the device has a NO2 sensor
      *
      * @param message {object} the received mqtt message
+     * @param {number} message[].noxl
      * @param row     {string} the current data row
      * @param device  {object} the device object the data is valid for
      */
@@ -478,6 +487,7 @@ class dysonAirPurifier extends utils.Adapter {
      * creates the data fields for the values itself and the index if the device has a VOC sensor
      *
      * @param message {object} the received mqtt message
+     * @param {number} message[].va10
      * @param row     {string} the current data row
      * @param device  {object} the device object the data is valid for
      */
@@ -516,6 +526,7 @@ class dysonAirPurifier extends utils.Adapter {
      * creates the data fields for the values itself and the index if the device has a PM 10 sensor
      *
      * @param message {object} the received mqtt message
+     * @param {number} message[].pm10
      * @param row     {string} the current data row
      * @param device  {object} the device object the data is valid for
      */
@@ -558,6 +569,7 @@ class dysonAirPurifier extends utils.Adapter {
      * creates the data fields for the values itself and the index if the device has a simple dust sensor
      *
      * @param message {object} the received mqtt message
+     * @param {number} message[].pact
      * @param row     {string} the current data row
      * @param device  {object} the device object the data is valid for
      */
@@ -600,6 +612,7 @@ class dysonAirPurifier extends utils.Adapter {
      * creates the data fields for the values itself and the index if the device has a PM 2,5 sensor
      *
      * @param message {object} the received mqtt message
+     * @param {number} message[].pm25
      * @param row     {string} the current data row
      * @param device  {object} the device object the data is valid for
      */
