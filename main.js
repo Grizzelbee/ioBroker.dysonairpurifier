@@ -157,7 +157,6 @@ class dysonAirPurifier extends utils.Adapter {
             }
             // only send to device if change should set a device value
             if (action !== 'Hostaddress'){
-                this.log.info('SENDING this data to device (' + thisDevice + '): ' + JSON.stringify(messageData));
                 // build the message to be send to the device
                 const message = {'msg': 'STATE-SET',
                     'time': new Date().toISOString(),
@@ -169,6 +168,7 @@ class dysonAirPurifier extends utils.Adapter {
                     //noinspection JSUnresolvedVariable
                     if (devices[mqttDevice].Serial === thisDevice){
                         this.log.debug('MANUAL CHANGE: device [' + thisDevice + '] -> [' + action +'] -> [' + state.val + ']');
+                        this.log.info('SENDING this data to device (' + thisDevice + '): ' + JSON.stringify(message));
                         //noinspection JSUnresolvedVariable
                         devices[mqttDevice].mqttClient.publish(
                             devices[mqttDevice].ProductType + '/' + thisDevice + '/command',
@@ -410,7 +410,20 @@ class dysonAirPurifier extends utils.Adapter {
             }
             // deviceConfig.length>7 means the data field has predefined states attached, that need to be handled
             if (deviceConfig.length > 7) {
-                this.createOrExtendObject( device.Serial + path + '.'+ deviceConfig[1], { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':deviceConfig[6], 'states': deviceConfig[7]}, native: {} }, value);
+                this.log.debug(`DeviceConfig: length()=${deviceConfig.length}, 7=[${JSON.stringify(deviceConfig[7])}]`);
+                let currentStates={};
+                if (deviceConfig[7]===dysonConstants.LOAD_FROM_PRODUCTS){
+
+                    this.log.debug(`Sideloading states for token [${deviceConfig[0]}] - Device:[${device.Serial}], Type:[${device.ProductType}].`);
+
+                    currentStates=dysonConstants.PRODUCTS[device.ProductType][deviceConfig[0]];
+                    this.log.debug(`Sideloading: Found states [${JSON.stringify(currentStates)}].`);
+                }
+
+
+
+
+                this.createOrExtendObject( device.Serial + path + '.'+ deviceConfig[1], { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':deviceConfig[6], 'states': currentStates}, native: {} }, value);
             } else {
                 this.createOrExtendObject( device.Serial + path + '.'+ deviceConfig[1], { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':deviceConfig[6] }, native: {} }, value);
             }
@@ -843,10 +856,10 @@ class dysonAirPurifier extends utils.Adapter {
             const self = this;
             this.getObject(id, function (err, oldObj) {
                 if (!err && oldObj) {
-                    self.log.debug('Updating existing object [' + id +'] with value: ['+ value+']');
+                    //self.log.debug('Updating existing object [' + id +'] with value: ['+ value+']');
                     self.extendObject(id, objData, () => {self.setState(id, value, true);});
                 } else {
-                    self.log.debug('Creating new object [' + id +'] with value: ['+ value+']');
+                    //self.log.debug('Creating new object [' + id +'] with value: ['+ value+']');
                     self.setObjectNotExists(id, objData, () => {self.setState(id, value, true);});
                 }
             });
