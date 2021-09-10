@@ -282,9 +282,8 @@ class dysonAirPurifier extends utils.Adapter {
             this.log.debug('Querying Host-Address of device: ' + device.Serial);
             const hostAddress = await this.getStateAsync(device.Serial + '.Hostaddress');
             this.log.debug('Got Host-Address-object [' + JSON.stringify(hostAddress) + '] for device: ' + device.Serial);
-            if (hostAddress  && hostAddress.val &&hostAddress.val !== '') {
+            if (hostAddress  && hostAddress.val && hostAddress.val !== '') {
                 this.log.debug('Found valid Host-Address [' + hostAddress.val + '] for device: ' + device.Serial);
-                device.hostAddress = hostAddress.val;
                 this.createOrExtendObject(device.Serial + '.Hostaddress', {
                     type: 'state',
                     common: {
@@ -308,7 +307,7 @@ class dysonAirPurifier extends utils.Adapter {
                         'type': 'string'
                     },
                     native: {}
-                }, undefined);
+                }, device.Serial);
             }
         } catch(error){
             this.log.error('[CreateOrUpdateDevice] Error: ' + error + ', Callstack: ' + error.stack);
