@@ -19,13 +19,13 @@ module.exports.PRODUCTS = {
     '358' : {name:'Dyson Pure Humidify+Cool', icon:'icons/purifier-humidifiers.png', 'ancp':{45:'45', 90:'90', 'BRZE':'Breeze'}},
     '438' : {name:'Dyson Pure Cool Tower', icon:'icons/purifiers.png', 'ancp':{45:'45', 90:'90', 180:'180', 350:'350', 'CUST':'Custom'}},
     '438E': {name:'Dyson Pure Cool Tower Formaldehyde', icon:'icons/purifiers.png', 'ancp':{45:'45', 90:'90', 180:'180', 350:'350', 'CUST':'Custom'}},
-    '455' : {name:'Dyson Pure Hot+Cool Link', icon:'icons/heaters.png'},
-    '455A': {name:'Dyson Pure Hot+Cool Link', icon:'icons/heaters.png'},
-    '469' : {name:'Dyson Pure Cool Link Desk', icon:'icons/fans.png'},
-    '475' : {name:'Dyson Pure Cool Link Tower', icon:'icons/purifiers.png'},
-    '520' : {name:'Dyson Pure Cool Desk', icon:'icons/fans.png'},
-    '527' : {name:'Dyson Pure Hot+Cool', icon:'icons/heaters.png'},
-    '527E': {name:'Dyson Pure Hot+Cool', icon:'icons/heaters.png'}
+    '455' : {name:'Dyson Pure Hot+Cool Link', icon:'icons/heaters.png', 'ancp':{45:'45', 90:'90', 180:'180', 350:'350', 'CUST':'Custom'}},
+    '455A': {name:'Dyson Pure Hot+Cool Link', icon:'icons/heaters.png', 'ancp':{45:'45', 90:'90', 180:'180', 350:'350', 'CUST':'Custom'}},
+    '469' : {name:'Dyson Pure Cool Link Desk', icon:'icons/fans.png', 'ancp':{}},
+    '475' : {name:'Dyson Pure Cool Link Tower', icon:'icons/purifiers.png', 'ancp':{45:'45', 90:'90', 180:'180', 350:'350', 'CUST':'Custom'}},
+    '520' : {name:'Dyson Pure Cool Desk', icon:'icons/fans.png', 'ancp':{}},
+    '527' : {name:'Dyson Pure Hot+Cool', icon:'icons/heaters.png', 'ancp':{45:'45', 90:'90', 180:'180', 350:'350', 'CUST':'Custom'}},
+    '527E': {name:'Dyson Pure Hot+Cool', icon:'icons/heaters.png', 'ancp':{45:'45', 90:'90', 180:'180', 350:'350', 'CUST':'Custom'}}
 };
 
 // data structure to determine readable names, etc for any datapoint
