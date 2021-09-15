@@ -139,11 +139,12 @@ Which is what the dyson app does also.
 
 ## Changelog
 
-### V1.1.0 (2021-09-xx) ()
+### V1.1.0 (2021-09-15) (Coming home)
 * (grizzelbee) New: Added correct tier-level to io-package
 * (grizzelbee) New: improved logging of unknown data points
 * (grizzelbee) New: Added support for dyson Pure Hot+Cool Link (ProductType 455A) 
 * (grizzelbee) New: Added support for formaldehyde sensor
+* (grizzelbee) New: oscillation angles can be set
 * (grizzelbee) Upd: Improved OscillationAngle data point to display only the values supported by the current model  
 * (grizzelbee) Fix: removed info: undefined is not a valid state value for id "Hostaddress"
 

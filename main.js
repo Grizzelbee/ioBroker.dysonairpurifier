@@ -83,8 +83,6 @@ class dysonAirPurifier extends utils.Adapter {
         }
     }
 
-
-
     /**
      * onStateChange
      *
@@ -94,6 +92,7 @@ class dysonAirPurifier extends utils.Adapter {
      * @param state {object} new state-object of the datapoint after change
      */
     async onStateChange(id, state) {
+        // id=dysonairpurifier.0.VS9-EU-NAB0887A.OscillationAngle
         const thisDevice = id.split('.')[2];
         const action = id.split('.').pop();
         // Warning, state can be null if it was deleted
@@ -154,6 +153,32 @@ class dysonAirPurifier extends utils.Adapter {
                     messageData = {[dysonAction]: dysonUtils.zeroFill(value, 4)};
                     break;
                 }
+                case 'ancp':
+                case 'osal':
+                case 'osau': {
+                    const result = await dysonUtils.getAngles(this, dysonAction, id, state);
+                    this.log.debug(`Result of getAngles: ${JSON.stringify(result)}`);
+                    result.ancp = Number.parseInt(result.ancp.val);
+                    result.osal = Number.parseInt(result.osal.val);
+                    result.osau = Number.parseInt(result.osau.val);
+                    if (result.osal + result.ancp > 355) {
+                        result.osau = 355;
+                        result.osal = 355 - result.ancp;
+                    } else if (result.osau - result.ancp < 5) {
+                        result.osal = 5;
+                        result.osau = 5 + result.ancp;
+                    } else {
+                        result.osau = result.osal + result.ancp;
+                    }
+                    messageData = {
+                        ['osal']: dysonUtils.zeroFill(result.osal, 4),
+                        ['osau']: dysonUtils.zeroFill(result.osau, 4),
+                        ['ancp']: 'CUST',
+                        ['oson']: 'ON'
+                    };
+                }
+                    break;
+
             }
             // only send to device if change should set a device value
             if (action !== 'Hostaddress'){
@@ -197,6 +222,9 @@ class dysonAirPurifier extends utils.Adapter {
             }
         }
     }
+
+
+
 
     /**
      * CreateOrUpdateDevice
@@ -302,7 +330,7 @@ class dysonAirPurifier extends utils.Adapter {
                         'type': 'string'
                     },
                     native: {}
-                }, device.hostAddress);
+                }, hostAddress.val);
             } else {
                 // No valid IP address of device found. Without we can't proceed. So terminate adapter.
                 this.createOrExtendObject(device.Serial + '.Hostaddress', {
