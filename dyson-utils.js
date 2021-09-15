@@ -103,6 +103,31 @@ module.exports.getDysonToken = async function(adapter, email, passwd, country,  
 };
 
 
+module.exports.getAngles = function(adapter, dysonAction, thisDevice, state){
+    return new Promise(async function(resolve) {
+        // thisDevice=dysonairpurifier.0.VS9-EU-NAB0887A.OscillationAngle
+        thisDevice = thisDevice.split('.', 3);
+        thisDevice = thisDevice.join('.');
+        const result={ancp: {}, osal: {}, osau: {}};
+        adapter.log.debug(`getAngles: given parameters: dysonAction: [${dysonAction}], thisDevice: [${thisDevice}]`);
+        if ( dysonAction === 'ancp' ){
+            result.ancp = state;
+            result.osal = await adapter.getStateAsync(thisDevice + '.OscillationLeft');
+            result.osau = await adapter.getStateAsync(thisDevice + '.OscillationRight');
+        } else if ( dysonAction === 'osal' ){
+            result.ancp = await adapter.getStateAsync(thisDevice + '.OscillationAngle');
+            result.osal = state;
+            result.osau = await adapter.getStateAsync(thisDevice + '.OscillationRight');
+        } else if ( dysonAction === 'osau' ){
+            result.ancp = await adapter.getStateAsync(thisDevice + '.OscillationAngle');
+            result.osal = await adapter.getStateAsync(thisDevice + '.OscillationLeft');
+            result.osau = state;
+        }
+        resolve(result);
+    });
+};
+
+
 /**
  * Function zeroFill
  *

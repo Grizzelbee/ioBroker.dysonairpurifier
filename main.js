@@ -83,8 +83,6 @@ class dysonAirPurifier extends utils.Adapter {
         }
     }
 
-
-
     /**
      * onStateChange
      *
@@ -94,6 +92,7 @@ class dysonAirPurifier extends utils.Adapter {
      * @param state {object} new state-object of the datapoint after change
      */
     async onStateChange(id, state) {
+        // id=dysonairpurifier.0.VS9-EU-NAB0887A.OscillationAngle
         const thisDevice = id.split('.')[2];
         const action = id.split('.').pop();
         // Warning, state can be null if it was deleted
@@ -154,10 +153,35 @@ class dysonAirPurifier extends utils.Adapter {
                     messageData = {[dysonAction]: dysonUtils.zeroFill(value, 4)};
                     break;
                 }
+                case 'ancp':
+                case 'osal':
+                case 'osau': {
+                    const result = await dysonUtils.getAngles(this, dysonAction, id, state);
+                    this.log.debug(`Result of getAngles: ${JSON.stringify(result)}`);
+                    result.ancp = Number.parseInt(result.ancp.val);
+                    result.osal = Number.parseInt(result.osal.val);
+                    result.osau = Number.parseInt(result.osau.val);
+                    if (result.osal + result.ancp > 355) {
+                        result.osau = 355;
+                        result.osal = 355 - result.ancp;
+                    } else if (result.osau - result.ancp < 5) {
+                        result.osal = 5;
+                        result.osau = 5 + result.ancp;
+                    } else {
+                        result.osau = result.osal + result.ancp;
+                    }
+                    messageData = {
+                        ['osal']: dysonUtils.zeroFill(result.osal, 4),
+                        ['osau']: dysonUtils.zeroFill(result.osau, 4),
+                        ['ancp']: 'CUST',
+                        ['oson']: 'ON'
+                    };
+                }
+                    break;
+
             }
             // only send to device if change should set a device value
             if (action !== 'Hostaddress'){
-                this.log.info('SENDING this data to device (' + thisDevice + '): ' + JSON.stringify(messageData));
                 // build the message to be send to the device
                 const message = {'msg': 'STATE-SET',
                     'time': new Date().toISOString(),
@@ -169,6 +193,7 @@ class dysonAirPurifier extends utils.Adapter {
                     //noinspection JSUnresolvedVariable
                     if (devices[mqttDevice].Serial === thisDevice){
                         this.log.debug('MANUAL CHANGE: device [' + thisDevice + '] -> [' + action +'] -> [' + state.val + ']');
+                        this.log.info('SENDING this data to device (' + thisDevice + '): ' + JSON.stringify(message));
                         //noinspection JSUnresolvedVariable
                         devices[mqttDevice].mqttClient.publish(
                             devices[mqttDevice].ProductType + '/' + thisDevice + '/command',
@@ -198,12 +223,23 @@ class dysonAirPurifier extends utils.Adapter {
         }
     }
 
+
+
+
     /**
      * CreateOrUpdateDevice
      *
      * Creates the base device information
      *
      * @param device  {object} data for the current device which are not provided by Web-API (IP-Address, MQTT-Password)
+     * @param {string} device.Serial Serial number of the device
+     * @param {string} device.ProductType Product type of the device
+     * @param {string} device.Version
+     * @param {string} device.AutoUpdate
+     * @param {string} device.NewVersionAvailable
+     * @param {string} device.ConnectionType
+     * @param {string} device.Name
+     * @param {string} device.hostAddress
      */
     async CreateOrUpdateDevice(device){
         try {
@@ -282,9 +318,8 @@ class dysonAirPurifier extends utils.Adapter {
             this.log.debug('Querying Host-Address of device: ' + device.Serial);
             const hostAddress = await this.getStateAsync(device.Serial + '.Hostaddress');
             this.log.debug('Got Host-Address-object [' + JSON.stringify(hostAddress) + '] for device: ' + device.Serial);
-            if (hostAddress  && hostAddress.val &&hostAddress.val !== '') {
+            if (hostAddress  && hostAddress.val && hostAddress.val !== '') {
                 this.log.debug('Found valid Host-Address [' + hostAddress.val + '] for device: ' + device.Serial);
-                device.hostAddress = hostAddress.val;
                 this.createOrExtendObject(device.Serial + '.Hostaddress', {
                     type: 'state',
                     common: {
@@ -295,7 +330,7 @@ class dysonAirPurifier extends utils.Adapter {
                         'type': 'string'
                     },
                     native: {}
-                }, device.hostAddress);
+                }, hostAddress.val);
             } else {
                 // No valid IP address of device found. Without we can't proceed. So terminate adapter.
                 this.createOrExtendObject(device.Serial + '.Hostaddress', {
@@ -308,7 +343,7 @@ class dysonAirPurifier extends utils.Adapter {
                         'type': 'string'
                     },
                     native: {}
-                }, undefined);
+                }, device.Serial);
             }
         } catch(error){
             this.log.error('[CreateOrUpdateDevice] Error: ' + error + ', Callstack: ' + error.stack);
@@ -355,7 +390,7 @@ class dysonAirPurifier extends utils.Adapter {
             this.log.debug('Processing Message: ' + ((typeof message === 'object')? JSON.stringify(message) : message) );
             const deviceConfig = await this.getDatapoint(row);
             if ( deviceConfig === undefined){
-                this.log.debug('Skipped creating unknown data field for: [' + row + '] Value: |-> ' + ((typeof( message[row] ) === 'object')? JSON.stringify(message[row]) : message[row]) );
+                this.log.debug(`Skipped creating unknown data field for: [${row}], Device:[${device.Serial}], Value:[${((typeof( message[row] ) === 'object')? JSON.stringify(message[row]) : message[row])}]`);
                 continue;
             }
             // strip leading zeros from numbers
@@ -410,7 +445,20 @@ class dysonAirPurifier extends utils.Adapter {
             }
             // deviceConfig.length>7 means the data field has predefined states attached, that need to be handled
             if (deviceConfig.length > 7) {
-                this.createOrExtendObject( device.Serial + path + '.'+ deviceConfig[1], { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':deviceConfig[6], 'states': deviceConfig[7]}, native: {} }, value);
+                this.log.debug(`DeviceConfig: length()=${deviceConfig.length}, 7=[${JSON.stringify(deviceConfig[7])}]`);
+                let currentStates={};
+                if (deviceConfig[7]===dysonConstants.LOAD_FROM_PRODUCTS){
+
+                    this.log.debug(`Sideloading states for token [${deviceConfig[0]}] - Device:[${device.Serial}], Type:[${device.ProductType}].`);
+
+                    currentStates=dysonConstants.PRODUCTS[device.ProductType][deviceConfig[0]];
+                    this.log.debug(`Sideloading: Found states [${JSON.stringify(currentStates)}].`);
+                }
+
+
+
+
+                this.createOrExtendObject( device.Serial + path + '.'+ deviceConfig[1], { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':deviceConfig[6], 'states': currentStates}, native: {} }, value);
             } else {
                 this.createOrExtendObject( device.Serial + path + '.'+ deviceConfig[1], { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':deviceConfig[6] }, native: {} }, value);
             }
@@ -428,6 +476,7 @@ class dysonAirPurifier extends utils.Adapter {
      * creates the data fields for the values itself and the index if the device has a NO2 sensor
      *
      * @param message {object} the received mqtt message
+     * @param {number} message[].noxl
      * @param row     {string} the current data row
      * @param device  {object} the device object the data is valid for
      */
@@ -466,6 +515,7 @@ class dysonAirPurifier extends utils.Adapter {
      * creates the data fields for the values itself and the index if the device has a VOC sensor
      *
      * @param message {object} the received mqtt message
+     * @param {number} message[].va10
      * @param row     {string} the current data row
      * @param device  {object} the device object the data is valid for
      */
@@ -504,6 +554,7 @@ class dysonAirPurifier extends utils.Adapter {
      * creates the data fields for the values itself and the index if the device has a PM 10 sensor
      *
      * @param message {object} the received mqtt message
+     * @param {number} message[].pm10
      * @param row     {string} the current data row
      * @param device  {object} the device object the data is valid for
      */
@@ -546,6 +597,7 @@ class dysonAirPurifier extends utils.Adapter {
      * creates the data fields for the values itself and the index if the device has a simple dust sensor
      *
      * @param message {object} the received mqtt message
+     * @param {number} message[].pact
      * @param row     {string} the current data row
      * @param device  {object} the device object the data is valid for
      */
@@ -588,6 +640,7 @@ class dysonAirPurifier extends utils.Adapter {
      * creates the data fields for the values itself and the index if the device has a PM 2,5 sensor
      *
      * @param message {object} the received mqtt message
+     * @param {number} message[].pm25
      * @param row     {string} the current data row
      * @param device  {object} the device object the data is valid for
      */
@@ -843,10 +896,10 @@ class dysonAirPurifier extends utils.Adapter {
             const self = this;
             this.getObject(id, function (err, oldObj) {
                 if (!err && oldObj) {
-                    self.log.debug('Updating existing object [' + id +'] with value: ['+ value+']');
+                    //self.log.debug('Updating existing object [' + id +'] with value: ['+ value+']');
                     self.extendObject(id, objData, () => {self.setState(id, value, true);});
                 } else {
-                    self.log.debug('Creating new object [' + id +'] with value: ['+ value+']');
+                    //self.log.debug('Creating new object [' + id +'] with value: ['+ value+']');
                     self.setObjectNotExists(id, objData, () => {self.setState(id, value, true);});
                 }
             });
