@@ -919,9 +919,9 @@ class dysonAirPurifier extends utils.Adapter {
      *
      * @param searchValue {string} dysonCode to search for.
      *
-     * @returns {string} returns the configDetails for any given datapoint or undefined if searchValue can't be resolved.
+     * @returns {object} returns the configDetails for any given datapoint or undefined if searchValue can't be resolved.
      */
-    async getDatapoint( searchValue ){
+    getDatapoint( searchValue ){
         // this.log.debug('getDatapoint('+searchValue+')');
         for(let row=0; row < dysonConstants.DATAPOINTS.length; row++){
             if (dysonConstants.DATAPOINTS[row].find(element => element === searchValue)){
@@ -935,7 +935,7 @@ class dysonAirPurifier extends utils.Adapter {
      * Function clearIntervalHandle
      *
      * sets an intervalHandle (timeoutHandle) to null if it's existing to clear it
-        *
+     *
      * @param updateIntervalHandle  {any} timeOutHandle to be checked and cleared
      */
     clearIntervalHandle(updateIntervalHandle){
