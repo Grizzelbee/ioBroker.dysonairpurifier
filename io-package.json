@@ -1,10 +1,32 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "1.1.0",
+        "version": "1.2.0",
         "news": {
+            "1.2.0": {
+                "en": "Highlights: Breaking Change: All ON/OFF-switches are type bool now - Added DeepCleanCycle to known data points - Fix: Switching water hardness now really works - See changelog for all changes!",
+                "de": "Highlights: Breaking Change: Alle ON/OFF-Schalter sind jetzt vom Typ bool - DeepCleanCycle zu bekannten Datenpunkten hinzugefügt - Fix: Wasserhärte-Umschaltung funktioniert jetzt wirklich - Siehe Changelog für alle Änderungen!",
+                "ru": "Основные моменты: Критическое изменение: все переключатели ВКЛ / ВЫКЛ теперь имеют тип bool - Добавлен DeepCleanCycle к известным точкам данных - Исправлено: переключение жесткости воды теперь действительно работает - Все изменения см. В журнале изменений!",
+                "pt": "Destaques: Mudança de ruptura: Todos os interruptores ON / OFF são do tipo bool agora - DeepCleanCycle adicionado a pontos de dados conhecidos - Correção: Mudar a dureza da água agora realmente funciona - Veja o changelog para todas as mudanças!",
+                "nl": "Hoogtepunten: Verandering doorbreken: Alle AAN/UIT-schakelaars zijn nu van het type bool - DeepCleanCycle toegevoegd aan bekende datapunten - Oplossing: omschakelen van waterhardheid werkt nu echt - Zie changelog voor alle wijzigingen!",
+                "fr": "Points forts : Changement révolutionnaire : tous les interrupteurs marche/arrêt sont désormais de type bool - Ajout de DeepCleanCycle aux points de données connus - Correction : La modification de la dureté de l'eau fonctionne maintenant vraiment - Voir le journal des modifications pour tous les changements !",
+                "it": "Highlights: Breaking Change: tutti gli interruttori ON/OFF ora sono di tipo bool - Aggiunto DeepCleanCycle ai punti dati noti - Correzione: il cambio della durezza dell'acqua ora funziona davvero - Vedi il registro delle modifiche per tutte le modifiche!",
+                "es": "Aspectos destacados: Cambio rotundo: todos los interruptores de ENCENDIDO / APAGADO son de tipo bool ahora - Se agregó DeepCleanCycle a puntos de datos conocidos - Solución: Cambiar la dureza del agua ahora realmente funciona - ¡Vea el registro de cambios para todos los cambios!",
+                "pl": "Najważniejsze informacje: Najważniejsza zmiana: Wszystkie przełączniki ON/OFF są teraz typu bool - Dodano funkcję DeepCleanCycle do znanych punktów danych - Poprawka: Zmiana twardości wody teraz naprawdę działa - Zobacz dziennik zmian dla wszystkich zmian!",
+                "zh-cn": "亮点： 重大变化：所有 ON/OFF 开关现在都是 bool 类型 - 将 DeepCleanCycle 添加到已知数据点 - 修复：现在切换水硬度确实有效 - 查看变更日志了解所有变化！"
+            },
             "1.1.0": {
-                "en": ""},
+                "en": "Highlights: Added support for dyson Pure Hot+Cool Link (ProductType 455A) - Added support for formaldehyde sensor - Oscillation angles can be set - See changelog for all changes!",
+                "de": "Highlights: Unterstützung für Dyson Pure Hot+Cool Link (Produkttyp 455A) hinzugefügt - Unterstützung für Formaldehydsensor hinzugefügt - Oszillationswinkel können eingestellt werden - Siehe Changelog für alle Änderungen!",
+                "ru": "Основные моменты: Добавлена ​​поддержка dyson Pure Hot + Cool Link (ProductType 455A) - Добавлена ​​поддержка датчика формальдегида - Можно установить углы колебаний - Все изменения см. В журнале изменений!",
+                "pt": "Destaques: Adicionado suporte para Dison Pure Hot + Cool Link (ProductType 455A) - Adicionado suporte para sensor de formaldeído - Ângulos de oscilação podem ser definidos - Consulte o changelog para todas as alterações!",
+                "nl": "Hoogtepunten: Ondersteuning toegevoegd voor dyson Pure Hot+Cool Link (ProductType 455A) - Ondersteuning toegevoegd voor formaldehyde-sensor - Oscillatiehoeken kunnen worden ingesteld - Zie changelog voor alle wijzigingen!",
+                "fr": "Points forts : Ajout de la prise en charge de dyson Pure Hot+Cool Link (ProductType 455A) - Ajout de la prise en charge du capteur de formaldéhyde - Les angles d'oscillation peuvent être définis - Voir le journal des modifications pour tous les changements !",
+                "it": "In evidenza: Aggiunto supporto per Dyson Pure Hot+Cool Link (ProductType 455A) - Aggiunto supporto per sensore di formaldeide - È possibile impostare gli angoli di oscillazione - Vedere il registro delle modifiche per tutte le modifiche!",
+                "es": "Aspectos destacados: Soporte agregado para dyson Pure Hot + Cool Link (ProductType 455A) - Soporte agregado para sensor de formaldehído - Se pueden configurar ángulos de oscilación - ¡Vea el registro de cambios para todos los cambios!",
+                "pl": "Najważniejsze informacje: Dodano obsługę dyson Pure Hot+Cool Link (ProductType 455A) - Dodano obsługę czujnika formaldehydu - Można ustawić kąty oscylacji - Zobacz dziennik zmian dla wszystkich zmian!",
+                "zh-cn": "亮点： 增加了对戴森 Pure Hot+Cool Link 的支持（产品类型 455A） - 增加了对甲醛传感器的支持 - 可以设置振荡角度 - 查看变更日志了解所有变化！"
+            },
             "1.0.0": {
                 "en": "Fixed \"wrong value for temperatures\" bug.",
                 "de": "Fehler \"falscher Wert für Temperaturen\" behoben.",
