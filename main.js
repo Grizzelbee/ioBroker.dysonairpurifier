@@ -99,13 +99,14 @@ class dysonAirPurifier extends utils.Adapter {
         if (state && !state.ack) {
             // you can use the ack flag to detect if it is status (true) or command (false)
             // get the whole data field array
-            let dysonAction = await this.getDatapoint( action );
-            if ( typeof dysonAction === 'undefined' ) {
+            const ActionData = await this.getDatapoint( action );
+            let dysonAction;
+            if ( typeof ActionData === 'undefined' ) {
                 // if dysonAction is undefined it's an adapter internal action and has to be handled with the given Name
                 dysonAction = action;
             } else {
                 // pick the dyson internal Action from the result row
-                dysonAction = dysonAction[0];
+                dysonAction = ActionData[0];
             }
             this.log.debug('onStateChange: Using dysonAction: [' + dysonAction + ']');
             let messageData = {[dysonAction]: state.val};
@@ -178,7 +179,16 @@ class dysonAirPurifier extends utils.Adapter {
                     };
                 }
                     break;
-
+            }
+            // switches defined as boolean must get the proper value to be send
+            // this is to translate between the needed states for ioBroker and the device
+            // boolean switches are better for visualizations and other adapters like text2command
+            if (ActionData[3]==='boolean' && ActionData[5].startsWith('switch')){
+                if (state.val){
+                    messageData = {[dysonAction]: 'ON'};
+                } else {
+                    messageData = {[dysonAction]: 'OFF'};
+                }
             }
             // only send to device if change should set a device value
             if (action !== 'Hostaddress'){
@@ -397,7 +407,7 @@ class dysonAirPurifier extends utils.Adapter {
             let value;
             if (deviceConfig[3]==='number'){
                 value = Number.parseInt(message[deviceConfig[0]], 10);
-                // TP02: When continuous monitoring is off and the fan ist switched off - temperature and humidity loose their values.
+                // TP02: When continuous monitoring is off and the fan is switched off - temperature and humidity loose their values.
                 // test whether the values are invalid and config.keepValues is true to prevent the old values from being destroyed
                 if ( message[deviceConfig[0]] === 'OFF' && adapter.config.keepValues ) {
                     continue;
@@ -406,31 +416,31 @@ class dysonAirPurifier extends utils.Adapter {
                     // create additional data field filterlifePercent converting value from hours to percent; 4300 is the estimated lifetime in hours by dyson
                     this.createOrExtendObject( device.Serial + path + '.FilterLifePercent', { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':'%', 'states': deviceConfig[7]}, native: {} }, Number(value * 100/4300));
                 }
-            } else {
-                if (deviceConfig[5] === 'value.temperature') {
-                    // TP02: When continuous monitoring is off and the fan ist switched off - temperature and humidity loose their values.
-                    // test whether the values are invalid and config.keepValues is true to prevent the old values from being destroyed
-                    if ( message[deviceConfig[0]] === 'OFF' && adapter.config.keepValues ) {
-                        continue;
-                    }
-                    value = Number.parseInt(message[deviceConfig[0]], 10);
-                    // convert temperature to configured unit
-                    switch (this.config.temperatureUnit) {
-                        case 'K' :
-                            value /= 10;
-                            break;
-                        case 'C' :
-                            deviceConfig[6] = '°' + this.config.temperatureUnit;
-                            value = Number((value / 10) - 273.15).toFixed(2);
-                            break;
-                        case 'F' :
-                            deviceConfig[6] = '°' + this.config.temperatureUnit;
-                            value = Number(((value / 10) - 273.15) * (9 / 5) + 32).toFixed(2);
-                            break;
-                    }
-                } else{
-                    value = message[deviceConfig[0]];
+            } else if (deviceConfig[5] === 'value.temperature') {
+                // TP02: When continuous monitoring is off and the fan ist switched off - temperature and humidity loose their values.
+                // test whether the values are invalid and config.keepValues is true to prevent the old values from being destroyed
+                if ( message[deviceConfig[0]] === 'OFF' && adapter.config.keepValues ) {
+                    continue;
                 }
+                value = Number.parseInt(message[deviceConfig[0]], 10);
+                // convert temperature to configured unit
+                switch (this.config.temperatureUnit) {
+                    case 'K' :
+                        value /= 10;
+                        break;
+                    case 'C' :
+                        deviceConfig[6] = '°' + this.config.temperatureUnit;
+                        value = Number((value / 10) - 273.15).toFixed(2);
+                        break;
+                    case 'F' :
+                        deviceConfig[6] = '°' + this.config.temperatureUnit;
+                        value = Number(((value / 10) - 273.15) * (9 / 5) + 32).toFixed(2);
+                        break;
+                }
+            } else if (deviceConfig[3]==='boolean' && deviceConfig[5].startsWith('switch')) {
+                value = (message[deviceConfig[0]] === 'ON');
+            } else {
+                value = message[deviceConfig[0]];
             }
             // during state-change message only changed values are being updated
             if (typeof (value) === 'object') {
@@ -448,16 +458,12 @@ class dysonAirPurifier extends utils.Adapter {
                 this.log.debug(`DeviceConfig: length()=${deviceConfig.length}, 7=[${JSON.stringify(deviceConfig[7])}]`);
                 let currentStates={};
                 if (deviceConfig[7]===dysonConstants.LOAD_FROM_PRODUCTS){
-
                     this.log.debug(`Sideloading states for token [${deviceConfig[0]}] - Device:[${device.Serial}], Type:[${device.ProductType}].`);
-
                     currentStates=dysonConstants.PRODUCTS[device.ProductType][deviceConfig[0]];
                     this.log.debug(`Sideloading: Found states [${JSON.stringify(currentStates)}].`);
+                } else {
+                    currentStates=deviceConfig[7];
                 }
-
-
-
-
                 this.createOrExtendObject( device.Serial + path + '.'+ deviceConfig[1], { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':deviceConfig[6], 'states': currentStates}, native: {} }, value);
             } else {
                 this.createOrExtendObject( device.Serial + path + '.'+ deviceConfig[1], { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':deviceConfig[6] }, native: {} }, value);

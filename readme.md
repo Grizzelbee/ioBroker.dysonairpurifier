@@ -138,6 +138,12 @@ Which is what the dyson app does also.
 
 ## Changelog
 
+
+### V1.2.0 (2021-10-xx) (Lost in forever)
+* (grizzelbee) New: Added DeepCleanCycle to known data points
+* (grizzelbee) Fix: Switching water hardness now really works
+* (grizzelbee) Chg: All ON/OFF switches are now boolean types to be more compliant to ioBroker standards for VIS and other adapters. Please delete those data points and let them being recreated if necessary. 
+
 ### V1.1.0 (2021-09-15) (Coming home)
 * (grizzelbee) New: Added correct tier-level to io-package
 * (grizzelbee) New: improved logging of unknown data points
@@ -368,7 +374,7 @@ Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD
 | bril | unknown | 0002 |    
 | corf | unknown | ON, OFF |
 | fqhp | unknown| |
-| clcr | [HP0x] Unknown | CLNO |
+| clcr | DeepcleanCycle | CLNO=inactive, CLAC=Deep clean in progress, CLCM=Finished |
 | psta | [HP0x] Unknown | INIT, CLNG, INV |
 | hsta | [HP0x] Unknown |  |
 | msta | [HP0x] Unknown | OFF, HUMD |
