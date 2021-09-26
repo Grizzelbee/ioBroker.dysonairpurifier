@@ -139,11 +139,14 @@ Which is what the dyson app does also.
 ## Changelog
 
 
-### V1.2.0 (2021-10-xx) (Lost in forever)
+### V2.0.0 (2021-09-26) (Lost in forever)
 * (grizzelbee) New: Added DeepCleanCycle to known data points
 * (grizzelbee) Fix: Switching water hardness now really works
-* (grizzelbee) Chg: BREAKING CHANGE! All ON/OFF switches are now boolean types to be more compliant to ioBroker standards for VIS and other adapters. Please delete those data points and let them being recreated if necessary. 
-
+* (grizzelbee) BREAKING CHANGES: Please recreate your object tree and test your scripts!
+* (grizzelbee) Chg: All ON/OFF switches are now boolean types to be more compliant to ioBroker standards for VIS and other adapters. Please delete those data points and let them being recreated if necessary.
+* (grizzelbee) Chg: All angles are numbers now
+* (grizzelbee) Chg: All 2-way switches are boolean now
+* 
 ### V1.1.0 (2021-09-15) (Coming home)
 * (grizzelbee) New: Added correct tier-level to io-package
 * (grizzelbee) New: improved logging of unknown data points

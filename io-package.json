@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "1.2.0",
+        "version": "2.0.0",
         "news": {
-            "1.2.0": {
+            "2.0.0": {
                 "en": "Highlights: Breaking Change: All ON/OFF-switches are type bool now - Added DeepCleanCycle to known data points - Fix: Switching water hardness now really works - See changelog for all changes!",
                 "de": "Highlights: Breaking Change: Alle ON/OFF-Schalter sind jetzt vom Typ bool - DeepCleanCycle zu bekannten Datenpunkten hinzugefügt - Fix: Wasserhärte-Umschaltung funktioniert jetzt wirklich - Siehe Changelog für alle Änderungen!",
                 "ru": "Основные моменты: Критическое изменение: все переключатели ВКЛ / ВЫКЛ теперь имеют тип bool - Добавлен DeepCleanCycle к известным точкам данных - Исправлено: переключение жесткости воды теперь действительно работает - Все изменения см. В журнале изменений!",

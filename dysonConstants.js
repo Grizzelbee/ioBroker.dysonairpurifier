@@ -12,7 +12,7 @@ module.exports.HTTP_HEADERS = {
 };
 
 const FILTERTYPES = {'GCOM':'Combined', 'GHEP':'HEPA', 'CARF':'Activated carbon'};
-const BOOL_SWITCH = {false:'OFF', true:'ON'};
+const BOOL_SWITCH = {false:'Off', true:'On'};
 
 module.exports.LOAD_FROM_PRODUCTS=999;
 module.exports.SUPPORTED_PRODUCT_TYPES = ['358', '438', '438E', '455', '455A', '469', '475', '520', '527', '527E'];
@@ -53,8 +53,8 @@ module.exports.DATAPOINTS = [
     ['sltm' , 'Sleeptimer'                , 'Sleep timer.'                                                                  , 'string', 'false', 'text'              ,''  ],
     ['oscs' , 'OscillationActive'         , 'Fan is currently oscillating.'                                                 , 'string', 'false', 'text'              ,'', {'IDLE':'Idle', 'OFF':'OFF', 'ON':'ON'} ],
     ['oson' , 'Oscillation'               , 'Oscillation of fan.'                                                           , 'boolean', 'true',  'switch'            ,'', BOOL_SWITCH ],
-    ['osal' , 'OscillationLeft'           , 'OscillationAngle Lower Boundary'                                               , 'string', 'true',  'text'              ,'°' ],
-    ['osau' , 'OscillationRight'          , 'OscillationAngle Upper Boundary'                                               , 'string', 'true',  'text'              ,'°' ],
+    ['osal' , 'OscillationLeft'           , 'OscillationAngle Lower Boundary'                                               , 'number', 'true',  'text'              ,'°' ],
+    ['osau' , 'OscillationRight'          , 'OscillationAngle Upper Boundary'                                               , 'number', 'true',  'text'              ,'°' ],
     ['ancp' , 'OscillationAngle'          , 'OscillationAngle'                                                              , 'string', 'true',  'text'              ,'°', dysonConstant.LOAD_FROM_PRODUCTS ],
     ['rssi' , 'RSSI'                      , 'Received Signal Strength Indication. Quality indicator for WIFI signal.'       , 'number', 'false', 'value'             ,'dBm' ],
     ['pact' , 'Dust'                      , 'Dust'                                                                          , 'number', 'false', 'value'             ,''  ],
@@ -71,7 +71,7 @@ module.exports.DATAPOINTS = [
     ['hcho' , 'Formaldehyde'              , 'Current formaldehyde level'                                                    , 'number', 'false', 'value'             ,'mg/m³' ],
     ['hmod' , 'HeaterMode'                , 'Heating Mode [ON/OFF]'                                                         , 'boolean', 'true',  'switch'            ,'', BOOL_SWITCH ],
     ['hmax' , 'TemperatureTarget'         , 'Target temperature for heating'                                                , 'string', 'true',  'value.temperature' ,'' ],
-    ['hume' , 'HumidificationMode'        , 'HumidificationMode Switch [ON/OFF]'                                            , 'string', 'true', 'switch'             ,'', {'OFF': 'OFF', 'HUMD': 'ON'} ],
+    ['hume' , 'HumidificationMode'        , 'HumidificationMode Switch [ON/OFF]'                                            , 'boolean', 'true', 'switch'             ,'', {false: 'Off', true: 'On'} ],
     ['haut' , 'HumidifyAutoMode'          , 'Humidify AutoMode [ON/OFF]'                                                    , 'boolean', 'true', 'switch'             ,'', BOOL_SWITCH ],
     ['humt' , 'HumidificationTarget'      , 'Manual Humidification Target'                                                  , 'number', 'true', 'value'              ,'%' , {'0030':30, '0040':40, '0050':50, '0060':60, '0070':70}],
     ['cdrr' , 'CleanDurationRemaining'    , 'Time remaining in deep clean cycle'                                            , 'number', 'false', 'value'             ,'Min' ],

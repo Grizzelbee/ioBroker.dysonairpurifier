@@ -156,36 +156,45 @@ class dysonAirPurifier extends utils.Adapter {
                 }
                 case 'ancp':
                 case 'osal':
-                case 'osau': {
-                    const result = await dysonUtils.getAngles(this, dysonAction, id, state);
-                    this.log.debug(`Result of getAngles: ${JSON.stringify(result)}`);
-                    result.ancp = Number.parseInt(result.ancp.val);
-                    result.osal = Number.parseInt(result.osal.val);
-                    result.osau = Number.parseInt(result.osau.val);
-                    if (result.osal + result.ancp > 355) {
-                        result.osau = 355;
-                        result.osal = 355 - result.ancp;
-                    } else if (result.osau - result.ancp < 5) {
-                        result.osal = 5;
-                        result.osau = 5 + result.ancp;
-                    } else {
-                        result.osau = result.osal + result.ancp;
-                    }
-                    messageData = {
-                        ['osal']: dysonUtils.zeroFill(result.osal, 4),
-                        ['osau']: dysonUtils.zeroFill(result.osau, 4),
-                        ['ancp']: 'CUST',
-                        ['oson']: 'ON'
-                    };
-                }
+                case 'osau':
+                    await dysonUtils.getAngles(this, dysonAction, id, state)
+                        .then((result) => {
+                            this.log.debug(`Result of getAngles: ${JSON.stringify(result)}`);
+                            result.ancp = (Number.parseInt(result.ancp.val) || 90);
+                            result.osal = Number.parseInt(result.osal.val);
+                            result.osau = Number.parseInt(result.osau.val);
+                            if (result.osal + result.ancp > 355) {
+                                result.osau = 355;
+                                result.osal = 355 - result.ancp;
+                            } else if (result.osau - result.ancp < 5) {
+                                result.osal = 5;
+                                result.osau = 5 + result.ancp;
+                            } else {
+                                result.osau = result.osal + result.ancp;
+                            }
+                            messageData = {
+                                ['osal']: dysonUtils.zeroFill(result.osal, 4),
+                                ['osau']: dysonUtils.zeroFill(result.osau, 4),
+                                ['ancp']: 'CUST',
+                                ['oson']: 'ON'
+                            };
+                        })
+                        .catch(() => {
+                            this.log.error('An error occurred while trying to retrieve the oscillation angles.');
+                        });
                     break;
-            }
+            } // of switch
             // switches defined as boolean must get the proper value to be send
             // this is to translate between the needed states for ioBroker and the device
             // boolean switches are better for visualizations and other adapters like text2command
             if (ActionData[3]==='boolean' && ActionData[5].startsWith('switch')){
                 if (state.val){
-                    messageData = {[dysonAction]: 'ON'};
+                    // handle special action "humidification" where ON is not ON but HUME
+                    if (dysonAction === 'hume'){
+                        messageData = {[dysonAction]: 'HUMD'};
+                    } else {
+                        messageData = {[dysonAction]: 'ON'};
+                    }
                 } else {
                     messageData = {[dysonAction]: 'OFF'};
                 }
@@ -438,7 +447,7 @@ class dysonAirPurifier extends utils.Adapter {
                         break;
                 }
             } else if (deviceConfig[3]==='boolean' && deviceConfig[5].startsWith('switch')) {
-                value = (message[deviceConfig[0]] === 'ON');
+                value = (message[deviceConfig[0]] === 'ON' || message[deviceConfig[0]] === 'HUMD');
             } else {
                 value = message[deviceConfig[0]];
             }

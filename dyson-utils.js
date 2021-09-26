@@ -103,7 +103,15 @@ module.exports.getDysonToken = async function(adapter, email, passwd, country,  
 };
 
 
-module.exports.getAngles = function(adapter, dysonAction, thisDevice, state){
+/**
+ * getAngles
+ *
+ * @param {object} adapter link to the adapter instance
+ * @param {string} dysonAction the current action that changed it's state
+ * @param {string} thisDevice path to the current device
+ * @param {object} state the state-object as received by OnStateChange
+ * @returns {Promise<object, any>}
+ */module.exports.getAngles = function(adapter, dysonAction, thisDevice, state){
     return new Promise(async function(resolve) {
         // thisDevice=dysonairpurifier.0.VS9-EU-NAB0887A.OscillationAngle
         thisDevice = thisDevice.split('.', 3);
