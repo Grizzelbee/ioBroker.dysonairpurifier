@@ -160,7 +160,8 @@ class dysonAirPurifier extends utils.Adapter {
                     await dysonUtils.getAngles(this, dysonAction, id, state)
                         .then((result) => {
                             this.log.debug(`Result of getAngles: ${JSON.stringify(result)}`);
-                            result.ancp = (Number.parseInt(result.ancp.val) || 90);
+                            result.ancp = (result.ancp.val==='CUST'? 90 : Number.parseInt(result.ancp.val));
+                            this.log.debug(`Result of parseInt(result.ancp.val): ${result.ancp}, typeof: ${typeof result.ancp }`);
                             result.osal = Number.parseInt(result.osal.val);
                             result.osau = Number.parseInt(result.osau.val);
                             if (result.osal + result.ancp > 355) {
@@ -187,16 +188,22 @@ class dysonAirPurifier extends utils.Adapter {
             // switches defined as boolean must get the proper value to be send
             // this is to translate between the needed states for ioBroker and the device
             // boolean switches are better for visualizations and other adapters like text2command
-            if (ActionData[3]==='boolean' && ActionData[5].startsWith('switch')){
-                if (state.val){
-                    // handle special action "humidification" where ON is not ON but HUME
-                    if (dysonAction === 'hume'){
-                        messageData = {[dysonAction]: 'HUMD'};
+            if (typeof ActionData !== 'undefined') {
+                if ( ActionData[3]==='boolean' && ActionData[5].startsWith('switch')){
+                    // current state is TRUE!
+                    if (state.val) {
+                        // handle special action "humidification" where ON is not ON but HUME
+                        if (dysonAction === 'hume'){
+                            messageData = {[dysonAction]: 'HUMD'};
+                            // handle special action "HeatingMode" where ON is not ON but HEAT
+                        } else if (dysonAction === 'hmod'){
+                            messageData = {[dysonAction]: 'HEAT'};
+                        } else {
+                            messageData = {[dysonAction]: 'ON'};
+                        }
                     } else {
-                        messageData = {[dysonAction]: 'ON'};
+                        messageData = {[dysonAction]: 'OFF'};
                     }
-                } else {
-                    messageData = {[dysonAction]: 'OFF'};
                 }
             }
             // only send to device if change should set a device value
