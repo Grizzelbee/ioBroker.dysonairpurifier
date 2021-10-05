@@ -416,7 +416,7 @@ class dysonAirPurifier extends utils.Adapter {
             this.log.debug('Processing Message: ' + ((typeof message === 'object')? JSON.stringify(message) : message) );
             const deviceConfig = await this.getDatapoint(row);
             if ( deviceConfig === undefined){
-                this.log.debug(`Skipped creating unknown data field for: [${row}], Device:[${device.Serial}], Value:[${((typeof( message[row] ) === 'object')? JSON.stringify(message[row]) : message[row])}]`);
+                this.log.debug(`Skipped creating unknown data field for Device:[${device.Serial}], Field: [${row}] Value:[${((typeof( message[row] ) === 'object')? JSON.stringify(message[row]) : message[row])}]`);
                 continue;
             }
             // strip leading zeros from numbers
