@@ -138,6 +138,14 @@ Which is what the dyson app does also.
 
 ## Changelog
 
+### V2.1.0 (2021-10-05) (Running to the edge)
+* (grizzelbee) New: Added some more data points 
+* (grizzelbee) New: Added switch for temperature unit of the fan display
+* (grizzelbee) New: Improved logging of unknown data points
+* (germanBluefox) Fix: Fixed icon links
+* (grizzelbee) Fix: fixed dependencies badge
+* (grizzelbee) Fix: added missing dependency plugin-sentry
+
 ### V2.0.1 (2021-10-04) (Lost in forever)
 * (grizzelbee) Fix: Turning on HeatingMode should work now
 * (grizzelbee) Fix: Sentry-error [2690134161](https://sentry.io/organizations/nocompany-6j/issues/2690134161/?project=5735771) -> Cannot read property '3' of undefined

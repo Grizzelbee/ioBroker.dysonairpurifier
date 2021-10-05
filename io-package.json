@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "2.0.1",
+        "version": "2.1.0",
         "news": {
+            "2.1.0": {
+                "en": "* (grizzelbee) New: Added some more data points, * (grizzelbee) New: Added switch for temperature unit of the fan display,* (grizzelbee) New: Improved logging of unknown data points,* (germanBluefox) Fix: Fixed icon links,* (grizzelbee) Fix: fixed dependencies badge,* (grizzelbee) Fix: added missing dependency plugin-sentry",
+                "de": "* (grizzelbee) Neu: Einige weitere Datenpunkte hinzugefügt, * (grizzelbee) Neu: Schalter für Temperatureinheit der Lüfteranzeige hinzugefügt,* (grizzelbee) Neu: Verbesserte Protokollierung unbekannter Datenpunkte,* (germanBluefox) Fix: Icon-Links korrigiert ",
+                "ru": "* (grizzelbee) Новое: добавлено несколько точек данных, * (grizzelbee) Новое: добавлен переключатель для единицы температуры дисплея вентилятора, * (grizzelbee) Новое: улучшена регистрация неизвестных точек данных, * (germanBluefox) Исправлено: исправлены ссылки на значки ",
+                "pt": "* (grizzelbee) Novo: Adicionados mais alguns pontos de dados, * (grizzelbee) Novo: Adicionado interruptor para a unidade de temperatura da tela do ventilador, * (grizzelbee) Novo: Registro aprimorado de pontos de dados desconhecidos, * (germanBluefox) Correção: links de ícones corrigidos ",
+                "nl": "* (grizzelbee) Nieuw: nog wat datapunten toegevoegd, * (grizzelbee) Nieuw: schakelaar toegevoegd voor temperatuureenheid van het ventilatordisplay,* (grizzelbee) Nieuw: verbeterde logging van onbekende datapunten,* (germanBluefox) Fix: vaste pictogramkoppelingen ",
+                "fr": "* (grizzelbee) Nouveau : ajout de quelques points de données supplémentaires, * (grizzelbee) Nouveau : ajout d'un commutateur pour l'unité de température de l'affichage du ventilateur,* (grizzelbee) Nouveau : enregistrement amélioré des points de données inconnus,* (allemandBluefox) Correction : liens d'icônes fixes ",
+                "it": "* (grizzelbee) Novità: Aggiunti altri punti dati, * (grizzelbee) Novità: Aggiunto interruttore per l'unità di temperatura del display della ventola,* (grizzelbee) Novità: Migliorata la registrazione dei punti dati sconosciuti,* (germanBluefox) Correzione: Corretti i collegamenti alle icone ",
+                "es": "* (grizzelbee) Nuevo: se agregaron algunos puntos de datos más, * (grizzelbee) Nuevo: se agregó un interruptor para la unidad de temperatura de la pantalla del ventilador, * (grizzelbee) Nuevo: registro mejorado de puntos de datos desconocidos, * (germanBluefox) Solución: enlaces de íconos fijos ",
+                "pl": "* (grizzelbee) Nowość: Dodano więcej punktów danych, * (grizzelbee) Nowość: Dodano przełącznik jednostki temperatury na wyświetlaczu wentylatora,* (grizzelbee) Nowość: Ulepszone rejestrowanie nieznanych punktów danych,* (germanBluefox) Poprawka: Naprawiono łącza ikon ",
+                "zh-cn": "* (grizzelbee) 新功能：添加了更多数据点，* (grizzelbee) 新功能：添加了风扇显示器温度单位的开关，* (grizzelbee) 新功能：改进了未知数据点的记录，* (germanBluefox) 修复：固定图标链接"
+            },
             "2.0.1": {
                 "en": "* Fixed Sentry Error Cannot read property '3' of undefined, * Turning on HeatingMode should work now, * updated dependencies",
                 "de": "* Sentry Error behoben Kann die Eigenschaft '3' von undefined nicht lesen, * Das Einschalten des Heizmodus sollte jetzt funktionieren, * Abhängigkeiten aktualisiert.",
