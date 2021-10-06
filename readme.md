@@ -143,7 +143,7 @@ Which is what the dyson app does also.
 
 ## Changelog
 
-### V2.1.0 (2021-10-05) (Running to the edge)
+### V2.1.1 (2021-10-05) (Running to the edge)
 * (grizzelbee) New: Added some more data points 
 * (grizzelbee) New: Added switch for temperature unit of the fan display
 * (grizzelbee) New: Improved logging of unknown data points

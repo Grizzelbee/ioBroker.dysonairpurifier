@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "2.1.0",
+        "version": "2.1.1",
         "news": {
-            "2.1.0": {
+            "2.1.1": {
                 "en": "* (grizzelbee) New: Added some more data points, * (grizzelbee) New: Added switch for temperature unit of the fan display,* (grizzelbee) New: Improved logging of unknown data points,* (germanBluefox) Fix: Fixed icon links,* (grizzelbee) Fix: fixed dependencies badge,* (grizzelbee) Fix: added missing dependency plugin-sentry",
                 "de": "* (grizzelbee) Neu: Einige weitere Datenpunkte hinzugefügt, * (grizzelbee) Neu: Schalter für Temperatureinheit der Lüfteranzeige hinzugefügt,* (grizzelbee) Neu: Verbesserte Protokollierung unbekannter Datenpunkte,* (germanBluefox) Fix: Icon-Links korrigiert ",
                 "ru": "* (grizzelbee) Новое: добавлено несколько точек данных, * (grizzelbee) Новое: добавлен переключатель для единицы температуры дисплея вентилятора, * (grizzelbee) Новое: улучшена регистрация неизвестных точек данных, * (germanBluefox) Исправлено: исправлены ссылки на значки ",
