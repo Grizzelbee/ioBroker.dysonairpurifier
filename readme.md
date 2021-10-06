@@ -390,7 +390,7 @@ Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD
 | clcr | DeepcleanCycle | CLNO=inactive, CLAC=Deep clean in progress, CLCM=Finished |
 | hsta | Heating state | ACTIVE/IDLE |
 | msta | Humidification state | Active/Idle   OFF, HUMD |
-| psta | [HP0x] Unknown | INIT, CLNG, INV |
+| psta | [HP0x] Unknown | INIT, CLNG, INV, OFF |
 | bril | unknown | 0002 | LEVEL_LOW, LEVEL_MEDIUM, LEVEL_HIGH |    
 | fqhp | unknown| |
 | tilt | [HP0x] Unknown | string |
