@@ -112,9 +112,13 @@ All the values will be saved and shown furthermore.
  
 ## Controlling your device(s)
 This adapter is currently able to control the following states of your devices:
+* FanMode                   , Mode of device (Manual, Auto, Off)
 * FanSpeed                  , Current fan speed
 * Nightmode                 , Night mode state
-* Oscillation               , Oscillation of fan.
+* Oscillation               , Oscillation of fan (On, Off).
+* OscillationRight          , OscillationAngle Upper Boundary
+* OscillationLeft           , OscillationAngle Lower Boundary
+* OscillationAngle          , OscillationAngle
 * ContinuousMonitoring      , Continuous Monitoring of environmental sensors even if device is off.
 * MainPower                 , Main Power of fan.
 * AutomaticMode             , Fan is in automatic mode.
@@ -127,6 +131,7 @@ This adapter is currently able to control the following states of your devices:
 * HumidifyAutoMode          , Auto / Off
 * AutoHumidificationTarget  , Auto HumidificationTarget
 * HumidificationTarget      , Manual HumidificationTarget
+* TemperatureUnit           , Unit to display temperature values in (Fan display).
 * WaterHardness             , Soft, Medium, Hard
 
 Possible values for these states are documented below, as far as known.
