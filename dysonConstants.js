@@ -77,6 +77,9 @@ module.exports.DATAPOINTS = [
     ['cdrr' , 'CleanDurationRemaining'    , 'Time remaining in deep clean cycle'                                            , 'number', 'false', 'value'             ,'Min' ],
     ['rect' , 'AutoHumidificationTarget'  , 'Auto Humidification target'                                                    , 'number', 'true', 'value'              ,'%' ],
     ['clcr' , 'DeepCleanCycle'            , 'Indicates whether a deep cleaning cycle is in progress or not.'                , 'string', 'false', 'text'              ,'', {'CLNO':'Inactive', 'CLCM':'Completed', 'CLAC':'Active'} ],
-    ['cltr' , 'TimeRemainingToNextClean'  , 'Time remaining to Next deep clean cycle.'                                      , 'number', 'false', 'value'              ,'hours' ],
+    ['cltr' , 'TimeRemainingToNextClean'  , 'Time remaining to Next deep clean cycle.'                                      , 'number', 'false', 'value'             ,'hours' ],
+    ['corf' , 'TemperatureUnit'           , 'Unit to display temperature values in (Fan display).'                          , 'boolean', 'true', 'switch'            ,'', {true:'Celsius', false:'Fahrenheit' }],
+    ['hsta' , 'HeatingState'              , 'Active/Idle'                                                                   , 'string', 'false', 'value'             ,'', {'OFF':'Idle', 'HEAT':'Active'}],
+    ['msta' , 'HumidificationState'       , 'Active/Idle'                                                                   , 'string', 'false', 'value'             ,'', {'OFF':'Idle', 'HUMD':'Active'}],
     ['wath' , 'WaterHardness'             , 'Water Hardness'                                                                , 'string', 'true', 'value'              ,'', {'0675': 'Hard', '1350':'Medium', '2025':'Soft'}]
 ];

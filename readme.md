@@ -5,7 +5,7 @@
 ![Number of Installations (latest)](http://iobroker.live/badges/dysonairpurifier-installed.svg)
 [![NPM version](https://img.shields.io/npm/v/iobroker.dysonairpurifier.svg)](https://www.npmjs.com/package/iobroker.dysonairpurifier)
 ![Number of Installations (stable)](http://iobroker.live/badges/dysonairpurifier-stable.svg)
-[![Dependency Status](https://img.shields.io/david/Grizzelbee/iobroker.dysonairpurifier.svg)](https://david-dm.org/Grizzelbee/iobroker.dysonairpurifier)
+[![Dependency Status](https://david-dm.org/Grizzelbee/iobroker.dysonairpurifier.svg)](https://david-dm.org/Grizzelbee/iobroker.dysonairpurifier)
 [![Known Vulnerabilities](https://snyk.io/test/github/Grizzelbee/ioBroker.dysonairpurifier/badge.svg)](https://snyk.io/test/github/Grizzelbee/ioBroker.dysonairpurifier)
 [![Test and Release](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/actions/workflows/test-and-deploy.yml/badge.svg)](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/actions/workflows/test-and-deploy.yml)
 [![NPM](https://nodei.co/npm/iobroker.dysonAirPurifier.svg?downloads=true)](https://nodei.co/npm/iobroker.dysonairpurifier/)
@@ -137,6 +137,14 @@ Which is what the dyson app does also.
 * No automatic IP detection of devices
 
 ## Changelog
+
+### V2.1.0 (2021-10-05) (Running to the edge)
+* (grizzelbee) New: Added some more data points 
+* (grizzelbee) New: Added switch for temperature unit of the fan display
+* (grizzelbee) New: Improved logging of unknown data points
+* (germanBluefox) Fix: Fixed icon links
+* (grizzelbee) Fix: fixed dependencies badge
+* (grizzelbee) Fix: added missing dependency plugin-sentry
 
 ### V2.0.1 (2021-10-04) (Lost in forever)
 * (grizzelbee) Fix: Turning on HeatingMode should work now
@@ -370,22 +378,22 @@ Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD
 | hmod | Heater Mode [ON/OFF] | HEAT | |
 | hmax | Target temperature for heating | 0 .. 5000 | K |
 | hume | HumidificationMode     | ON, OFF, |
-| haut | Humidify Auto Mode| |
-| humt | Humidification Target| |
-| cdrr | CleanDurationRemaining| |  
-| rect | AutoHumidificationTarget| |
-| cltr | TimeRemainingToNextClean| |
-| wath | WaterHardness| SOFT="2025", MEDIUM="1350",HARD="0675"|
+| haut | Humidify Auto Mode|         HUMIDIFY_AUTO_MODE_ON, HUMIDIFY_AUTO_MODE_OFF |
+| humt | Humidification Target| HUMIDIFICATION_MODE_OFF, HUMIDIFICATION_MODE_THIRTY, HUMIDIFICATION_MODE_FORTY, HUMIDIFICATION_MODE_FIFTY, HUMIDIFICATION_MODE_SIXTY, HUMIDIFICATION_MODE_SEVENTY |
+| cdrr | CleanDurationRemaining| integer |  minutes |
+| rect | AutoHumidificationTarget| integer | % |
+| cltr | TimeRemainingToNextClean| integer| hours |
+| wath | WaterHardness| SOFT="2025", MEDIUM="1350", HARD="0675"|
 | wacd | WarningCode  | NONE... | 
-| rstf | reset filter lifecycle | 
-| bril | unknown | 0002 |    
-| corf | unknown | ON, OFF |
-| fqhp | unknown| |
+| rstf | reset filter lifecycle | RESET_FILTER_LIFE_IGNORE, RESET_FILTER_LIFE_ACTION
+| corf | Temperature format | ON=Celsius, OFF=Fahrenheit |
 | clcr | DeepcleanCycle | CLNO=inactive, CLAC=Deep clean in progress, CLCM=Finished |
-| psta | [HP0x] Unknown | INIT, CLNG, INV |
-| hsta | [HP0x] Unknown |  |
-| msta | [HP0x] Unknown | OFF, HUMD |
-| tilt | [HP0x] Unknown |  |
+| hsta | Heating state | ACTIVE/IDLE |
+| msta | Humidification state | Active/Idle   OFF, HUMD |
+| psta | [HP0x] Unknown | INIT, CLNG, INV, OFF |
+| bril | unknown | 0002 | LEVEL_LOW, LEVEL_MEDIUM, LEVEL_HIGH |    
+| fqhp | unknown| |
+| tilt | [HP0x] Unknown | string |
 | dial | [DP0x] Unknown |  | 
 
 
