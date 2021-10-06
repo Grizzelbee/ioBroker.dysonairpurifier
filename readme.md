@@ -150,6 +150,7 @@ Which is what the dyson app does also.
 * (germanBluefox) Fix: Fixed icon links
 * (grizzelbee) Fix: fixed dependencies badge
 * (grizzelbee) Fix: added missing dependency plugin-sentry
+* (grizzelbee) Fix: Setting HumidificationTarget now works
 
 ### V2.0.1 (2021-10-04) (Lost in forever)
 * (grizzelbee) Fix: Turning on HeatingMode should work now
