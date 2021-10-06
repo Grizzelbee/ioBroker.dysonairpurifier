@@ -109,7 +109,7 @@ class dysonAirPurifier extends utils.Adapter {
                 dysonAction = ActionData[0];
             }
             this.log.debug('onStateChange: Using dysonAction: [' + dysonAction + ']');
-            let messageData = {[dysonAction]: state.val};
+            let messageData = {[dysonAction]: (typeof state.val === 'number'? dysonUtils.zeroFill(state.val, 4): state.val)};
             switch (dysonAction) {
                 case 'Hostaddress' :
                     for (const mqttDevice in devices){

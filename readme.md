@@ -143,13 +143,14 @@ Which is what the dyson app does also.
 
 ## Changelog
 
-### V2.1.0 (2021-10-05) (Running to the edge)
+### V2.1.1 (2021-10-05) (Running to the edge)
 * (grizzelbee) New: Added some more data points 
 * (grizzelbee) New: Added switch for temperature unit of the fan display
 * (grizzelbee) New: Improved logging of unknown data points
 * (germanBluefox) Fix: Fixed icon links
 * (grizzelbee) Fix: fixed dependencies badge
 * (grizzelbee) Fix: added missing dependency plugin-sentry
+* (grizzelbee) Fix: Setting HumidificationTarget now works
 
 ### V2.0.1 (2021-10-04) (Lost in forever)
 * (grizzelbee) Fix: Turning on HeatingMode should work now
