@@ -1,10 +1,10 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "2.2.0",
+        "version": "2.1.2",
         "news": {
-            "2.2.0": {
-                "en": "New: Removed NO2 from general AirQuality to be more compliant to dyson-app\n Upd: Code cleanup\n Upd: Removed gap between sending a command and new values getting displayed (max 30 Secs)",
+            "2.1.2": {
+                "en": "New: Removed NO2 from general AirQuality to be more compliant to dyson-app\n Upd: Code cleanup\n Upd: Removed delay between sending a command and new values getting displayed (max 30 Secs)",
                 "de": "Neu: NO2 aus der allgemeinen AirQuality entfernt, um konformer mit der Dyson-App zu sein\n Upd: Code-Bereinigung\n Upd: Verzögerung zwischen dem Senden eines Befehls und der Anzeige neuer Werte entfernt (max. 30 Sek.)",
                 "ru": "Новое: Удален NO2 из общего AirQuality, чтобы быть более совместимым с приложением dyson\n Upd: Очистка кода\n Upd: Убран разрыв между отправкой команды и отображением новых значений (максимум 30 секунд)",
                 "pt": "Novo: Removido o NO2 do AirQuality geral para ser mais compatível com o dyson-app\n Upd: Limpeza de código\n Upd: Removida a lacuna entre o envio de um comando e a exibição de novos valores (máximo de 30 segundos)",
