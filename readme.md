@@ -391,7 +391,7 @@ Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD
 | cltr | TimeRemainingToNextClean| integer| hours |
 | wath | WaterHardness| SOFT="2025", MEDIUM="1350", HARD="0675"|
 | wacd | WarningCode  | NONE... | 
-| rstf | reset filter lifecycle | RESET_FILTER_LIFE_IGNORE, RESET_FILTER_LIFE_ACTION
+| rstf | reset filter lifecycle | 'RSTF', 'STET',  RESET_FILTER_LIFE_IGNORE, RESET_FILTER_LIFE_ACTION
 | corf | Temperature format | ON=Celsius, OFF=Fahrenheit |
 | clcr | DeepcleanCycle | CLNO=inactive, CLAC=Deep clean in progress, CLCM=Finished |
 | hsta | Heating state | ACTIVE/IDLE |
