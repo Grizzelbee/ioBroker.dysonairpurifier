@@ -22,7 +22,7 @@ const dysonConstants = require('./dysonConstants.js');
 let adapter = null;
 let adapterIsSetUp = false;
 let devices = [];
-let NO2  = 0; // Numeric representation of current NO2Index
+// let NO2  = 0; // Numeric representation of current NO2Index
 let VOC  = 0; // Numeric representation of current VOCIndex
 let PM25 = 0; // Numeric representation of current PM25Index
 let PM10 = 0; // Numeric representation of current PM10Index
@@ -244,7 +244,7 @@ class dysonAirPurifier extends utils.Adapter {
                         'states' : {0:'Good', 1:'Medium', 2:'Bad', 3:'very Bad', 4:'extremely Bad', 5:'worrying'}
                     },
                     native: {}
-                }, Math.max(NO2, VOC, Dust, PM25, PM10));
+                }, Math.max(VOC, Dust, PM25, PM10));
             }
         }
     }
@@ -527,7 +527,7 @@ class dysonAirPurifier extends utils.Adapter {
             },
             native: {}
         }, NO2Index);
-        NO2 = NO2Index;
+        // NO2 = NO2Index;
         this.subscribeStates(device.Serial + '.Sensor.NO2Index' );
     }
 
