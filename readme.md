@@ -143,6 +143,12 @@ Which is what the dyson app does also.
 
 ## Changelog
 
+### V2.2.0 (2021-10-05) (Escape from the earth)
+* (grizzelbee) New: Removed NO2 from general AirQuality to be more compliant to dyson-app
+* (grizzelbee) Upd: Code cleanup
+* (grizzelbee) Upd: Removed gap between sending a command and new values getting displayed (max 30 Secs)
+
+
 ### V2.1.1 (2021-10-05) (Running to the edge)
 * (grizzelbee) New: Added some more data points 
 * (grizzelbee) New: Added switch for temperature unit of the fan display
