@@ -17,10 +17,14 @@ const httpsAgent = new https.Agent({ca: rootCas});
 rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
 
 
+module.exports.wait=async function(milliSec){
+    return setTimeout(()=>{/* do nothing but waiting */}, milliSec);
+};
+
+
 
 /**
  * getDyson2faMail
- *
  * Does the first part of the dyson 2FA. Requests the one-time-password from the API
  *
  * @param {object} adapter link to the adapter instance

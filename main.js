@@ -12,7 +12,6 @@ const adapterName = require('./package.json').name.split('.').pop();
 
 // Load additional modules
 const mqtt   = require('mqtt');
-// const {stringify} = require('flatted');
 
 // Load utils for this adapter
 const dysonUtils = require('./dyson-utils.js');
@@ -21,8 +20,7 @@ const dysonConstants = require('./dysonConstants.js');
 // Variable definitions
 let adapter = null;
 let adapterIsSetUp = false;
-let devices = [];
-let NO2  = 0; // Numeric representation of current NO2Index
+let devices = {};
 let VOC  = 0; // Numeric representation of current VOCIndex
 let PM25 = 0; // Numeric representation of current PM25Index
 let PM10 = 0; // Numeric representation of current PM10Index
@@ -92,7 +90,6 @@ class dysonAirPurifier extends utils.Adapter {
      * @param state {object} new state-object of the datapoint after change
      */
     async onStateChange(id, state) {
-        // id=dysonairpurifier.0.VS9-EU-NAB0887A.OscillationAngle
         const thisDevice = id.split('.')[2];
         const action = id.split('.').pop();
         // Warning, state can be null if it was deleted
@@ -220,11 +217,16 @@ class dysonAirPurifier extends utils.Adapter {
                     if (devices[mqttDevice].Serial === thisDevice){
                         this.log.debug('MANUAL CHANGE: device [' + thisDevice + '] -> [' + action +'] -> [' + state.val + ']');
                         this.log.info('SENDING this data to device (' + thisDevice + '): ' + JSON.stringify(message));
-                        //noinspection JSUnresolvedVariable
                         devices[mqttDevice].mqttClient.publish(
                             devices[mqttDevice].ProductType + '/' + thisDevice + '/command',
                             JSON.stringify(message)
                         );
+                        // refresh data asap to avoid 30 Sec gap
+                        devices[mqttDevice].mqttClient.publish(
+                            devices[mqttDevice].ProductType + '/' + devices[mqttDevice].Serial + '/command', JSON.stringify({
+                                msg: 'REQUEST-CURRENT-STATE',
+                                time: new Date().toISOString()
+                            }));
                     }
                 }
             }
@@ -236,7 +238,7 @@ class dysonAirPurifier extends utils.Adapter {
                 this.createOrExtendObject(thisDevice + '.AirQuality', {
                     type: 'state',
                     common: {
-                        name: 'Overall AirQuality (worst value of all indexes)',
+                        name: 'Overall AirQuality (worst value of all indexes except NO2)',
                         'read': true,
                         'write': false,
                         'role': 'value',
@@ -244,7 +246,7 @@ class dysonAirPurifier extends utils.Adapter {
                         'states' : {0:'Good', 1:'Medium', 2:'Bad', 3:'very Bad', 4:'extremely Bad', 5:'worrying'}
                     },
                     native: {}
-                }, Math.max(NO2, VOC, Dust, PM25, PM10));
+                }, Math.max(VOC, Dust, PM25, PM10));
             }
         }
     }
@@ -471,12 +473,12 @@ class dysonAirPurifier extends utils.Adapter {
             }
             // deviceConfig.length>7 means the data field has predefined states attached, that need to be handled
             if (deviceConfig.length > 7) {
-                this.log.debug(`DeviceConfig: length()=${deviceConfig.length}, 7=[${JSON.stringify(deviceConfig[7])}]`);
+                // this.log.debug(`DeviceConfig: length()=${deviceConfig.length}, 7=[${JSON.stringify(deviceConfig[7])}]`);
                 let currentStates={};
                 if (deviceConfig[7]===dysonConstants.LOAD_FROM_PRODUCTS){
-                    this.log.debug(`Sideloading states for token [${deviceConfig[0]}] - Device:[${device.Serial}], Type:[${device.ProductType}].`);
+                    // this.log.debug(`Sideloading states for token [${deviceConfig[0]}] - Device:[${device.Serial}], Type:[${device.ProductType}].`);
                     currentStates=dysonConstants.PRODUCTS[device.ProductType][deviceConfig[0]];
-                    this.log.debug(`Sideloading: Found states [${JSON.stringify(currentStates)}].`);
+                    // this.log.debug(`Sideloading: Found states [${JSON.stringify(currentStates)}].`);
                 } else {
                     currentStates=deviceConfig[7];
                 }
@@ -527,7 +529,6 @@ class dysonAirPurifier extends utils.Adapter {
             },
             native: {}
         }, NO2Index);
-        NO2 = NO2Index;
         this.subscribeStates(device.Serial + '.Sensor.NO2Index' );
     }
 
@@ -575,10 +576,10 @@ class dysonAirPurifier extends utils.Adapter {
      *
      * creates the data fields for the values itself and the index if the device has a PM 10 sensor
      *
-     * @param message {object} the received mqtt message
+     * @param {object} message the received mqtt message
      * @param {number} message[].pm10
-     * @param row     {string} the current data row
-     * @param device  {object} the device object the data is valid for
+     * @param {string} row the current data row
+     * @param {object} device the device object the data is valid for
      */
     createPM10(message, row, device) {
         // PM10 QualityIndex
@@ -699,6 +700,7 @@ class dysonAirPurifier extends utils.Adapter {
         this.subscribeStates(device.Serial + '.Sensor.PM25Index' );
     }
 
+
     /**
      * main
      *
@@ -740,9 +742,7 @@ class dysonAirPurifier extends utils.Adapter {
                         // Subscribes to the status topic to receive updates
                         //noinspection JSUnresolvedVariable
                         devices[thisDevice].mqttClient.subscribe(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/status/current', function () {
-
                             // Sends an initial request for the current state
-                            //noinspection JSUnresolvedVariable
                             devices[thisDevice].mqttClient.publish(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/command', JSON.stringify({
                                 msg: 'REQUEST-CURRENT-STATE',
                                 time: new Date().toISOString()
@@ -755,7 +755,6 @@ class dysonAirPurifier extends utils.Adapter {
                             //noinspection JSUnresolvedVariable
                             adapterLog.debug('Updating device [' + devices[thisDevice].Serial + '] (polling API scheduled).');
                             try {
-                                //noinspection JSUnresolvedVariable
                                 devices[thisDevice].mqttClient.publish(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/command', JSON.stringify({
                                     msg: 'REQUEST-CURRENT-STATE',
                                     time: new Date().toISOString()
