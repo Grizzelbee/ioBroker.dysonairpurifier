@@ -740,13 +740,8 @@ class dysonAirPurifier extends utils.Adapter {
                         // Subscribes to the status topic to receive updates
                         //noinspection JSUnresolvedVariable
                         devices[thisDevice].mqttClient.subscribe(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/status/current', function () {
-
                             // Sends an initial request for the current state
-                            //noinspection JSUnresolvedVariable
-                            devices[thisDevice].mqttClient.publish(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/command', JSON.stringify({
-                                msg: 'REQUEST-CURRENT-STATE',
-                                time: new Date().toISOString()
-                            }));
+                            dysonUtils.refreshDevice(devices, thisDevice);
                         });
                         // Sets the interval for status updates
                         adapterLog.info('Starting Polltimer with a ' + adapter.config.pollInterval + ' seconds interval.');
@@ -755,11 +750,7 @@ class dysonAirPurifier extends utils.Adapter {
                             //noinspection JSUnresolvedVariable
                             adapterLog.debug('Updating device [' + devices[thisDevice].Serial + '] (polling API scheduled).');
                             try {
-                                //noinspection JSUnresolvedVariable
-                                devices[thisDevice].mqttClient.publish(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/command', JSON.stringify({
-                                    msg: 'REQUEST-CURRENT-STATE',
-                                    time: new Date().toISOString()
-                                }));
+                                dysonUtils.refreshDevice(devices, thisDevice);
                             } catch (error) {
                                 //noinspection JSUnresolvedVariable
                                 adapterLog.error(devices[thisDevice].Serial + ' - MQTT interval error: ' + error);

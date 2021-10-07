@@ -17,10 +17,23 @@ const httpsAgent = new https.Agent({ca: rootCas});
 rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
 
 
+/**
+ * refreshDevice
+ * sends the request-current-state message to the given device to refresh it's data. The requested data is returned by a mqtt-message.
+ *
+ * @param {object} devices array of known devices
+ * @param {string} thisDevice device to address
+ */
+
+module.exports.refreshDevice = function(devices, thisDevice){
+    devices[thisDevice].mqttClient.publish(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/command', JSON.stringify({
+        msg: 'REQUEST-CURRENT-STATE',
+        time: new Date().toISOString()
+    }));
+};
 
 /**
  * getDyson2faMail
- *
  * Does the first part of the dyson 2FA. Requests the one-time-password from the API
  *
  * @param {object} adapter link to the adapter instance
