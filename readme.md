@@ -146,7 +146,7 @@ Which is what the dyson app does also.
 ### V2.2.0 (2021-10-05) (Escape from the earth)
 * (grizzelbee) New: Removed NO2 from general AirQuality to be more compliant to dyson-app
 * (grizzelbee) Upd: Code cleanup
-* (grizzelbee) Upd: Removed gap between sending a command and new values getting displayed (max 30 Secs)
+* (grizzelbee) Upd: Removed delay between sending a command and new values getting displayed (max 30 Secs)
 
 
 ### V2.1.1 (2021-10-05) (Running to the edge)
