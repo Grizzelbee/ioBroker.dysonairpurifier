@@ -157,25 +157,40 @@ class dysonAirPurifier extends utils.Adapter {
                     await dysonUtils.getAngles(this, dysonAction, id, state)
                         .then((result) => {
                             this.log.debug(`Result of getAngles: ${JSON.stringify(result)}`);
-                            result.ancp = (result.ancp.val==='CUST'? 90 : Number.parseInt(result.ancp.val));
-                            this.log.debug(`Result of parseInt(result.ancp.val): ${result.ancp}, typeof: ${typeof result.ancp }`);
-                            result.osal = Number.parseInt(result.osal.val);
-                            result.osau = Number.parseInt(result.osau.val);
-                            if (result.osal + result.ancp > 355) {
-                                result.osau = 355;
-                                result.osal = 355 - result.ancp;
-                            } else if (result.osau - result.ancp < 5) {
-                                result.osal = 5;
-                                result.osau = 5 + result.ancp;
-                            } else {
-                                result.osau = result.osal + result.ancp;
+                            switch (result.ancp.val) {
+                                case 'CUST': result.ancp = 90;
+                                    break;
+                                case 'BRZE':result.ancp = 'BRZE';
+                                    break;
+                                default: result.ancp = Number.parseInt(result.ancp.val);
                             }
-                            messageData = {
-                                ['osal']: dysonUtils.zeroFill(result.osal, 4),
-                                ['osau']: dysonUtils.zeroFill(result.osau, 4),
-                                ['ancp']: 'CUST',
-                                ['oson']: 'ON'
-                            };
+                            if (result.ancp === 'BRZE'){
+                                messageData = {
+                                    ['osal']: '0180',
+                                    ['osau']: '0180',
+                                    ['ancp']: 'BRZE',
+                                    ['oson']: 'ON'
+                                };
+                            } else {
+                                this.log.debug(`Result of parseInt(result.ancp.val): ${result.ancp}, typeof: ${typeof result.ancp }`);
+                                result.osal = Number.parseInt(result.osal.val);
+                                result.osau = Number.parseInt(result.osau.val);
+                                if (result.osal + result.ancp > 355) {
+                                    result.osau = 355;
+                                    result.osal = 355 - result.ancp;
+                                } else if (result.osau - result.ancp < 5) {
+                                    result.osal = 5;
+                                    result.osau = 5 + result.ancp;
+                                } else {
+                                    result.osau = result.osal + result.ancp;
+                                }
+                                messageData = {
+                                    ['osal']: dysonUtils.zeroFill(result.osal, 4),
+                                    ['osau']: dysonUtils.zeroFill(result.osau, 4),
+                                    ['ancp']: 'CUST',
+                                    ['oson']: 'ON'
+                                };
+                            }
                         })
                         .catch(() => {
                             this.log.error('An error occurred while trying to retrieve the oscillation angles.');
