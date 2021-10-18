@@ -143,7 +143,7 @@ Which is what the dyson app does also.
 
 ## Changelog
 
-### V2.1.3 (2021-10-17) (Running to the edge)
+_### V2.1.3 (2021-10-17) (Running to the edge)
 * (grizzelbee) Fix: [#148](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/148) Hostaddress is used properly when given.
 * (grizzelbee) Fix: [#149](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/149) OscillationAngle "Breeze" is working now 
 * (grizzelbee) Fix: [#150](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/150) Strange delay and jumping of boolean switches is fixed 

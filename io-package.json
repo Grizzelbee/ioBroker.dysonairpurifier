@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "2.1.2",
+        "version": "2.1.3",
         "news": {
+            "2.1.3": {
+                "en": "Bugfix release!\nHostaddress is used properly when given.\nOscillationAngle \"Breeze\" is working now\nStrange delay and jumping of boolean switches is fixed",
+                "de": "Bugfix-Release! \nHostadresse wird korrekt verwendet, wenn sie angegeben wird. \nOscillationAngle \"Breeze\" funktioniert jetzt \nSeltsame Verzögerung und Springen von Booleschen Schaltern wurde behoben",
+                "ru": "Выпуск исправления ошибок \n Hostaddress используется правильно, если задан. \n OscillationAngle \"Breeze\" теперь работает \n Странная задержка и скачки логических переключателей исправлены",
+                "pt": "Versão de correção de bug \n Hostaddress é usado corretamente quando fornecido. \n OscillationAngle \"Breeze\" está funcionando agora \n Atraso estranho e saltos de interruptores booleanos foram corrigidos",
+                "nl": "Bugfix release\nHostaddress wordt correct gebruikt wanneer gegeven.\nOscillationAngle \"Breeze\" werkt nu\nVreemde vertraging en springen van boolean switches is opgelost",
+                "fr": "Version de correction de bug \n L'adresse d'hôte est utilisée correctement lorsqu'elle est donnée. \n L'angle d'oscillation \"Breeze\" fonctionne maintenant \n Le délai étrange et le saut des commutateurs booléens sont corrigés",
+                "it": "Rilascio bugfix\nL'indirizzo host viene utilizzato correttamente quando viene fornito.\nOscillationAngle \"Breeze\" funziona ora\nLo strano ritardo e il salto degli interruttori booleani sono stati corretti",
+                "es": "Versión de corrección de errores \n Hostaddress se usa correctamente cuando se proporciona. \n OscillationAngle \"Breeze\" está funcionando ahora \n Se corrigió el retraso extraño y el salto de los interruptores booleanos",
+                "pl": "Wydanie poprawki błędu \n Adres hosta jest używany poprawnie, gdy jest podany. \n Kąt oscylacyjny \"Breeze\" teraz działa \n Dziwne opóźnienie i przeskakiwanie przełączników binarnych zostało naprawione",
+                "zh-cn": "修正版本\n主机地址在给出时正确使用。\nOscillationAngle“微风”现在正在工作\n奇怪的延迟和布尔开关的跳跃是固定的"
+            },
             "2.1.2": {
                 "en": "New: Removed NO2 from general AirQuality to be more compliant to dyson-app\n Upd: Code cleanup\n Upd: Removed delay between sending a command and new values getting displayed (max 30 Secs)",
                 "de": "Neu: NO2 aus der allgemeinen AirQuality entfernt, um konformer mit der Dyson-App zu sein\n Upd: Code-Bereinigung\n Upd: Verzögerung zwischen dem Senden eines Befehls und der Anzeige neuer Werte entfernt (max. 30 Sek.)",
