@@ -166,8 +166,8 @@ class dysonAirPurifier extends utils.Adapter {
                             }
                             if (result.ancp === 'BRZE'){
                                 messageData = {
-                                    ['osal']: '0180',
-                                    ['osau']: '0180',
+                                    //['osal']: '0180',
+                                    //['osau']: '0180',
                                     ['ancp']: 'BRZE',
                                     ['oson']: 'ON'
                                 };
@@ -236,12 +236,18 @@ class dysonAirPurifier extends utils.Adapter {
                             devices[mqttDevice].ProductType + '/' + thisDevice + '/command',
                             JSON.stringify(message)
                         );
-                        // refresh data asap to avoid 30 Sec gap
-                        devices[mqttDevice].mqttClient.publish(
-                            devices[mqttDevice].ProductType + '/' + devices[mqttDevice].Serial + '/command', JSON.stringify({
-                                msg: 'REQUEST-CURRENT-STATE',
-                                time: new Date().toISOString()
-                            }));
+                        // refresh data with a delay of 250 ms to avoid 30 Sec gap
+                        /*
+                        setTimeout(() => {
+                            this.log.info('requesting new state of device (' + thisDevice + ').');
+                            devices[mqttDevice].mqttClient.publish(
+                                devices[mqttDevice].ProductType + '/' + thisDevice + '/command', JSON.stringify({
+                                    msg: 'REQUEST-CURRENT-STATE',
+                                    time: new Date().toISOString()
+                                }));
+                        }, 250);
+
+                         */
                     }
                 }
             }
@@ -431,7 +437,7 @@ class dysonAirPurifier extends utils.Adapter {
                 return;
             }
             // Handle all other message types
-            this.log.debug('Processing Message: ' + ((typeof message === 'object')? JSON.stringify(message) : message) );
+            this.log.debug(`Processing item [${JSON.stringify(row)}] of Message: ${((typeof message === 'object')? JSON.stringify(message) : message)}` );
             const deviceConfig = await this.getDatapoint(row);
             if ( deviceConfig === undefined){
                 this.log.debug(`Skipped creating unknown data field for Device:[${device.Serial}], Field: [${row}] Value:[${((typeof( message[row] ) === 'object')? JSON.stringify(message[row]) : message[row])}]`);
@@ -472,8 +478,12 @@ class dysonAirPurifier extends utils.Adapter {
                         break;
                 }
             } else if (deviceConfig[3]==='boolean' && deviceConfig[5].startsWith('switch')) {
-                value = (message[deviceConfig[0]] === 'ON' || message[deviceConfig[0]] === 'HUMD');
+                // testValue should be the 2nd value in an array or if it's no array, the value itself
+                const testValue = ( typeof message[deviceConfig[0]] === 'object'? message[deviceConfig[0]][1] : message[deviceConfig[0]] );
+                this.log.debug(`${deviceConfig[1]} is a bool switch. Current state: [${testValue}]`);
+                value = (testValue === 'ON' || testValue === 'HUMD');
             } else {
+                // It's no bool switch
                 value = message[deviceConfig[0]];
             }
             // during state-change message only changed values are being updated
