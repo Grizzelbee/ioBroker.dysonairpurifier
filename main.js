@@ -157,25 +157,40 @@ class dysonAirPurifier extends utils.Adapter {
                     await dysonUtils.getAngles(this, dysonAction, id, state)
                         .then((result) => {
                             this.log.debug(`Result of getAngles: ${JSON.stringify(result)}`);
-                            result.ancp = (result.ancp.val==='CUST'? 90 : Number.parseInt(result.ancp.val));
-                            this.log.debug(`Result of parseInt(result.ancp.val): ${result.ancp}, typeof: ${typeof result.ancp }`);
-                            result.osal = Number.parseInt(result.osal.val);
-                            result.osau = Number.parseInt(result.osau.val);
-                            if (result.osal + result.ancp > 355) {
-                                result.osau = 355;
-                                result.osal = 355 - result.ancp;
-                            } else if (result.osau - result.ancp < 5) {
-                                result.osal = 5;
-                                result.osau = 5 + result.ancp;
-                            } else {
-                                result.osau = result.osal + result.ancp;
+                            switch (result.ancp.val) {
+                                case 'CUST': result.ancp = 90;
+                                    break;
+                                case 'BRZE':result.ancp = 'BRZE';
+                                    break;
+                                default: result.ancp = Number.parseInt(result.ancp.val);
                             }
-                            messageData = {
-                                ['osal']: dysonUtils.zeroFill(result.osal, 4),
-                                ['osau']: dysonUtils.zeroFill(result.osau, 4),
-                                ['ancp']: 'CUST',
-                                ['oson']: 'ON'
-                            };
+                            if (result.ancp === 'BRZE'){
+                                messageData = {
+                                    //['osal']: '0180',
+                                    //['osau']: '0180',
+                                    ['ancp']: 'BRZE',
+                                    ['oson']: 'ON'
+                                };
+                            } else {
+                                this.log.debug(`Result of parseInt(result.ancp.val): ${result.ancp}, typeof: ${typeof result.ancp }`);
+                                result.osal = Number.parseInt(result.osal.val);
+                                result.osau = Number.parseInt(result.osau.val);
+                                if (result.osal + result.ancp > 355) {
+                                    result.osau = 355;
+                                    result.osal = 355 - result.ancp;
+                                } else if (result.osau - result.ancp < 5) {
+                                    result.osal = 5;
+                                    result.osau = 5 + result.ancp;
+                                } else {
+                                    result.osau = result.osal + result.ancp;
+                                }
+                                messageData = {
+                                    ['osal']: dysonUtils.zeroFill(result.osal, 4),
+                                    ['osau']: dysonUtils.zeroFill(result.osau, 4),
+                                    ['ancp']: 'CUST',
+                                    ['oson']: 'ON'
+                                };
+                            }
                         })
                         .catch(() => {
                             this.log.error('An error occurred while trying to retrieve the oscillation angles.');
@@ -221,12 +236,18 @@ class dysonAirPurifier extends utils.Adapter {
                             devices[mqttDevice].ProductType + '/' + thisDevice + '/command',
                             JSON.stringify(message)
                         );
-                        // refresh data asap to avoid 30 Sec gap
-                        devices[mqttDevice].mqttClient.publish(
-                            devices[mqttDevice].ProductType + '/' + devices[mqttDevice].Serial + '/command', JSON.stringify({
-                                msg: 'REQUEST-CURRENT-STATE',
-                                time: new Date().toISOString()
-                            }));
+                        // refresh data with a delay of 250 ms to avoid 30 Sec gap
+                        /*
+                        setTimeout(() => {
+                            this.log.info('requesting new state of device (' + thisDevice + ').');
+                            devices[mqttDevice].mqttClient.publish(
+                                devices[mqttDevice].ProductType + '/' + thisDevice + '/command', JSON.stringify({
+                                    msg: 'REQUEST-CURRENT-STATE',
+                                    time: new Date().toISOString()
+                                }));
+                        }, 250);
+
+                         */
                     }
                 }
             }
@@ -348,6 +369,7 @@ class dysonAirPurifier extends utils.Adapter {
             this.log.debug('Got Host-Address-object [' + JSON.stringify(hostAddress) + '] for device: ' + device.Serial);
             if (hostAddress  && hostAddress.val && hostAddress.val !== '') {
                 this.log.debug('Found valid Host-Address [' + hostAddress.val + '] for device: ' + device.Serial);
+                device.hostAddress = hostAddress.val;
                 this.createOrExtendObject(device.Serial + '.Hostaddress', {
                     type: 'state',
                     common: {
@@ -371,7 +393,7 @@ class dysonAirPurifier extends utils.Adapter {
                         'type': 'string'
                     },
                     native: {}
-                }, device.Serial);
+                }, '');
             }
         } catch(error){
             this.log.error('[CreateOrUpdateDevice] Error: ' + error + ', Callstack: ' + error.stack);
@@ -415,7 +437,7 @@ class dysonAirPurifier extends utils.Adapter {
                 return;
             }
             // Handle all other message types
-            this.log.debug('Processing Message: ' + ((typeof message === 'object')? JSON.stringify(message) : message) );
+            this.log.debug(`Processing item [${JSON.stringify(row)}] of Message: ${((typeof message === 'object')? JSON.stringify(message) : message)}` );
             const deviceConfig = await this.getDatapoint(row);
             if ( deviceConfig === undefined){
                 this.log.debug(`Skipped creating unknown data field for Device:[${device.Serial}], Field: [${row}] Value:[${((typeof( message[row] ) === 'object')? JSON.stringify(message[row]) : message[row])}]`);
@@ -456,8 +478,12 @@ class dysonAirPurifier extends utils.Adapter {
                         break;
                 }
             } else if (deviceConfig[3]==='boolean' && deviceConfig[5].startsWith('switch')) {
-                value = (message[deviceConfig[0]] === 'ON' || message[deviceConfig[0]] === 'HUMD');
+                // testValue should be the 2nd value in an array or if it's no array, the value itself
+                const testValue = ( typeof message[deviceConfig[0]] === 'object'? message[deviceConfig[0]][1] : message[deviceConfig[0]] );
+                this.log.debug(`${deviceConfig[1]} is a bool switch. Current state: [${testValue}]`);
+                value = (testValue === 'ON' || testValue === 'HUMD');
             } else {
+                // It's no bool switch
                 value = message[deviceConfig[0]];
             }
             // during state-change message only changed values are being updated
@@ -715,13 +741,14 @@ class dysonAirPurifier extends utils.Adapter {
                 for (const thisDevice in devices) {
                     await this.CreateOrUpdateDevice(devices[thisDevice]);
                     // Initializes the MQTT client for local communication with the thisDevice
-                    if (!devices[thisDevice].hostAddress || devices[thisDevice].hostAddress === '' || devices[thisDevice].hostAddress === 'undefined' || typeof devices[thisDevice].hostAddress === undefined) {
+                    this.log.debug(`Result of CreateOrUpdateDevice: [${JSON.stringify( devices[thisDevice] )}]`);
+                    if (!devices[thisDevice].hostAddress || devices[thisDevice].hostAddress === '' || devices[thisDevice].hostAddress === 'undefined' || typeof devices[thisDevice].hostAddress === 'undefined') {
                         adapter.log.info('No host address given. Trying to connect to the device with it\'s default hostname [' + devices[thisDevice].Serial + ']. This should work if you haven\'t changed it and if you\'re running a DNS.');
                         devices[thisDevice].hostAddress = devices[thisDevice].Serial;
                     }
                     // subscribe to changes on host address to re-init adapter on changes
-                    this.log.debug('Subscribing for state changes on :' + devices[thisDevice].Serial + '.Hostaddress');
-                    this.subscribeStates(devices[thisDevice].Serial + '.Hostaddress');
+                    this.log.debug('Subscribing for state changes on :' + devices[thisDevice].Serial + '.hostAddress');
+                    this.subscribeStates(devices[thisDevice].Serial + '.hostAddress');
                     // connect to device
                     adapterLog.info(`Trying to connect to device [${devices[thisDevice].Serial}] via MQTT on host address [${devices[thisDevice].hostAddress}].`);
                     devices[thisDevice].mqttClient = mqtt.connect('mqtt://' + devices[thisDevice].hostAddress, {
