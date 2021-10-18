@@ -363,6 +363,7 @@ class dysonAirPurifier extends utils.Adapter {
             this.log.debug('Got Host-Address-object [' + JSON.stringify(hostAddress) + '] for device: ' + device.Serial);
             if (hostAddress  && hostAddress.val && hostAddress.val !== '') {
                 this.log.debug('Found valid Host-Address [' + hostAddress.val + '] for device: ' + device.Serial);
+                device.hostAddress = hostAddress.val;
                 this.createOrExtendObject(device.Serial + '.Hostaddress', {
                     type: 'state',
                     common: {
@@ -386,7 +387,7 @@ class dysonAirPurifier extends utils.Adapter {
                         'type': 'string'
                     },
                     native: {}
-                }, device.Serial);
+                }, '');
             }
         } catch(error){
             this.log.error('[CreateOrUpdateDevice] Error: ' + error + ', Callstack: ' + error.stack);
@@ -730,13 +731,14 @@ class dysonAirPurifier extends utils.Adapter {
                 for (const thisDevice in devices) {
                     await this.CreateOrUpdateDevice(devices[thisDevice]);
                     // Initializes the MQTT client for local communication with the thisDevice
-                    if (!devices[thisDevice].hostAddress || devices[thisDevice].hostAddress === '' || devices[thisDevice].hostAddress === 'undefined' || typeof devices[thisDevice].hostAddress === undefined) {
+                    this.log.debug(`Result of CreateOrUpdateDevice: [${JSON.stringify( devices[thisDevice] )}]`);
+                    if (!devices[thisDevice].hostAddress || devices[thisDevice].hostAddress === '' || devices[thisDevice].hostAddress === 'undefined' || typeof devices[thisDevice].hostAddress === 'undefined') {
                         adapter.log.info('No host address given. Trying to connect to the device with it\'s default hostname [' + devices[thisDevice].Serial + ']. This should work if you haven\'t changed it and if you\'re running a DNS.');
                         devices[thisDevice].hostAddress = devices[thisDevice].Serial;
                     }
                     // subscribe to changes on host address to re-init adapter on changes
-                    this.log.debug('Subscribing for state changes on :' + devices[thisDevice].Serial + '.Hostaddress');
-                    this.subscribeStates(devices[thisDevice].Serial + '.Hostaddress');
+                    this.log.debug('Subscribing for state changes on :' + devices[thisDevice].Serial + '.hostAddress');
+                    this.subscribeStates(devices[thisDevice].Serial + '.hostAddress');
                     // connect to device
                     adapterLog.info(`Trying to connect to device [${devices[thisDevice].Serial}] via MQTT on host address [${devices[thisDevice].hostAddress}].`);
                     devices[thisDevice].mqttClient = mqtt.connect('mqtt://' + devices[thisDevice].hostAddress, {
