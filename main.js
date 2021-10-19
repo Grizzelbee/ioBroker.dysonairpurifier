@@ -866,7 +866,8 @@ class dysonAirPurifier extends utils.Adapter {
             }
         } catch (error) {
             this.setState('info.connection', false, true);
-            adapterLog.error(`[main()] error: ${error.message}, stack: ${error.stack}`);
+            adapterLog.error(`[main] Error while querying devices from dyson servers. The most common issue is that you haven't finished the 2FA process. Please refer to the ReadMe for instructions.`);
+            adapterLog.error(`[main] error: ${error}, stack: ${error.stack}`);
         }
     }
 
