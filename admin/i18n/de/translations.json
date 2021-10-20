@@ -36,5 +36,6 @@
     "keepValues_desc": "Behalten Sie alte Sensorwerte bei, wenn die kontinuierliche Überwachung ausgeschaltet ist.",
     "password_desc": "Passwort Ihres Dyson-Kontos.",
     "switzerland": "Schweiz",
-    "temperatureUnit_desc": "Einheit zur Anzeige der Temperatur."
+    "temperatureUnit_desc": "Einheit zur Anzeige der Temperatur.",
+    "token_inside": "Ein Token wurde empfangen und gespeichert."
 }

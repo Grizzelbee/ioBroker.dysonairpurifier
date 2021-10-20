@@ -36,5 +36,6 @@
     "keepValues_desc": "连续监控关闭时，请保留旧的传感器值。",
     "password_desc": "dyson帐户的密码。",
     "switzerland": "瑞士",
-    "temperatureUnit_desc": "显示温度的单位。"
+    "temperatureUnit_desc": "显示温度的单位。",
+    "token_inside": "已接收并存储令牌。"
 }

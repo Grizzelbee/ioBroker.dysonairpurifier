@@ -37,6 +37,11 @@
                         $key.prop('checked', settings[id])
                             .on('change', () => onChange());
                     } else {
+                        if (id === 'token'){
+                            if (settings[id] != '') {
+                                document.getElementById("token_inside").checked=true;
+                            }
+                        }
                         if (id === 'Password') {
                             // get the system secret for pwd de-/encryption
                             socket.emit('getObject', 'system.config', function (err, obj) {
@@ -154,6 +159,7 @@
                     } else if (response.token){
                         console.log(`Setting token [${JSON.stringify(response)}] to input.`);
                         $('input[id=token]').val(response.token).change();
+                        document.getElementById("token_inside").checked=true;
                         if (M) M.updateTextFields();
                         showMessage(`Received token [${JSON.stringify(response)}] from dyson and saved it to config.`);
                     }
@@ -245,11 +251,16 @@
                     <label class="translate" for="dyson_code">Lbl_dyson_code</label>
                     <span class="translate">dyson_code_desc</span>
                 </div>
+                <div class="input field col s6 m4">
+                    </br></br>
+                    <input type="checkbox" id="token_inside" class="value" onclick="return false;" onkeydown="return false;" disabled="true"/>
+                    <span for="token_inside"  class="translate">token_inside</span>
+                    </br>
+                </div>
                 <div class="input-field col s12 m4 hide">
                     <input class="value hide" id="token" type="text">
                     <label class="translate hide" for="token">Lbl_token</label>
                 </div>
-
             </div>
             <div class="row">
                 <div class="col s12 m12"> <!--s12 m4 l2 -->
