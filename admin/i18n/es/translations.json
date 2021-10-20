@@ -36,5 +36,6 @@
     "keepValues_desc": "mantenga los valores de los sensores antiguos cuando la monitorización continua esté desactivada.",
     "password_desc": "Contraseña de su cuenta de dyson.",
     "switzerland": "Suiza",
-    "temperatureUnit_desc": "Unidad para mostrar la temperatura."
+    "temperatureUnit_desc": "Unidad para mostrar la temperatura.",
+    "token_inside": "Se ha recibido y almacenado un token."
 }

@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "2.1.3",
+        "version": "2.1.4",
         "news": {
+            "2.1.4": {
+                "en": "Added token-indicator to config page.",
+                "de": "Token-Indikator zur Konfigurationsseite hinzugefügt.",
+                "ru": "На страницу конфигурации добавлен токен-индикатор.",
+                "pt": "Adicionado indicador de token à página de configuração.",
+                "nl": "Token-indicator toegevoegd aan configuratiepagina.",
+                "fr": "Ajout d'un indicateur de jeton à la page de configuration.",
+                "it": "Aggiunto indicatore di token alla pagina di configurazione.",
+                "es": "Se agregó un indicador de token a la página de configuración.",
+                "pl": "Dodano wskaźnik tokena do strony konfiguracji.",
+                "zh-cn": "向配置页面添加了令牌指示器。"
+            },
             "2.1.3": {
                 "en": "Bugfix release!\nHostaddress is used properly when given.\nOscillationAngle \"Breeze\" is working now\nStrange delay and jumping of boolean switches is fixed",
                 "de": "Bugfix-Release! \nHostadresse wird korrekt verwendet, wenn sie angegeben wird. \nOscillationAngle \"Breeze\" funktioniert jetzt \nSeltsame Verzögerung und Springen von Booleschen Schaltern wurde behoben",
