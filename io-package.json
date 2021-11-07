@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "2.1.4",
+        "version": "2.2.0",
         "news": {
+            "2.2.0": {
+                "en": "Added support for dyson PH03 humidify+cool (358E).",
+                "de": "Unterstützung für Dyson PH03 humidify+cool (358E) hinzugefügt.",
+                "ru": "Добавлена ​​поддержка dyson PH03 humidify + cool (358E).",
+                "pt": "Adicionado suporte para dyson PH03 humidify + cool (358E).",
+                "nl": "Ondersteuning toegevoegd voor dyson PH03 humidify+cool (358E).",
+                "fr": "Ajout de la prise en charge du dyson PH03 humidify+cool (358E).",
+                "it": "Aggiunto supporto per dyson PH03 humidify+cool (358E).",
+                "es": "Se agregó soporte para dyson PH03 humidify + cool (358E).",
+                "pl": "Dodano wsparcie dla Dyson PH03 humidify+cool (358E).",
+                "zh-cn": "添加了对戴森 PH03 加湿+冷却 (358E) 的支持。"
+            },
             "2.1.4": {
                 "en": "Added token-indicator to config page.",
                 "de": "Token-Indikator zur Konfigurationsseite hinzugefügt.",
