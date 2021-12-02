@@ -129,7 +129,7 @@
                         break;
                 }
                 sendTo(null, 'getDyson2faMail', payload, (response) => {
-                    JSON.stringify('Response: ' + response);
+                    //JSON.stringify('Response: ' + response);
                     if (response.error) {
                         console.log('Error: ' + typeof response.error === 'object'? JSON.stringify(response.error): response.error);
                         showError('Error: ' + typeof response.error === 'object'? JSON.stringify(response.error): response.error);

@@ -112,7 +112,7 @@ class dysonAirPurifier extends utils.Adapter {
                     for (const mqttDevice in devices){
                         //noinspection JSUnresolvedVariable
                         if (devices[mqttDevice].Serial === thisDevice){
-                            if (!state.val || typeof state.val === undefined || state.val === '') {
+                            if (!state.val || typeof state.val === 'undefined' || state.val === '') {
                                 devices[mqttDevice].Hostaddress = thisDevice;
                             } else {
                                 devices[mqttDevice].Hostaddress = state.val;
@@ -801,6 +801,7 @@ class dysonAirPurifier extends utils.Adapter {
                         payload = JSON.parse(payload.toString());
                         adapterLog.debug('MessageType: ' + payload.msg);
                         switch (payload.msg) {
+                            case 'STATE-CHANGE':
                             case 'CURRENT-STATE' :
                                 await adapter.processMsg(devices[thisDevice], '', payload);
                                 break;
@@ -817,9 +818,6 @@ class dysonAirPurifier extends utils.Adapter {
                                     native: {}
                                 }, null);
                                 await adapter.processMsg(devices[thisDevice], '.Sensor', payload);
-                                break;
-                            case 'STATE-CHANGE':
-                                await adapter.processMsg(devices[thisDevice], '', payload);
                                 break;
                         }
                         //noinspection JSUnresolvedVariable
