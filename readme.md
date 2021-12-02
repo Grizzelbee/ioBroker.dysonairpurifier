@@ -143,7 +143,7 @@ Which is what the dyson app does also.
 
 ## Changelog
 
-### V2.3.0 (2021-11-26) (Welcome to my wasteland)
+### V2.3.0 (2021-12-02) (Fairytale of doom)
 * (grizzelbee) New: Added some GUI elements for air quality in folder icons
 * (grizzelbee) New: Added support for HEPA PTFE filters
 * (grizzelbee) New: Added support for Combined PTFE filters
