@@ -320,7 +320,7 @@ Which is what the dyson app does also.
 * (grizzelbee) Fix: Added missing clearTimeout
 
 ### V0.5.0 (2020-10-27) (Heart of the hurricane)
-* (grizzelbee) New: Editable data fields have now appropiate value lists
+* (grizzelbee) New: Editable data fields have now appropriate value lists
 * (grizzelbee) New: Added more country codes
 * (grizzelbee) New: Target temperature of heater can now be set - **in the configured unit!**
 * (grizzelbee) Fix: [#13](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/13) - Filter life value is now displayed in percent not in hours
