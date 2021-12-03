@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "2.2.0",
+        "version": "2.3.0",
         "news": {
+            "2.3.0": {
+                "en": "Fanspeed is now a number (not string anymore) to work properly with IoT-Adapter\nPlease delete this data point and let get recreated\nAdded some GUI elements for air quality in folder icons",
+                "de": "Fanspeed ist jetzt eine Zahl (kein String mehr) um mit dem IoT-Adapter richtig zu funktionieren \nBitte diesen Datenpunkt löschen und neu erstellen lassen \nEinige GUI-Elemente für die Luftqualität im Ordner 'icons' hinzugefügt",
+                "ru": "Fanspeed теперь является числом (больше не строкой) для правильной работы с IoT-адаптером \n Удалите эту точку данных и дайте ей воссоздать \n Добавлены некоторые элементы графического интерфейса для качества воздуха в значки папок",
+                "pt": "Fanspeed agora é um número (não é mais uma string) para funcionar corretamente com o adaptador IoT \n Exclua este ponto de dados e deixe ser recriado \n Adicionados alguns elementos de GUI para a qualidade do ar nos ícones de pasta",
+                "nl": "Fanspeed is nu een nummer (geen string meer) om goed te werken met IoT-Adapter\nVerwijder dit datapunt en laat het opnieuw maken\nVoeg enkele GUI-elementen toe voor luchtkwaliteit in mappictogrammen",
+                "fr": "La vitesse du ventilateur est maintenant un nombre (plus une chaîne) pour fonctionner correctement avec l'adaptateur IoT \n Veuillez supprimer ce point de données et laissez-le être recréé \n Ajout de quelques éléments d'interface graphique pour la qualité de l'air dans les icônes de dossier",
+                "it": "Fanspeed ora è un numero (non più una stringa) per funzionare correttamente con l'adattatore IoT \n Elimina questo punto dati e lascia che venga ricreato \n Aggiunti alcuni elementi della GUI per la qualità dell'aria nelle icone delle cartelle",
+                "es": "Fanspeed ahora es un número (ya no una cadena) para funcionar correctamente con el Adaptador de IoT \n Elimine este punto de datos y deje que se vuelva a crear \n Se agregaron algunos elementos GUI para la calidad del aire en los íconos de la carpeta",
+                "pl": "Prędkość wentylatora jest teraz liczbą (nie ciągiem), która działa poprawnie z adapterem IoT \n Usuń ten punkt danych i pozwól się odtworzyć \n Dodano kilka elementów GUI dla jakości powietrza w ikonach folderów",
+                "zh-cn": "Fanspeed 现在是一个数字（不再是字符串），可以与 IoT-Adapter 正常工作\n请删除此数据点并重新创建\n在文件夹图标中添加了一些用于空气质量的 GUI 元素"
+            },
             "2.2.0": {
                 "en": "Added support for dyson PH03 humidify+cool (358E).",
                 "de": "Unterstützung für Dyson PH03 humidify+cool (358E) hinzugefügt.",

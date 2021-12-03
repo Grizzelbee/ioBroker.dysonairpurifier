@@ -11,7 +11,7 @@ module.exports.HTTP_HEADERS = {
     'Content-Type': 'application/json'
 };
 
-const FILTERTYPES = {'GCOM':'Combined', 'GHEP':'HEPA', 'CARF':'Activated carbon'};
+const FILTERTYPES = {'GCOM':'Combined', 'PCOM':'Combined PTFE', 'GHEP':'HEPA', 'PHEP':'HEPA PTFE', 'CARF':'Activated carbon'};
 const BOOL_SWITCH = {false:'Off', true:'On'};
 
 module.exports.LOAD_FROM_PRODUCTS=999;
@@ -37,7 +37,7 @@ module.exports.DATAPOINTS = [
     ['ercd' , 'LastErrorCode'             , 'Error code of the last error occurred on this device'                          , 'string',  'false', 'text'              ,''  ],
     ['filf' , 'FilterLife'                , 'Estimated remaining filter life in hours.'                                     , 'number',  'false', 'value'             , 'hours' ],
     ['fmod' , 'FanMode'                   , 'Mode of device'                                                                , 'string',  'true',  'switch'            ,'', {'FAN':'Manual', 'AUTO':'Auto', 'OFF':'Off'} ],
-    ['fnsp' , 'FanSpeed'                  , 'Current fan speed'                                                             , 'string',  'true',  'switch'            ,'', {'AUTO':'Auto', '0001':'1', '0002':'2', '0003':'3', '0004':'4', '0005':'5', '0006':'6', '0007':'7', '0008':'8', '0009':'9', '0010':'10' } ],
+    ['fnsp' , 'FanSpeed'                  , 'Current fan speed'                                                             , 'number',  'true',  'value'            ,'' ],
     ['fnst' , 'FanStatus'                 , 'Current Fan state; correlating to Auto-mode'                                   , 'string',  'false', 'text'              ,'' ],
     ['nmod' , 'Nightmode'                 , 'Night mode state'                                                              , 'boolean', 'true',  'switch.mode.moonlight'  ,'', BOOL_SWITCH ],
     ['qtar' , 'AirQualityTarget'          , 'Target Air quality for Auto Mode.'                                             , 'string',  'true', 'text'              ,'', {'0001':'0001', '0002':'0002', '0003':'0003', '0004':'0004'}  ],

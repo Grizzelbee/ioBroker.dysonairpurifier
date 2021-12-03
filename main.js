@@ -112,7 +112,7 @@ class dysonAirPurifier extends utils.Adapter {
                     for (const mqttDevice in devices){
                         //noinspection JSUnresolvedVariable
                         if (devices[mqttDevice].Serial === thisDevice){
-                            if (!state.val || typeof state.val === undefined || state.val === '') {
+                            if (!state.val || typeof state.val === 'undefined' || state.val === '') {
                                 devices[mqttDevice].Hostaddress = thisDevice;
                             } else {
                                 devices[mqttDevice].Hostaddress = state.val;
@@ -127,13 +127,16 @@ class dysonAirPurifier extends utils.Adapter {
                         }
                     }
                     break;
-                case 'fnsp' :
-                    // when AUTO set AUTO to true also
-                    if (state.val === 'AUTO') {
-                        // add second value to message to get auto mode working
-                        messageData.auto = 'ON';
+                case 'fnsp' : {
+                    // protect upper and lower speed limit of fan
+                    const value = Number.parseInt(state.val, 10);
+                    if (value < 1) {
+                        messageData = {'fnsp': '0001'};
+                    } else if (value > 10) {
+                        messageData = {'fnsp': '0010'};
                     }
                     break;
+                }
                 case 'hmax':{
                     // Target temperature for heating in KELVIN!
                     // convert temperature to configured unit
@@ -230,14 +233,14 @@ class dysonAirPurifier extends utils.Adapter {
                 for (const mqttDevice in devices){
                     //noinspection JSUnresolvedVariable
                     if (devices[mqttDevice].Serial === thisDevice){
-                        this.log.debug('MANUAL CHANGE: device [' + thisDevice + '] -> [' + action +'] -> [' + state.val + ']');
+                        this.log.debug(`MANUAL CHANGE: device [${thisDevice}] -> [${action}] -> [${state.val}], id: [${id}]`);
                         this.log.info('SENDING this data to device (' + thisDevice + '): ' + JSON.stringify(message));
+                        this.setState(id, state.val, true);
                         devices[mqttDevice].mqttClient.publish(
                             devices[mqttDevice].ProductType + '/' + thisDevice + '/command',
                             JSON.stringify(message)
                         );
                         // refresh data with a delay of 250 ms to avoid 30 Sec gap
-                        /*
                         setTimeout(() => {
                             this.log.info('requesting new state of device (' + thisDevice + ').');
                             devices[mqttDevice].mqttClient.publish(
@@ -245,9 +248,7 @@ class dysonAirPurifier extends utils.Adapter {
                                     msg: 'REQUEST-CURRENT-STATE',
                                     time: new Date().toISOString()
                                 }));
-                        }, 250);
-
-                         */
+                        }, 100);
                     }
                 }
             }
@@ -800,6 +801,7 @@ class dysonAirPurifier extends utils.Adapter {
                         payload = JSON.parse(payload.toString());
                         adapterLog.debug('MessageType: ' + payload.msg);
                         switch (payload.msg) {
+                            case 'STATE-CHANGE':
                             case 'CURRENT-STATE' :
                                 await adapter.processMsg(devices[thisDevice], '', payload);
                                 break;
@@ -816,9 +818,6 @@ class dysonAirPurifier extends utils.Adapter {
                                     native: {}
                                 }, null);
                                 await adapter.processMsg(devices[thisDevice], '.Sensor', payload);
-                                break;
-                            case 'STATE-CHANGE':
-                                await adapter.processMsg(devices[thisDevice], '', payload);
                                 break;
                         }
                         //noinspection JSUnresolvedVariable
