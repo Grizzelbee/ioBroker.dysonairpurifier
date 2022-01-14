@@ -223,7 +223,7 @@ class dysonAirPurifier extends utils.Adapter {
             }
             // only send to device if change should set a device value
             if (action !== 'Hostaddress'){
-                // build the message to be send to the device
+                // build the message to be sent to the device
                 const message = {'msg': 'STATE-SET',
                     'time': new Date().toISOString(),
                     'mode-reason': 'LAPP',
@@ -231,7 +231,6 @@ class dysonAirPurifier extends utils.Adapter {
                     'data': messageData
                 };
                 for (const mqttDevice in devices){
-                    //noinspection JSUnresolvedVariable
                     if (devices[mqttDevice].Serial === thisDevice){
                         this.log.debug(`MANUAL CHANGE: device [${thisDevice}] -> [${action}] -> [${state.val}], id: [${id}]`);
                         this.log.info('SENDING this data to device (' + thisDevice + '): ' + JSON.stringify(message));
