@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "2.3.0",
+        "version": "2.3.1",
         "news": {
+            "2.3.1": {
+                "en": "Updated documentation\nupdated dependecies",
+                "de": "Aktualisierte Dokumentation\naktualisierte Abhängigkeiten",
+                "ru": "Обновленная документация\nобновленные зависимости",
+                "pt": "Documentação atualizada\ndependências atualizadas",
+                "nl": "Bijgewerkte documentatie\nbijgewerkte afhankelijkheden",
+                "fr": "Documentation mise à jour\ndépendances mises à jour",
+                "it": "Documentazione aggiornata\ndipendenze aggiornate",
+                "es": "Documentación actualizada\ndependencias actualizadas",
+                "pl": "Zaktualizowana dokumentacja\nzaktualizowane zależności",
+                "zh-cn": "更新的文档\n更新的依赖项"
+            },
             "2.3.0": {
                 "en": "Fanspeed is now a number (not string anymore) to work properly with IoT-Adapter\nPlease delete this data point and let get recreated\nAdded some GUI elements for air quality in folder icons",
                 "de": "Fanspeed ist jetzt eine Zahl (kein String mehr) um mit dem IoT-Adapter richtig zu funktionieren \nBitte diesen Datenpunkt löschen und neu erstellen lassen \nEinige GUI-Elemente für die Luftqualität im Ordner 'icons' hinzugefügt",

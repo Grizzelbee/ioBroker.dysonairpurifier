@@ -149,6 +149,10 @@ Which is what the dyson app does also.
 
 ## Changelog
 
+### V2.3.1 (2022-01-14) (Fairytale of doom)
+* (grizzelbee) Upd: Updated dependencies
+* (grizzelbee) Upd: Updated documentation
+
 ### V2.3.0 (2021-12-02) (Fairytale of doom)
 * (grizzelbee) New: Added some GUI elements for air quality in folder icons
 * (grizzelbee) New: Added support for HEPA PTFE filters
@@ -512,4 +516,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Copyright (c) 2021 Hanjo Hingsen <open-source@hingsen.de>
+Copyright (c) 2020 .. 2022 Hanjo Hingsen <open-source@hingsen.de>
