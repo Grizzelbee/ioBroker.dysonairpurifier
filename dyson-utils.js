@@ -68,7 +68,7 @@ module.exports.getDyson2faMail = async function(adapter, email, passwd, country,
         }
     } catch(error){
         adapter.log.error('CATCH-getDyson2faMail: ' + stringify(error));
-        return {error : `Received error: [${error}] from dyson API.\n These credentials have been used during this request: Username: [${email}], Password: [${passwd}], country: [${country}], locale: [${locale}].\nIf these credentials are okay please contact the developer via iobroker forum or github.`};
+        return {error : `Received error: [${error}] from dyson API.\n These credentials have been used during this request: Username: [${email}], Password: [${passwd}], country: [${country}], locale: [${locale}].\nIf these credentials are okay and you are facing a 401 error, please refer to the adapters readme file for a documented solution.\nIf these credentials are okay and you are facing another error please contact the developer via iobroker forum or github.`};
     }
 };
 
@@ -297,7 +297,7 @@ module.exports.maskConfig = function (unmaskedConfig) {
 
 /**
  * Parse an incoming JSON message payload from the Dyson device
- * 
+ *
  * @param msg Incoming JSON message
  */
 module.exports.parseDysonMessage = function (msg) {
