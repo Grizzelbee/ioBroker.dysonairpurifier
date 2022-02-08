@@ -1004,6 +1004,7 @@ class dysonAirPurifier extends utils.Adapter {
             for (const thisDevice in devices)  {
                 clearTimeout(devices[thisDevice].updateIntervalHandle);
                 this.log.info('Cleaned up timeout for ' + devices[thisDevice].Serial + '.');
+                // todo unsubscribe to any subscribes
             }
             this.log.info('Cleaned up everything...');
             callback();
