@@ -14,8 +14,7 @@ const path = require('path');
 const https = require('https');
 const rootCas = require('ssl-root-cas').create();
 const httpsAgent = new https.Agent({ca: rootCas});
-const dns = require('dns');
-const ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+// const ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
 rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
 
 
@@ -247,26 +246,6 @@ module.exports.getDevices = async function(token, adapter) {
                         adapter.log.warn('Please open an Issue on github if you think your device should be supported.');
                     } else {
                         // productType is supported: Push to Array and create in devicetree
-
-
-                        dns.resolve(response.data[thisDevice].Serial,(err, addresses)=>{
-                            if (err) {
-                                adapter.log.error('Error on DNS lookup.');
-                            } else {
-                                if ( addresses.toString().match(ipformat) ){
-                                    adapter.log.info(`Device with serial number [${response.data[thisDevice].Serial}] has IP [${ addresses.toString() }].`);
-                                } else {
-                                    adapter.log.info(`[${response.data[thisDevice].Serial}]: No valid IP found.`);
-                                }
-
-                            }
-
-
-                        });
-
-
-
-
                         response.data[thisDevice].hostAddress = undefined;
                         response.data[thisDevice].mqttClient = null;
                         response.data[thisDevice].mqttPassword = this.decryptMqttPasswd(response.data[thisDevice].LocalCredentials);

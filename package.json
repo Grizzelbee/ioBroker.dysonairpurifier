@@ -26,7 +26,6 @@
     "@iobroker/adapter-core": "^2.5.1",
     "@iobroker/plugin-sentry": "^1.1.10",
     "axios": "^0.25.0",
-    "dns": "^0.2.2",
     "flatted": "^3.2.5",
     "https": "^1.0.0",
     "lodash": "^4.17.21",
