@@ -14,6 +14,7 @@ const path = require('path');
 const https = require('https');
 const rootCas = require('ssl-root-cas').create();
 const httpsAgent = new https.Agent({ca: rootCas});
+// const ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
 rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
 
 
