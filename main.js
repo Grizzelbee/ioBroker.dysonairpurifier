@@ -65,8 +65,8 @@ class dysonAirPurifier extends utils.Adapter {
                 dysonUtils.getDyson2faMail(this, msg.message.email, msg.message.password, msg.message.country, msg.message.locale)
                     .then((response) => this.sendTo(msg.from, msg.command, response, msg.callback))
                     .catch((e) => {
-                        this.log.warn(`Couldn't handle getDyson2faMail message: ${e}`);
-                        this.sendTo(msg.from, msg.command, { error: e || 'No data' }, msg.callback);
+                        adapter.log.warn(`Couldn't handle getDyson2faMail message: ${e}`);
+                        adapter.sendTo(msg.from, msg.command, { error: e || 'No data' }, msg.callback);
                     });
             }
             if (msg.command === 'getDysonToken') {
@@ -74,8 +74,8 @@ class dysonAirPurifier extends utils.Adapter {
                 dysonUtils.getDysonToken(this, msg.message.email, msg.message.password,msg.message.country, msg.message.challengeId, msg.message.PIN)
                     .then((response) => this.sendTo(msg.from, msg.command, response, msg.callback))
                     .catch((e) => {
-                        this.log.warn(`Couldn't handle getDysonToken message: ${e}`);
-                        this.sendTo(msg.from, msg.command, { error: e || 'No data' }, msg.callback);
+                        adapter.log.warn(`Couldn't handle getDysonToken message: ${e}`);
+                        adapter.sendTo(msg.from, msg.command, { error: e || 'No data' }, msg.callback);
                     });
             }
         }
