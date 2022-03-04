@@ -162,6 +162,12 @@ Which is what the dyson app does also.
 
 ## Changelog
 
+
+
+### V2.3.2 (2022-03-04) (Fairytale of doom)
+* (grizzelbee) Fix: Fixed: Sentry-Error: [DYSONAIRPURIFIER-D](https://sentry.io/organizations/grizzelbee/issues/3021418514)
+* (grizzelbee) Upd: Updated dependencies
+
 ### V2.3.1 (2022-01-14) (Fairytale of doom)
 * (grizzelbee) Upd: Updated dependencies
 * (grizzelbee) Upd: Updated documentation

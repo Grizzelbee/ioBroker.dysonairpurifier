@@ -1,10 +1,22 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "2.3.1",
+        "version": "2.3.2",
         "news": {
+            "2.3.2": {
+                "en": "Fixed sentry-error DYSONAIRPURIFIER-D\nupdated dependencies",
+                "de": "Sentry-Fehler DYSONAIRPURIFIER-D behoben\nAbhängigkeiten aktualisiert",
+                "ru": "Исправлена ​​ошибка Sentry-DYSONAIRPURIFIER-D\nобновлены зависимости",
+                "pt": "Corrigido o erro de sentinela DYSONAIRPURIFIER-D \n dependências atualizadas",
+                "nl": "Vaste schildwachtfout DYSONAIRPURIFIER-D\nbijgewerkte afhankelijkheden",
+                "fr": "Correction de l'erreur sentinelle DYSONAIRPURIFIER-D \n dépendances mises à jour",
+                "it": "Risolto errore di sentinella DYSONAIRPURIFIER-D\ndipendenze aggiornate",
+                "es": "Se corrigió el error de centinela DYSONAIRPURIFIER-D \n Dependencias actualizadas",
+                "pl": "Naprawiono błąd wartownika DYSONAIRPURIFIER-D \n zaktualizowane zależności",
+                "zh-cn": "修复了哨兵错误 DYSONAIRPURIFIER-D\n 更新了依赖项"
+            },
             "2.3.1": {
-                "en": "Updated documentation\nupdated dependecies",
+                "en": "Updated documentation\nupdated dependencies",
                 "de": "Aktualisierte Dokumentation\naktualisierte Abhängigkeiten",
                 "ru": "Обновленная документация\nобновленные зависимости",
                 "pt": "Documentação atualizada\ndependências atualizadas",
