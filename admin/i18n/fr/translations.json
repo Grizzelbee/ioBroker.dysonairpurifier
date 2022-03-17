@@ -27,6 +27,7 @@
     "btn_2fa_desc": "Cliquez sur ce bouton pour demander votre e-mail d'authentification à 2 facteurs.",
     "challengeId_desc": "Sera récupéré automatiquement de l'API dyson. ",
     "country_desc": "Code ISO du pays dans lequel vous avez créé votre compte dyson.",
+    "donation": "Si vous aimez cet adaptateur et envisagez de me soutenir :",
     "dyson_code_desc": "Entrez ici le code à 6 chiffres de l'e-mail dyson.",
     "email_desc": "l'adresse e-mail de votre compte dyson.",
     "finish_desc": "Cliquez sur ce bouton lorsque vous avez saisi le code de l'e-mail dyson.",
