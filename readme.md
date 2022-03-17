@@ -164,12 +164,12 @@ Which is what the dyson app does also.
 
 ## Changelog
 
-### V2.4.0 (2022-03-04) ()
-* (grizzelbee) New: Added warning codes to device tree
-* (grizzelbee) New: Queries Device-faults
+### V2.4.0 (2022-03-17) (Echo from the past)
+* (grizzelbee) New: Added warning code to device tree
+* (grizzelbee) New: Added Device-faults as SystemState to device tree
 * (grizzelbee) New: Added donate button to readme and config page
 * (grizzelbee) Upd: Switched "Sending data to device" message from loglevel info to debug
-* (grizzelbee) Upd: reduced amount od debug messages
+* (grizzelbee) Upd: reduced amount of debug messages
 * (grizzelbee) Upd: Updated dependencies
 
 
