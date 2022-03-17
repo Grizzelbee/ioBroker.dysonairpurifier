@@ -233,7 +233,7 @@ class dysonAirPurifier extends utils.Adapter {
                 for (const mqttDevice in devices){
                     if (devices[mqttDevice].Serial === thisDevice){
                         this.log.debug(`MANUAL CHANGE: device [${thisDevice}] -> [${action}] -> [${state.val}], id: [${id}]`);
-                        this.log.info('SENDING this data to device (' + thisDevice + '): ' + JSON.stringify(message));
+                        this.log.debug('SENDING this data to device (' + thisDevice + '): ' + JSON.stringify(message));
                         this.setState(id, state.val, true);
                         devices[mqttDevice].mqttClient.publish(
                             devices[mqttDevice].ProductType + '/' + thisDevice + '/command',
@@ -293,7 +293,7 @@ class dysonAirPurifier extends utils.Adapter {
     async CreateOrUpdateDevice(device){
         try {
             // create device folder
-            this.log.debug('Creating device folder.');
+            //this.log.debug('Creating device folder.');
             await this.createOrExtendObject(device.Serial, {
                 type: 'device',
                 common: {name: dysonConstants.PRODUCTS[device.ProductType].name, icon: dysonConstants.PRODUCTS[device.ProductType].icon, type:'string'},
@@ -301,7 +301,32 @@ class dysonAirPurifier extends utils.Adapter {
             }, null);
             await this.createOrExtendObject(device.Serial + '.Firmware', {
                 type: 'channel',
-                common: {name: 'Information on device\'s firmware', 'read': true, 'write': false, type:'string', role:'value'},
+                common: {name: 'Information on devices firmware', 'read': true, 'write': false, type:'string', role:'value'},
+                native: {}
+            }, null);
+            await this.createOrExtendObject(device.Serial + '.SystemState', {
+                type: 'folder',
+                common: {name: 'Information on devices system state (Filter, Water tank, ...)', 'read': true, 'write': false, type:'string', role:'value'},
+                native: {}
+            }, null);
+            await this.createOrExtendObject(device.Serial + '.SystemState.product-errors', {
+                type: 'channel',
+                common: {name: 'Information on devices product errors', 'read': true, 'write': false, type:'string', role:'value'},
+                native: {}
+            }, null);
+            await this.createOrExtendObject(device.Serial + '.SystemState.product-warnings', {
+                type: 'channel',
+                common: {name: 'Information on devices product-warnings', 'read': true, 'write': false, type:'string', role:'value'},
+                native: {}
+            }, null);
+            await this.createOrExtendObject(device.Serial + '.SystemState.module-errors', {
+                type: 'channel',
+                common: {name: 'Information on devices module-errors', 'read': true, 'write': false, type:'string', role:'value'},
+                native: {}
+            }, null);
+            await this.createOrExtendObject(device.Serial + '.SystemState.module-warnings', {
+                type: 'channel',
+                common: {name: 'Information on devices module-warnings', 'read': true, 'write': false, type:'string', role:'value'},
                 native: {}
             }, null);
             await this.createOrExtendObject(device.Serial + '.Firmware.Version', {
@@ -416,6 +441,9 @@ class dysonAirPurifier extends utils.Adapter {
                 await this.processMsg(device, '', message[row]);
                 return;
             }
+            if ( row === 'product-errors'  || row === 'product-warnings' || row === 'module-errors' || row === 'module-warnings'){
+                await this.processMsg(device, `${path}.${row}`, message[row]);
+            }
             // Is this a "data" message?
             if ( row === 'data'){
                 await this.processMsg(device, '.Sensor', message[row]);
@@ -437,7 +465,7 @@ class dysonAirPurifier extends utils.Adapter {
                 return;
             }
             // Handle all other message types
-            this.log.debug(`Processing item [${JSON.stringify(row)}] of Message: ${((typeof message === 'object')? JSON.stringify(message) : message)}` );
+            //this.log.debug(`Processing item [${JSON.stringify(row)}] of Message: ${((typeof message === 'object')? JSON.stringify(message) : message)}` );
             const deviceConfig = await this.getDatapoint(row);
             if ( deviceConfig === undefined){
                 this.log.debug(`Skipped creating unknown data field for Device:[${device.Serial}], Field: [${row}] Value:[${((typeof( message[row] ) === 'object')? JSON.stringify(message[row]) : message[row])}]`);
@@ -480,7 +508,7 @@ class dysonAirPurifier extends utils.Adapter {
             } else if (deviceConfig[3]==='boolean' && deviceConfig[5].startsWith('switch')) {
                 // testValue should be the 2nd value in an array or if it's no array, the value itself
                 const testValue = ( typeof message[deviceConfig[0]] === 'object'? message[deviceConfig[0]][1] : message[deviceConfig[0]] );
-                this.log.debug(`${deviceConfig[1]} is a bool switch. Current state: [${testValue}]`);
+                //this.log.debug(`${deviceConfig[1]} is a bool switch. Current state: [${testValue}]`);
                 value = (testValue === 'ON' || testValue === 'HUMD');
             } else {
                 // It's no bool switch
@@ -775,6 +803,18 @@ class dysonAirPurifier extends utils.Adapter {
                                 time: new Date().toISOString()
                             }));
                         });
+                        // Subscribes to the "faults" topic to receive updates on any faults and warnings
+                        devices[thisDevice].mqttClient.subscribe(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/status/faults', function () {
+                            // Sends an initial request for the current state
+                            devices[thisDevice].mqttClient.publish(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/command', JSON.stringify({
+                                msg: 'REQUEST-CURRENT-FAULTS',
+                                time: new Date().toISOString()
+                            }));
+                        });
+                        // Subscribes to the software topic to receive updates on any faults and warnings
+                        devices[thisDevice].mqttClient.subscribe(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/status/software', function () {});
+                        // Subscribes to the connection topic to receive updates on any faults and warnings
+                        devices[thisDevice].mqttClient.subscribe(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/status/connection', function () {});
                         // Sets the interval for status updates
                         adapterLog.info('Starting Polltimer with a ' + adapter.config.pollInterval + ' seconds interval.');
                         // start refresh scheduler with interval from adapters config
@@ -782,8 +822,16 @@ class dysonAirPurifier extends utils.Adapter {
                             //noinspection JSUnresolvedVariable
                             adapterLog.debug('Updating device [' + devices[thisDevice].Serial + '] (polling API scheduled).');
                             try {
+                                // possible messages:
+                                // msg: 'REQUEST-PRODUCT-ENVIRONMENT-CURRENT-SENSOR-DATA'
+                                // msg: 'REQUEST-CURRENT-FAULTS'
+                                // msg: 'REQUEST-CURRENT-STATE',
                                 devices[thisDevice].mqttClient.publish(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/command', JSON.stringify({
                                     msg: 'REQUEST-CURRENT-STATE',
+                                    time: new Date().toISOString()
+                                }));
+                                devices[thisDevice].mqttClient.publish(devices[thisDevice].ProductType + '/' + devices[thisDevice].Serial + '/command', JSON.stringify({
+                                    msg: 'REQUEST-CURRENT-FAULTS',
                                     time: new Date().toISOString()
                                 }));
                             } catch (error) {
@@ -803,6 +851,9 @@ class dysonAirPurifier extends utils.Adapter {
                             case 'STATE-CHANGE':
                             case 'CURRENT-STATE' :
                                 await adapter.processMsg(devices[thisDevice], '', payload);
+                                break;
+                            case 'CURRENT-FAULTS' :
+                                await adapter.processMsg(devices[thisDevice], '.SystemState', payload);
                                 break;
                             case 'ENVIRONMENTAL-CURRENT-SENSOR-DATA' :
                                 //noinspection JSUnresolvedVariable
