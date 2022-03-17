@@ -27,6 +27,7 @@
     "btn_2fa_desc": "单击此按钮以请求您的2因子验证电子邮件。",
     "challengeId_desc": "将自动从dyson API中检索。",
     "country_desc": "您创建戴森帐户所在国家/地区的ISO代码。",
+    "donation": "如果你喜欢这个适配器并考虑支持我：",
     "dyson_code_desc": "在此处输入dyson电子邮件中的6位数字代码。",
     "email_desc": "您的戴森帐户的电子邮件地址。",
     "finish_desc": "从dyson电子邮件中输入代码后，请单击此按钮。",

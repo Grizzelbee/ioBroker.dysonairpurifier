@@ -27,6 +27,7 @@
     "btn_2fa_desc": "Click this button to request your 2 factor authentication email.",
     "challengeId_desc": "Will be retrieved from dyson API automatically. No need to enter.",
     "country_desc": "ISO-Code of the country you created your dyson Account in.",
+    "donation": "If you like this adapter and consider supporting me:",
     "dyson_code_desc": "Enter the 6 digit code from the dyson email here.",
     "email_desc": "email address of your dyson account.",
     "finish_desc": "Click this button when you have entered the code from the dyson email.",

@@ -27,6 +27,7 @@
     "btn_2fa_desc": "Kliknij ten przycisk, aby zażądać wiadomości e-mail z uwierzytelnianiem dwuskładnikowym.",
     "challengeId_desc": "Zostanie automatycznie pobrany z dyson API. ",
     "country_desc": "Kod ISO kraju, w którym utworzyłeś swoje konto Dyson.",
+    "donation": "Jeśli podoba Ci się ten adapter i rozważ wsparcie mnie:",
     "dyson_code_desc": "Wpisz tutaj 6-cyfrowy kod z e-maila Dysona.",
     "email_desc": "adres e-mail twojego konta dyson.",
     "finish_desc": "Kliknij ten przycisk po wprowadzeniu kodu z e-maila Dyson.",

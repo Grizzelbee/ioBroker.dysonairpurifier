@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "2.3.2",
+        "version": "2.4.0",
         "news": {
+            "2.4.0": {
+                "en": "Added warning code to device tree\nAdded Device-faults as SystemState to device tree\nAdded donate button to readme and config page\nSwitched \"Sending data to device\" message from loglevel info to debug\nreduced amount of debug messages\nUpdated dependencies,",
+                "de": "Warncode zum Gerätebaum hinzugefügt\nGerätefehler als SystemState zum Gerätebaum hinzugefügt\nSpenden-Schaltfläche zur Readme- und Konfigurationsseite hinzugefügt\nMeldung \"Daten an Gerät senden\" von Loglevel-Info auf Debug umgestellt\nAnzahl der Debug-Meldungen reduziert\nAbhängigkeiten aktualisiert,",
+                "ru": "Добавлен код предупреждения в дерево устройств\nДобавлены ошибки устройства как SystemState в дерево устройств\nДобавлена ​​кнопка пожертвования на страницу чтения и конфигурации\nПереключено сообщение «Отправка данных на устройство» с информации уровня журнала на отладку\nуменьшено количество отладочных сообщений\nОбновлены зависимости,",
+                "pt": "Adicionado código de aviso à árvore de dispositivos\nAdicionado Device-falhas como SystemState à árvore de dispositivos\nAdicionado botão doar para leia-me e página de configuração\nMudança \"Enviando dados para dispositivo\" mensagem de informações de nível de log para depuração\nquantidade reduzida de mensagens de depuração\nDependências atualizadas,",
+                "nl": "Waarschuwingscode toegevoegd aan apparaatstructuur\nApparaatfouten als systeemstatus toegevoegd aan apparaatstructuur\nDonatieknop toegevoegd aan leesmij- en configuratiepagina\nBericht \"Gegevens naar apparaat verzenden\" van logniveau-info naar foutopsporing\nverminderd aantal foutopsporingsberichten\nBijgewerkte afhankelijkheden,",
+                "fr": "Ajout d'un code d'avertissement à l'arborescence des appareils\nAjout des défauts de l'appareil en tant que SystemState à l'arborescence des appareils\nAjout d'un bouton de don au fichier Lisez-moi et à la page de configuration\nChangement du message \"Envoi de données à l'appareil\" des informations de niveau de journalisation au débogage\nRéduction du nombre de messages de débogage\nDépendances mises à jour,",
+                "it": "Aggiunto codice di avviso all'albero del dispositivo\nAggiunti errori del dispositivo come SystemState all'albero del dispositivo\nAggiunto pulsante di donazione alla pagina Leggimi e configurazione\nMessaggio \"Invio dati al dispositivo\" cambiato dalle informazioni a livello di log al debug\nRidotta quantità di messaggi di debug\nAggiornate dipendenze,",
+                "es": "Se agregó un código de advertencia al árbol de dispositivos\nSe agregaron fallas de dispositivo como estado del sistema al árbol de dispositivos\nSe agregó un botón de donación a la página Léame y configuración",
+                "pl": "Dodano kod ostrzeżenia do drzewa urządzeń\nDodano błędy urządzenia jako SystemState do drzewa urządzeń\nDodano przycisk darowizny do strony readme i konfiguracji\nPrzełączono komunikat „Wysyłanie danych do urządzenia” z informacji o poziomie logowania do debugowania\nzmniejszono liczbę komunikatów debugowania\nZaktualizowano zależności,",
+                "zh-cn": "向设备树添加了警告代码\n将设备故障作为 SystemState 添加到设备树\n在自述文件和配置页面中添加了捐赠按钮\n将“向设备发送数据”消息从日志级别信息切换到调试\n减少了调试消息的数量\n更新了依赖项，"
+            },
             "2.3.2": {
                 "en": "Fixed sentry-error DYSONAIRPURIFIER-D\nupdated dependencies",
                 "de": "Sentry-Fehler DYSONAIRPURIFIER-D behoben\nAbhängigkeiten aktualisiert",
