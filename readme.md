@@ -160,8 +160,9 @@ Which is what the dyson app does also.
 
 ### Known issues
 * No automatic IP detection of devices
-* Sometimes the adapter loses the MQTT connection to a fan and isn't able to reconnect. In my case it's sufficient to unplug the fan for approximately 10 seconds to reset it and plug it in again. Give it a try.
-
+* Sometimes the adapter loses the MQTT connection to a fan and isn't able to reconnect. 
+  * In my case it's sufficient to unplug the fan for approximately 10 seconds to reset it and plug it in again. Give it a try.
+  * In other cases it has been an IP issue. Resetting the DHCP server (router) solved the issue.
 ## Changelog
 
 ### V2.4.0 (2022-03-17) (Echo from the past)
