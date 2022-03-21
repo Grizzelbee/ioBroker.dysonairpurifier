@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "2.4.0",
+        "version": "2.4.1",
         "news": {
+            "2.4.1": {
+                "en": "Changed SystemStates from type string to boolean",
+                "de": "SystemStates vom Typ „String“ in „Boolean“ geändert",
+                "ru": "Тип SystemStates изменен со строкового на логический.",
+                "pt": "Alterado SystemStates do tipo string para booleano",
+                "nl": "Systeemstatus gewijzigd van type string in boolean",
+                "fr": "Changement de SystemStates de type chaîne en booléen",
+                "it": "SystemStates modificato da tipo stringa a booleano",
+                "es": "Cambiado SystemStates de tipo cadena a booleano",
+                "pl": "Zmieniono stany systemowe z typu string na logiczne",
+                "zh-cn": "将 SystemStates 从字符串类型更改为布尔值"
+            },
             "2.4.0": {
                 "en": "Added warning code to device tree\nAdded Device-faults as SystemState to device tree\nAdded donate button to readme and config page\nSwitched \"Sending data to device\" message from loglevel info to debug\nreduced amount of debug messages\nUpdated dependencies,",
                 "de": "Warncode zum Gerätebaum hinzugefügt\nGerätefehler als SystemState zum Gerätebaum hinzugefügt\nSpenden-Schaltfläche zur Readme- und Konfigurationsseite hinzugefügt\nMeldung \"Daten an Gerät senden\" von Loglevel-Info auf Debug umgestellt\nAnzahl der Debug-Meldungen reduziert\nAbhängigkeiten aktualisiert,",
