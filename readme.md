@@ -165,6 +165,9 @@ All states report whether there is a failure or not. `True` means a failure, `fa
   * In other cases it has been an IP issue. Resetting the DHCP server (router) solved the issue.
 ## Changelog
 
+### V2.4.1 (2022-03-20) (Echo from the past)
+* (grizzelbee) New: Changed SystemState from text to boolean data points
+
 ### V2.4.0 (2022-03-17) (Echo from the past)
 * (grizzelbee) New: Added warning code to device tree
 * (grizzelbee) New: Added Device-faults as SystemState to device tree
