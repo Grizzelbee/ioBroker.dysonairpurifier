@@ -888,14 +888,16 @@ class dysonAirPurifier extends utils.Adapter {
 
                     devices[thisDevice].mqttClient.on('reconnect', function () {
                         //noinspection JSUnresolvedVariable
-                        adapterLog.info(devices[thisDevice].Serial + ' - MQTT reconnecting.');
+                        if (!adapter.config.disableReconnectLogging)
+                            adapterLog.info(devices[thisDevice].Serial + ' - MQTT reconnecting.');
                         //noinspection JSUnresolvedVariable
                         adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'reconnect');
                     });
 
                     devices[thisDevice].mqttClient.on('close', function () {
                         //noinspection JSUnresolvedVariable
-                        adapterLog.info(devices[thisDevice].Serial + ' - MQTT disconnected.');
+                        if (!adapter.config.disableReconnectLogging)
+                            adapterLog.info(devices[thisDevice].Serial + ' - MQTT disconnected.');
                         adapter.clearIntervalHandle(devices[thisDevice].updateIntervalHandle);
                         //noinspection JSUnresolvedVariable
                         adapter.setDeviceOnlineState(devices[thisDevice].Serial,  'disconnected');

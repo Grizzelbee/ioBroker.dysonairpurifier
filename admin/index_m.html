@@ -229,13 +229,17 @@
                     <label class="translate" for="pollInterval">Poll_Interval</label>
                     <span class="translate">Poll_Interval_desc</span>
                 </div>
-                <div class="input field col s6 m4">
-                    </br></br>
+                <div class="col s6 m4 input-field tooltip">
                     <input type="checkbox" id="keepValues" class="value"/>
-                    <span for="keepValues"  class="translate">keepValues</span>
-                    </br>
-                    <span class="translate">keepValues_desc</span>
+                    <label for="keepValues"  class="translate">keepValues</label><br/>
+                    <span class="tooltiptext translate ">keepValues_desc</span>
                 </div>
+                <div class="col s6 m4 input-field tooltip">
+                    <input type="checkbox" id="disableReconnectLogging" class="value"/>
+                    <label for="disableReconnectLogging"  class="translate">disableReconnectLogging</label><br/>
+                    <span class="tooltiptext translate">disableReconnectLogging_desc</span>
+                </div>
+
             </div>
             <div class="row">
                 <div class="col s12 m12"> <!--s12 m4 l2 -->
@@ -255,7 +259,7 @@
                     <label class="translate" for="dyson_code">Lbl_dyson_code</label>
                     <span class="translate">dyson_code_desc</span>
                 </div>
-                <div class="input field col s6 m4">
+                <div class="input-field col s6 m4">
                     </br></br>
                     <input type="checkbox" id="token_inside" class="value" onclick="return false;" onkeydown="return false;" disabled="true"/>
                     <span for="token_inside"  class="translate">token_inside</span>

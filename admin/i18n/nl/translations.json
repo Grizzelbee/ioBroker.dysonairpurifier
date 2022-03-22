@@ -27,6 +27,8 @@
     "btn_2fa_desc": "Klik op deze knop om uw 2-factor authenticatie-e-mail aan te vragen.",
     "challengeId_desc": "Wordt automatisch opgehaald uit de dyson-API. ",
     "country_desc": "ISO-code van het land waarin je je dyson-account hebt aangemaakt.",
+    "disableReconnectLogging": "Logboekregistratie opnieuw verbinden uitschakelen",
+    "disableReconnectLogging_desc": "Schakelt het loggen van gebeurtenissen voor opnieuw verbinden uit.",
     "donation": "Als je deze adapter leuk vindt en overweegt mij te steunen:",
     "dyson_code_desc": "Voer hier de 6-cijferige code uit de dyson-e-mail in.",
     "email_desc": "e-mailadres van uw dyson-account.",
