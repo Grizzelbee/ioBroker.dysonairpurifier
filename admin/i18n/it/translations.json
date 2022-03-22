@@ -27,6 +27,8 @@
     "btn_2fa_desc": "Fare clic su questo pulsante per richiedere l'e-mail di autenticazione a 2 fattori.",
     "challengeId_desc": "Verrà recuperato automaticamente dall'API di dyson. ",
     "country_desc": "Codice ISO del paese in cui hai creato il tuo account dyson.",
+    "disableReconnectLogging": "Disabilita la registrazione della riconnessione",
+    "disableReconnectLogging_desc": "Disabilita la registrazione di eventuali eventi di riconnessione.",
     "donation": "Se ti piace questo adattatore e considera di supportarmi:",
     "dyson_code_desc": "Inserisci qui il codice a 6 cifre dell'e-mail di dyson.",
     "email_desc": "indirizzo e-mail del tuo account dyson.",

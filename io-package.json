@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "2.4.1",
+        "version": "2.5.0",
         "news": {
+            "2.5.0": {
+                "en": "Added option to disable the logging of reconnect events.",
+                "de": "Option hinzugefügt, um die Protokollierung von Wiederverbindungsereignissen zu deaktivieren.",
+                "ru": "Добавлена ​​возможность отключить регистрацию событий переподключения.",
+                "pt": "Adicionada opção para desabilitar o registro de eventos de reconexão.",
+                "nl": "Optie toegevoegd om het loggen van herverbindingsgebeurtenissen uit te schakelen.",
+                "fr": "Ajout d'une option pour désactiver la journalisation des événements de reconnexion.",
+                "it": "Aggiunta opzione per disabilitare la registrazione degli eventi di riconnessione.",
+                "es": "Opción agregada para deshabilitar el registro de eventos de reconexión.",
+                "pl": "Dodano opcję wyłączenia rejestrowania zdarzeń ponownego połączenia.",
+                "zh-cn": "添加了禁用重新连接事件记录的选项。"
+            },
             "2.4.1": {
                 "en": "Changed SystemStates from type string to boolean",
                 "de": "SystemStates vom Typ „String“ in „Boolean“ geändert",
@@ -74,174 +86,6 @@
                 "es": "Se agregó soporte para dyson PH03 humidify + cool (358E).",
                 "pl": "Dodano wsparcie dla Dyson PH03 humidify+cool (358E).",
                 "zh-cn": "添加了对戴森 PH03 加湿+冷却 (358E) 的支持。"
-            },
-            "2.1.4": {
-                "en": "Added token-indicator to config page.",
-                "de": "Token-Indikator zur Konfigurationsseite hinzugefügt.",
-                "ru": "На страницу конфигурации добавлен токен-индикатор.",
-                "pt": "Adicionado indicador de token à página de configuração.",
-                "nl": "Token-indicator toegevoegd aan configuratiepagina.",
-                "fr": "Ajout d'un indicateur de jeton à la page de configuration.",
-                "it": "Aggiunto indicatore di token alla pagina di configurazione.",
-                "es": "Se agregó un indicador de token a la página de configuración.",
-                "pl": "Dodano wskaźnik tokena do strony konfiguracji.",
-                "zh-cn": "向配置页面添加了令牌指示器。"
-            },
-            "2.1.3": {
-                "en": "Bugfix release!\nHostaddress is used properly when given.\nOscillationAngle \"Breeze\" is working now\nStrange delay and jumping of boolean switches is fixed",
-                "de": "Bugfix-Release! \nHostadresse wird korrekt verwendet, wenn sie angegeben wird. \nOscillationAngle \"Breeze\" funktioniert jetzt \nSeltsame Verzögerung und Springen von Booleschen Schaltern wurde behoben",
-                "ru": "Выпуск исправления ошибок \n Hostaddress используется правильно, если задан. \n OscillationAngle \"Breeze\" теперь работает \n Странная задержка и скачки логических переключателей исправлены",
-                "pt": "Versão de correção de bug \n Hostaddress é usado corretamente quando fornecido. \n OscillationAngle \"Breeze\" está funcionando agora \n Atraso estranho e saltos de interruptores booleanos foram corrigidos",
-                "nl": "Bugfix release\nHostaddress wordt correct gebruikt wanneer gegeven.\nOscillationAngle \"Breeze\" werkt nu\nVreemde vertraging en springen van boolean switches is opgelost",
-                "fr": "Version de correction de bug \n L'adresse d'hôte est utilisée correctement lorsqu'elle est donnée. \n L'angle d'oscillation \"Breeze\" fonctionne maintenant \n Le délai étrange et le saut des commutateurs booléens sont corrigés",
-                "it": "Rilascio bugfix\nL'indirizzo host viene utilizzato correttamente quando viene fornito.\nOscillationAngle \"Breeze\" funziona ora\nLo strano ritardo e il salto degli interruttori booleani sono stati corretti",
-                "es": "Versión de corrección de errores \n Hostaddress se usa correctamente cuando se proporciona. \n OscillationAngle \"Breeze\" está funcionando ahora \n Se corrigió el retraso extraño y el salto de los interruptores booleanos",
-                "pl": "Wydanie poprawki błędu \n Adres hosta jest używany poprawnie, gdy jest podany. \n Kąt oscylacyjny \"Breeze\" teraz działa \n Dziwne opóźnienie i przeskakiwanie przełączników binarnych zostało naprawione",
-                "zh-cn": "修正版本\n主机地址在给出时正确使用。\nOscillationAngle“微风”现在正在工作\n奇怪的延迟和布尔开关的跳跃是固定的"
-            },
-            "2.1.2": {
-                "en": "New: Removed NO2 from general AirQuality to be more compliant to dyson-app\n Upd: Code cleanup\n Upd: Removed delay between sending a command and new values getting displayed (max 30 Secs)",
-                "de": "Neu: NO2 aus der allgemeinen AirQuality entfernt, um konformer mit der Dyson-App zu sein\n Upd: Code-Bereinigung\n Upd: Verzögerung zwischen dem Senden eines Befehls und der Anzeige neuer Werte entfernt (max. 30 Sek.)",
-                "ru": "Новое: Удален NO2 из общего AirQuality, чтобы быть более совместимым с приложением dyson\n Upd: Очистка кода\n Upd: Убран разрыв между отправкой команды и отображением новых значений (максимум 30 секунд)",
-                "pt": "Novo: Removido o NO2 do AirQuality geral para ser mais compatível com o dyson-app\n Upd: Limpeza de código\n Upd: Removida a lacuna entre o envio de um comando e a exibição de novos valores (máximo de 30 segundos)",
-                "nl": "Nieuw: NO2 verwijderd uit algemene AirQuality om beter te voldoen aan de dyson-app\n Update: code opschonen\n Update: hiaat tussen het verzenden van een opdracht en het weergeven van nieuwe waarden verwijderd (max. 30 seconden)",
-                "fr": "Nouveau : Suppression du NO2 de AirQuality général pour être plus conforme à l'application dyson\n Mise à jour : Nettoyage du code\n Mise à jour : Suppression de l'écart entre l'envoi d'une commande et l'affichage des nouvelles valeurs (max 30 secondes)",
-                "it": "Novità: rimosso NO2 dall'AirQuality generale per essere più conforme a dyson-app\n Upd: pulizia del codice\n Upd: rimosso il divario tra l'invio di un comando e la visualizzazione di nuovi valori (max 30 secondi)",
-                "es": "Nuevo: se eliminó el NO2 de AirQuality general para ser más compatible con la aplicación dyson\n Upd: limpieza de código\n Upd: se eliminó la brecha entre el envío de un comando y la visualización de nuevos valores (máximo 30 segundos)",
-                "pl": "Nowość: Usunięto NO2 z ogólnej AirQuality, aby był bardziej zgodny z aplikacją dyson\n Aktualizacja: Oczyszczanie kodu\n Aktualizacja: Usunięto przerwę między wysłaniem polecenia a wyświetleniem nowych wartości (maks. 30 sekund)",
-                "zh-cn": "新功能：从一般空气质量中删除二氧化氮以更符合dyson-app\n 更新：代码清理\n 更新：删除发送命令和显示新值之间的差距（最长 30 秒）"
-            },
-            "2.1.1": {
-                "en": "New: Added some more data points, \nNew: Added switch for temperature unit of the fan display,\nNew: Improved logging of unknown data points,* (germanBluefox) Fix: Fixed icon links,\nFix: fixed dependencies badge,\nFix: added missing dependency plugin-sentry",
-                "de": "Neu: Einige weitere Datenpunkte hinzugefügt, \nNeu: Schalter für Temperatureinheit der Lüfteranzeige hinzugefügt,\nNeu: Verbesserte Protokollierung unbekannter Datenpunkte,* (germanBluefox) Fix: Icon-Links korrigiert ",
-                "ru": "Новое: добавлено несколько точек данных, \nНовое: добавлен переключатель для единицы температуры дисплея вентилятора, \nНовое: улучшена регистрация неизвестных точек данных,\n (germanBluefox) Исправлено: исправлены ссылки на значки ",
-                "pt": "Novo: Adicionados mais alguns pontos de dados, \nNovo: Adicionado interruptor para a unidade de temperatura da tela do ventilador, \nNovo: Registro aprimorado de pontos de dados desconhecidos,\n (germanBluefox) Correção: links de ícones corrigidos ",
-                "nl": "Nieuw: nog wat datapunten toegevoegd, \nNieuw: schakelaar toegevoegd voor temperatuureenheid van het ventilatordisplay,\nNieuw: verbeterde logging van onbekende datapunten,* (germanBluefox) Fix: vaste pictogramkoppelingen ",
-                "fr": "Nouveau : ajout de quelques points de données supplémentaires, \nNouveau : ajout d'un commutateur pour l'unité de température de l'affichage du ventilateur,\nNouveau : enregistrement amélioré des points de données inconnus,* (allemandBluefox) Correction : liens d'icônes fixes ",
-                "it": "Novità: Aggiunti altri punti dati, \nNovità: Aggiunto interruttore per l'unità di temperatura del display della ventola,\nNovità: Migliorata la registrazione dei punti dati sconosciuti,* (germanBluefox) Correzione: Corretti i collegamenti alle icone ",
-                "es": "Nuevo: se agregaron algunos puntos de datos más, \nNuevo: se agregó un interruptor para la unidad de temperatura de la pantalla del ventilador, \nNuevo: registro mejorado de puntos de datos desconocidos,\n (germanBluefox) Solución: enlaces de íconos fijos ",
-                "pl": "Nowość: Dodano więcej punktów danych, \nNowość: Dodano przełącznik jednostki temperatury na wyświetlaczu wentylatora,\nNowość: Ulepszone rejestrowanie nieznanych punktów danych,* (germanBluefox) Poprawka: Naprawiono łącza ikon ",
-                "zh-cn": "新功能：添加了更多数据点，\n新功能：添加了风扇显示器温度单位的开关，\n新功能：改进了未知数据点的记录，* (germanBluefox) 修复：固定图标链接"
-            },
-            "2.0.1": {
-                "en": "* Fixed Sentry Error Cannot read property '3' of undefined,\n Turning on HeatingMode should work now,\n updated dependencies",
-                "de": "* Sentry Error behoben Kann die Eigenschaft '3' von undefined nicht lesen,\n Das Einschalten des Heizmodus sollte jetzt funktionieren,\n Abhängigkeiten aktualisiert.",
-                "ru": "* Исправлена ​​ошибка Sentry. Невозможно прочесть свойство '3' из undefined,\n Включение режима отопления теперь должно работать,\n обновленные зависимости",
-                "pt": "* Erro de Sentinela corrigido, não é possível ler a propriedade '3' de indefinido,\n Ativar o HeatingMode deve funcionar agora,\n dependências atualizadas",
-                "nl": "* Vaste Sentry-fout Kan eigenschap '3' van undefined niet lezen,\n Verwarmingsmodus inschakelen zou nu moeten werken,\n bijgewerkte afhankelijkheden",
-                "fr": "* Correction de l'erreur Sentry Impossible de lire la propriété '3' de non défini,\n L'activation du HeatingMode devrait fonctionner maintenant,\n Dépendances mises à jour",
-                "it": "* Risolto errore Sentry Impossibile leggere la proprietà '3' di undefined,\n L'attivazione della modalità di riscaldamento dovrebbe funzionare ora,\n dipendenze aggiornate",
-                "es": "* Se corrigió el error de Sentry No se puede leer la propiedad '3' de indefinido,\n Activar el modo de calefacción debería funcionar ahora,\n dependencias actualizadas",
-                "pl": "* Naprawiono błąd Sentry Cannot read property '3' undefined,\n Włączenie trybu ogrzewania powinno teraz działać,\n zaktualizowane zależności",
-                "zh-cn": "* 固定哨兵错误无法读取未定义的属性“3”，* 现在应该可以打开加热模式，* 更新依赖项"
-            },
-            "2.0.0": {
-                "en": "Highlights: Breaking Change: All ON/OFF-switches are type bool now - Added DeepCleanCycle to known data points - Fix: Switching water hardness now really works - See changelog for all changes!",
-                "de": "Highlights: Breaking Change: Alle ON/OFF-Schalter sind jetzt vom Typ bool - DeepCleanCycle zu bekannten Datenpunkten hinzugefügt - Fix: Wasserhärte-Umschaltung funktioniert jetzt wirklich - Siehe Changelog für alle Änderungen!",
-                "ru": "Основные моменты: Критическое изменение: все переключатели ВКЛ / ВЫКЛ теперь имеют тип bool - Добавлен DeepCleanCycle к известным точкам данных - Исправлено: переключение жесткости воды теперь действительно работает - Все изменения см. В журнале изменений!",
-                "pt": "Destaques: Mudança de ruptura: Todos os interruptores ON / OFF são do tipo bool agora - DeepCleanCycle adicionado a pontos de dados conhecidos - Correção: Mudar a dureza da água agora realmente funciona - Veja o changelog para todas as mudanças!",
-                "nl": "Hoogtepunten: Verandering doorbreken: Alle AAN/UIT-schakelaars zijn nu van het type bool - DeepCleanCycle toegevoegd aan bekende datapunten - Oplossing: omschakelen van waterhardheid werkt nu echt - Zie changelog voor alle wijzigingen!",
-                "fr": "Points forts : Changement révolutionnaire : tous les interrupteurs marche/arrêt sont désormais de type bool - Ajout de DeepCleanCycle aux points de données connus - Correction : La modification de la dureté de l'eau fonctionne maintenant vraiment - Voir le journal des modifications pour tous les changements !",
-                "it": "Highlights: Breaking Change: tutti gli interruttori ON/OFF ora sono di tipo bool - Aggiunto DeepCleanCycle ai punti dati noti - Correzione: il cambio della durezza dell'acqua ora funziona davvero - Vedi il registro delle modifiche per tutte le modifiche!",
-                "es": "Aspectos destacados: Cambio rotundo: todos los interruptores de ENCENDIDO / APAGADO son de tipo bool ahora - Se agregó DeepCleanCycle a puntos de datos conocidos - Solución: Cambiar la dureza del agua ahora realmente funciona - ¡Vea el registro de cambios para todos los cambios!",
-                "pl": "Najważniejsze informacje: Najważniejsza zmiana: Wszystkie przełączniki ON/OFF są teraz typu bool - Dodano funkcję DeepCleanCycle do znanych punktów danych - Poprawka: Zmiana twardości wody teraz naprawdę działa - Zobacz dziennik zmian dla wszystkich zmian!",
-                "zh-cn": "亮点： 重大变化：所有 ON/OFF 开关现在都是 bool 类型 - 将 DeepCleanCycle 添加到已知数据点 - 修复：现在切换水硬度确实有效 - 查看变更日志了解所有变化！"
-            },
-            "1.1.0": {
-                "en": "Highlights: Added support for dyson Pure Hot+Cool Link (ProductType 455A) - Added support for formaldehyde sensor - Oscillation angles can be set - See changelog for all changes!",
-                "de": "Highlights: Unterstützung für Dyson Pure Hot+Cool Link (Produkttyp 455A) hinzugefügt - Unterstützung für Formaldehydsensor hinzugefügt - Oszillationswinkel können eingestellt werden - Siehe Changelog für alle Änderungen!",
-                "ru": "Основные моменты: Добавлена ​​поддержка dyson Pure Hot + Cool Link (ProductType 455A) - Добавлена ​​поддержка датчика формальдегида - Можно установить углы колебаний - Все изменения см. В журнале изменений!",
-                "pt": "Destaques: Adicionado suporte para Dison Pure Hot + Cool Link (ProductType 455A) - Adicionado suporte para sensor de formaldeído - Ângulos de oscilação podem ser definidos - Consulte o changelog para todas as alterações!",
-                "nl": "Hoogtepunten: Ondersteuning toegevoegd voor dyson Pure Hot+Cool Link (ProductType 455A) - Ondersteuning toegevoegd voor formaldehyde-sensor - Oscillatiehoeken kunnen worden ingesteld - Zie changelog voor alle wijzigingen!",
-                "fr": "Points forts : Ajout de la prise en charge de dyson Pure Hot+Cool Link (ProductType 455A) - Ajout de la prise en charge du capteur de formaldéhyde - Les angles d'oscillation peuvent être définis - Voir le journal des modifications pour tous les changements !",
-                "it": "In evidenza: Aggiunto supporto per Dyson Pure Hot+Cool Link (ProductType 455A) - Aggiunto supporto per sensore di formaldeide - È possibile impostare gli angoli di oscillazione - Vedere il registro delle modifiche per tutte le modifiche!",
-                "es": "Aspectos destacados: Soporte agregado para dyson Pure Hot + Cool Link (ProductType 455A) - Soporte agregado para sensor de formaldehído - Se pueden configurar ángulos de oscilación - ¡Vea el registro de cambios para todos los cambios!",
-                "pl": "Najważniejsze informacje: Dodano obsługę dyson Pure Hot+Cool Link (ProductType 455A) - Dodano obsługę czujnika formaldehydu - Można ustawić kąty oscylacji - Zobacz dziennik zmian dla wszystkich zmian!",
-                "zh-cn": "亮点： 增加了对戴森 Pure Hot+Cool Link 的支持（产品类型 455A） - 增加了对甲醛传感器的支持 - 可以设置振荡角度 - 查看变更日志了解所有变化！"
-            },
-            "1.0.0": {
-                "en": "Fixed \"wrong value for temperatures\" bug.",
-                "de": "Fehler \"falscher Wert für Temperaturen\" behoben.",
-                "ru": "Исправлена ​​ошибка \"неправильного значения температуры\".",
-                "pt": "Corrigido bug de \"valor errado para temperaturas\".",
-                "nl": "Bug \"verkeerde waarde voor temperaturen\" opgelost.",
-                "fr": "Correction d'un bug \"mauvaise valeur pour les températures\".",
-                "it": "Risolto bug \"valore errato per le temperature\".",
-                "es": "Se corrigió el error de \"valor incorrecto para las temperaturas\".",
-                "pl": "Naprawiono błąd \"niewłaściwej wartości temperatur\".",
-                "zh-cn": "修复了“错误的温度值”错误。"
-            },
-            "0.9.5": {
-                "en": "Fixed some new and some old bugs.",
-                "de": "Einige neue und einige alte Fehler behoben.",
-                "ru": "Исправлены некоторые новые и некоторые старые ошибки.",
-                "pt": "Corrigido alguns bugs novos e antigos.",
-                "nl": "Enkele nieuwe en enkele oude bugs verholpen.",
-                "fr": "Correction de quelques nouveaux et anciens bugs.",
-                "it": "Risolti alcuni bug nuovi e alcuni vecchi.",
-                "es": "Se corrigieron algunos errores nuevos y algunos viejos.",
-                "pl": "Naprawiono kilka nowych i kilka starych błędów.",
-                "zh-cn": "修复了一些新的和一些旧的错误。"
-            },
-            "0.9.4": {
-                "en": "Added some debug code - no new features.",
-                "de": "Debug-Code hinzugefügt - keine neuen Funktionen.",
-                "ru": "Добавлен отладочный код - новых функций нет.",
-                "pt": "Adicionado algum código de depuração - sem novos recursos.",
-                "nl": "Wat debug-code toegevoegd - geen nieuwe functies.",
-                "fr": "Ajout de code de débogage - pas de nouvelles fonctionnalités.",
-                "it": "Aggiunto del codice di debug - nessuna nuova funzionalità.",
-                "es": "Se agregó un código de depuración, sin características nuevas.",
-                "pl": "Dodano trochę kodu debugowania - brak nowych funkcji.",
-                "zh-cn": "添加了一些调试代码 - 没有新功能。"
-            },
-            "0.9.3": {
-                "en": "Added some debug code - no new features.",
-                "de": "Debug-Code hinzugefügt - keine neuen Funktionen.",
-                "ru": "Добавлен отладочный код - новых функций нет.",
-                "pt": "Adicionado algum código de depuração - sem novos recursos.",
-                "nl": "Wat debug-code toegevoegd - geen nieuwe functies.",
-                "fr": "Ajout de code de débogage - pas de nouvelles fonctionnalités.",
-                "it": "Aggiunto del codice di debug - nessuna nuova funzionalità.",
-                "es": "Se agregó un código de depuración, sin características nuevas.",
-                "pl": "Dodano trochę kodu debugowania - brak nowych funkcji.",
-                "zh-cn": "添加了一些调试代码 - 没有新功能。"
-            },
-            "0.9.2": {
-                "en": "Added support for switzerland and updated certificate as well as dependencies.",
-                "de": "Unterstützung für die Schweiz und aktualisierte Zertifikate sowie Abhängigkeiten hinzugefügt.",
-                "ru": "Добавлена ​​поддержка Швейцарии и обновлен сертификат, а также зависимости.",
-                "pt": "Adicionado suporte para suíça e certificado atualizado, bem como dependências.",
-                "nl": "Ondersteuning toegevoegd voor Zwitserland en bijgewerkt certificaat en afhankelijkheden.",
-                "fr": "Ajout de la prise en charge de la suisse et mise à jour du certificat ainsi que des dépendances.",
-                "it": "Aggiunto supporto per la Svizzera e certificato aggiornato e dipendenze.",
-                "es": "Se agregó soporte para Suiza y certificado actualizado, así como dependencias.",
-                "pl": "Dodano obsługę Szwajcarii i zaktualizowano certyfikat oraz zależności.",
-                "zh-cn": "添加了对瑞士和更新的证书以及依赖项的支持。"
-            },
-            "0.9.1": {
-                "en": "TP02, HP02  and others are now supporting the OFF state.",
-                "de": "TP02, HP02  und andere unterstützen jetzt den AUS-Zustand.",
-                "ru": "TP02, HP02  и другие теперь поддерживают состояние ВЫКЛ.",
-                "pt": "TP02, HP02  e outros agora suportam o estado OFF.",
-                "nl": "TP02, HP02  en anderen ondersteunen nu de UIT-status.",
-                "fr": "TP02, HP02  et d'autres prennent désormais en charge l'état OFF.",
-                "it": "TP02, HP02  e altri supportano ora lo stato OFF.",
-                "es": "TP02, HP02  y otros ahora admiten el estado APAGADO.",
-                "pl": "TP02, HP02  i inne obsługują teraz stan WYŁĄCZONY.",
-                "zh-cn": "TP02, HP02和其他设备现在支持OFF状态。"
-            },
-            "0.9.0": {
-                "en": "Support for new dyson 2 factor login procedure, new features and bugfixes.",
-                "de": "Unterstützung für neues Dyson 2-Faktor-Anmeldeverfahren, neue Funktionen und Bugfixes.",
-                "ru": "Поддержка новой двухфакторной процедуры входа в систему Dyson, новых функций и исправлений.",
-                "pt": "Suporte para novo procedimento de login do fator dyson 2, novos recursos e correções de bugs.",
-                "nl": "Ondersteuning voor nieuwe aanmeldingsprocedure voor dyson 2-factoren, nieuwe functies en bugfixes.",
-                "fr": "Prise en charge de la nouvelle procédure de connexion dyson 2 factor, de nouvelles fonctionnalités et de corrections de bogues.",
-                "it": "Supporto per la nuova procedura di accesso a 2 fattori di dyson, nuove funzionalità e correzioni di bug.",
-                "es": "Soporte para el nuevo procedimiento de inicio de sesión de factor de Dyson 2, nuevas funciones y correcciones de errores.",
-                "pl": "Wsparcie dla nowej procedury logowania dyson 2, nowe funkcje i poprawki błędów.",
-                "zh-cn": "支持新的dyson 2 factor登录过程，新功能和错误修正。"
             }
         },
         "title": "dyson AirPurifier",
@@ -323,7 +167,8 @@
         "keepValues": false,
         "challengeId": "",
         "dyson_code": "",
-        "token": ""
+        "token": "",
+        "disableReconnectLogging": false
     },
     "encryptedNative": [
         "Password",
