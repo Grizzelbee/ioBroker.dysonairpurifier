@@ -40,5 +40,6 @@
     "password_desc": "Mot de passe de votre compte dyson.",
     "switzerland": "Suisse",
     "temperatureUnit_desc": "Unité pour afficher la température.",
-    "token_inside": "Un jeton a été reçu et stocké."
+    "token_inside": "Un jeton a été reçu et stocké.",
+    "token_inside_desc": "Indique si un jeton d'authentification a été reçu des serveurs Dyson qui est nécessaire pour se connecter - l'adaptateur ne fonctionnera pas si cette case n'est pas cochée."
 }

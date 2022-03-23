@@ -40,5 +40,6 @@
     "password_desc": "Wachtwoord van uw dyson-account.",
     "switzerland": "Zwitserland",
     "temperatureUnit_desc": "Eenheid om de temperatuur weer te geven.",
-    "token_inside": "Er is een token ontvangen en opgeslagen."
+    "token_inside": "Er is een token ontvangen en opgeslagen.",
+    "token_inside_desc": "Geeft aan of er een auth-token is ontvangen van de dyson-servers die nodig is om in te loggen - de adapter zal niet werken zonder dat dit selectievakje is aangevinkt."
 }
