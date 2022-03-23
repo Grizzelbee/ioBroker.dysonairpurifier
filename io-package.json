@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "2.5.0",
+        "version": "2.5.1",
         "news": {
+            "2.5.1": {
+                "en": "Improved layout of config page and added tooltips to checkboxes.",
+                "de": "Verbessertes Layout der Konfigurationsseite und Tooltips zu Kontrollkästchen hinzugefügt.",
+                "ru": "Улучшен макет страницы конфигурации и добавлены всплывающие подсказки к флажкам.",
+                "pt": "Layout aprimorado da página de configuração e dicas de ferramentas adicionadas às caixas de seleção.",
+                "nl": "Verbeterde lay-out van de configuratiepagina en tooltips toegevoegd aan selectievakjes.",
+                "fr": "Mise en page améliorée de la page de configuration et ajout d'info-bulles aux cases à cocher.",
+                "it": "Layout migliorato della pagina di configurazione e aggiunta di suggerimenti alle caselle di controllo.",
+                "es": "Se mejoró el diseño de la página de configuración y se agregó información sobre herramientas a las casillas de verificación.",
+                "pl": "Ulepszony układ strony konfiguracji i dodane podpowiedzi do pól wyboru.",
+                "zh-cn": "改进了配置页面的布局并为复选框添加了工具提示。"
+            },
             "2.5.0": {
                 "en": "Added option to disable the logging of reconnect events.",
                 "de": "Option hinzugefügt, um die Protokollierung von Wiederverbindungsereignissen zu deaktivieren.",
