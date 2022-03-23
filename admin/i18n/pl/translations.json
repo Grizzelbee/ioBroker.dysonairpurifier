@@ -40,5 +40,6 @@
     "password_desc": "Hasło Twojego konta Dyson.",
     "switzerland": "Szwajcaria",
     "temperatureUnit_desc": "Jednostka do wyświetlania temperatury.",
-    "token_inside": "Token został odebrany i zapisany."
+    "token_inside": "Token został odebrany i zapisany.",
+    "token_inside_desc": "Wskazuje, czy z serwerów dyson został odebrany token uwierzytelniania, który jest potrzebny do zalogowania — adapter nie będzie działał bez zaznaczenia tego pola wyboru."
 }

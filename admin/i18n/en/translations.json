@@ -40,5 +40,6 @@
     "password_desc": "Password of your dyson account.",
     "switzerland": "Switzerland",
     "temperatureUnit_desc": "Unit to display the temperature.",
-    "token_inside": "A token has been received and stored."
+    "token_inside": "A token has been received and stored.",
+    "token_inside_desc": "Indicates whether an auth-token has been received from the dyson servers which is needed to login - the adapter will not work without having this checkbox checked."
 }

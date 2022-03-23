@@ -40,5 +40,6 @@
     "password_desc": "Passwort Ihres Dyson-Kontos.",
     "switzerland": "Schweiz",
     "temperatureUnit_desc": "Einheit zur Anzeige der Temperatur.",
-    "token_inside": "Ein Token wurde empfangen und gespeichert."
+    "token_inside": "Ein Token wurde empfangen und gespeichert.",
+    "token_inside_desc": "Zeigt an, ob von den Dyson-Servern ein Authentifizierungstoken empfangen wurde, das für die Anmeldung erforderlich ist – der Adapter funktioniert nicht, wenn dieses Kontrollkästchen nicht aktiviert ist."
 }

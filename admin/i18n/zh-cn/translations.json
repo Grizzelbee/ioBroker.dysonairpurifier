@@ -40,5 +40,6 @@
     "password_desc": "dyson帐户的密码。",
     "switzerland": "瑞士",
     "temperatureUnit_desc": "显示温度的单位。",
-    "token_inside": "已接收并存储令牌。"
+    "token_inside": "已接收并存储令牌。",
+    "token_inside_desc": "指示是否已从需要登录的戴森服务器接收到身份验证令牌 - 如果不选中此复选框，适配器将无法工作。"
 }

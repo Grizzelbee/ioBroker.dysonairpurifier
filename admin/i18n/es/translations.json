@@ -40,5 +40,6 @@
     "password_desc": "Contraseña de su cuenta de dyson.",
     "switzerland": "Suiza",
     "temperatureUnit_desc": "Unidad para mostrar la temperatura.",
-    "token_inside": "Se ha recibido y almacenado un token."
+    "token_inside": "Se ha recibido y almacenado un token.",
+    "token_inside_desc": "Indica si se ha recibido un token de autenticación de los servidores de Dyson que se necesita para iniciar sesión; el adaptador no funcionará sin marcar esta casilla de verificación."
 }
