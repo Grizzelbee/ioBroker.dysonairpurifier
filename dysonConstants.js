@@ -27,7 +27,8 @@ module.exports.PRODUCTS = {
     '475' : {name:'Dyson Pure Cool Link Tower', icon:'icons/purifiers.png', 'ancp':{0:'0', 45:'45', 90:'90', 180:'180', 350:'350', 'CUST':'Custom'}},
     '520' : {name:'Dyson Pure Cool Desk', icon:'icons/fans.png', 'ancp':{}},
     '527' : {name:'Dyson Pure Hot+Cool', icon:'icons/heaters.png', 'ancp':{0:'0', 45:'45', 90:'90', 180:'180', 350:'350', 'CUST':'Custom'}},
-    '527E': {name:'Dyson Pure Hot+Cool', icon:'icons/heaters.png', 'ancp':{0:'0', 45:'45', 90:'90', 180:'180', 350:'350', 'CUST':'Custom'}}
+    '527E': {name:'Dyson Pure Hot+Cool', icon:'icons/heaters.png', 'ancp':{0:'0', 45:'45', 90:'90', 180:'180', 350:'350', 'CUST':'Custom'}},
+    '527K': {name:'Dyson Pure Hot+Cool Formaldehyde', icon:'icons/heaters.png', 'ancp':{0:'0', 45:'45', 90:'90', 180:'180', 350:'350', 'CUST':'Custom'}}
 };
 
 // data structure to determine readable names, etc for any datapoint
