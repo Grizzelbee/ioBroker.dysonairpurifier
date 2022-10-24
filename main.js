@@ -241,7 +241,7 @@ class dysonAirPurifier extends utils.Adapter {
                         );
                         // refresh data with a delay of 250 ms to avoid 30 Sec gap
                         setTimeout(() => {
-                            this.log.info('requesting new state of device (' + thisDevice + ').');
+                            this.log.debug('requesting new state of device (' + thisDevice + ').');
                             devices[mqttDevice].mqttClient.publish(
                                 devices[mqttDevice].ProductType + '/' + thisDevice + '/command', JSON.stringify({
                                     msg: 'REQUEST-CURRENT-STATE',
