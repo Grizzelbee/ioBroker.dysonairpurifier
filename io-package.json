@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "2.5.1",
+        "version": "2.5.2",
         "news": {
+            "2.5.2": {
+                "en": "New: Added Dyson Pure Cool Tower Formaldehyde (Type 438K) to device list.\nNew: Added Dyson Pure Hot+Cool Formaldehyde (Type 527K) to device list.\nChg: Moved log message requesting new state of device from info to debug\nUpd: Dependencies got updated",
+                "de": "Neu: Dyson Pure Cool Tower Formaldehyd (Typ 438K) zur Geräteliste hinzugefügt.\nNeu: Dyson Pure Hot+Cool Formaldehyd (Typ 527K) zur Geräteliste hinzugefügt.\nÄnderung: Protokollnachricht, die einen neuen Gerätestatus anfordert, von „Info“ in „Debug“ geändert\n Upd: Abhängigkeiten wurden aktualisiert",
+                "ru": "Новое: в список устройств добавлен формальдегид Dyson Pure Cool Tower (тип 438K).\n Новое: в список устройств добавлен формальдегид Dyson Pure Hot+Cool (тип 527K). Upd: Зависимости обновлены",
+                "pt": "Novo: Adicionado Formaldeído Dyson Pure Cool Tower (Tipo 438K) à lista de dispositivos.\nNovo: Adicionado Formaldeído Dyson Pure Hot+Cool (Tipo 527K) à lista de dispositivos.\nChg: Mensagem de registro movida solicitando novo estado do dispositivo de informações para depuração\n Upd: As dependências foram atualizadas",
+                "nl": "Nieuw: Dyson Pure Cool Tower Formaldehyde (Type 438K) toegevoegd aan apparatenlijst.\nNieuw: Dyson Pure Hot+Cool Formaldehyde (Type 527K) toegevoegd aan apparatenlijst.\nChg: Verplaatst logbericht met verzoek om nieuwe apparaatstatus van info naar foutopsporing\n Upd: afhankelijkheden zijn bijgewerkt",
+                "fr": "Nouveau : Ajout du Dyson Pure Cool Tower Formaldéhyde (Type 438K) à la liste des appareils.\nNouveau : Ajout du Dyson Pure Hot+Cool Formaldéhyde (Type 527K) à la liste des appareils.\nChg : Message de journal déplacé demandant le nouvel état de l'appareil d'info à débogage\n Mise à jour : les dépendances ont été mises à jour",
+                "it": "Novità: aggiunto Dyson Pure Cool Tower Formaldeide (tipo 438K) all'elenco dei dispositivi.\nNovità: aggiunto Dyson Pure Hot+Cool formaldeide (tipo 527K) all'elenco dei dispositivi.\nChg: messaggio di registro spostato che richiede il nuovo stato del dispositivo dalle informazioni al debug\n Aggiorna: le dipendenze sono state aggiornate",
+                "es": "Nuevo: Se agregó Dyson Pure Cool Tower Formaldehído (Tipo 438K) a la lista de dispositivos.\nNuevo: Se agregó Dyson Pure Hot+Cool Formaldehído (Tipo 527K) a la lista de dispositivos.\nCambiar: Se movió el mensaje de registro solicitando el nuevo estado del dispositivo de información a depuración\n Actualizar: las dependencias se actualizaron",
+                "pl": "Nowość: Dodano Dyson Pure Cool Tower Formaldehyd (Typ 438K) do listy urządzeń.\nNowość: Dodano Dyson Pure Hot+Cool Formaldehyd (Typ 527K) do listy urządzeń.\nZmiana: Przeniesiono komunikat dziennika z żądaniem nowego stanu urządzenia z informacji do debugowania\n Aktualizacja: Zależności zostały zaktualizowane",
+                "uk": "Нове: додано Dyson Pure Cool Tower Formaldehyde (тип 438K) до списку пристроїв.\nНове: додано Dyson Pure Hot+Cool Formaldehyde (тип 527K) до списку пристроїв.\nChg: переміщено повідомлення журналу із запитом нового стану пристрою з інформації до налагодження\n Оновлено: залежності оновлено",
+                "zh-cn": "新：将 Dyson Pure Cool Tower Formaldehyde（438K 型）添加到设备列表。\n新：将 Dyson Pure Hot+Cool Formaldehyde（527K 型）添加到设备列表。\n更改：将请求设备新状态的日志消息从信息移至调试\n更新：依赖项已更新"
+            },
             "2.5.1": {
                 "en": "Improved layout of config page and added tooltips to checkboxes.",
                 "de": "Verbessertes Layout der Konfigurationsseite und Tooltips zu Kontrollkästchen hinzugefügt.",
@@ -13,7 +26,8 @@
                 "it": "Layout migliorato della pagina di configurazione e aggiunta di suggerimenti alle caselle di controllo.",
                 "es": "Se mejoró el diseño de la página de configuración y se agregó información sobre herramientas a las casillas de verificación.",
                 "pl": "Ulepszony układ strony konfiguracji i dodane podpowiedzi do pól wyboru.",
-                "zh-cn": "改进了配置页面的布局并为复选框添加了工具提示。"
+                "zh-cn": "改进了配置页面的布局并为复选框添加了工具提示。",
+                "uk": "Покращено макет сторінки конфігурації та додано підказки до прапорців."
             },
             "2.5.0": {
                 "en": "Added option to disable the logging of reconnect events.",
@@ -25,7 +39,8 @@
                 "it": "Aggiunta opzione per disabilitare la registrazione degli eventi di riconnessione.",
                 "es": "Opción agregada para deshabilitar el registro de eventos de reconexión.",
                 "pl": "Dodano opcję wyłączenia rejestrowania zdarzeń ponownego połączenia.",
-                "zh-cn": "添加了禁用重新连接事件记录的选项。"
+                "zh-cn": "添加了禁用重新连接事件记录的选项。",
+                "uk": "Додано параметр для вимкнення реєстрації подій повторного підключення."
             },
             "2.4.1": {
                 "en": "Changed SystemStates from type string to boolean",
@@ -37,7 +52,8 @@
                 "it": "SystemStates modificato da tipo stringa a booleano",
                 "es": "Cambiado SystemStates de tipo cadena a booleano",
                 "pl": "Zmieniono stany systemowe z typu string na logiczne",
-                "zh-cn": "将 SystemStates 从字符串类型更改为布尔值"
+                "zh-cn": "将 SystemStates 从字符串类型更改为布尔值",
+                "uk": "SystemStates змінено з рядкового типу на логічний"
             },
             "2.4.0": {
                 "en": "Added warning code to device tree\nAdded Device-faults as SystemState to device tree\nAdded donate button to readme and config page\nSwitched \"Sending data to device\" message from loglevel info to debug\nreduced amount of debug messages\nUpdated dependencies,",
@@ -49,7 +65,8 @@
                 "it": "Aggiunto codice di avviso all'albero del dispositivo\nAggiunti errori del dispositivo come SystemState all'albero del dispositivo\nAggiunto pulsante di donazione alla pagina Leggimi e configurazione\nMessaggio \"Invio dati al dispositivo\" cambiato dalle informazioni a livello di log al debug\nRidotta quantità di messaggi di debug\nAggiornate dipendenze,",
                 "es": "Se agregó un código de advertencia al árbol de dispositivos\nSe agregaron fallas de dispositivo como estado del sistema al árbol de dispositivos\nSe agregó un botón de donación a la página Léame y configuración",
                 "pl": "Dodano kod ostrzeżenia do drzewa urządzeń\nDodano błędy urządzenia jako SystemState do drzewa urządzeń\nDodano przycisk darowizny do strony readme i konfiguracji\nPrzełączono komunikat „Wysyłanie danych do urządzenia” z informacji o poziomie logowania do debugowania\nzmniejszono liczbę komunikatów debugowania\nZaktualizowano zależności,",
-                "zh-cn": "向设备树添加了警告代码\n将设备故障作为 SystemState 添加到设备树\n在自述文件和配置页面中添加了捐赠按钮\n将“向设备发送数据”消息从日志级别信息切换到调试\n减少了调试消息的数量\n更新了依赖项，"
+                "zh-cn": "向设备树添加了警告代码\n将设备故障作为 SystemState 添加到设备树\n在自述文件和配置页面中添加了捐赠按钮\n将“向设备发送数据”消息从日志级别信息切换到调试\n减少了调试消息的数量\n更新了依赖项，",
+                "uk": "Додано код попередження до дерева пристроїв\nДодано Device-faults як SystemState до дерева пристроїв\nДодано кнопку пожертви на сторінку readme і конфігурації\nПовідомлення «Надсилання даних на пристрій» змінено з інформації рівня журналу на налагодження\nзменшена кількість повідомлень про налагодження\nОновлені залежності,"
             },
             "2.3.2": {
                 "en": "Fixed sentry-error DYSONAIRPURIFIER-D\nupdated dependencies",
@@ -61,7 +78,8 @@
                 "it": "Risolto errore di sentinella DYSONAIRPURIFIER-D\ndipendenze aggiornate",
                 "es": "Se corrigió el error de centinela DYSONAIRPURIFIER-D \n Dependencias actualizadas",
                 "pl": "Naprawiono błąd wartownika DYSONAIRPURIFIER-D \n zaktualizowane zależności",
-                "zh-cn": "修复了哨兵错误 DYSONAIRPURIFIER-D\n 更新了依赖项"
+                "zh-cn": "修复了哨兵错误 DYSONAIRPURIFIER-D\n 更新了依赖项",
+                "uk": "Виправлена ​​помилка сторожового DYSONAIRPURIFIER-D\nоновлені залежності"
             },
             "2.3.1": {
                 "en": "Updated documentation\nupdated dependencies",
@@ -73,7 +91,8 @@
                 "it": "Documentazione aggiornata\ndipendenze aggiornate",
                 "es": "Documentación actualizada\ndependencias actualizadas",
                 "pl": "Zaktualizowana dokumentacja\nzaktualizowane zależności",
-                "zh-cn": "更新的文档\n更新的依赖项"
+                "zh-cn": "更新的文档\n更新的依赖项",
+                "uk": "Оновлена ​​документація\nоновлені залежності"
             },
             "2.3.0": {
                 "en": "Fanspeed is now a number (not string anymore) to work properly with IoT-Adapter\nPlease delete this data point and let get recreated\nAdded some GUI elements for air quality in folder icons",
@@ -85,7 +104,8 @@
                 "it": "Fanspeed ora è un numero (non più una stringa) per funzionare correttamente con l'adattatore IoT \n Elimina questo punto dati e lascia che venga ricreato \n Aggiunti alcuni elementi della GUI per la qualità dell'aria nelle icone delle cartelle",
                 "es": "Fanspeed ahora es un número (ya no una cadena) para funcionar correctamente con el Adaptador de IoT \n Elimine este punto de datos y deje que se vuelva a crear \n Se agregaron algunos elementos GUI para la calidad del aire en los íconos de la carpeta",
                 "pl": "Prędkość wentylatora jest teraz liczbą (nie ciągiem), która działa poprawnie z adapterem IoT \n Usuń ten punkt danych i pozwól się odtworzyć \n Dodano kilka elementów GUI dla jakości powietrza w ikonach folderów",
-                "zh-cn": "Fanspeed 现在是一个数字（不再是字符串），可以与 IoT-Adapter 正常工作\n请删除此数据点并重新创建\n在文件夹图标中添加了一些用于空气质量的 GUI 元素"
+                "zh-cn": "Fanspeed 现在是一个数字（不再是字符串），可以与 IoT-Adapter 正常工作\n请删除此数据点并重新创建\n在文件夹图标中添加了一些用于空气质量的 GUI 元素",
+                "uk": "Швидкість вентилятора тепер є числом (більше не рядком), щоб правильно працювати з IoT-Adapter\nБудь ласка, видаліть цю точку даних і дозвольте створити її заново\nДодано деякі елементи GUI для якості повітря в значках папок"
             },
             "2.2.0": {
                 "en": "Added support for dyson PH03 humidify+cool (358E).",
@@ -97,7 +117,8 @@
                 "it": "Aggiunto supporto per dyson PH03 humidify+cool (358E).",
                 "es": "Se agregó soporte para dyson PH03 humidify + cool (358E).",
                 "pl": "Dodano wsparcie dla Dyson PH03 humidify+cool (358E).",
-                "zh-cn": "添加了对戴森 PH03 加湿+冷却 (358E) 的支持。"
+                "zh-cn": "添加了对戴森 PH03 加湿+冷却 (358E) 的支持。",
+                "uk": "Додано підтримку для dyson PH03 humidify+cool (358E)."
             }
         },
         "title": "dyson AirPurifier",
@@ -111,7 +132,8 @@
             "it": "purificatori d'aria dyson, umidificatori d'aria, termoventilatori e ventilatori",
             "es": "Purificadores de aire Dyson, humidificadores de aire, calefactores y ventiladores.",
             "pl": "oczyszczacze powietrza dyson, nawilżacze powietrza, nagrzewnice i wentylatory",
-            "zh-cn": "戴森空气净化器，空气加湿器，风扇加热器和风扇"
+            "zh-cn": "戴森空气净化器，空气加湿器，风扇加热器和风扇",
+            "uk": "очищувачі повітря, зволожувачі повітря, обігрівачі та вентилятори dyson"
         },
         "desc": {
             "en": "Integrate dyson air purifiers and fans into ioBroker",
@@ -123,7 +145,8 @@
             "it": "Integra i purificatori d'aria e i ventilatori Dyson in ioBroker",
             "es": "Integre purificadores de aire y ventiladores Dyson en ioBroker",
             "pl": "Zintegruj oczyszczacze powietrza i wentylatory Dyson w ioBroker",
-            "zh-cn": "将戴森空气净化器和风扇集成到ioBroker中"
+            "zh-cn": "将戴森空气净化器和风扇集成到ioBroker中",
+            "uk": "Інтегруйте очищувачі повітря та вентилятори dyson в ioBroker"
         },
         "authors": [
             "grizzelbee <open.source@hingsen.de>"
