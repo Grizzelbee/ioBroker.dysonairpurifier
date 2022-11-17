@@ -18,7 +18,7 @@ module.exports.LOAD_FROM_PRODUCTS=999;
 module.exports.SUPPORTED_PRODUCT_TYPES = ['358', '358E', '438', '438E', '438K', '455', '455A', '469', '475', '520', '527', '527E'];
 module.exports.PRODUCTS = {
     '358' : {name:'Dyson Pure Humidify+Cool', icon:'icons/purifier-humidifiers.png', 'ancp':{0:'0', 45:'45', 90:'90', 'BRZE':'Breeze'}},
-    '358E' : {name:'Dyson Pure Humidify+Cool', icon:'icons/purifier-humidifiers.png', 'ancp':{0:'0', 45:'45', 90:'90', 'BRZE':'Breeze'}},
+    '358E': {name:'Dyson Pure Humidify+Cool', icon:'icons/purifier-humidifiers.png', 'ancp':{0:'0', 45:'45', 90:'90', 'BRZE':'Breeze'}},
     '438' : {name:'Dyson Pure Cool Tower', icon:'icons/purifiers.png', 'ancp':{0:'0', 45:'45', 90:'90', 180:'180', 350:'350', 'CUST':'Custom'}},
     '438E': {name:'Dyson Pure Cool Tower Formaldehyde', icon:'icons/purifiers.png', 'ancp':{0:'0', 45:'45', 90:'90', 180:'180', 350:'350', 'CUST':'Custom'}},
     '438K': {name:'Dyson Pure Cool Tower Formaldehyde', icon:'icons/purifiers.png', 'ancp':{0:'0', 45:'45', 90:'90', 180:'180', 350:'350', 'CUST':'Custom'}},
