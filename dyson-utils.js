@@ -238,8 +238,7 @@ module.exports.getDevices = async function(token, adapter) {
                 const devices = [];
                 for (const thisDevice in response.data) {
                     adapter.log.debug('Data received from dyson API: ' + JSON.stringify(response.data[thisDevice]));
-                    // TODO Try to switch from SUPPORTED_PRODUCT_TYPES-array to PRODUCTS-object
-                    if (!dysonConstants.SUPPORTED_PRODUCT_TYPES.some(function (t) {
+                    if (!Object.keys(dysonConstants.PRODUCTS).some(function (t) {
                         return t === response.data[thisDevice].ProductType;
                     })) {
                         adapter.log.warn('Device with serial number [' + response.data[thisDevice].Serial + '] not added, hence it is not supported by this adapter. Product type: [' + response.data[thisDevice].ProductType + ']');
