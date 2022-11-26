@@ -168,7 +168,7 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 
 ### 2.5.3 (2022-11-26) (Halo of the dark)
 * (grizzelbee) Upd: Dependencies got updated
-* (grizzelbee) Chg: better and easier detection of supported devices
+* (grizzelbee) Chg: [#207](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/207) better and easier detection of supported devices
 
 ### 2.5.2 (2022-11-17) (Halo of the dark)
 * (grizzelbee) Upd: Dependencies got updated
