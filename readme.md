@@ -166,6 +166,10 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 ## Changelog
 ### **WORK IN PROGRESS**
 
+### 2.5.3 (2022-11-26) (Halo of the dark)
+* (grizzelbee) Upd: Dependencies got updated
+* (grizzelbee) Chg: better and easier detection of supported devices
+
 ### 2.5.2 (2022-11-17) (Halo of the dark)
 * (grizzelbee) Upd: Dependencies got updated
 * (grizzelbee) Chg: Moved log message "requesting new state of device" from info to debug

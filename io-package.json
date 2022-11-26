@@ -1,8 +1,11 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "2.5.2",
+        "version": "2.5.3",
         "news": {
+            "2.5.3": {
+                "en": "Upd: Dependencies got updated*Chg: easier and better detection of supported devices"
+            },
             "2.5.2": {
                 "en": "New: Added Dyson Pure Cool Tower Formaldehyde (Type 438K) to device list.\nNew: Added Dyson Pure Hot+Cool Formaldehyde (Type 527K) to device list.\nChg: Moved log message requesting new state of device from info to debug\nUpd: Dependencies got updated",
                 "de": "Neu: Dyson Pure Cool Tower Formaldehyd (Typ 438K) zur Geräteliste hinzugefügt.\nNeu: Dyson Pure Hot+Cool Formaldehyd (Typ 527K) zur Geräteliste hinzugefügt.\nÄnderung: Protokollnachricht, die einen neuen Gerätestatus anfordert, von „Info“ in „Debug“ geändert\n Upd: Abhängigkeiten wurden aktualisiert",
