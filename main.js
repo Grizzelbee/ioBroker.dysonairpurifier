@@ -513,7 +513,7 @@ class dysonAirPurifier extends utils.Adapter {
             } else if (deviceConfig[3]==='boolean' && deviceConfig[5].startsWith('indicator')) {
                 // testValue should be the 2nd value in an array or if it's no array, the value itself
                 const testValue = ( typeof message[deviceConfig[0]] === 'object'? message[deviceConfig[0]][1] : message[deviceConfig[0]] );
-                //this.log.debug(`${deviceConfig[1]} is a bool switch. Current state: [${testValue}]`);
+                this.log.debug(`${deviceConfig[1]} is a bool switch. Current state: [${testValue}] --> returnvalue for further processing: ${(testValue === 'FAIL')}`);
                 value = (testValue === 'FAIL');
             } else {
                 // It's no bool switch
