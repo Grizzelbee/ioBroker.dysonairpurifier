@@ -15,7 +15,6 @@ const FILTERTYPES = {'GCOM':'Combined', 'PCOM':'Combined PTFE', 'GHEP':'HEPA', '
 const BOOL_SWITCH = {false:'Off', true:'On'};
 
 module.exports.LOAD_FROM_PRODUCTS=999;
-// module.exports.SUPPORTED_PRODUCT_TYPES = ['358', '358E', '438', '438E', '438K', '455', '455A', '469', '475', '520', '527', '527E'];
 module.exports.PRODUCTS = {
     '358' : {name:'Dyson Pure Humidify+Cool', icon:'icons/purifier-humidifiers.png', 'ancp':{0:'0', 45:'45', 90:'90', 'BRZE':'Breeze'}},
     '358E': {name:'Dyson Pure Humidify+Cool', icon:'icons/purifier-humidifiers.png', 'ancp':{0:'0', 45:'45', 90:'90', 'BRZE':'Breeze'}},
@@ -104,7 +103,7 @@ module.exports.DATAPOINTS = [
     ['wpmp' , 'WATER_PUMP_FAILURE'                  , 'A water pump failure has been detected.' , 'boolean',  'false', 'indicator', '' ],
     ['prot' , 'PUMP_ROTOR'                          , ''                   , 'boolean',  'false', 'indicator', '' ],
     ['uled' , 'UVC_LED'                             , 'Sanitizing UV-LED failure',          'boolean',  'false', 'indicator', '' ],
-    ['fltr' , 'FILTER_REPLACEMENT'                  , 'At least one new filter is required.' , 'boolean', 'false', 'indindicator', '' ],
+    ['fltr' , 'FILTER_REPLACEMENT'                  , 'At least one filter needs to be replaced.' , 'boolean', 'false', 'indicator', '' ],
     ['tnke' , 'TANK_EMPTY'                          , 'Water tank is empty.',               'boolean', 'false', 'indicator' ,'' ],
     ['tnkp' , 'TANK_UNDETECTED'                     , 'Water tank could not be detected.',  'boolean', 'false', 'indicator' ,'' ],
     ['cldu' , 'CLEAN_CYCLE_OVERDUE'                 , 'Clean cycle is overdue.',            'boolean', 'false', 'indicator', '' ],
