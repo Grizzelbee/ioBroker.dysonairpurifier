@@ -166,6 +166,9 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 ## Changelog
 ### **WORK IN PROGRESS**
 
+### 2.5.4 (2022-11-27) (Halo of the dark)
+* (grizzelbee) Upd: [#207](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/207)Downgraded axios to 0.27.2 due to an error in version 1.x returning data as binary instead of string.
+
 ### 2.5.3 (2022-11-26) (Halo of the dark)
 * (grizzelbee) Upd: Dependencies got updated
 * (grizzelbee) Chg: [#207](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/207) better and easier detection of supported devices
