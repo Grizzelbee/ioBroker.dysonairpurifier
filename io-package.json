@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "2.5.3",
+        "version": "2.5.4",
         "news": {
+            "2.5.4": {
+                "en": "Upd: Downgraded axios to 0.27.2 due to an error in version 1.x returning data as binary instead of string.",
+                "de": "Upd: axios auf 0.27.2 herabgestuft aufgrund eines Fehlers in Version 1.x, der Daten als Binärdatei statt als Zeichenfolge zurückgibt.",
+                "ru": "Upd: понижена версия axios до 0.27.2 из-за ошибки в версии 1.x, возвращающей данные в виде двоичных данных вместо строки.",
+                "pt": "Upd: Axios rebaixados para 0.27.2 devido a um erro na versão 1.x retornando dados como binários em vez de string.",
+                "nl": "Upd: axios gedowngraded naar 0.27.2 vanwege een fout in versie 1.x die gegevens retourneerde als binair in plaats van als string.",
+                "fr": "Mise à jour : Axios rétrogradé à 0.27.2 en raison d'une erreur dans la version 1.x renvoyant des données sous forme binaire au lieu de chaîne.",
+                "it": "Aggiornamento: Axios declassato a 0.27.2 a causa di un errore nella versione 1.x che restituisce i dati come binari invece che come stringhe.",
+                "es": "Actualizar: axios degradado a 0.27.2 debido a un error en la versión 1.x que devuelve datos como binarios en lugar de cadenas.",
+                "pl": "Aktualizacja: Obniżono wersję axios do 0.27.2 z powodu błędu w wersji 1.x zwracającej dane w postaci binarnej zamiast łańcuchowej.",
+                "uk": "Оновлено: axios знижено до 0.27.2 через помилку у версії 1.x, що повертає дані як двійкові, а не як рядки.",
+                "zh-cn": "更新：由于版本 1.x 中的错误将 axios 降级为 0.27.2，返回数据为二进制而不是字符串。"
+            },
             "2.5.3": {
                 "en": "Upd: Dependencies got updated\nChg: easier and better detection of supported devices",
                 "de": "Upd: Abhängigkeiten wurden aktualisiert\nChg: einfachere und bessere Erkennung von unterstützten Geräten",
