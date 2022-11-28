@@ -162,6 +162,7 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 
 ### Known issues
 * No automatic IP detection of devices
+* Still many unknown device messages (mostly failures and warnings) 
 * Sometimes the adapter loses the MQTT connection to a fan and isn't able to reconnect. `This is usually no issue of the adapter itself, but an issue in your local network!`
   * In some cases it's sufficient to unplug the fan for approximately 10 seconds to reset it and plug it in again. Just give it a try!
   * In other cases it has been an IP/DNS issue. Resetting the DHCP/DNS server (router) solved the issue.
@@ -170,10 +171,10 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 ### **WORK IN PROGRESS**
 
 ### 2.5.5 (2022-11-28) (Halo of the dark)
-* (grizzelbee) Fix: [#213](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/213)Fixed warning due to wrong data type on field FILTER_REPLACEMENT
+* (grizzelbee) Fix: [#213](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/213) Fixed warning due to wrong data type on field FILTER_REPLACEMENT
 
 ### 2.5.4 (2022-11-27) (Halo of the dark)
-* (grizzelbee) Upd: [#207](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/207)Downgraded axios to 0.27.2 due to an error in version 1.x returning data as binary instead of string.
+* (grizzelbee) Upd: [#207](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/207) Downgraded axios to 0.27.2 due to an error in version 1.x returning data as binary instead of string.
 
 ### 2.5.3 (2022-11-26) (Halo of the dark)
 * (grizzelbee) Upd: Dependencies got updated
