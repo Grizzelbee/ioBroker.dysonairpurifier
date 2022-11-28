@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "2.5.4",
+        "version": "2.5.5",
         "news": {
+            "2.5.5": {
+                "en": "Fix: Fixed warning due to wrong data type on field FILTER_REPLACEMENT.",
+                "de": "Fix: Warnung wegen falschem Datentyp im Feld FILTER_REPLACEMENT behoben.",
+                "ru": "Исправлено: исправлено предупреждение из-за неправильного типа данных в поле FILTER_REPLACEMENT.",
+                "pt": "Correção: Corrigido o aviso devido ao tipo de dados errado no campo FILTER_REPLACEMENT.",
+                "nl": "Oplossing: waarschuwing verholpen vanwege verkeerd gegevenstype in veld FILTER_REPLACEMENT.",
+                "fr": "Correction : avertissement corrigé en raison d'un type de données incorrect sur le champ FILTER_REPLACEMENT.",
+                "it": "Correzione: risolto avviso a causa di un tipo di dati errato nel campo FILTER_REPLACEMENT.",
+                "es": "Solución: se corrigió la advertencia debido a un tipo de datos incorrecto en el campo FILTER_REPLACEMENT.",
+                "pl": "Poprawka: Naprawiono ostrzeżenie z powodu nieprawidłowego typu danych w polu FILTER_REPLACEMENT.",
+                "uk": "Виправлення: виправлено попередження через неправильний тип даних у полі FILTER_REPLACEMENT.",
+                "zh-cn": "修复：修复了由于字段 FILTER_REPLACEMENT 上的错误数据类型而导致的警告。"
+            },
             "2.5.4": {
                 "en": "Upd: Downgraded axios to 0.27.2 due to an error in version 1.x returning data as binary instead of string.",
                 "de": "Upd: axios auf 0.27.2 herabgestuft aufgrund eines Fehlers in Version 1.x, der Daten als Binärdatei statt als Zeichenfolge zurückgibt.",
