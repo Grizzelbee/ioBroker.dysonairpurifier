@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "2.5.5",
+        "version": "2.5.6",
         "news": {
-            "2.5.5": {
+            "2.5.6": {
                 "en": "Fix: Fixed warning due to wrong data type on field FILTER_REPLACEMENT.",
                 "de": "Fix: Warnung wegen falschem Datentyp im Feld FILTER_REPLACEMENT behoben.",
                 "ru": "Исправлено: исправлено предупреждение из-за неправильного типа данных в поле FILTER_REPLACEMENT.",
