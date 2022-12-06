@@ -35,6 +35,7 @@ Fan-Icon in Logo created by [Freepik](https://www.flaticon.com/de/autoren/freepi
 * Dyson Pure Hot+Cool (HP07, ProductType 527K)
 * Dyson Pure Humidify+Cool (PH01, ProductType 358)
 * Dyson Pure Humidify+Cool (PH03, ProductType 358E)
+* Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)
 
 ## Features
 Connects your Dyson fans, fan heaters, air purifiers, and air humidifiers to ioBroker.
@@ -170,7 +171,11 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 ## Changelog
 ### **WORK IN PROGRESS**
 
-### 2.5.6 (2022-11-28) (Halo of the dark)
+### 2.5.7 (2022-12-06) (Halo of the dark)
+* (grizzelbee) New: Added support for Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)
+* (grizzelbee) Upd: Upgraded axios to 1.2.1
+
+* ### 2.5.6 (2022-11-28) (Halo of the dark)
 * (grizzelbee) Fix: [#213](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/213) Fixed warning due to wrong data type on field FILTER_REPLACEMENT
 
 ### 2.5.4 (2022-11-27) (Halo of the dark)

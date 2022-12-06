@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "2.5.6",
+        "version": "2.5.7",
         "news": {
+            "2.5.7": {
+                "en": "Added support for Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)",
+                "de": "Unterstützung für Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K) hinzugefügt",
+                "ru": "Добавлена ​​поддержка Dyson Pure Humidify+Cool Formальдегид (PH04, ProductType 358K).",
+                "pt": "Adicionado suporte para Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)",
+                "nl": "Ondersteuning toegevoegd voor Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)",
+                "fr": "Ajout de la prise en charge de Dyson Pure Humidify+Cool Formaldéhyde (PH04, ProductType 358K)",
+                "it": "Aggiunto il supporto per Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)",
+                "es": "Se agregó soporte para Dyson Pure Humidify+Cool Formaldehído (PH04, ProductType 358K)",
+                "pl": "Dodano obsługę Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)",
+                "uk": "Додано підтримку для Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)",
+                "zh-cn": "添加了对 Dyson Pure Humidify+Cool Formaldehyde（PH04，产品类型 358K）的支持"
+            },
             "2.5.6": {
                 "en": "Fix: Fixed warning due to wrong data type on field FILTER_REPLACEMENT.",
                 "de": "Fix: Warnung wegen falschem Datentyp im Feld FILTER_REPLACEMENT behoben.",
