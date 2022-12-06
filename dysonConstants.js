@@ -18,6 +18,7 @@ module.exports.LOAD_FROM_PRODUCTS=999;
 module.exports.PRODUCTS = {
     '358' : {name:'Dyson Pure Humidify+Cool', icon:'icons/purifier-humidifiers.png', 'ancp':{0:'0', 45:'45', 90:'90', 'BRZE':'Breeze'}},
     '358E': {name:'Dyson Pure Humidify+Cool', icon:'icons/purifier-humidifiers.png', 'ancp':{0:'0', 45:'45', 90:'90', 'BRZE':'Breeze'}},
+    '358K': {name:'Dyson Pure Humidify+Cool Formaldehyde', icon:'icons/purifier-humidifiers.png', 'ancp':{0:'0', 45:'45', 90:'90', 'BRZE':'Breeze'}},
     '438' : {name:'Dyson Pure Cool Tower', icon:'icons/purifiers.png', 'ancp':{0:'0', 45:'45', 90:'90', 180:'180', 350:'350', 'CUST':'Custom'}},
     '438E': {name:'Dyson Pure Cool Tower Formaldehyde', icon:'icons/purifiers.png', 'ancp':{0:'0', 45:'45', 90:'90', 180:'180', 350:'350', 'CUST':'Custom'}},
     '438K': {name:'Dyson Pure Cool Tower Formaldehyde', icon:'icons/purifiers.png', 'ancp':{0:'0', 45:'45', 90:'90', 180:'180', 350:'350', 'CUST':'Custom'}},
@@ -85,6 +86,7 @@ module.exports.DATAPOINTS = [
     ['hsta' , 'HeatingState'              , 'Active/Idle'                                                                   , 'string',  'false', 'value'             ,'', {'OFF':'Idle', 'HEAT':'Active'}],
     ['msta' , 'HumidificationState'       , 'Active/Idle'                                                                   , 'string',  'false', 'value'             ,'', {'OFF':'Idle', 'HUMD':'Active'}],
     ['wath' , 'WaterHardness'             , 'Water Hardness'                                                                , 'string',  'true', 'value'              ,'', {'0675': 'Hard', '1350':'Medium', '2025':'Soft'}],
+    ['rstf' , 'ResetFilterLifetime'       , 'Reset filter lifetime bach to 100%'                                            , 'boolean', 'true', 'switch'             ,''],
     ['amf1' , 'AFM_FOC_DURATION'                    , 'AFM_FOC_DURATION'                          , 'boolean',  'false', 'indicator', '' ],
     ['amf2' , 'AFM_OVER_VOLT'                       , 'AFM_OVER_VOLT'                             , 'boolean',  'false', 'indicator', '' ],
     ['amf3' , 'AFM_UNDER_VOLT'                      , 'AFM_UNDER_VOLT'                            , 'boolean',  'false', 'indicator', '' ],
