@@ -175,7 +175,7 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 * (grizzelbee) New: Added support for Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)
 * (grizzelbee) Upd: Upgraded axios to 1.2.1
 
-* ### 2.5.6 (2022-11-28) (Halo of the dark)
+### 2.5.6 (2022-11-28) (Halo of the dark)
 * (grizzelbee) Fix: [#213](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/213) Fixed warning due to wrong data type on field FILTER_REPLACEMENT
 
 ### 2.5.4 (2022-11-27) (Halo of the dark)
