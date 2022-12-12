@@ -72,6 +72,6 @@
   "bugs": {
     "url": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues"
   },
-  "readmeFilename": "readme.md",
+  "readmeFilename": "README.md",
   "snyk": true
 }
