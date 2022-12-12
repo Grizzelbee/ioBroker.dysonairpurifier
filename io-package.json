@@ -173,7 +173,6 @@
                 "uk": "Додано підтримку для dyson PH03 humidify+cool (358E)."
             }
         },
-        "title": "dyson AirPurifier",
         "titleLang": {
             "en": "dyson air purifiers, air humidifiers, fan heater and fans",
             "de": "Dyson Luftreiniger, Luftbefeuchter, Heizlüfter und Lüfter",
@@ -204,13 +203,11 @@
             "grizzelbee <open.source@hingsen.de>"
         ],
         "keywords": [
-            "ioBroker",
             "dyson",
-            "Smart Home",
-            "home automation",
             "air purifier",
             "pure cool",
             "hot & cool",
+            "humidify & cool",
             "fan"
         ],
         "license": "MIT",
@@ -235,8 +232,7 @@
         "subscribe": "messagebox",
         "dependencies": [
             {
-                "js-controller": ">=3.0.0",
-                "admin": ">=4.0.9"
+                "js-controller": ">=3.0.0"
             }
         ],
         "plugins": {
