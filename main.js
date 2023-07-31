@@ -468,7 +468,7 @@ class dysonAirPurifier extends utils.Adapter {
             //this.log.debug(`Processing item [${JSON.stringify(row)}] of Message: ${((typeof message === 'object')? JSON.stringify(message) : message)}` );
             const deviceConfig = await this.getDatapoint(row);
             if ( deviceConfig === undefined){
-                this.log.debug(`Skipped creating unknown data field for Device:[${device.Serial}], Field: [${row}] Value:[${((typeof( message[row] ) === 'object')? JSON.stringify(message[row]) : message[row])}]`);
+                this.log.silly(`Skipped creating unknown data field for Device:[${device.Serial}], Field: [${row}] Value:[${((typeof( message[row] ) === 'object')? JSON.stringify(message[row]) : message[row])}]`);
                 continue;
             }
             // strip leading zeros from numbers
@@ -513,7 +513,7 @@ class dysonAirPurifier extends utils.Adapter {
             } else if (deviceConfig[3]==='boolean' && deviceConfig[5].startsWith('indicator')) {
                 // testValue should be the 2nd value in an array or if it's no array, the value itself
                 const testValue = ( typeof message[deviceConfig[0]] === 'object'? message[deviceConfig[0]][1] : message[deviceConfig[0]] );
-                this.log.debug(`${deviceConfig[1]} is a bool switch. Current state: [${testValue}] --> returnvalue for further processing: ${(testValue === 'FAIL')}`);
+                this.log.silly(`${deviceConfig[1]} is a bool switch. Current state: [${testValue}] --> returnvalue for further processing: ${(testValue === 'FAIL')}`);
                 value = (testValue === 'FAIL');
             } else {
                 // It's no bool switch
