@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "2.5.7",
+        "version": "2.5.8",
         "news": {
+            "2.5.8": {
+                "en": "Fixed calculation of hmax values for heaters",
+                "de": "Berechnung der hmax-Werte für Heizungen korrigiert",
+                "ru": "Исправлен расчет значений hmax для обогревателей",
+                "pt": "Cálculo fixo de valores hmax para aquecedores",
+                "nl": "Vaste berekening van hmax-waarden voor verwarmingen",
+                "fr": "Calcul fixe des valeurs hmax pour les appareils de chauffage",
+                "it": "Calcolo fisso dei valori hmax per i riscaldatori",
+                "es": "Cálculo fijo de valores hmax para calentadores.",
+                "pl": "Naprawiono obliczanie wartości hmax dla grzejników",
+                "uk": "Виправлено розрахунок значень hmax для нагрівачів",
+                "zh-cn": "修复了加热器 hmax 值的计算"
+            },
             "2.5.7": {
                 "en": "Added support for Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)",
                 "de": "Unterstützung für Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K) hinzugefügt",
@@ -119,58 +132,6 @@
                 "pl": "Dodano kod ostrzeżenia do drzewa urządzeń\nDodano błędy urządzenia jako SystemState do drzewa urządzeń\nDodano przycisk darowizny do strony readme i konfiguracji\nPrzełączono komunikat „Wysyłanie danych do urządzenia” z informacji o poziomie logowania do debugowania\nzmniejszono liczbę komunikatów debugowania\nZaktualizowano zależności,",
                 "zh-cn": "向设备树添加了警告代码\n将设备故障作为 SystemState 添加到设备树\n在自述文件和配置页面中添加了捐赠按钮\n将“向设备发送数据”消息从日志级别信息切换到调试\n减少了调试消息的数量\n更新了依赖项，",
                 "uk": "Додано код попередження до дерева пристроїв\nДодано Device-faults як SystemState до дерева пристроїв\nДодано кнопку пожертви на сторінку readme і конфігурації\nПовідомлення «Надсилання даних на пристрій» змінено з інформації рівня журналу на налагодження\nзменшена кількість повідомлень про налагодження\nОновлені залежності,"
-            },
-            "2.3.2": {
-                "en": "Fixed sentry-error DYSONAIRPURIFIER-D\nupdated dependencies",
-                "de": "Sentry-Fehler DYSONAIRPURIFIER-D behoben\nAbhängigkeiten aktualisiert",
-                "ru": "Исправлена ​​ошибка Sentry-DYSONAIRPURIFIER-D\nобновлены зависимости",
-                "pt": "Corrigido o erro de sentinela DYSONAIRPURIFIER-D \n dependências atualizadas",
-                "nl": "Vaste schildwachtfout DYSONAIRPURIFIER-D\nbijgewerkte afhankelijkheden",
-                "fr": "Correction de l'erreur sentinelle DYSONAIRPURIFIER-D \n dépendances mises à jour",
-                "it": "Risolto errore di sentinella DYSONAIRPURIFIER-D\ndipendenze aggiornate",
-                "es": "Se corrigió el error de centinela DYSONAIRPURIFIER-D \n Dependencias actualizadas",
-                "pl": "Naprawiono błąd wartownika DYSONAIRPURIFIER-D \n zaktualizowane zależności",
-                "zh-cn": "修复了哨兵错误 DYSONAIRPURIFIER-D\n 更新了依赖项",
-                "uk": "Виправлена ​​помилка сторожового DYSONAIRPURIFIER-D\nоновлені залежності"
-            },
-            "2.3.1": {
-                "en": "Updated documentation\nupdated dependencies",
-                "de": "Aktualisierte Dokumentation\naktualisierte Abhängigkeiten",
-                "ru": "Обновленная документация\nобновленные зависимости",
-                "pt": "Documentação atualizada\ndependências atualizadas",
-                "nl": "Bijgewerkte documentatie\nbijgewerkte afhankelijkheden",
-                "fr": "Documentation mise à jour\ndépendances mises à jour",
-                "it": "Documentazione aggiornata\ndipendenze aggiornate",
-                "es": "Documentación actualizada\ndependencias actualizadas",
-                "pl": "Zaktualizowana dokumentacja\nzaktualizowane zależności",
-                "zh-cn": "更新的文档\n更新的依赖项",
-                "uk": "Оновлена ​​документація\nоновлені залежності"
-            },
-            "2.3.0": {
-                "en": "Fanspeed is now a number (not string anymore) to work properly with IoT-Adapter\nPlease delete this data point and let get recreated\nAdded some GUI elements for air quality in folder icons",
-                "de": "Fanspeed ist jetzt eine Zahl (kein String mehr) um mit dem IoT-Adapter richtig zu funktionieren \nBitte diesen Datenpunkt löschen und neu erstellen lassen \nEinige GUI-Elemente für die Luftqualität im Ordner 'icons' hinzugefügt",
-                "ru": "Fanspeed теперь является числом (больше не строкой) для правильной работы с IoT-адаптером \n Удалите эту точку данных и дайте ей воссоздать \n Добавлены некоторые элементы графического интерфейса для качества воздуха в значки папок",
-                "pt": "Fanspeed agora é um número (não é mais uma string) para funcionar corretamente com o adaptador IoT \n Exclua este ponto de dados e deixe ser recriado \n Adicionados alguns elementos de GUI para a qualidade do ar nos ícones de pasta",
-                "nl": "Fanspeed is nu een nummer (geen string meer) om goed te werken met IoT-Adapter\nVerwijder dit datapunt en laat het opnieuw maken\nVoeg enkele GUI-elementen toe voor luchtkwaliteit in mappictogrammen",
-                "fr": "La vitesse du ventilateur est maintenant un nombre (plus une chaîne) pour fonctionner correctement avec l'adaptateur IoT \n Veuillez supprimer ce point de données et laissez-le être recréé \n Ajout de quelques éléments d'interface graphique pour la qualité de l'air dans les icônes de dossier",
-                "it": "Fanspeed ora è un numero (non più una stringa) per funzionare correttamente con l'adattatore IoT \n Elimina questo punto dati e lascia che venga ricreato \n Aggiunti alcuni elementi della GUI per la qualità dell'aria nelle icone delle cartelle",
-                "es": "Fanspeed ahora es un número (ya no una cadena) para funcionar correctamente con el Adaptador de IoT \n Elimine este punto de datos y deje que se vuelva a crear \n Se agregaron algunos elementos GUI para la calidad del aire en los íconos de la carpeta",
-                "pl": "Prędkość wentylatora jest teraz liczbą (nie ciągiem), która działa poprawnie z adapterem IoT \n Usuń ten punkt danych i pozwól się odtworzyć \n Dodano kilka elementów GUI dla jakości powietrza w ikonach folderów",
-                "zh-cn": "Fanspeed 现在是一个数字（不再是字符串），可以与 IoT-Adapter 正常工作\n请删除此数据点并重新创建\n在文件夹图标中添加了一些用于空气质量的 GUI 元素",
-                "uk": "Швидкість вентилятора тепер є числом (більше не рядком), щоб правильно працювати з IoT-Adapter\nБудь ласка, видаліть цю точку даних і дозвольте створити її заново\nДодано деякі елементи GUI для якості повітря в значках папок"
-            },
-            "2.2.0": {
-                "en": "Added support for dyson PH03 humidify+cool (358E).",
-                "de": "Unterstützung für Dyson PH03 humidify+cool (358E) hinzugefügt.",
-                "ru": "Добавлена ​​поддержка dyson PH03 humidify + cool (358E).",
-                "pt": "Adicionado suporte para dyson PH03 humidify + cool (358E).",
-                "nl": "Ondersteuning toegevoegd voor dyson PH03 humidify+cool (358E).",
-                "fr": "Ajout de la prise en charge du dyson PH03 humidify+cool (358E).",
-                "it": "Aggiunto supporto per dyson PH03 humidify+cool (358E).",
-                "es": "Se agregó soporte para dyson PH03 humidify + cool (358E).",
-                "pl": "Dodano wsparcie dla Dyson PH03 humidify+cool (358E).",
-                "zh-cn": "添加了对戴森 PH03 加湿+冷却 (358E) 的支持。",
-                "uk": "Додано підтримку для dyson PH03 humidify+cool (358E)."
             }
         },
         "titleLang": {
