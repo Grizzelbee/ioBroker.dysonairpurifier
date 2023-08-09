@@ -171,6 +171,9 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 ## Changelog
 ### **WORK IN PROGRESS**
 
+### 2.5.8 (2023-08-09) (Halo of the dark)
+* (grizzelbee) Fix: Fixed calculation of hmax temperatures for heater models.
+
 ### 2.5.7 (2022-12-06) (Halo of the dark)
 * (grizzelbee) New: Added support for Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)
 * (grizzelbee) Upd: Upgraded axios to 1.2.1
