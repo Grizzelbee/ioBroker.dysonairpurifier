@@ -145,10 +145,10 @@ class dysonAirPurifier extends utils.Adapter {
                         case 'K' : value *= 10;
                             break;
                         case 'C' :
-                            value = Number((value*10) + 273.15).toFixed(2);
+                            value = Number((value + 273.15) * 10).toFixed(0);
                             break;
                         case 'F' :
-                            value = Number(((value*10) + 273.15) * (9/5) + 32).toFixed(2);
+                            value = Number((value - 32) * (9/5) + 273.15).toFixed(0);
                             break;
                     }
                     messageData = {[dysonAction]: dysonUtils.zeroFill(value, 4)};
