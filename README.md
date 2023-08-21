@@ -171,6 +171,9 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 ## Changelog
 ### **WORK IN PROGRESS**
 
+### 2.5.9 (2023-08-21) (Halo of the dark)
+* (grizzelbee) Fix: Updated year in license- and readme file to make adapter checker happy
+
 ### 2.5.8 (2023-08-09) (Halo of the dark)
 * (grizzelbee) Fix: Fixed calculation of hmax temperatures for heater models.
 
@@ -588,4 +591,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Copyright (c) 2020 .. 2022 Hanjo Hingsen <open-source@hingsen.de>
+Copyright (c) 2020 .. 2023 Hanjo Hingsen <open-source@hingsen.de>

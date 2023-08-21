@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "2.5.8",
+        "version": "2.5.9",
         "news": {
+            "2.5.9": {
+                "en": "Updated year in license- and readme file to make adapter checker happy",
+                "de": "Aktualisiertes Jahr in der Lizenz- und Readme-Datei, um den Adapterprüfer glücklich zu machen",
+                "ru": "Обновлен год в файле лицензии и файле readme, чтобы сделать проверку адаптера счастливой.",
+                "pt": "Ano atualizado no arquivo de licença e leia-me para deixar o verificador do adaptador feliz",
+                "nl": "Bijgewerkt jaar in licentie- en leesmij-bestand om adapter checker blij te maken",
+                "fr": "Année mise à jour dans le fichier de licence et readme pour rendre le vérificateur d'adaptateur heureux",
+                "it": "Anno aggiornato nel file di licenza e readme per rendere felice il controllore dell'adattatore",
+                "es": "Año actualizado en la licencia y el archivo Léame para que el verificador de adaptadores sea feliz",
+                "pl": "Zaktualizowano rok w licencji i pliku readme, aby uszczęśliwić narzędzie do sprawdzania adapterów",
+                "uk": "Оновлено рік у файлі ліцензії та readme, щоб зробити інструмент перевірки адаптера щасливим",
+                "zh-cn": "更新了许可证和自述文件中的年份，以使适配器检查器满意"
+            },
             "2.5.8": {
                 "en": "Fixed calculation of hmax values for heaters",
                 "de": "Berechnung der hmax-Werte für Heizungen korrigiert",
