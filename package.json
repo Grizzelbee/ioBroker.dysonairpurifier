@@ -26,7 +26,7 @@
     "@iobroker/adapter-core": "^3.0.3",
     "@iobroker/plugin-sentry": "^1.2.1",
     "@snyk/protect": "^1.1204.0",
-    "axios": "^1.4.0",
+    "axios": "^1.6.0",
     "flatted": "^3.2.7",
     "https": "^1.0.0",
     "lodash": "^4.17.21",
