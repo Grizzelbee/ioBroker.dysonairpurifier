@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "2.5.9",
+        "version": "3.0.0",
         "news": {
+            "3.0.0": {
+                "en": "* Upd: dependencies got updated * New: Added HCHO-Index * BREAKING CHANGES: * Replaced values in field pm25 with values from pm25r and calculating them accordingly to the dyson App * Replaced values in field pm10 with values from pm10r and calculating them accordingly to the dyson App * Replaced values in field hcho with values from hchr  and calculating them accordingly to the dyson App * Fields pm25r and pm10r are now deprecated and will be removed",
+                "de": "* Aktualisiert: Abhängigkeiten wurden aktualisiert. * Neu: HCHO-Index hinzugefügt Die Dyson-App * Werte im Feld hcho durch Werte aus hchr ersetzt und entsprechend in der Dyson-App berechnet * Die Felder pm25r und pm10r sind jetzt veraltet und werden entfernt",
+                "ru": "* Обновление: обновлены зависимости * Новое: добавлен индекс HCHO * СЕРЬЕЗНЫЕ ИЗМЕНЕНИЯ: * Заменены значения в поле pm25 на значения из pm25r и расчет их в соответствии с приложением Dyson * Заменены значения в поле pm10 значениями из pm10r и расчет их в соответствии с приложение Dyson * Заменены значения в поле hcho значениями из hchr и расчет их в соответствии с приложением Dyson * Поля pm25r и pm10r устарели и будут удалены.",
+                "pt": "* Atualização: dependências foram atualizadas * Novo: Índice HCHO adicionado * ALTERAÇÕES ÚLTIMAS: * Valores substituídos no campo pm25 por valores de pm25r e cálculo deles de acordo com o aplicativo dyson * Valores substituídos no campo pm10 por valores de pm10r e cálculo deles de acordo com o aplicativo dyson * Valores substituídos no campo hcho por valores de hchr e cálculo deles de acordo com o aplicativo dyson * Os campos pm25r e pm10r agora estão obsoletos e serão removidos",
+                "nl": "* Upd: afhankelijkheden zijn bijgewerkt * Nieuw: HCHO-index toegevoegd * BREAKING CHANGES: * Waarden in veld pm25 vervangen door waarden uit pm25r en deze overeenkomstig berekend met de dyson-app * Waarden in veld pm10 vervangen door waarden uit pm10r en deze overeenkomstig berekend de dyson-app * Waarden in veld hcho vervangen door waarden uit hchr en deze overeenkomstig berekend met de dyson-app * Velden pm25r en pm10r zijn nu verouderd en worden verwijderd",
+                "fr": "* Mise à jour : les dépendances ont été mises à jour * Nouveau : ajout de l'index HCHO * CHANGEMENTS RUPTURE : * Remplacement des valeurs dans le champ pm25 par les valeurs de pm25r et calcul de celles-ci en fonction de l'application Dyson * Remplacement des valeurs dans le champ pm10 par les valeurs de pm10r et calcul de celles-ci en conséquence l'application dyson * Remplacement des valeurs dans le champ hcho par les valeurs de hchr et calcul de celles-ci en conséquence selon l'application dyson * Les champs pm25r et pm10r sont désormais obsolètes et seront supprimés",
+                "it": "* Aggiornamento: le dipendenze sono state aggiornate * Novità: aggiunto indice HCHO * MODIFICHE ROTANTI: * Sostituiti i valori nel campo pm25 con valori da pm25r e calcolandoli in base all'app Dyson * Sostituiti i valori nel campo pm10 con valori da pm10r e calcolandoli in base a l'app Dyson * Sostituiti i valori nel campo hcho con i valori di hchr e calcolandoli di conseguenza all'app Dyson * I campi pm25r e pm10r sono ora deprecati e verranno rimossi",
+                "es": "* Actualización: se actualizaron las dependencias * Nuevo: Índice HCHO agregado * CAMBIOS IMPORTANTES: * Se reemplazaron los valores en el campo pm25 con valores de pm25r y se calcularon de acuerdo con la aplicación Dyson * Se reemplazaron los valores en el campo pm10 con valores de pm10r y se calcularon de acuerdo con la aplicación Dyson * Se reemplazaron los valores en el campo hcho con valores de hchr y se calcularon de acuerdo con la aplicación Dyson * Los campos pm25r y pm10r ahora están obsoletos y se eliminarán",
+                "pl": "* Aktualizacja: zaktualizowano zależności * Nowość: Dodano HCHO-Index * PIERWSZE ZMIANY: * Zastąpiono wartości w polu pm25 wartościami z pm25r i przeliczono je zgodnie z aplikacją dyson * Zastąpiono wartości w polu pm10 wartościami z pm10r i przeliczono je odpowiednio do aplikacja dyson * Zastąpiono wartości w polu hcho wartościami z hchr i przeliczono je zgodnie z aplikacją dyson * Pola pm25r i pm10r są obecnie przestarzałe i zostaną usunięte",
+                "uk": "* Оновлено: оновлено залежності * Нове: додано HCHO-індекс * ОСНОВНІ ЗМІНИ: * Замінено значення в полі pm25 на значення з pm25r і обчислення їх відповідно до програми dyson * Замінено значення в полі pm10 на значення з pm10r і обчислення їх відповідно до програма dyson * Замінено значення в полі hcho на значення з hchr і обчислення їх відповідно до програми dyson * Поля pm25r і pm10r тепер не підтримуються та будуть видалені",
+                "zh-cn": "* 更新：依赖项已更新 * 新功能：添加了 HCHO 索引 * 重大更改： * 将字段 pm25 中的值替换为 pm25r 中的值，并根据 Dyson 应用程序相应地计算它们 * 将字段 pm10 中的值替换为 pm10r 中的值，并相应地计算它们Dyson 应用程序 * 将字段 hcho 中的值替换为 hchr 中的值，并根据 Dyson 应用程序相应地计算它们 * 字段 pm25r 和 pm10r 现已弃用并将被删除"
+            },
             "2.5.9": {
                 "en": "Updated year in license- and readme file to make adapter checker happy",
                 "de": "Aktualisiertes Jahr in der Lizenz- und Readme-Datei, um den Adapterprüfer glücklich zu machen",
@@ -213,7 +226,49 @@
             "sentry": {
                 "dsn": "https://1016f555431c4acfb16b2481019aa1aa@o505019.ingest.sentry.io/5735771"
             }
-        }
+        },
+        "messages": [
+            {
+                "condition": {
+                    "operand": "and",
+                    "rules": [
+                        "oldVersion<3.0.0",
+                        "newVersion>=3.0.0"
+                    ]
+                },
+                "title": {
+                    "en": "Check your historization and scripts after update",
+                    "de": "Überprüfen Sie nach dem Update Ihre Historisierung und Skripte",
+                    "ru": "Проверьте свою историю и скрипты после обновления",
+                    "pt": "Verifique seu histórico e scripts após a atualização",
+                    "nl": "Controleer uw historisatie en scripts na de update",
+                    "fr": "Vérifiez votre historisation et vos scripts après la mise à jour",
+                    "it": "Controlla la storicizzazione e gli script dopo l'aggiornamento",
+                    "es": "Verifique su historización y scripts después de la actualización",
+                    "pl": "Sprawdź swoją historię i skrypty po aktualizacji",
+                    "uk": "Перевірте свою історію та сценарії після оновлення",
+                    "zh-cn": "更新后检查您的历史记录和脚本"
+                },
+                "text": {
+                    "en": "This Update changes the behavior of PM2.5, PM10 and HCHO fields and deletes the PM25R and PM10R fields - to be more compliant to the dyson App. Therefore you need to check whether you use the mentioned fields in scripts or any history adapter. lease read the changelog carefully.",
+                    "de": "Dieses Update ändert das Verhalten der PM2.5-, PM10- und HCHO-Felder und löscht die PM25R- und PM10R-Felder – um eine bessere Kompatibilität mit der Dyson-App zu gewährleisten. Daher müssen Sie prüfen, ob Sie die genannten Felder in Skripten oder einem Verlaufsadapter verwenden. Bitte lesen Sie das Änderungsprotokoll sorgfältig durch.",
+                    "ru": "Это обновление изменяет поведение полей PM2.5, PM10 и HCHO и удаляет поля PM25R и PM10R, чтобы обеспечить большую совместимость с приложением Dyson. Поэтому вам необходимо проверить, используете ли вы упомянутые поля в скриптах или каком-либо адаптере истории. аренду, внимательно прочитайте журнал изменений.",
+                    "pt": "Esta atualização altera o comportamento dos campos PM2.5, PM10 e HCHO e exclui os campos PM25R e PM10R - para ser mais compatível com o aplicativo dyson. Portanto, você precisa verificar se usa os campos mencionados em scripts ou em qualquer adaptador de histórico. leia o changelog com atenção.",
+                    "nl": "Deze update verandert het gedrag van PM2.5-, PM10- en HCHO-velden en verwijdert de PM25R- en PM10R-velden - om beter te voldoen aan de dyson-app. Daarom moet u controleren of u de genoemde velden in scripts of in een geschiedenisadapter gebruikt. lease lees de changelog zorgvuldig.",
+                    "fr": "Cette mise à jour modifie le comportement des champs PM2.5, PM10 et HCHO et supprime les champs PM25R et PM10R - pour être plus conforme à l'application Dyson. Par conséquent, vous devez vérifier si vous utilisez les champs mentionnés dans des scripts ou dans un adaptateur d'historique. lisez attentivement le journal des modifications.",
+                    "it": "Questo aggiornamento modifica il comportamento dei campi PM2.5, PM10 e HCHO ed elimina i campi PM25R e PM10R, per essere più conformi all'app Dyson. Pertanto è necessario verificare se si utilizzano i campi menzionati negli script o in qualsiasi adattatore della cronologia. lease leggere attentamente il registro delle modifiche.",
+                    "es": "Esta actualización cambia el comportamiento de los campos PM2.5, PM10 y HCHO y elimina los campos PM25R y PM10R para cumplir mejor con la aplicación Dyson. Por lo tanto, debe verificar si utiliza los campos mencionados en scripts o en cualquier adaptador de historial. Lea atentamente el registro de cambios.",
+                    "pl": "Ta aktualizacja zmienia zachowanie pól PM2.5, PM10 i HCHO oraz usuwa pola PM25R i PM10R, aby zapewnić większą zgodność z aplikacją dyson. Dlatego musisz sprawdzić, czy używasz wspomnianych pól w skryptach lub jakimś adapterze historii. Przeczytaj uważnie dziennik zmian.",
+                    "uk": "Це оновлення змінює поведінку полів PM2.5, PM10 і HCHO та видаляє поля PM25R і PM10R для більшої відповідності додатку dyson. Тому вам потрібно перевірити, чи використовуєте ви згадані поля в сценаріях або будь-якому адаптері історії. уважно прочитайте журнал змін.",
+                    "zh-cn": "此更新更改了 PM2.5、PM10 和 HCHO 字段的行为，并删除了 PM25R 和 PM10R 字段 - 以更符合 Dyson 应用程序。因此，您需要检查是否在脚本或任何历史适配器中使用提到的字段。请仔细阅读变更日志。"
+                },
+                "level": "warn",
+                "buttons": [
+                    "agree",
+                    "cancel"
+                ]
+            }
+        ]
     },
     "native": {
         "email": "",

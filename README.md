@@ -171,6 +171,17 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 ## Changelog
 ### **WORK IN PROGRESS**
 
+
+### 3.0.0 (2024-01-11) (Marching on)
+* (grizzelbee) Upd: dependencies got updated
+* (grizzelbee) Upd: updated year of copyright in license 
+* (grizzelbee) New: [#244](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/244) Added HCHO-Index 
+* (grizzelbee) Chg: BREAKING CHANGES: 
+  * Replaced values in field pm25 with values from pm25r and calculating them accordingly to the dyson App
+  * Replaced values in field pm10 with values from pm10r and calculating them accordingly to the dyson App 
+  * [#244](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/244) Replaced values in field hcho with values from hchr and calculating them accordingly to the dyson App
+  * Fields pm25r and pm10r are now deprecated and will be removed
+
 ### 2.5.9 (2023-08-21) (Halo of the dark)
 * (grizzelbee) Fix: Updated year in license- and readme file to make adapter checker happy
 

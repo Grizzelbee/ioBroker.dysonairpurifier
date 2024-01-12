@@ -22,8 +22,6 @@ module.exports.wait=async function(milliSec){
     return setTimeout(()=>{/* do nothing but waiting */}, milliSec);
 };
 
-
-
 /**
  * getDyson2faMail
  * Does the first part of the dyson 2FA. Requests the one-time-password from the API
@@ -117,6 +115,7 @@ module.exports.getDysonToken = async function(adapter, email, passwd, country,  
  * @param {object} state the state-object as received by OnStateChange
  * @returns {Promise<object, any>}
  */module.exports.getAngles = function(adapter, dysonAction, thisDevice, state){
+    // eslint-disable-next-line no-async-promise-executor
     return new Promise(async function(resolve) {
         // thisDevice=dysonairpurifier.0.VS9-EU-NAB0887A.OscillationAngle
         thisDevice = thisDevice.split('.', 3);
@@ -308,4 +307,19 @@ module.exports.parseDysonMessage = function (msg) {
     // const data = JSON.parse(msg);
     // console.log(data);
     return;
+};
+
+module.exports.deleteUnusedFields = async function(self, device){
+    self.log.debug(`Looking for deprecated fields on device ${device}`);
+    for (const field of dysonConstants.FIELDSTODELETE) {
+        const id = device + field;
+        self.log.debug(`Looking for deprecated field: ${id}`);
+        // const self = this;
+        self.getObject(id, function (err, oldObj) {
+            if (!err && oldObj) {
+                self.log.info(`Deleting deprecated field: ${id}`);
+                self.delObject(id);
+            }
+        });
+    }
 };

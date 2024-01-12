@@ -25,6 +25,7 @@ let VOC  = 0; // Numeric representation of current VOCIndex
 let PM25 = 0; // Numeric representation of current PM25Index
 let PM10 = 0; // Numeric representation of current PM10Index
 let Dust = 0; // Numeric representation of current DustIndex
+const hcho = 0; // Numeric representation of current FormaldehydeIndex
 
 
 
@@ -234,7 +235,7 @@ class dysonAirPurifier extends utils.Adapter {
                     if (devices[mqttDevice].Serial === thisDevice){
                         this.log.debug(`MANUAL CHANGE: device [${thisDevice}] -> [${action}] -> [${state.val}], id: [${id}]`);
                         this.log.debug('SENDING this data to device (' + thisDevice + '): ' + JSON.stringify(message));
-                        this.setState(id, state.val, true);
+                        await this.setState(id, state.val, true);
                         devices[mqttDevice].mqttClient.publish(
                             devices[mqttDevice].ProductType + '/' + thisDevice + '/command',
                             JSON.stringify(message)
@@ -254,7 +255,7 @@ class dysonAirPurifier extends utils.Adapter {
         } else if (state && state.ack) {
             // state changes by hardware or adapter depending on hardware values
             // check if it is an Index calculation
-            if ( action.substr( action.length-5, 5 ) === 'Index' ) {
+            if ( action.includes('Index') ) {
                 // if some index has changed recalculate overall AirQuality
                 this.createOrExtendObject(thisDevice + '.AirQuality', {
                     type: 'state',
@@ -424,6 +425,95 @@ class dysonAirPurifier extends utils.Adapter {
             this.log.error('[CreateOrUpdateDevice] Error: ' + error + ', Callstack: ' + error.stack);
         }
     }
+    // Format: [ 0-dysonCode, 1-Name of Datapoint, 2-Description, 3-datatype, 4-writeable, 5-role, 6-unit, 7-possible values for data field]
+    /**
+     *
+     * @param dataField {[]}
+     * @returns {string}
+     */
+    getDysonCode(dataField){
+        return dataField[0];
+    }
+    /**
+     *
+     * @param dataField {[]}
+     * @param value {string}
+     * @returns {void}
+     */
+    setDysonCode(dataField, value){
+        dataField[0] = value;
+    }
+
+    /**
+     *
+     * @param dataField {[]}
+     * @returns {string}
+     */
+    getDataPointName(dataField){
+        return dataField[1];
+    }
+
+    /**
+     *
+     * @param dataField {[]}
+     * @returns {string}
+     */
+    getDescription(dataField){
+        return dataField[2];
+    }
+
+    /**
+     *
+     * @param dataField {[]}
+     * @returns {string}
+     */
+    getDataType(dataField){
+        return dataField[3];
+    }
+
+    // Format: [ 0-dysonCode, 1-Name of Datapoint, 2-Description, 3-datatype, 4-writeable, 5-role, 6-unit, 7-possible values for data field]
+    /**
+     *
+     * @param dataField {[]}
+     * @returns {boolean}
+     */
+    getWriteable(dataField){
+        return ( dataField[4] === 'true');
+    }
+    /**
+     *
+     * @param dataField {[]}
+     * @returns {string}
+     */
+    getDataRole(dataField){
+        return dataField[5];
+    }
+    /**
+     *
+     * @param dataField {[]}
+     * @returns {string}
+     */
+    getDataUnit(dataField){
+        return dataField[6];
+    }
+    /**
+     *
+     * @param dataField {any}
+     * @param value {string}
+     * @returns {void}
+     */
+    setDataUnit(dataField, value){
+        dataField[6] = value;
+    }
+    /**
+     *
+     * @param dataField {[]}
+     * @returns {{}}
+     */
+    getValueList(dataField){
+        return dataField[7];
+    }
+
 
     /**
      * processMsg
@@ -447,10 +537,10 @@ class dysonAirPurifier extends utils.Adapter {
             // Is this a "data" message?
             if ( row === 'data'){
                 await this.processMsg(device, '.Sensor', message[row]);
-                if (Object.prototype.hasOwnProperty.call(message[row], 'pm25')) {
+                if (Object.prototype.hasOwnProperty.call(message[row], 'pm25r')) {
                     this.createPM25(message, row, device);
                 }
-                if (Object.prototype.hasOwnProperty.call(message[row], 'pm10')) {
+                if (Object.prototype.hasOwnProperty.call(message[row], 'pm10r')) {
                     this.createPM10(message, row, device);
                 }
                 if (Object.prototype.hasOwnProperty.call(message[row], 'pact')) {
@@ -462,6 +552,9 @@ class dysonAirPurifier extends utils.Adapter {
                 if (Object.prototype.hasOwnProperty.call(message[row], 'noxl')) {
                     this.createNO2(message, row, device);
                 }
+                if (Object.prototype.hasOwnProperty.call(message[row], 'hchr')) {
+                    this.createHCHO(message, row, device);
+                }
                 return;
             }
             // Handle all other message types
@@ -471,58 +564,68 @@ class dysonAirPurifier extends utils.Adapter {
                 this.log.silly(`Skipped creating unknown data field for Device:[${device.Serial}], Field: [${row}] Value:[${((typeof( message[row] ) === 'object')? JSON.stringify(message[row]) : message[row])}]`);
                 continue;
             }
+            if (this.getDataPointName(deviceConfig) === 'skip') {
+                this.log.silly(`Skipped creating known but unused data field for Device:[${device.Serial}], Field: [${row}] Value:[${((typeof( message[row] ) === 'object')? JSON.stringify(message[row]) : message[row])}]`);
+                continue;
+            }
+            // this.setDysonCode(deviceConfig, dysonUtils.getFieldRewrite(deviceConfig[0]));
             // strip leading zeros from numbers
             let value;
-            if (deviceConfig[3]==='number'){
-                value = Number.parseInt(message[deviceConfig[0]], 10);
+            if (this.getDataType(deviceConfig)==='number'){
+                value = Number.parseInt(message[this.getDysonCode(deviceConfig)], 10);
                 // TP02: When continuous monitoring is off and the fan is switched off - temperature and humidity loose their values.
                 // test whether the values are invalid and config.keepValues is true to prevent the old values from being destroyed
-                if ( message[deviceConfig[0]] === 'OFF' && adapter.config.keepValues ) {
+                if ( message[this.getDysonCode(deviceConfig)] === 'OFF' && adapter.config.keepValues ) {
                     continue;
                 }
-                if (deviceConfig[0] === 'filf') {
+                if (this.getDysonCode(deviceConfig) === 'filf') {
                     // create additional data field filterlifePercent converting value from hours to percent; 4300 is the estimated lifetime in hours by dyson
-                    this.createOrExtendObject( device.Serial + path + '.FilterLifePercent', { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':'%', 'states': deviceConfig[7]}, native: {} }, Number(value * 100/4300));
+                    this.createOrExtendObject( device.Serial + path + '.FilterLifePercent', { type: 'state', common: {name: this.getDescription(deviceConfig), 'read':true, 'write': this.getWriteable(deviceConfig)===true, 'role': this.getDataRole(deviceConfig), 'type':this.getDataType(deviceConfig), 'unit':'%', 'states': this.getValueList(deviceConfig)}, native: {} }, Number(value * 100/4300));
                 }
-            } else if (deviceConfig[5] === 'value.temperature') {
+                if ( (this.getDysonCode(deviceConfig) === 'p10r') || (this.getDysonCode(deviceConfig) === 'p25r')  ) {
+                    value = Math.floor(value/10);
+                }
+            } else if (this.getDataRole(deviceConfig) === 'value.temperature') {
                 // TP02: When continuous monitoring is off and the fan ist switched off - temperature and humidity loose their values.
                 // test whether the values are invalid and config.keepValues is true to prevent the old values from being destroyed
-                if ( message[deviceConfig[0]] === 'OFF' && adapter.config.keepValues ) {
+                if ( message[this.getDysonCode(deviceConfig)] === 'OFF' && adapter.config.keepValues ) {
                     continue;
                 }
-                value = Number.parseInt(message[deviceConfig[0]], 10);
+                value = Number.parseInt(message[this.getDysonCode(deviceConfig)], 10);
                 // convert temperature to configured unit
                 switch (this.config.temperatureUnit) {
                     case 'K' :
                         value /= 10;
                         break;
                     case 'C' :
-                        deviceConfig[6] = '°' + this.config.temperatureUnit;
+                        this.setDataUnit(deviceConfig, '°C');
+                        // OLD: deviceConfig[6] = '°' + this.config.temperatureUnit;
                         value = Number((value / 10) - 273.15).toFixed(2);
                         break;
                     case 'F' :
-                        deviceConfig[6] = '°' + this.config.temperatureUnit;
+                        this.setDataUnit(deviceConfig, '°F');
+                        // OLD: deviceConfig[6] = '°' + this.config.temperatureUnit;
                         value = Number(((value / 10) - 273.15) * (9 / 5) + 32).toFixed(2);
                         break;
                 }
-            } else if (deviceConfig[3]==='boolean' && deviceConfig[5].startsWith('switch')) {
+            } else if (this.getDataType(deviceConfig)==='boolean' && this.getDataRole(deviceConfig).startsWith('switch')) {
                 // testValue should be the 2nd value in an array or if it's no array, the value itself
-                const testValue = ( typeof message[deviceConfig[0]] === 'object'? message[deviceConfig[0]][1] : message[deviceConfig[0]] );
-                //this.log.debug(`${deviceConfig[1]} is a bool switch. Current state: [${testValue}]`);
+                const testValue = ( typeof message[this.getDysonCode(deviceConfig)] === 'object'? message[this.getDysonCode(deviceConfig)][1] : message[this.getDysonCode(deviceConfig)] );
+                //this.log.debug(`${getDataPointName(deviceConfig)} is a bool switch. Current state: [${testValue}]`);
                 value = (testValue === 'ON' || testValue === 'HUMD');
-            } else if (deviceConfig[3]==='boolean' && deviceConfig[5].startsWith('indicator')) {
+            } else if (this.getDataType(deviceConfig)==='boolean' && this.getDataRole(deviceConfig).startsWith('indicator')) {
                 // testValue should be the 2nd value in an array or if it's no array, the value itself
-                const testValue = ( typeof message[deviceConfig[0]] === 'object'? message[deviceConfig[0]][1] : message[deviceConfig[0]] );
-                this.log.silly(`${deviceConfig[1]} is a bool switch. Current state: [${testValue}] --> returnvalue for further processing: ${(testValue === 'FAIL')}`);
+                const testValue = ( typeof message[this.getDysonCode(deviceConfig)] === 'object'? message[this.getDysonCode(deviceConfig)][1] : message[this.getDysonCode(deviceConfig)] );
+                this.log.silly(`${this.getDataPointName(deviceConfig)} is a bool switch. Current state: [${testValue}] --> returnvalue for further processing: ${(testValue === 'FAIL')}`);
                 value = (testValue === 'FAIL');
             } else {
                 // It's no bool switch
-                value = message[deviceConfig[0]];
+                value = message[this.getDysonCode(deviceConfig)];
             }
             // during state-change message only changed values are being updated
             if (typeof (value) === 'object') {
                 if (value[0] === value[1]) {
-                    this.log.debug('Values for [' + deviceConfig[1] + '] are equal. No update required. Skipping.');
+                    this.log.debug('Values for [' + this.getDataPointName(deviceConfig) + '] are equal. No update required. Skipping.');
                     continue;
                 } else {
                     value = value[1].valueOf();
@@ -532,23 +635,23 @@ class dysonAirPurifier extends utils.Adapter {
             }
             // deviceConfig.length>7 means the data field has predefined states attached, that need to be handled
             if (deviceConfig.length > 7) {
-                // this.log.debug(`DeviceConfig: length()=${deviceConfig.length}, 7=[${JSON.stringify(deviceConfig[7])}]`);
+                // this.log.debug(`DeviceConfig: length()=${deviceConfig.length}, 7=[${JSON.stringify(this.getValueList(deviceConfig))}]`);
                 let currentStates={};
-                if (deviceConfig[7]===dysonConstants.LOAD_FROM_PRODUCTS){
-                    // this.log.debug(`Sideloading states for token [${deviceConfig[0]}] - Device:[${device.Serial}], Type:[${device.ProductType}].`);
-                    currentStates=dysonConstants.PRODUCTS[device.ProductType][deviceConfig[0]];
+                if (this.getValueList(deviceConfig)===dysonConstants.LOAD_FROM_PRODUCTS){
+                    // this.log.debug(`Sideloading states for token [${getDysonCode(deviceConfig)}] - Device:[${device.Serial}], Type:[${device.ProductType}].`);
+                    currentStates=dysonConstants.PRODUCTS[device.ProductType][this.getDysonCode(deviceConfig)];
                     // this.log.debug(`Sideloading: Found states [${JSON.stringify(currentStates)}].`);
                 } else {
-                    currentStates=deviceConfig[7];
+                    currentStates=this.getValueList(deviceConfig);
                 }
-                this.createOrExtendObject( device.Serial + path + '.'+ deviceConfig[1], { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':deviceConfig[6], 'states': currentStates}, native: {} }, value);
+                this.createOrExtendObject( device.Serial + path + '.'+ this.getDataPointName(deviceConfig), { type: 'state', common: {name: this.getDescription(deviceConfig), 'read':true, 'write': this.getWriteable(deviceConfig)===true, 'role': this.getDataRole(deviceConfig), 'type':this.getDataType(deviceConfig), 'unit':this.getDataUnit(deviceConfig), 'states': currentStates}, native: {} }, value);
             } else {
-                this.createOrExtendObject( device.Serial + path + '.'+ deviceConfig[1], { type: 'state', common: {name: deviceConfig[2], 'read':true, 'write': deviceConfig[4]==='true', 'role': deviceConfig[5], 'type':deviceConfig[3], 'unit':deviceConfig[6] }, native: {} }, value);
+                this.createOrExtendObject( device.Serial + path + '.'+ this.getDataPointName(deviceConfig), { type: 'state', common: {name: this.getDescription(deviceConfig), 'read':true, 'write': this.getWriteable(deviceConfig)===true, 'role': this.getDataRole(deviceConfig), 'type':this.getDataType(deviceConfig), 'unit':this.getDataUnit(deviceConfig) }, native: {} }, value);
             }
-            // deviceConfig[4]=true -> data field is editable, so subscribe for state changes
-            if (deviceConfig[4]==='true') {
-                //this.log.debug('Subscribing for state changes on :' + device.Serial + path + '.'+ deviceConfig[1] );
-                this.subscribeStates(device.Serial + path + '.'+ deviceConfig[1] );
+            // getWriteable(deviceConfig)=true -> data field is editable, so subscribe for state changes
+            if (this.getWriteable(deviceConfig) === true) {
+                //this.log.debug('Subscribing for state changes on :' + device.Serial + path + '.'+ this.getDataPointName(deviceConfig) );
+                this.subscribeStates(device.Serial + path + '.'+ this.getDataPointName(deviceConfig) );
             }
         }
     }
@@ -589,6 +692,45 @@ class dysonAirPurifier extends utils.Adapter {
             native: {}
         }, NO2Index);
         this.subscribeStates(device.Serial + '.Sensor.NO2Index' );
+    }
+
+    /**
+     * createHCHO
+     *
+     * creates the data fields for the values itself and the index if the device has a HCHO sensor
+     *
+     * @param message {object} the received mqtt message
+     * @param {number} message[].noxl
+     * @param row     {string} the current data row
+     * @param device  {object} the device object the data is valid for
+     */
+    createHCHO(message, row, device) {
+        // HCHO QualityIndex
+        // 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad
+        let HCHOIndex = 0;
+        const value = message[row].hchr / 1000;
+        if ((value >= 0 ) && (value < 0.1)) {
+            HCHOIndex = 0;
+        } else if ((value >= 0.1) && (value < 0.3)) {
+            HCHOIndex = 1;
+        } else if ((value >= 0.3) && (value < 0.5)) {
+            HCHOIndex = 2;
+        } else if (value >= 0.5) {
+            HCHOIndex = 3;
+        }
+        this.createOrExtendObject(device.Serial + '.Sensor.HCHOIndex', {
+            type: 'state',
+            common: {
+                name: 'HCHO QualityIndex. 0 - 0.099: Good, 0.100 - 0.299: Medium, 0.300 - 0.499, Bad, >0.500: very Bad',
+                'read': true,
+                'write': false,
+                'role': 'value',
+                'type': 'number',
+                'states' : {0:'Good', 1:'Medium', 2:'Bad', 3:'very Bad', 4:'extremely Bad', 5:'worrying'}
+            },
+            native: {}
+        }, HCHOIndex);
+        this.subscribeStates(device.Serial + '.Sensor.HCHOIndex' );
     }
 
     /**
@@ -644,17 +786,17 @@ class dysonAirPurifier extends utils.Adapter {
         // PM10 QualityIndex
         // 0-50: Good, 51-75: Medium, 76-100, Bad, 101-350: very Bad, 351-420: extremely Bad, >421 worrying
         let PM10Index = 0;
-        if (message[row].pm10 < 51) {
+        if (message[row].pm10r < 51) {
             PM10Index = 0;
-        } else if (message[row].pm10 >= 51 && message[row].pm10 <= 75) {
+        } else if (message[row].pm10r >= 51 && message[row].pm10r <= 75) {
             PM10Index = 1;
-        } else if (message[row].pm10 >= 76 && message[row].pm10 <= 100) {
+        } else if (message[row].pm10r >= 76 && message[row].pm10r <= 100) {
             PM10Index = 2;
-        } else if (message[row].pm10 >= 101 && message[row].pm10 <= 350) {
+        } else if (message[row].pm10r >= 101 && message[row].pm10r <= 350) {
             PM10Index = 3;
-        } else if (message[row].pm10 >= 351 && message[row].pm10 <= 420) {
+        } else if (message[row].pm10r >= 351 && message[row].pm10r <= 420) {
             PM10Index = 4;
-        } else if (message[row].pm10 >= 421) {
+        } else if (message[row].pm10r >= 421) {
             PM10Index = 5;
         }
         this.createOrExtendObject(device.Serial + '.Sensor.PM10Index', {
@@ -730,17 +872,17 @@ class dysonAirPurifier extends utils.Adapter {
         // PM2.5 QualityIndex
         // 0-35: Good, 36-53: Medium, 54-70: Bad, 71-150: very Bad, 151-250: extremely Bad, >251 worrying
         let PM25Index = 0;
-        if (message[row].pm25 < 36) {
+        if (message[row].pm25r < 36) {
             PM25Index = 0;
-        } else if (message[row].pm25 >= 36 && message[row].pm25 <= 53) {
+        } else if (message[row].pm25r >= 36 && message[row].pm25r <= 53) {
             PM25Index = 1;
-        } else if (message[row].pm25 >= 54 && message[row].pm25 <= 70) {
+        } else if (message[row].pm25r >= 54 && message[row].pm25r <= 70) {
             PM25Index = 2;
-        } else if (message[row].pm25 >= 71 && message[row].pm25 <= 150) {
+        } else if (message[row].pm25r >= 71 && message[row].pm25r <= 150) {
             PM25Index = 3;
-        } else if (message[row].pm25 >= 151 && message[row].pm25 <= 250) {
+        } else if (message[row].pm25r >= 151 && message[row].pm25r <= 250) {
             PM25Index = 4;
-        } else if (message[row].pm25 >= 251) {
+        } else if (message[row].pm25r >= 251) {
             PM25Index = 5;
         }
         this.createOrExtendObject(device.Serial + '.Sensor.PM25Index', {
@@ -773,6 +915,8 @@ class dysonAirPurifier extends utils.Adapter {
             if (typeof devices != 'undefined') {
                 for (const thisDevice in devices) {
                     await this.CreateOrUpdateDevice(devices[thisDevice]);
+                    // delete deprecated fields from device tree
+                    await dysonUtils.deleteUnusedFields(this, `${this.name}.${this.instance}.${devices[thisDevice].Serial}`);
                     // Initializes the MQTT client for local communication with the thisDevice
                     this.log.debug(`Result of CreateOrUpdateDevice: [${JSON.stringify( devices[thisDevice] )}]`);
                     if (!devices[thisDevice].hostAddress || devices[thisDevice].hostAddress === '' || devices[thisDevice].hostAddress === 'undefined' || typeof devices[thisDevice].hostAddress === 'undefined') {

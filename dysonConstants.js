@@ -32,6 +32,9 @@ module.exports.PRODUCTS = {
     '527K': {name:'Dyson Pure Hot+Cool Formaldehyde', icon:'icons/heaters.png', 'ancp':{0:'0', 45:'45', 90:'90', 180:'180', 350:'350', 'CUST':'Custom'}}
 };
 
+module.exports.FIELDSTODELETE = ['.Sensor.PM10R', '.Sensor.PM25R'];
+
+
 // data structure to determine readable names, etc for any datapoint
 // Every row is one state in a dyson message. Format: [ 0-dysonCode, 1-Name of Datapoint, 2-Description, 3-datatype, 4-writeable, 5-role, 6-unit, 7-possible values for data field]
 module.exports.DATAPOINTS = [
@@ -66,13 +69,14 @@ module.exports.DATAPOINTS = [
     ['sltm' , 'Sleeptimer'                , 'Sleep timer'                                                                   , 'number',  'false', 'value'             ,'Min' ],
     ['tact' , 'Temperature'               , 'Temperature'                                                                   , 'string',  'false', 'value.temperature' ,'' ],
     ['vact' , 'VOC'                       , 'VOC - Volatile Organic Compounds'                                              , 'number',  'false', 'value'             ,'' ],
-    ['pm25' , 'PM25'                      , 'PM2.5 - Particulate Matter 2.5µm'                                              , 'number',  'false', 'value'             ,'µg/m³' ],
-    ['pm10' , 'PM10'                      , 'PM10 - Particulate Matter 10µm'                                                , 'number',  'false', 'value'             ,'µg/m³' ],
+    ['pm25' , 'skip'                      , 'PM2.5 - Particulate Matter 2.5µm'                                              , 'number',  'false', 'value'             ,'µg/m³' ],
+    ['pm10' , 'skip'                      , 'PM10 - Particulate Matter 10µm'                                                , 'number',  'false', 'value'             ,'µg/m³' ],
     ['va10' , 'VOC'                       , 'VOC - Volatile Organic Compounds (inside)'                                     , 'number',  'false', 'value'             ,'' ],
     ['noxl' , 'NO2'                       , 'NO2 - Nitrogen dioxide (inside)'                                               , 'number',  'false', 'value'             ,'' ],
-    ['p25r' , 'PM25R'                     , 'PM-2.5R - Particulate Matter 2.5µm'                                            , 'number',  'false', 'value'             ,'µg/m³' ],
-    ['p10r' , 'PM10R'                     , 'PM-10R - Particulate Matter 10µm'                                              , 'number',  'false', 'value'             ,'µg/m³' ],
-    ['hcho' , 'Formaldehyde'              , 'Current formaldehyde level'                                                    , 'number',  'false', 'value'             ,'mg/m³' ],
+    ['p25r' , 'PM25'                      , 'PM2.5 - Particulate Matter 2.5µm'                                            , 'number',  'false', 'value'             ,'µg/m³' ],
+    ['p10r' , 'PM10'                      , 'PM10 - Particulate Matter 10µm'                                              , 'number',  'false', 'value'             ,'µg/m³' ],
+    ['hcho' , 'skip'                      , 'Current formaldehyde level'                                                    , 'number',  'false', 'value'             ,'mg/m³' ],
+    ['hchr' , 'Formaldehyde'              , 'Current formaldehyde level'                                                    , 'number',  'false', 'value'             ,'mg/m³' ],
     ['hmod' , 'HeaterMode'                , 'Heating Mode [ON/OFF]'                                                         , 'boolean', 'true',  'switch'            ,'', BOOL_SWITCH ],
     ['hmax' , 'TemperatureTarget'         , 'Target temperature for heating'                                                , 'string',  'true',  'value.temperature' ,'' ],
     ['hume' , 'HumidificationMode'        , 'HumidificationMode Switch [ON/OFF]'                                            , 'boolean', 'true', 'switch'             ,'', {false: 'Off', true: 'On'} ],
