@@ -171,6 +171,10 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 ## Changelog
 ### **WORK IN PROGRESS**
 
+### 3.0.1 (2024-01-31) (Marching on)
+* (grizzelbee) Upd: dependencies got updated
+* (grizzelbee) Fix: [#244](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/244) Fixed PM2.5, PM10, VOC, NO2 Values
+* (grizzelbee) Fix: [#244](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/244) Fixed PM2.5, PM10, VOC Indexes
 
 ### 3.0.0 (2024-01-11) (Marching on)
 * (grizzelbee) Upd: dependencies got updated
