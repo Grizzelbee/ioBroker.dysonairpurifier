@@ -537,14 +537,17 @@ class dysonAirPurifier extends utils.Adapter {
             // Is this a "data" message?
             if ( row === 'data'){
                 await this.processMsg(device, '.Sensor', message[row]);
-                if (Object.prototype.hasOwnProperty.call(message[row], 'pm25r')) {
+                if (Object.prototype.hasOwnProperty.call(message[row], 'p25r')) {
                     this.createPM25(message, row, device);
                 }
-                if (Object.prototype.hasOwnProperty.call(message[row], 'pm10r')) {
+                if (Object.prototype.hasOwnProperty.call(message[row], 'p10r')) {
                     this.createPM10(message, row, device);
                 }
                 if (Object.prototype.hasOwnProperty.call(message[row], 'pact')) {
                     this.createDust(message, row, device);
+                }
+                if (Object.prototype.hasOwnProperty.call(message[row], 'vact')) {
+                    this.createVOC(message, row, device);
                 }
                 if (Object.prototype.hasOwnProperty.call(message[row], 'va10')) {
                     this.createVOC(message, row, device);
@@ -582,7 +585,7 @@ class dysonAirPurifier extends utils.Adapter {
                     // create additional data field filterlifePercent converting value from hours to percent; 4300 is the estimated lifetime in hours by dyson
                     this.createOrExtendObject( device.Serial + path + '.FilterLifePercent', { type: 'state', common: {name: this.getDescription(deviceConfig), 'read':true, 'write': this.getWriteable(deviceConfig)===true, 'role': this.getDataRole(deviceConfig), 'type':this.getDataType(deviceConfig), 'unit':'%', 'states': this.getValueList(deviceConfig)}, native: {} }, Number(value * 100/4300));
                 }
-                if ( (this.getDysonCode(deviceConfig) === 'p10r') || (this.getDysonCode(deviceConfig) === 'p25r')  ) {
+                if ( (this.getDysonCode(deviceConfig) === 'vact') || (this.getDysonCode(deviceConfig) === 'va10') || (this.getDysonCode(deviceConfig) === 'noxl')  ) {
                     value = Math.floor(value/10);
                 }
             } else if (this.getDataRole(deviceConfig) === 'value.temperature') {
@@ -759,7 +762,7 @@ class dysonAirPurifier extends utils.Adapter {
         this.createOrExtendObject(device.Serial + '.Sensor.VOCIndex', {
             type: 'state',
             common: {
-                name: 'VOC QualityIndex. 0-39: Good, 40-69: Medium, 70-89: Bad, >90: very Bad',
+                name: 'VOC QualityIndex. 0-3: Good, 4-6: Medium, 7-9: Bad, >9: very Bad',
                 'read': true,
                 'write': false,
                 'role': 'value',
@@ -786,17 +789,17 @@ class dysonAirPurifier extends utils.Adapter {
         // PM10 QualityIndex
         // 0-50: Good, 51-75: Medium, 76-100, Bad, 101-350: very Bad, 351-420: extremely Bad, >421 worrying
         let PM10Index = 0;
-        if (message[row].pm10r < 51) {
+        if (message[row].p10r < 51) {
             PM10Index = 0;
-        } else if (message[row].pm10r >= 51 && message[row].pm10r <= 75) {
+        } else if (message[row].p10r >= 51 && message[row].p10r <= 75) {
             PM10Index = 1;
-        } else if (message[row].pm10r >= 76 && message[row].pm10r <= 100) {
+        } else if (message[row].p10r >= 76 && message[row].p10r <= 100) {
             PM10Index = 2;
-        } else if (message[row].pm10r >= 101 && message[row].pm10r <= 350) {
+        } else if (message[row].p10r >= 101 && message[row].p10r <= 350) {
             PM10Index = 3;
-        } else if (message[row].pm10r >= 351 && message[row].pm10r <= 420) {
+        } else if (message[row].p10r >= 351 && message[row].p10r <= 420) {
             PM10Index = 4;
-        } else if (message[row].pm10r >= 421) {
+        } else if (message[row].p10r >= 421) {
             PM10Index = 5;
         }
         this.createOrExtendObject(device.Serial + '.Sensor.PM10Index', {
@@ -872,17 +875,17 @@ class dysonAirPurifier extends utils.Adapter {
         // PM2.5 QualityIndex
         // 0-35: Good, 36-53: Medium, 54-70: Bad, 71-150: very Bad, 151-250: extremely Bad, >251 worrying
         let PM25Index = 0;
-        if (message[row].pm25r < 36) {
+        if (message[row].p25r < 36) {
             PM25Index = 0;
-        } else if (message[row].pm25r >= 36 && message[row].pm25r <= 53) {
+        } else if (message[row].p25r >= 36 && message[row].p25r <= 53) {
             PM25Index = 1;
-        } else if (message[row].pm25r >= 54 && message[row].pm25r <= 70) {
+        } else if (message[row].p25r >= 54 && message[row].p25r <= 70) {
             PM25Index = 2;
-        } else if (message[row].pm25r >= 71 && message[row].pm25r <= 150) {
+        } else if (message[row].p25r >= 71 && message[row].p25r <= 150) {
             PM25Index = 3;
-        } else if (message[row].pm25r >= 151 && message[row].pm25r <= 250) {
+        } else if (message[row].p25r >= 151 && message[row].p25r <= 250) {
             PM25Index = 4;
-        } else if (message[row].pm25r >= 251) {
+        } else if (message[row].p25r >= 251) {
             PM25Index = 5;
         }
         this.createOrExtendObject(device.Serial + '.Sensor.PM25Index', {
