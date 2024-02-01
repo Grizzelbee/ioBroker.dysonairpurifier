@@ -63,6 +63,8 @@ class dysonAirPurifier extends utils.Adapter {
     async onMessage( msg ) {
         if (typeof msg === 'object' && msg.callback && msg.from && msg.from.startsWith('system.adapter.admin') ) {
             if (msg.command === 'getDyson2faMail'){
+                this.log.debug('OnMessage: Received getDyson2faMail request.');
+                msg.message.locale = await dysonUtils.getDyson2faLocale( msg.message.country);
                 dysonUtils.getDyson2faMail(this, msg.message.email, msg.message.password, msg.message.country, msg.message.locale)
                     .then((response) => this.sendTo(msg.from, msg.command, response, msg.callback))
                     .catch((e) => {
@@ -587,6 +589,9 @@ class dysonAirPurifier extends utils.Adapter {
                 }
                 if ( (this.getDysonCode(deviceConfig) === 'vact') || (this.getDysonCode(deviceConfig) === 'va10') || (this.getDysonCode(deviceConfig) === 'noxl')  ) {
                     value = Math.floor(value/10);
+                }
+                if (this.getDysonCode(deviceConfig) === 'hchr') {
+                    value = value/1000;
                 }
             } else if (this.getDataRole(deviceConfig) === 'value.temperature') {
                 // TP02: When continuous monitoring is off and the fan ist switched off - temperature and humidity loose their values.

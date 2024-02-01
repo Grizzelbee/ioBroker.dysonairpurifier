@@ -18,9 +18,60 @@ const httpsAgent = new https.Agent({ca: rootCas});
 rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
 
 
-module.exports.wait=async function(milliSec){
-    return setTimeout(()=>{/* do nothing but waiting */}, milliSec);
+// is this used?
+// if no error occurs - delete it. 2024-01-31
+//module.exports.wait=async function(milliSec){
+//    return(setTimeout(()=>{/* do nothing but waiting */}, milliSec));
+//};
+
+
+module.exports.getDyson2faLocale = async function(country){
+    return new Promise((resolve, reject) =>{
+        switch(country){
+            case 'DE':
+                resolve('de-DE');
+                break;
+            case 'AT':
+                resolve('de-AT');
+                break;
+            case 'CH':
+                resolve('de-CH');
+                break;
+            case 'NL':
+                resolve('nl-NL');
+                break;
+            case 'FR':
+                resolve('fr-FR');
+                break;
+            case 'PL':
+                resolve('pl-PL');
+                break;
+            case 'BE':
+                resolve('fr-BE');
+                break;
+            case 'US':
+                resolve('en-US');
+                break;
+            case 'GB':
+                resolve('en-GB');
+                break;
+            case 'IE':
+                resolve('en-IE');
+                break;
+            case 'CA':
+                resolve('en-CA');
+                break;
+            case 'RU':
+                resolve('ru-RU');
+                break;
+            case 'CN':
+                resolve('cn-CN');
+                break;
+        }
+        reject('getDyson2faLocale: Unknown country for 2FA mail: ' + country);
+    });
 };
+
 
 /**
  * getDyson2faMail
@@ -48,7 +99,7 @@ module.exports.getDyson2faMail = async function(adapter, email, passwd, country,
                 json: true,
             });
         if (result.data && result.data.accountStatus !== 'ACTIVE'){
-            return {error : `This account : ${email} is ${result.data.accountStatus} but needs to be ACTIVE. Please fix this first and set this account to active using the dyson smartphone app or website.`};
+            return({error : `This account : ${email} is ${result.data.accountStatus} but needs to be ACTIVE. Please fix this first and set this account to active using the dyson smartphone app or website.`});
         } else {
             adapter.log.debug('Result: ' + JSON.stringify(result.data));
             if (result.data.authenticationMethod === 'EMAIL_PWD_2FA'){
@@ -60,14 +111,14 @@ module.exports.getDyson2faMail = async function(adapter, email, passwd, country,
                     });
                 adapter.log.debug(`Result from API-Status request -> challengeId is: ${response.data.challengeId}`);
                 adapter.log.debug(stringify(response.data));
-                return response.data;
+                return(response.data);
             } else {
-                return {error : `Received unexpected authentication-method from dyson API. Expecting: [EMAIL_PWD_2FA], received: [${result.data.authenticationMethod}].`};
+                return({error : `Received unexpected authentication-method from dyson API. Expecting: [EMAIL_PWD_2FA], received: [${result.data.authenticationMethod}].`});
             }
         }
     } catch(error){
         adapter.log.error('CATCH-getDyson2faMail: ' + stringify(error));
-        return {error : `Received error: [${error}] from dyson API.\n These credentials have been used during this request: Username: [${email}], Password: [${passwd}], country: [${country}], locale: [${locale}].\nIf these credentials are okay and you are facing a 401 error, please refer to the adapters readme file for a documented solution.\nIf these credentials are okay and you are facing another error please contact the developer via iobroker forum or github.`};
+        return({error : `Received error: [${error}] from dyson API.\n These credentials have been used during this request: Username: [${email}], Password: [${passwd}], country: [${country}], locale: [${locale}].\nIf these credentials are okay and you are facing a 401 error, please refer to the adapters readme file for a documented solution.\nIf these credentials are okay and you are facing another error please contact the developer via iobroker forum or github.`});
     }
 };
 
@@ -99,7 +150,7 @@ module.exports.getDysonToken = async function(adapter, email, passwd, country,  
                 headers: dysonConstants.HTTP_HEADERS,
                 json: true,
             });
-        return response.data;
+        return(response.data);
     } catch(err){
         adapter.log.error('getDysonToken: ' + err);
     }
@@ -116,7 +167,7 @@ module.exports.getDysonToken = async function(adapter, email, passwd, country,  
  * @returns {Promise<object, any>}
  */module.exports.getAngles = function(adapter, dysonAction, thisDevice, state){
     // eslint-disable-next-line no-async-promise-executor
-    return new Promise(async function(resolve) {
+    return(new Promise(async function(resolve) {
         // thisDevice=dysonairpurifier.0.VS9-EU-NAB0887A.OscillationAngle
         thisDevice = thisDevice.split('.', 3);
         thisDevice = thisDevice.join('.');
@@ -136,7 +187,7 @@ module.exports.getDysonToken = async function(adapter, email, passwd, country,  
             result.osau = state;
         }
         resolve(result);
-    });
+    }));
 };
 
 
@@ -154,13 +205,13 @@ module.exports.zeroFill = function (number, width) {
     const num = parseInt(number);
 
     if (isNaN(num)) {
-        return '';
+        return('');
     }
 
     const negativeSign = num < 0 ? '-' : '';
     const str = '' + Math.abs(num);
 
-    return `${negativeSign}${_.padStart(str, width, '0')}`;
+    return(`${negativeSign}${_.padStart(str, width, '0')}`);
 };
 
 /**
@@ -175,7 +226,7 @@ module.exports.zeroFill = function (number, width) {
 module.exports.checkAdapterConfig = async function (adapter) {
     const config = adapter.config;
 
-    return new Promise(
+    return(new Promise(
         function (resolve, reject) {
             if ((!config.email || config.email === '')
                 || (!config.Password || config.Password === '')
@@ -199,7 +250,7 @@ module.exports.checkAdapterConfig = async function (adapter) {
             } else {
                 resolve(true);
             }
-        });
+        }));
 };
 
 /**
@@ -217,7 +268,7 @@ module.exports.decryptMqttPasswd = function(LocalCredentials) {
     const decipher = crypto.createDecipheriv('aes-256-cbc', key, initializationVector);
     const decryptedPasswordString = decipher.update(LocalCredentials, 'base64', 'utf8') + decipher.final('utf8');
     const decryptedPasswordJson = JSON.parse(decryptedPasswordString);
-    return decryptedPasswordJson.apPasswordHash;
+    return(decryptedPasswordJson.apPasswordHash);
 };
 
 /**
@@ -231,14 +282,14 @@ module.exports.decryptMqttPasswd = function(LocalCredentials) {
  *      rejects with an error message
  */
 module.exports.getDevices = async function(token, adapter) {
-    return new Promise((resolve, reject) => {
+    return(new Promise((resolve, reject) => {
         this.dysonGetDevicesFromApi(token)
             .then((response) => {
                 const devices = [];
                 for (const thisDevice in response.data) {
                     adapter.log.debug('Data received from dyson API: ' + JSON.stringify(response.data[thisDevice]));
                     if (!Object.keys(dysonConstants.PRODUCTS).some(function (t) {
-                        return t === response.data[thisDevice].ProductType;
+                        return(t === response.data[thisDevice].ProductType);
                     })) {
                         adapter.log.warn('Device with serial number [' + response.data[thisDevice].Serial + '] not added, hence it is not supported by this adapter. Product type: [' + response.data[thisDevice].ProductType + ']');
                         adapter.log.warn('Please open an Issue on github if you think your device should be supported.');
@@ -256,7 +307,7 @@ module.exports.getDevices = async function(token, adapter) {
             .catch((error) => {
                 reject('[dysonGetDevicesFromApi] Error: (' + error.statuscode + ') ' + error + ', Callstack: ' + error.stack);
             });
-    });
+    }));
 };
 
 
@@ -272,13 +323,13 @@ module.exports.getDevices = async function(token, adapter) {
  */
 module.exports.dysonGetDevicesFromApi = async function(token) {
     // Sends a request to the API to get all devices of the user
-    return await axios.get(dysonConstants.API_BASE_URI + '/v2/provisioningservice/manifest',
+    return(await axios.get(dysonConstants.API_BASE_URI + '/v2/provisioningservice/manifest',
         {
             httpsAgent,
             headers: { 'Authorization': 'Bearer ' + token },
             json: true
         }
-    );
+    ));
 };
 
 
@@ -291,7 +342,7 @@ module.exports.maskConfig = function (unmaskedConfig) {
     // Masking sensitive fields (password) for logging configuration (creating a deep copy of the config)
     const maskedConfig = JSON.parse(JSON.stringify(unmaskedConfig));
     maskedConfig.Password = '(***)';
-    return maskedConfig;
+    return(maskedConfig);
 };
 
 /**
