@@ -1,20 +1,20 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "3.0.1",
+        "version": "3.1.0",
         "news": {
-            "3.0.1": {
-                "en": "dependencies got updated \nFixed PM2.5, PM10, VOC, NO2 Values \nFixed PM2.5, PM10, VOC Indexes",
-                "de": "Abhängigkeiten wurden aktualisiert. \nPM2,5-, PM10-, VOC- und NO2-Werte korrigiert. \nPM2,5-, PM10- und VOC-Indizes korrigiert",
-                "ru": "обновлены зависимости \nИсправлены значения PM2.5, PM10, VOC, NO2 \nИсправлены индексы PM2.5, PM10, VOC",
-                "pt": "dependências foram atualizadas \nValores corrigidos de PM2.5, PM10, VOC, NO2 \nCorrigidos índices de PM2.5, PM10, VOC",
-                "nl": "afhankelijkheden zijn bijgewerkt \nVaste PM2.5-, PM10-, VOC-, NO2-waarden \nVaste PM2.5-, PM10-, VOC-indexen",
-                "fr": "les dépendances ont été mises à jour \nCorrection des valeurs PM2,5, PM10, COV, NO2 \nCorrection des indices PM2,5, PM10, COV",
-                "it": "le dipendenze sono state aggiornate \nRisolti i valori PM2.5, PM10, VOC, NO2 \nRisolti gli indici PM2.5, PM10, VOC",
-                "es": "las dependencias se actualizaron \nValores fijos de PM2.5, PM10, VOC, NO2 \nÍndices fijos de PM2.5, PM10, VOC",
-                "pl": "zależności zostały zaktualizowane \nStałe wartości PM2,5, PM10, VOC, NO2 \nNaprawiono indeksy PM2,5, PM10, VOC",
-                "uk": "залежності оновлено \nВиправлені значення PM2.5, PM10, VOC, NO2 \nВиправлені індекси PM2.5, PM10, VOC",
-                "zh-cn": "更新了依赖项 \n修复了 PM2.5、PM10、VOC、NO2 值 \n修复了 PM2.5、PM10、VOC 指数"
+            "3.1.0": {
+                "en": "dependencies got updated\nFixed PM2.5, PM10, VOC, NO2 Values\nFixed PM2.5, PM10, VOC Indexes\nUpdated admin-UI to jsonConfig",
+                "de": "Abhängigkeiten wurden aktualisiert \n PM2.5-, PM10-, VOC-, NO2-Werte korrigiert \n PM2.5-, PM10-, VOC-Indizes korrigiert \n Admin-UI auf jsonConfig aktualisiert",
+                "ru": "зависимости обновлены \n Исправлены значения PM2.5, PM10, VOC, NO2 \n Исправлены индексы PM2.5, PM10, VOC \n Обновлен интерфейс администратора до jsonConfig",
+                "pt": "dependências foram atualizadas\n Valores corrigidos de PM2.5, PM10, VOC, NO2\n Corrigidos índices PM2.5, PM10, VOC\n UI de administração atualizada para jsonConfig",
+                "nl": "afhankelijkheden zijn bijgewerkt \n PM2.5-, PM10-, VOC-, NO2-waarden opgelost \n PM2.5-, PM10-, VOC-indexen opgelost \n Beheerdersinterface bijgewerkt naar jsonConfig",
+                "fr": "les dépendances ont été mises à jour\n Correction des valeurs PM2,5, PM10, VOC, NO2\n Correction des index PM2,5, PM10, VOC\n Mise à jour de l'interface utilisateur d'administration vers jsonConfig",
+                "it": "le dipendenze sono state aggiornate\nCorrezione dei valori PM2.5, PM10, VOC, NO2\nCorrezione degli indici PM2.5, PM10 e VOC\nInterfaccia utente di amministrazione aggiornata a jsonConfig",
+                "es": "las dependencias se actualizaron \n Se corrigieron los valores de PM2.5, PM10, VOC y NO2 \n Se corrigieron los índices de PM2.5, PM10 y VOC \n Se actualizó la interfaz de usuario del administrador a jsonConfig",
+                "pl": "zależności zostały zaktualizowane\nNaprawiono wartości PM2.5, PM10, VOC, NO2\nNaprawiono indeksy PM2.5, PM10, VOC\nZaktualizowano interfejs administratora do jsonConfig",
+                "uk": "залежності оновлено\nВиправлено значення PM2.5, PM10, VOC, NO2\nВиправлено індекси PM2.5, PM10, VOC\nОновлено інтерфейс адміністратора до jsonConfig",
+                "zh-cn": "更新了依赖项\n修复了 PM2.5、PM10、VOC、NO2 值\n修复了 PM2.5、PM10、VOC 索引\n将管理 UI 更新为 jsonConfig"
             },
             "3.0.0": {
                 "en": "\nUpd: dependencies got updated \nNew: Added HCHO-Index \nBREAKING CHANGES: \nReplaced values in field pm25 with values from pm25r and calculating them accordingly to the dyson App \nReplaced values in field pm10 with values from pm10r and calculating them accordingly to the dyson App \nReplaced values in field hcho with values from hchr  and calculating them accordingly to the dyson App \nFields pm25r and pm10r are now deprecated and will be removed",
@@ -110,7 +110,7 @@
         "platform": "Javascript/Node.js",
         "icon": "dyson_logo.svg",
         "adminUI": {
-            "config": "materialize"
+            "config": "json"
         },
         "enabled": true,
         "extIcon": "https://raw.githubusercontent.com/Grizzelbee/ioBroker.dysonairpurifier/master/admin/dyson_logo.svg",
@@ -177,7 +177,12 @@
                     "cancel"
                 ]
             }
-        ]
+        ],
+        "licenseInformation": {
+            "license": "MIT",
+            "link": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier/blob/master/LICENSE",
+            "type": "free"
+        }
     },
     "native": {
         "email": "",
