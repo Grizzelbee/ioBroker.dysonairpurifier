@@ -1087,13 +1087,14 @@ class dysonAirPurifier extends utils.Adapter {
         // Terminate adapter after first start because configuration is not yet received
         // Adapter is restarted automatically when config page is closed
         adapter = this; // preserve adapter reference to address functions etc. correctly later
-        const configIsValid = await dysonUtils.checkAdapterConfig(adapter);
-        if (configIsValid) {
-            await this.main();
-        } else {
-            adapter.log.warn('This adapter has no or no valid configuration. Starting anyway to give you the opportunity to configure it properly.');
-            await this.setState('info.connection', false, true);
-        }
+        dysonUtils.checkAdapterConfig(adapter)
+            .then( ()=> {
+                this.main();
+            })
+            .catch( (error) => {
+                adapter.log.warn('This adapter has no or no valid configuration. Starting anyway to give you the opportunity to configure it properly.');
+                this.setState('info.connection', false, true);
+            });
     }
     /***********************************************
      * Misc helper functions                       *
