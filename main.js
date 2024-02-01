@@ -1072,7 +1072,7 @@ class dysonAirPurifier extends utils.Adapter {
                 adapterLog.error(`Unable to retrieve data from dyson servers. May be e.g. a failed login or connection issues. Please check.`);
             }
         } catch (error) {
-            this.setState('info.connection', false, true);
+            await this.setState('info.connection', false, true);
             adapterLog.error(`[main] Error while querying devices from dyson servers. The most common issue is that you haven't finished the 2FA process. Please refer to the ReadMe for instructions.`);
             adapterLog.error(`[main] error: ${error}, stack: ${error.stack}`);
         }
