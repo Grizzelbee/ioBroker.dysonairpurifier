@@ -1092,7 +1092,7 @@ class dysonAirPurifier extends utils.Adapter {
                 this.main();
             })
             .catch( (error) => {
-                adapter.log.warn('This adapter has no or no valid configuration. Starting anyway to give you the opportunity to configure it properly.');
+                adapter.log.warn('This adapter has no or no valid configuration. Starting anyway to give you the opportunity to configure it properly. ' + error);
                 this.setState('info.connection', false, true);
             });
     }
