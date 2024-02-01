@@ -8,14 +8,14 @@
     "Great Britain": "Großbritannien",
     "Ireland": "Irland",
     "Kelvin": "Kelvin",
+    "Lbl_2FA": "2-Faktor-Authentifizierung",
     "Lbl_Password": "Passwort",
-    "Lbl_challengeId": "dyson ChallengeId",
+    "Lbl_ChallengeId": "dyson Challenge-Id",
     "Lbl_country": "Ländercode",
     "Lbl_dyson_code": "dyson Einmalpasswort",
     "Lbl_email": "Email",
     "Lbl_temperatureUnit": "Temperatureinheit",
     "Lbl_token": "Ihr Zugriffstoken",
-    "Netherland": "Niederlande",
     "Netherlands": "Niederlande",
     "Poland": "Polen",
     "Poll_Interval": "Pollinterval",
@@ -40,6 +40,10 @@
     "password_desc": "Passwort Ihres Dyson-Kontos.",
     "switzerland": "Schweiz",
     "temperatureUnit_desc": "Einheit zur Anzeige der Temperatur.",
+    "token_received": "Ein Token wurde empfangen und gespeichert.",
+    "token_received_desc": "Zeigt an, ob von den Dyson-Servern ein Authentifizierungstoken empfangen wurde, das für die Anmeldung erforderlich ist – der Adapter funktioniert nicht, wenn dieses Kontrollkästchen nicht aktiviert ist.",
+    "desc_2FA": "Sie müssen zunächst einen einmaligen 2FA-Prozess ähnlich der Dyson-App durchführen, um diesen Adapter zu aktivieren.",
     "token_inside": "Ein Token wurde empfangen und gespeichert.",
-    "token_inside_desc": "Zeigt an, ob von den Dyson-Servern ein Authentifizierungstoken empfangen wurde, das für die Anmeldung erforderlich ist – der Adapter funktioniert nicht, wenn dieses Kontrollkästchen nicht aktiviert ist."
+    "token_inside_desc": "Zeigt an, ob ein Authentifizierungstoken von den Dyson-Servern empfangen wurde, der für die Anmeldung erforderlich ist – der Adapter funktioniert nicht, wenn dieses Kontrollkästchen nicht aktiviert ist.",
+    "Lbl_UpAndRunning": "Diese Adapterinstanz muss vor der Konfiguration betriebsbereit sein."
 }

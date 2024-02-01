@@ -41,5 +41,9 @@
     "switzerland": "Szwajcaria",
     "temperatureUnit_desc": "Jednostka do wyświetlania temperatury.",
     "token_inside": "Token został odebrany i zapisany.",
-    "token_inside_desc": "Wskazuje, czy z serwerów dyson został odebrany token uwierzytelniania, który jest potrzebny do zalogowania — adapter nie będzie działał bez zaznaczenia tego pola wyboru."
+    "token_inside_desc": "Wskazuje, czy z serwerów dyson został odebrany token uwierzytelniania, który jest potrzebny do zalogowania — adapter nie będzie działał bez zaznaczenia tego pola wyboru.",
+    "Lbl_2FA": "Uwierzytelnianie dwuskładnikowe",
+    "Lbl_ChallengeId": "dyson Challenge-Id",
+    "desc_2FA": "Aby aktywować ten adapter, musisz wykonać początkowy jednorazowy proces 2FA podobny do aplikacji dyson.",
+    "Lbl_UpAndRunning": "Przed konfiguracją ta instancja adaptera musi zostać uruchomiona i uruchomiona."
 }

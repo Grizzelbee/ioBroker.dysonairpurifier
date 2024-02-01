@@ -41,5 +41,9 @@
     "switzerland": "Zwitserland",
     "temperatureUnit_desc": "Eenheid om de temperatuur weer te geven.",
     "token_inside": "Er is een token ontvangen en opgeslagen.",
-    "token_inside_desc": "Geeft aan of er een auth-token is ontvangen van de dyson-servers die nodig is om in te loggen - de adapter zal niet werken zonder dat dit selectievakje is aangevinkt."
+    "token_inside_desc": "Geeft aan of er een auth-token is ontvangen van de dyson-servers die nodig is om in te loggen - de adapter zal niet werken zonder dat dit selectievakje is aangevinkt.",
+    "Lbl_2FA": "2-factor authenticatie",
+    "Lbl_ChallengeId": "dyson Challenge-ID",
+    "desc_2FA": "U moet een eerste eenmalig 2FA-proces uitvoeren, vergelijkbaar met de Dyson-app, om deze adapter te activeren.",
+    "Lbl_UpAndRunning": "Deze adapterinstantie moet actief zijn vóór de configuratie."
 }
