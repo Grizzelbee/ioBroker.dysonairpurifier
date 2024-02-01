@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "3.1.0",
+        "version": "3.1.1",
         "news": {
-            "3.1.0": {
+            "3.1.1": {
                 "en": "dependencies got updated\nFixed PM2.5, PM10, VOC, NO2 Values\nFixed PM2.5, PM10, VOC Indexes\nUpdated admin-UI to jsonConfig",
                 "de": "Abhängigkeiten wurden aktualisiert \n PM2.5-, PM10-, VOC-, NO2-Werte korrigiert \n PM2.5-, PM10-, VOC-Indizes korrigiert \n Admin-UI auf jsonConfig aktualisiert",
                 "ru": "зависимости обновлены \n Исправлены значения PM2.5, PM10, VOC, NO2 \n Исправлены индексы PM2.5, PM10, VOC \n Обновлен интерфейс администратора до jsonConfig",
