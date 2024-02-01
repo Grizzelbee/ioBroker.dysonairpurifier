@@ -1,0 +1,192 @@
+{
+  "i18n": true,
+  "type": "panel",
+  "items": {
+    "donationHelp": {
+    "type": "staticText",
+    "text": "donation"
+  },
+  "donateButton": {
+      "newLine": true,
+      "type": "staticImage",
+      "src": "adapter/dysonairpurifier/admin/paypal-donate-button.png",
+      "href": "https://www.paypal.com/donate/?hosted_button_id=SPUDTXGNG2MYG"
+    },
+    "testAlive": {
+      "newLine": true,
+      "type": "alive",
+      "label": "",
+      "textAlive": "",
+      "textNotAlive": "Lbl_UpAndRunning"
+    },
+    "_basicSection": {
+      "newLine": true,
+      "type" : "header",
+      "text" : "Settings",
+      "size": 2,
+      "sm": 24,
+      "md": 8,
+      "lg": 6
+    },
+    "_2FactorSection": {
+      "type" : "header",
+      "text" : "Lbl_2FA",
+      "tooltip": "desc_2FA",
+      "size": 2,
+      "sm": 24,
+      "md": 8,
+      "lg": 6
+    },
+    "email": {
+      "newLine": true,
+      "type": "text",
+      "label": "Lbl_email",
+      "tooltip" : "email_desc",
+      "sm": 12,
+      "md": 4,
+      "lg": 3
+    },
+    "Password": {
+      "type": "password",
+      "label": "Lbl_Password",
+      "tooltip": "password_desc",
+      "sm": 12,
+      "md": 4,
+      "lg": 3
+    },
+    "token_received": {
+      "type": "checkbox",
+      "label": "token_received",
+      "tooltip": "token_received_desc",
+      "defaultFunc": "data.token.length>0",
+      "disabled": "true",
+      "sm": 30,
+      "md": 94,
+      "lg": 6
+    },
+    "country": {
+      "newLine": true,
+      "type": "select",
+      "label": "Lbl_country",
+      "default": "de",
+      "tooltip": "country_desc",
+      "options" : [
+        {"label":"Germany",        "value":"DE"},
+        {"label":"Austria",        "value":"AT"},
+        {"label":"Belgium",        "value":"BE"},
+        {"label":"Netherlands",    "value":"NL"},
+        {"label":"Poland",         "value":"PL"},
+        {"label":"France",         "value":"FR"},
+        {"label":"United Kingdom", "value":"GK"},
+        {"label":"Ireland",        "value":"IE"},
+        {"label":"Canada",         "value":"CA"},
+        {"label":"USA",            "value":"US"},
+        {"label":"Russia",         "value":"RU"},
+        {"label":"China",          "value":"CN"}
+      ],
+      "sm": 10,
+      "md": 3,
+      "lg": 2
+    },
+    "temperatureUnit": {
+      "type": "select",
+      "label": "temperatureUnit",
+      "default": "de",
+      "tooltip": "temperatureUnit_desc",
+      "options" : [
+        {"label":{"en":"Celsius"},    "value":"C"},
+        {"label":{"en":"Fahrenheit"}, "value":"F"},
+        {"label":{"en":"Kelvin"},     "value":"K"}
+      ],
+      "sm": 10,
+      "md": 3,
+      "lg": 2
+    },
+    "pollInterval": {
+      "type": "number",
+      "label": "Poll_Interval",
+      "tooltip" : "Poll_Interval_desc",
+      "min": 0,
+      "max": 10000,
+      "default": 30,
+      "sm": 10,
+      "md": 3,
+      "lg": 2
+    },
+    "challengeId": {
+      "type": "text",
+      "label": "Lbl_ChallengeId",
+      "tooltip": "challengeId_desc",
+      "default": "",
+      "doNotSave": true,
+      "sm": 12,
+      "md": 4,
+      "lg": 3
+    },
+    "dyson_code": {
+      "type": "text",
+      "label": "Lbl_dyson_code",
+      "tooltip": "dyson_code_desc",
+      "doNotSave": true,
+      "sm": 12,
+      "md": 4,
+      "lg": 3
+    },
+    "keepValues": {
+      "newLine": true,
+      "type": "checkbox",
+      "label": "keepValues",
+      "tooltip": "keepValues_desc",
+      "default": false,
+      "sm": 30,
+      "md": 9,
+      "lg": 6
+    },
+    "getDyson2faMail": {
+      "type": "sendTo",
+      "label": "Start 2FA Process",
+      "variant": "outlined",
+      "showProcess": true,
+      "command": "getDyson2faMail",
+      "jsonData": "{ \"email\": \"${data.email}\", \"password\": \"${data.Password}\" , \"country\": \"${data.country}\", \"locale\": \"${data.locale}\"}",
+      "useNative": true,
+      "tooltip": "Start the 2FA Process and get the One-Time-Password eMail.",
+      "sm": 12,
+      "md": 4,
+      "lg": 3
+    },
+    "getDysonToken": {
+      "type": "sendTo",
+      "label": "Finish 2FA Process",
+      "variant": "outlined",
+      "showProcess": true,
+      "command": "getDysonToken",
+      "jsonData": "{ \"email\": \"${data.email}\", \"password\": \"${data.Password}\" , \"country\": \"${data.country}\", \"challengeId\": \"${data.challengeId}\", \"PIN\": \"${data.dyson_code}\"}",
+      "useNative": true,
+      "tooltip": "finish_desc",
+      "sm": 12,
+      "md": 2,
+      "lg": 3
+    },
+    "disableReconnectLogging": {
+      "newLine": true,
+      "type": "checkbox",
+      "label": "disableReconnectLogging",
+      "tooltip": "disableReconnectLogging_desc",
+      "default": false,
+      "sm": 30,
+      "md": 9,
+      "lg": 6
+    },
+    "token": {
+      "type": "password",
+      "label": "Token",
+      "tooltip": "token_desc",
+      "disabled": "true",
+      "hidden": "true",
+      "sm": 30,
+      "md": 9,
+      "lg": 6
+    }
+  }
+}
