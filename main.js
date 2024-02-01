@@ -1092,10 +1092,6 @@ class dysonAirPurifier extends utils.Adapter {
             if (configIsValid) {
                 adapter.getForeignObject('system.config', (err, obj) => {
                     if (adapter.supportsFeature && adapter.supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
-                        if (obj && obj.native && obj.native.secret) {
-                        //noinspection JSUnresolvedVariable
-                            adapter.config.Password = this.decrypt(obj.native.secret, adapter.config.Password);
-                        }
                         this.main();
                     } else {
                         throw new Error('This adapter requires at least js-controller V3.0.0. Your system is not compatible. Please update your system.');
@@ -1196,16 +1192,6 @@ class dysonAirPurifier extends utils.Adapter {
             return updateIntervalHandle;
         }
     }
-
-    decrypt(key, value) {
-        let result = '';
-        for (let i = 0; i < value.length; ++i) {
-            result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
-        }
-        return result;
-    }
-
-
 
     // Exit adapter
     onUnload(callback) {
