@@ -25,7 +25,6 @@ let VOC  = 0; // Numeric representation of current VOCIndex
 let PM25 = 0; // Numeric representation of current PM25Index
 let PM10 = 0; // Numeric representation of current PM10Index
 let Dust = 0; // Numeric representation of current DustIndex
-const hcho = 0; // Numeric representation of current FormaldehydeIndex
 
 
 
