@@ -1087,23 +1087,12 @@ class dysonAirPurifier extends utils.Adapter {
         // Terminate adapter after first start because configuration is not yet received
         // Adapter is restarted automatically when config page is closed
         adapter = this; // preserve adapter reference to address functions etc. correctly later
-        try{
-            const configIsValid = await dysonUtils.checkAdapterConfig(adapter);
-            if (configIsValid) {
-                adapter.getForeignObject('system.config', (err, obj) => {
-                    if (adapter.supportsFeature && adapter.supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
-                        this.main();
-                    } else {
-                        throw new Error('This adapter requires at least js-controller V3.0.0. Your system is not compatible. Please update your system.');
-                    }
-                });
-            } else {
-                adapter.log.warn('This adapter has no or no valid configuration. Starting anyway to give you the opportunity to configure it properly.');
-                this.setState('info.connection', false, true);
-            }
-        } catch(error)  {
+        const configIsValid = await dysonUtils.checkAdapterConfig(adapter);
+        if (configIsValid) {
+            await this.main();
+        } else {
             adapter.log.warn('This adapter has no or no valid configuration. Starting anyway to give you the opportunity to configure it properly.');
-            this.setState('info.connection', false, true);
+            await this.setState('info.connection', false, true);
         }
     }
     /***********************************************
