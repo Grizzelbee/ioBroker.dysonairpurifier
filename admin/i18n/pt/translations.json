@@ -41,5 +41,9 @@
     "switzerland": "Suíça",
     "temperatureUnit_desc": "Unidade para exibir a temperatura.",
     "token_inside": "Um token foi recebido e armazenado.",
-    "token_inside_desc": "Indica se um token de autenticação foi recebido dos servidores dison que é necessário para efetuar login - o adaptador não funcionará sem que esta caixa de seleção esteja marcada."
+    "token_inside_desc": "Indica se um token de autenticação foi recebido dos servidores dison que é necessário para efetuar login - o adaptador não funcionará sem que esta caixa de seleção esteja marcada.",
+    "Lbl_2FA": "Autenticação de 2 fatores",
+    "Lbl_ChallengeId": "ID do desafio dison",
+    "desc_2FA": "Você precisa realizar um processo 2FA inicial semelhante ao aplicativo dyson para ativar este adaptador.",
+    "Lbl_UpAndRunning": "Esta instância do adaptador precisa estar instalada e em execução antes da configuração."
 }

@@ -41,5 +41,9 @@
     "switzerland": "Suisse",
     "temperatureUnit_desc": "Unité pour afficher la température.",
     "token_inside": "Un jeton a été reçu et stocké.",
-    "token_inside_desc": "Indique si un jeton d'authentification a été reçu des serveurs Dyson qui est nécessaire pour se connecter - l'adaptateur ne fonctionnera pas si cette case n'est pas cochée."
+    "token_inside_desc": "Indique si un jeton d'authentification a été reçu des serveurs Dyson qui est nécessaire pour se connecter - l'adaptateur ne fonctionnera pas si cette case n'est pas cochée.",
+    "Lbl_2FA": "Authentification à 2 facteurs",
+    "Lbl_ChallengeId": "ID de défi Dyson",
+    "desc_2FA": "Vous devez effectuer un premier processus 2FA unique similaire à l'application Dyson pour activer cet adaptateur.",
+    "Lbl_UpAndRunning": "Cette instance d'adaptateur doit être opérationnelle avant la configuration."
 }

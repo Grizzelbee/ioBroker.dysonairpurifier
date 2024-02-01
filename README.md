@@ -171,6 +171,13 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 ## Changelog
 ### **WORK IN PROGRESS**
 
+### 3.1.1 (2024-02-01) (Marching on)
+* (grizzelbee) Upd: dependencies got updated
+* (grizzelbee) Fix: [#244](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/244) Fixed PM2.5, PM10, VOC Values to be compliant to the dyson App
+* (grizzelbee) Fix: [#113](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/113) Fixed NO2 Values to be compliant to the dyson App
+* (grizzelbee) Fix: [#244](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/244) Fixed PM2.5, PM10, VOC Indexes
+* (grizzelbee) New: Changed admin user interface to jsonConfig
+* (grizzelbee) Upd: Code cleanup
 
 ### 3.0.0 (2024-01-11) (Marching on)
 * (grizzelbee) Upd: dependencies got updated
@@ -493,7 +500,7 @@ Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD
 | cflt | Carbonfilter                                    | CARF, NONE                                                                                                                                                        |                                     |
 | hflr | Status HEPA-Filter                              | 0000 - 0100                                                                                                                                                       | Percent                             |
 | hflt | HEPA-Filter                                     | GHEP, GCOM                                                                                                                                                        |                                     |
-| sltm | Sleeptimer                                      | ON, OFF                                                                                                                                                           ||     |
+| sltm | Sleeptimer                                      | ON, OFF                                                                                                                                                           |                                     |     |
 | hmod | Heater Mode [ON/OFF]                            | HEAT                                                                                                                                                              |                                     |
 | hmax | Target temperature for heating                  | 0 .. 5000                                                                                                                                                         | K                                   |
 | hume | HumidificationMode                              | ON, OFF,                                                                                                                                                          |                                     |
@@ -540,13 +547,14 @@ Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD
 | sltm | Sleep timer                | OFF... 9999     | Minutes |
 | tact | Temperature in Kelvin      | 0000 - 5000     | K       |
 | vact | volatile organic compounds | 0001 - 0009     |         |
-| hcho | Formaldehyde               ||
-| pm25 | PM2.5                      | 0018            ||
-| pm10 | PM10                       | 0011            ||
-| va10 | volatile organic compounds | 0004            ||
-| noxl | NO2                        | 0000 - 0014     ||
-| p25r |                            | 0019            ||
-| p10r |                            | 0018            ||
+| hcho | Formaldehyde  (not used)   |                 |         |
+| hchr | Formaldehyde               |                 |         |
+| pm25 | PM2.5          (not used)  | 0018            |         |
+| pm10 | PM10           (not used)  | 0011            |         |
+| va10 | volatile organic compounds | 0004            |         |
+| noxl | NO2                        | 0000 - 0014     |         |
+| p25r | PM2.5 particulate matter   | 0019            | µg/m³   |
+| p10r | PM10 particulate matter    | 0018            | µg/m³   |
 
 ### ENVIRONMENTAL-AND-USAGE-DATA
 

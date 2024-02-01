@@ -25,7 +25,6 @@ let VOC  = 0; // Numeric representation of current VOCIndex
 let PM25 = 0; // Numeric representation of current PM25Index
 let PM10 = 0; // Numeric representation of current PM10Index
 let Dust = 0; // Numeric representation of current DustIndex
-const hcho = 0; // Numeric representation of current FormaldehydeIndex
 
 
 
@@ -63,6 +62,8 @@ class dysonAirPurifier extends utils.Adapter {
     async onMessage( msg ) {
         if (typeof msg === 'object' && msg.callback && msg.from && msg.from.startsWith('system.adapter.admin') ) {
             if (msg.command === 'getDyson2faMail'){
+                this.log.debug('OnMessage: Received getDyson2faMail request.');
+                msg.message.locale = await dysonUtils.getDyson2faLocale( msg.message.country);
                 dysonUtils.getDyson2faMail(this, msg.message.email, msg.message.password, msg.message.country, msg.message.locale)
                     .then((response) => this.sendTo(msg.from, msg.command, response, msg.callback))
                     .catch((e) => {
@@ -537,14 +538,17 @@ class dysonAirPurifier extends utils.Adapter {
             // Is this a "data" message?
             if ( row === 'data'){
                 await this.processMsg(device, '.Sensor', message[row]);
-                if (Object.prototype.hasOwnProperty.call(message[row], 'pm25r')) {
+                if (Object.prototype.hasOwnProperty.call(message[row], 'p25r')) {
                     this.createPM25(message, row, device);
                 }
-                if (Object.prototype.hasOwnProperty.call(message[row], 'pm10r')) {
+                if (Object.prototype.hasOwnProperty.call(message[row], 'p10r')) {
                     this.createPM10(message, row, device);
                 }
                 if (Object.prototype.hasOwnProperty.call(message[row], 'pact')) {
                     this.createDust(message, row, device);
+                }
+                if (Object.prototype.hasOwnProperty.call(message[row], 'vact')) {
+                    this.createVOC(message, row, device);
                 }
                 if (Object.prototype.hasOwnProperty.call(message[row], 'va10')) {
                     this.createVOC(message, row, device);
@@ -582,8 +586,11 @@ class dysonAirPurifier extends utils.Adapter {
                     // create additional data field filterlifePercent converting value from hours to percent; 4300 is the estimated lifetime in hours by dyson
                     this.createOrExtendObject( device.Serial + path + '.FilterLifePercent', { type: 'state', common: {name: this.getDescription(deviceConfig), 'read':true, 'write': this.getWriteable(deviceConfig)===true, 'role': this.getDataRole(deviceConfig), 'type':this.getDataType(deviceConfig), 'unit':'%', 'states': this.getValueList(deviceConfig)}, native: {} }, Number(value * 100/4300));
                 }
-                if ( (this.getDysonCode(deviceConfig) === 'p10r') || (this.getDysonCode(deviceConfig) === 'p25r')  ) {
+                if ( (this.getDysonCode(deviceConfig) === 'vact') || (this.getDysonCode(deviceConfig) === 'va10') || (this.getDysonCode(deviceConfig) === 'noxl')  ) {
                     value = Math.floor(value/10);
+                }
+                if (this.getDysonCode(deviceConfig) === 'hchr') {
+                    value = value/1000;
                 }
             } else if (this.getDataRole(deviceConfig) === 'value.temperature') {
                 // TP02: When continuous monitoring is off and the fan ist switched off - temperature and humidity loose their values.
@@ -759,7 +766,7 @@ class dysonAirPurifier extends utils.Adapter {
         this.createOrExtendObject(device.Serial + '.Sensor.VOCIndex', {
             type: 'state',
             common: {
-                name: 'VOC QualityIndex. 0-39: Good, 40-69: Medium, 70-89: Bad, >90: very Bad',
+                name: 'VOC QualityIndex. 0-3: Good, 4-6: Medium, 7-9: Bad, >9: very Bad',
                 'read': true,
                 'write': false,
                 'role': 'value',
@@ -786,17 +793,17 @@ class dysonAirPurifier extends utils.Adapter {
         // PM10 QualityIndex
         // 0-50: Good, 51-75: Medium, 76-100, Bad, 101-350: very Bad, 351-420: extremely Bad, >421 worrying
         let PM10Index = 0;
-        if (message[row].pm10r < 51) {
+        if (message[row].p10r < 51) {
             PM10Index = 0;
-        } else if (message[row].pm10r >= 51 && message[row].pm10r <= 75) {
+        } else if (message[row].p10r >= 51 && message[row].p10r <= 75) {
             PM10Index = 1;
-        } else if (message[row].pm10r >= 76 && message[row].pm10r <= 100) {
+        } else if (message[row].p10r >= 76 && message[row].p10r <= 100) {
             PM10Index = 2;
-        } else if (message[row].pm10r >= 101 && message[row].pm10r <= 350) {
+        } else if (message[row].p10r >= 101 && message[row].p10r <= 350) {
             PM10Index = 3;
-        } else if (message[row].pm10r >= 351 && message[row].pm10r <= 420) {
+        } else if (message[row].p10r >= 351 && message[row].p10r <= 420) {
             PM10Index = 4;
-        } else if (message[row].pm10r >= 421) {
+        } else if (message[row].p10r >= 421) {
             PM10Index = 5;
         }
         this.createOrExtendObject(device.Serial + '.Sensor.PM10Index', {
@@ -872,17 +879,17 @@ class dysonAirPurifier extends utils.Adapter {
         // PM2.5 QualityIndex
         // 0-35: Good, 36-53: Medium, 54-70: Bad, 71-150: very Bad, 151-250: extremely Bad, >251 worrying
         let PM25Index = 0;
-        if (message[row].pm25r < 36) {
+        if (message[row].p25r < 36) {
             PM25Index = 0;
-        } else if (message[row].pm25r >= 36 && message[row].pm25r <= 53) {
+        } else if (message[row].p25r >= 36 && message[row].p25r <= 53) {
             PM25Index = 1;
-        } else if (message[row].pm25r >= 54 && message[row].pm25r <= 70) {
+        } else if (message[row].p25r >= 54 && message[row].p25r <= 70) {
             PM25Index = 2;
-        } else if (message[row].pm25r >= 71 && message[row].pm25r <= 150) {
+        } else if (message[row].p25r >= 71 && message[row].p25r <= 150) {
             PM25Index = 3;
-        } else if (message[row].pm25r >= 151 && message[row].pm25r <= 250) {
+        } else if (message[row].p25r >= 151 && message[row].p25r <= 250) {
             PM25Index = 4;
-        } else if (message[row].pm25r >= 251) {
+        } else if (message[row].p25r >= 251) {
             PM25Index = 5;
         }
         this.createOrExtendObject(device.Serial + '.Sensor.PM25Index', {
@@ -1065,7 +1072,7 @@ class dysonAirPurifier extends utils.Adapter {
                 adapterLog.error(`Unable to retrieve data from dyson servers. May be e.g. a failed login or connection issues. Please check.`);
             }
         } catch (error) {
-            this.setState('info.connection', false, true);
+            await this.setState('info.connection', false, true);
             adapterLog.error(`[main] Error while querying devices from dyson servers. The most common issue is that you haven't finished the 2FA process. Please refer to the ReadMe for instructions.`);
             adapterLog.error(`[main] error: ${error}, stack: ${error.stack}`);
         }
@@ -1080,28 +1087,14 @@ class dysonAirPurifier extends utils.Adapter {
         // Terminate adapter after first start because configuration is not yet received
         // Adapter is restarted automatically when config page is closed
         adapter = this; // preserve adapter reference to address functions etc. correctly later
-        try{
-            const configIsValid = await dysonUtils.checkAdapterConfig(adapter);
-            if (configIsValid) {
-                adapter.getForeignObject('system.config', (err, obj) => {
-                    if (adapter.supportsFeature && adapter.supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
-                        if (obj && obj.native && obj.native.secret) {
-                        //noinspection JSUnresolvedVariable
-                            adapter.config.Password = this.decrypt(obj.native.secret, adapter.config.Password);
-                        }
-                        this.main();
-                    } else {
-                        throw new Error('This adapter requires at least js-controller V3.0.0. Your system is not compatible. Please update your system.');
-                    }
-                });
-            } else {
-                adapter.log.warn('This adapter has no or no valid configuration. Starting anyway to give you the opportunity to configure it properly.');
+        dysonUtils.checkAdapterConfig(adapter)
+            .then( ()=> {
+                this.main();
+            })
+            .catch( (error) => {
+                adapter.log.warn('This adapter has no or no valid configuration. Starting anyway to give you the opportunity to configure it properly. ' + error);
                 this.setState('info.connection', false, true);
-            }
-        } catch(error)  {
-            adapter.log.warn('This adapter has no or no valid configuration. Starting anyway to give you the opportunity to configure it properly.');
-            this.setState('info.connection', false, true);
-        }
+            });
     }
     /***********************************************
      * Misc helper functions                       *
@@ -1189,16 +1182,6 @@ class dysonAirPurifier extends utils.Adapter {
             return updateIntervalHandle;
         }
     }
-
-    decrypt(key, value) {
-        let result = '';
-        for (let i = 0; i < value.length; ++i) {
-            result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
-        }
-        return result;
-    }
-
-
 
     // Exit adapter
     onUnload(callback) {

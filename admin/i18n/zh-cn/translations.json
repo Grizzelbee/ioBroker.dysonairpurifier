@@ -41,5 +41,9 @@
     "switzerland": "瑞士",
     "temperatureUnit_desc": "显示温度的单位。",
     "token_inside": "已接收并存储令牌。",
-    "token_inside_desc": "指示是否已从需要登录的戴森服务器接收到身份验证令牌 - 如果不选中此复选框，适配器将无法工作。"
+    "token_inside_desc": "指示是否已从需要登录的戴森服务器接收到身份验证令牌 - 如果不选中此复选框，适配器将无法工作。",
+    "Lbl_2FA": "2因素身份验证",
+    "Lbl_ChallengeId": "戴森挑战-ID",
+    "desc_2FA": "您需要执行类似于戴森应用程序的初始一次性 2FA 流程来激活此适配器。",
+    "Lbl_UpAndRunning": "该适配器实例需要在配置之前启动并运行。"
 }
