@@ -111,7 +111,8 @@ module.exports.getDyson2faMail = async function(adapter, email, passwd, country,
                     });
                 adapter.log.debug(`Result from API-Status request -> challengeId is: ${response.data.challengeId}`);
                 adapter.log.debug(stringify(response.data));
-                return(response.data);
+                //return(response.data);
+                return( {native: {challengeId: response.data.challengeId}} );
             } else {
                 return({error : `Received unexpected authentication-method from dyson API. Expecting: [EMAIL_PWD_2FA], received: [${result.data.authenticationMethod}].`});
             }

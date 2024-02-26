@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "3.1.1",
+        "version": "3.1.2",
         "news": {
+            "3.1.2": {
+                "en": "dependencies got updated\n2FA Process is working again\nAt least nodeJs V18.2.0 is required",
+                "de": "Abhängigkeiten wurden aktualisiert\n2FA-Prozess funktioniert wieder\nMindestens nodeJs V18.2.0 ist erforderlich",
+                "ru": "зависимости обновлены \n Процесс 2FA снова работает \n Требуется как минимум nodeJs V18.2.0",
+                "pt": "dependências foram atualizadas\n O processo 2FA está funcionando novamente\nPelo menos nodeJs V18.2.0 é necessário",
+                "nl": "afhankelijkheden zijn bijgewerkt\n2FA-proces werkt weer\nMinimaal nodeJs V18.2.0 is vereist",
+                "fr": "les dépendances ont été mises à jour\nLe processus 2FA fonctionne à nouveau\nAu moins nodeJs V18.2.0 est requis",
+                "it": "le dipendenze sono state aggiornate\n Il processo 2FA funziona di nuovo\nÈ richiesto almeno nodeJs V18.2.0",
+                "es": "las dependencias se actualizaron\n El proceso 2FA está funcionando nuevamente\n Se requiere al menos nodeJs V18.2.0",
+                "pl": "zależności zostały zaktualizowane\nProces 2FA znów działa\nWymagany jest przynajmniej nodeJs V18.2.0",
+                "uk": "залежності оновлено\nПроцес 2FA знову працює\nПотрібен принаймні nodeJs V18.2.0",
+                "zh-cn": "依赖项已更新\n2FA 进程再次运行\n至少需要 nodeJs V18.2.0"
+            },
             "3.1.1": {
                 "en": "dependencies got updated\nFixed PM2.5, PM10, VOC, NO2 Values\nFixed PM2.5, PM10, VOC Indexes\nUpdated admin-UI to jsonConfig",
                 "de": "Abhängigkeiten wurden aktualisiert \n PM2.5-, PM10-, VOC-, NO2-Werte korrigiert \n PM2.5-, PM10-, VOC-Indizes korrigiert \n Admin-UI auf jsonConfig aktualisiert",
