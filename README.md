@@ -174,6 +174,7 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 ### 3.1.2 (2024-02-26) (Marching on)
 * (grizzelbee) Upd: dependencies got updated
 * (grizzelbee) Fix: 2FA Process is working again
+* (grizzelbee) New: At least nodeJs V18.2.0 is required
 
 ### 3.1.1 (2024-02-01) (Marching on)
 * (grizzelbee) Upd: dependencies got updated
