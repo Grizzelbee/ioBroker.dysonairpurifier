@@ -171,6 +171,10 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 ## Changelog
 ### **WORK IN PROGRESS**
 
+### 3.1.2 (2024-02-26) (Marching on)
+* (grizzelbee) Upd: dependencies got updated
+* (grizzelbee) Fix: 2FA Process is working again
+
 ### 3.1.1 (2024-02-01) (Marching on)
 * (grizzelbee) Upd: dependencies got updated
 * (grizzelbee) Fix: [#244](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/244) Fixed PM2.5, PM10, VOC Values to be compliant to the dyson App
