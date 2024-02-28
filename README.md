@@ -60,9 +60,9 @@ connects to all devices locally and interacts with them.
 
 ### Prerequisites
 
-* This adapter needs Node.js >= version 10
+* This adapter needs Node.js >= version 18.2
 * At least js-Controller 3.0.0 is required
-* At least Admin 4.0.9 is required
+* At least Admin 6.0.0 is required
 * To get this adapter running you'll need a Dyson account.
 * Make sure to add your fan to your account. Either via App or online.
 
@@ -164,12 +164,16 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 ### Known issues
 * No automatic IP detection of devices
 * Still many unknown device messages (mostly failures and warnings) 
+* Filter Reset does not work since the correct mqtt message is unknown
 * Sometimes the adapter loses the MQTT connection to a fan and isn't able to reconnect. `This is usually no issue of the adapter itself, but an issue in your local network!`
   * In some cases it's sufficient to unplug the fan for approximately 10 seconds to reset it and plug it in again. Just give it a try!
   * In other cases it has been an IP/DNS issue. Resetting the DHCP/DNS server (router) solved the issue.
 
 ## Changelog
 ### **WORK IN PROGRESS**
+
+### 3.1.3 (2024-02-28) (Marching on)
+* (grizzelbee) Fix: 2FA Process is working again - truely
 
 ### 3.1.2 (2024-02-26) (Marching on)
 * (grizzelbee) Upd: dependencies got updated

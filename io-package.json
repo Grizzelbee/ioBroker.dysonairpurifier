@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "3.1.2",
+        "version": "3.1.3",
         "news": {
+            "3.1.3": {
+                "en": "2FA Process is working again - truely",
+                "de": "Der 2FA-Prozess funktioniert wieder – tatsächlich",
+                "ru": "Процесс 2FA снова работает — это правда",
+                "pt": "O processo 2FA está funcionando novamente - de verdade",
+                "nl": "Het 2FA-proces werkt weer - echt waar",
+                "fr": "Le processus 2FA fonctionne à nouveau – vraiment",
+                "it": "Il processo 2FA funziona di nuovo, davvero",
+                "es": "El proceso 2FA está funcionando nuevamente, de verdad",
+                "pl": "Proces 2FA znów działa – to prawda",
+                "uk": "Процес 2FA знову працює - дійсно",
+                "zh-cn": "2FA 流程再次发挥作用——确实如此"
+            },
             "3.1.2": {
                 "en": "dependencies got updated\n2FA Process is working again\nAt least nodeJs V18.2.0 is required",
                 "de": "Abhängigkeiten wurden aktualisiert\n2FA-Prozess funktioniert wieder\nMindestens nodeJs V18.2.0 ist erforderlich",
@@ -141,7 +154,8 @@
         "subscribe": "messagebox",
         "dependencies": [
             {
-                "js-controller": ">=3.0.0"
+                "js-controller": ">=3.0.0",
+                "admin": ">=6.0.0"
             }
         ],
         "plugins": {
