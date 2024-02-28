@@ -151,9 +151,11 @@ module.exports.getDysonToken = async function(adapter, email, passwd, country,  
                 headers: dysonConstants.HTTP_HEADERS,
                 json: true,
             });
-        return(response.data);
+        // return(response.data);
+        return( {native: {token: response.data.token}} );
     } catch(err){
         adapter.log.error('getDysonToken: ' + err);
+        return({error : `Received error: [${err}] from dyson API.`});
     }
 };
 
