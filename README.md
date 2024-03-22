@@ -36,6 +36,7 @@ Fan-Icon in Logo created by [Freepik](https://www.flaticon.com/de/autoren/freepi
 * Dyson Pure Humidify+Cool (PH01, ProductType 358)
 * Dyson Pure Humidify+Cool (PH03, ProductType 358E)
 * Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)
+* Dyson Purifier Hot+Cool Formaldehyde HP09
 
 ## Features
 Connects your Dyson fans, fan heaters, air purifiers, and air humidifiers to ioBroker.
