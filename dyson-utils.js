@@ -365,7 +365,7 @@ module.exports.parseDysonMessage = function (msg) {
 
     // const data = JSON.parse(msg);
     // console.log(data);
-    return;
+    //return;
 };
 
 module.exports.deleteUnusedFields = async function(self, device){
