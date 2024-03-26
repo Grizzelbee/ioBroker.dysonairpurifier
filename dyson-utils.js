@@ -294,8 +294,13 @@ module.exports.getDevices = async function(token, adapter) {
                     if (!Object.keys(dysonConstants.PRODUCTS).some(function (t) {
                         return(t === response.data[thisDevice].ProductType);
                     })) {
-                        adapter.log.warn('Device with serial number [' + response.data[thisDevice].Serial + '] not added, hence it is not supported by this adapter. Product type: [' + response.data[thisDevice].ProductType + ']');
-                        adapter.log.warn('Please open an Issue on github if you think your device should be supported.');
+                        // ProductType 552 = Lampe - dann diese Warning nicht anzeigen
+                        if (552 === response.data[thisDevice].ProductType) {
+                            adapter.log.info('Device with serial number [' + response.data[thisDevice].Serial + '] not added, since it is a lamp and not supported by this adapter.');
+                        } else {
+                            adapter.log.warn('Device with serial number [' + response.data[thisDevice].Serial + '] not added, hence it is not supported by this adapter. Product type: [' + response.data[thisDevice].ProductType + ']');
+                            adapter.log.warn('Please open an Issue on github if you think your device should be supported.');
+                        }
                     } else {
                         // productType is supported: Push to Array and create in devicetree
                         response.data[thisDevice].hostAddress = undefined;
