@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "3.1.3",
+        "version": "3.1.4",
         "news": {
+            "3.1.4": {
+                "en": "Lamps (Product type 552) won't generate a warning on startup anymore but show an info that they are not supported by this adapter.",
+                "de": "Lampen (Produkttyp 552) generieren beim Start keine Warnung mehr, sondern zeigen einen Hinweis an, dass sie von diesem Adapter nicht unterstützt werden.",
+                "ru": "Лампы (тип продукта 552) больше не будут выдавать предупреждение при запуске, а будут показывать информацию о том, что они не поддерживаются этим адаптером.",
+                "pt": "As lâmpadas (tipo de produto 552) não gerarão mais um aviso na inicialização, mas mostrarão uma informação de que não são suportadas por este adaptador.",
+                "nl": "Lampen (producttype 552) genereren geen waarschuwing meer bij het opstarten, maar geven de informatie weer dat ze niet door deze adapter worden ondersteund.",
+                "fr": "Les lampes (type de produit 552) ne généreront plus d'avertissement au démarrage mais afficheront une information indiquant qu'elles ne sont pas prises en charge par cet adaptateur.",
+                "it": "Le lampade (tipo prodotto 552) non genereranno più un avviso all'avvio ma mostreranno un'informazione che non sono supportate da questo adattatore.",
+                "es": "Las lámparas (tipo de producto 552) ya no generarán una advertencia al iniciarse, pero mostrarán información de que no son compatibles con este adaptador.",
+                "pl": "Lampy (typ produktu 552) nie będą już generować ostrzeżenia przy uruchomieniu, ale pokażą informację, że nie są obsługiwane przez ten adapter.",
+                "uk": "Лампи (тип продукту 552) більше не генеруватимуть попередження під час запуску, але відображатимуть інформацію про те, що вони не підтримуються цим адаптером.",
+                "zh-cn": "灯（产品类型 552）将不再在启动时生成警告，但会显示此适配器不支持它们的信息。"
+            },
             "3.1.3": {
                 "en": "2FA Process is working again - truely",
                 "de": "Der 2FA-Prozess funktioniert wieder – tatsächlich",
