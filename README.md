@@ -32,7 +32,7 @@ Fan-Icon in Logo created by [Freepik](https://www.flaticon.com/de/autoren/freepi
 * Dyson Pure Hot+Cool Link New (ProductType 455A)
 * Dyson Pure Hot+Cool, 2018 model (HP04, ProductType 527)
 * Dyson Pure Hot+Cool (HP07, ProductType 527E)
-* Dyson Pure Hot+Cool (HP07, ProductType 527K)
+* Dyson Pure Hot+Cool Formaldehyde (HP09, ProductType 527K)
 * Dyson Pure Humidify+Cool (PH01, ProductType 358)
 * Dyson Pure Humidify+Cool (PH03, ProductType 358E)
 * Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)
@@ -171,6 +171,9 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 
 ## Changelog
 ### **WORK IN PROGRESS**
+
+### 3.1.4 (2024-03-22) (Marching on)
+* (grizzelbee) Fix: Lamps (Product type 552) won't generate a warning on startup anymore but show an info that they are not supported by this adapter.
 
 ### 3.1.3 (2024-02-28) (Marching on)
 * (grizzelbee) Fix: 2FA Process is working again - truely
