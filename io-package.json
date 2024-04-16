@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "3.1.4",
+        "version": "3.1.5",
         "news": {
+            "3.1.5": {
+                "en": "Requesting at least admin v6.13.16 as dependency.",
+                "de": "Mindestens Admin v6.13.16 als Abhängigkeit erforderlich.",
+                "ru": "Запрос как минимум администратора v6.13.16 в качестве зависимости.",
+                "pt": "Solicitando pelo menos admin v6.13.16 como dependência.",
+                "nl": "Minimaal beheerder v6.13.16 aanvragen als afhankelijkheid.",
+                "fr": "Demander au moins admin v6.13.16 comme dépendance.",
+                "it": "Richiedendo almeno admin v6.13.16 come dipendenza.",
+                "es": "Solicitando al menos admin v6.13.16 como dependencia.",
+                "pl": "Żądanie co najmniej administratora v6.13.16 jako zależność.",
+                "uk": "Запит принаймні admin v6.13.16 як залежність.",
+                "zh-cn": "请求至少 admin v6.13.16 作为依赖项。"
+            },
             "3.1.4": {
                 "en": "Lamps (Product type 552) won't generate a warning on startup anymore but show an info that they are not supported by this adapter.",
                 "de": "Lampen (Produkttyp 552) generieren beim Start keine Warnung mehr, sondern zeigen einen Hinweis an, dass sie von diesem Adapter nicht unterstützt werden.",
@@ -145,7 +158,6 @@
             "humidify & cool",
             "fan"
         ],
-        "license": "MIT",
         "platform": "Javascript/Node.js",
         "icon": "dyson_logo.svg",
         "adminUI": {
@@ -165,10 +177,14 @@
         "dataSource": "poll",
         "messagebox": true,
         "subscribe": "messagebox",
+        "globalDependencies": [
+            {
+                "admin": ">=6.13.16"
+            }
+        ],
         "dependencies": [
             {
-                "js-controller": ">=3.0.0",
-                "admin": ">=6.0.0"
+                "js-controller": ">=3.0.0"
             }
         ],
         "plugins": {

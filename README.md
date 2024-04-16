@@ -172,6 +172,9 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 ## Changelog
 ### **WORK IN PROGRESS**
 
+### 3.1.5 (2024-04-16) (Marching on)
+* (grizzelbee) Fix: Requesting at least admin v6.13.16 as dependency
+
 ### 3.1.4 (2024-03-22) (Marching on)
 * (grizzelbee) Fix: Lamps (Product type 552) won't generate a warning on startup anymore but show an info that they are not supported by this adapter.
 
