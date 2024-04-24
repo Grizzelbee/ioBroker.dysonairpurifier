@@ -172,21 +172,31 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 ## Changelog
 ### **WORK IN PROGRESS**
 
+### 3.1.6 (2024-04-24) (Marching on)
+
+* (grizzelbee) Upd: dependencies got updated
+* (grizzelbee) Fix: [#266](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/266) HeatingMode switch is now working correctly
+
 ### 3.1.5 (2024-04-16) (Marching on)
+
 * (grizzelbee) Fix: Requesting at least admin v6.13.16 as dependency
 
 ### 3.1.4 (2024-03-22) (Marching on)
+
 * (grizzelbee) Fix: Lamps (Product type 552) won't generate a warning on startup anymore but show an info that they are not supported by this adapter.
 
 ### 3.1.3 (2024-02-28) (Marching on)
+
 * (grizzelbee) Fix: 2FA Process is working again - truely
 
 ### 3.1.2 (2024-02-26) (Marching on)
+
 * (grizzelbee) Upd: dependencies got updated
 * (grizzelbee) Fix: 2FA Process is working again
 * (grizzelbee) New: At least nodeJs V18.2.0 is required
 
 ### 3.1.1 (2024-02-01) (Marching on)
+
 * (grizzelbee) Upd: dependencies got updated
 * (grizzelbee) Fix: [#244](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/244) Fixed PM2.5, PM10, VOC Values to be compliant to the dyson App
 * (grizzelbee) Fix: [#113](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/113) Fixed NO2 Values to be compliant to the dyson App
@@ -195,6 +205,7 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 * (grizzelbee) Upd: Code cleanup
 
 ### 3.0.0 (2024-01-11) (Marching on)
+
 * (grizzelbee) Upd: dependencies got updated
 * (grizzelbee) Upd: updated year of copyright in license 
 * (grizzelbee) New: [#244](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/244) Added HCHO-Index 
