@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "dysonairpurifier",
-        "version": "3.1.5",
+        "version": "3.1.6",
         "news": {
+            "3.1.6": {
+                "en": "Dependencies got updated\nHeatingMode switch is now working correctly.",
+                "de": "Abhängigkeiten wurden aktualisiert\nHeatingMode-Schalter funktioniert jetzt korrekt.",
+                "ru": "Зависимости обновлены. Переключатель HeatingMode теперь работает правильно.",
+                "pt": "As dependências foram atualizadas\n A chave HeatingMode agora está funcionando corretamente.",
+                "nl": "Afhankelijkheden zijn bijgewerkt \nHeatingMode-schakelaar werkt nu correct.",
+                "fr": "Les dépendances ont été mises à jour\nLe commutateur HeatingMode fonctionne désormais correctement.",
+                "it": "Le dipendenze sono state aggiornate\nL'interruttore della modalità di riscaldamento ora funziona correttamente.",
+                "es": "Se actualizaron las dependencias. El interruptor de modo de calefacción ahora funciona correctamente.",
+                "pl": "Zależności zostały zaktualizowane. \n Przełącznik trybu ogrzewania działa teraz poprawnie.",
+                "uk": "Залежності оновлено\nПеремикач HeatingMode тепер працює правильно.",
+                "zh-cn": "依赖项已更新\nHeatingMode 开关现在可以正常工作。"
+            },
             "3.1.5": {
                 "en": "Requesting at least admin v6.13.16 as dependency.",
                 "de": "Mindestens Admin v6.13.16 als Abhängigkeit erforderlich.",
