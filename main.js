@@ -619,7 +619,7 @@ class dysonAirPurifier extends utils.Adapter {
                 // testValue should be the 2nd value in an array or if it's no array, the value itself
                 const testValue = ( typeof message[this.getDysonCode(deviceConfig)] === 'object'? message[this.getDysonCode(deviceConfig)][1] : message[this.getDysonCode(deviceConfig)] );
                 //this.log.debug(`${getDataPointName(deviceConfig)} is a bool switch. Current state: [${testValue}]`);
-                value = (testValue === 'ON' || testValue === 'HUMD');
+                value = (testValue === 'ON' || testValue === 'HUMD' || testValue === 'HEAT');
             } else if (this.getDataType(deviceConfig)==='boolean' && this.getDataRole(deviceConfig).startsWith('indicator')) {
                 // testValue should be the 2nd value in an array or if it's no array, the value itself
                 const testValue = ( typeof message[this.getDysonCode(deviceConfig)] === 'object'? message[this.getDysonCode(deviceConfig)][1] : message[this.getDysonCode(deviceConfig)] );
