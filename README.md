@@ -173,6 +173,10 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 ## Changelog
 ### **WORK IN PROGRESS**
 
+### 3.1.7 (2024-04-24) (Marching on)
+
+* (grizzelbee) Fix: [#266](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/266) HeatingMode switch is now working correctly
+
 ### 3.1.6 (2024-04-24) (Marching on)
 
 * (grizzelbee) Upd: dependencies got updated
