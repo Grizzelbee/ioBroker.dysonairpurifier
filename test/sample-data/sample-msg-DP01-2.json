@@ -1,11 +1,11 @@
 {
-    "msg": "ENVIRONMENTAL-CURRENT-SENSOR-DATA",
-    "time": "2020-10-31T12:07:03.000Z",
-    "data": {
-        "tact": "OFF",
-        "hact": "OFF",
-        "pact": "0000",
-        "vact": "0001",
-        "sltm": "OFF"
-    }
+  "msg": "ENVIRONMENTAL-CURRENT-SENSOR-DATA",
+  "time": "2020-10-31T12:07:03.000Z",
+  "data": {
+    "tact": "OFF",
+    "hact": "OFF",
+    "pact": "0000",
+    "vact": "0001",
+    "sltm": "OFF"
+  }
 }

@@ -3,10 +3,10 @@
   "type": "panel",
   "items": {
     "donationHelp": {
-    "type": "staticText",
-    "text": "donation"
-  },
-  "donateButton": {
+      "type": "staticText",
+      "text": "donation"
+    },
+    "donateButton": {
       "newLine": true,
       "type": "staticImage",
       "src": "adapter/dysonairpurifier/admin/paypal-donate-button.png",
@@ -21,16 +21,16 @@
     },
     "_basicSection": {
       "newLine": true,
-      "type" : "header",
-      "text" : "Settings",
+      "type": "header",
+      "text": "Settings",
       "size": 2,
       "sm": 24,
       "md": 8,
       "lg": 6
     },
     "_2FactorSection": {
-      "type" : "header",
-      "text" : "Lbl_2FA",
+      "type": "header",
+      "text": "Lbl_2FA",
       "tooltip": "desc_2FA",
       "size": 2,
       "sm": 24,
@@ -41,7 +41,7 @@
       "newLine": true,
       "type": "text",
       "label": "Lbl_email",
-      "tooltip" : "email_desc",
+      "tooltip": "email_desc",
       "sm": 12,
       "md": 4,
       "lg": 3
@@ -70,19 +70,19 @@
       "label": "Lbl_country",
       "default": "de",
       "tooltip": "country_desc",
-      "options" : [
-        {"label":"Germany",        "value":"DE"},
-        {"label":"Austria",        "value":"AT"},
-        {"label":"Belgium",        "value":"BE"},
-        {"label":"Netherlands",    "value":"NL"},
-        {"label":"Poland",         "value":"PL"},
-        {"label":"France",         "value":"FR"},
-        {"label":"United Kingdom", "value":"GK"},
-        {"label":"Ireland",        "value":"IE"},
-        {"label":"Canada",         "value":"CA"},
-        {"label":"USA",            "value":"US"},
-        {"label":"Russia",         "value":"RU"},
-        {"label":"China",          "value":"CN"}
+      "options": [
+        { "label": "Germany", "value": "DE" },
+        { "label": "Austria", "value": "AT" },
+        { "label": "Belgium", "value": "BE" },
+        { "label": "Netherlands", "value": "NL" },
+        { "label": "Poland", "value": "PL" },
+        { "label": "France", "value": "FR" },
+        { "label": "United Kingdom", "value": "GK" },
+        { "label": "Ireland", "value": "IE" },
+        { "label": "Canada", "value": "CA" },
+        { "label": "USA", "value": "US" },
+        { "label": "Russia", "value": "RU" },
+        { "label": "China", "value": "CN" }
       ],
       "sm": 10,
       "md": 3,
@@ -93,10 +93,10 @@
       "label": "temperatureUnit",
       "default": "de",
       "tooltip": "temperatureUnit_desc",
-      "options" : [
-        {"label":{"en":"Celsius"},    "value":"C"},
-        {"label":{"en":"Fahrenheit"}, "value":"F"},
-        {"label":{"en":"Kelvin"},     "value":"K"}
+      "options": [
+        { "label": { "en": "Celsius" }, "value": "C" },
+        { "label": { "en": "Fahrenheit" }, "value": "F" },
+        { "label": { "en": "Kelvin" }, "value": "K" }
       ],
       "sm": 10,
       "md": 3,
@@ -105,7 +105,7 @@
     "pollInterval": {
       "type": "number",
       "label": "Poll_Interval",
-      "tooltip" : "Poll_Interval_desc",
+      "tooltip": "Poll_Interval_desc",
       "min": 0,
       "max": 10000,
       "default": 30,

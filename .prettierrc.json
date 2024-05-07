@@ -1,0 +1,16 @@
+{
+  "overrides": [
+    {
+      "files": "**/*.{js,jsx,ts,tsx,css,md,json,scss}",
+      "options": {
+        "arrowParens": "avoid",
+        "bracketSpacing": true,
+        "trailingComma": "none",
+        "useTabs": false,
+        "plugins": ["prettier-plugin-organize-imports"],
+        "printWidth": 80,
+        "singleQuote": true
+      }
+    }
+  ]
+}
