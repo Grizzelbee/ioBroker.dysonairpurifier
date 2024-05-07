@@ -17,9 +17,11 @@
         "allowTemplateLiterals": true
       }
     ],
-    "semi": ["error", "always"]
+    "semi": ["error", "always"],
+    "no-useless-concat": "error",
+    "prefer-template": "error"
   },
   "parserOptions": {
-    "ecmaVersion": 2018
+    "ecmaVersion": "latest"
   }
 }

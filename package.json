@@ -26,6 +26,7 @@
     "node": ">= 18.2.0"
   },
   "main": "main.js",
+  "type": "commonjs",
   "scripts": {
     "prepare": "[ \"$NODE_ENV\" = 'development' ] || [ -z \"$NODE_ENV\" ] && husky || exit 0",
     "test:js": "mocha --require test/mocha.setup.js *.test.js",
