@@ -394,7 +394,7 @@ module.exports.parseDysonMessage = function (msg) {
 
 /**
  *
- * @param {Record<string, any>} self
+ * @param {import('@iobroker/adapter-core').AdapterInstance} self
  * @param {string} device
  */
 module.exports.deleteUnusedFields = async function (self, device) {
@@ -403,7 +403,7 @@ module.exports.deleteUnusedFields = async function (self, device) {
     const id = device + field;
     self.log.debug(`Looking for deprecated field: ${id}`);
     // const self = this;
-    self.getObject(id, function (err, oldObj) {
+    self.getObject(id, (err, oldObj) => {
       if (!err && oldObj) {
         self.log.info(`Deleting deprecated field: ${id}`);
         self.delObject(id);
@@ -415,23 +415,20 @@ module.exports.deleteUnusedFields = async function (self, device) {
 /**
  * Queries the current IP address of a host at a local dns resolver
  *
- * @param {Record<string, any>} self Handle of the instance
+ * @param {import('@iobroker/adapter-core').AdapterInstance} self Handle of the instance
  * @param {string}   deviceName The hostname of the queried device
  * @returns {Promise<string>} first IPv4-Address of the device
  */
 module.exports.getFanIP = async function(self, deviceName){
   self.log.debug(`Querying IP for device ${deviceName}`);
-  return new Promise((resolve, reject) => {
-    dnsResolver.resolve4(deviceName)
-        .then((addresses) => {
-          self.log.debug(`Found IP [${addresses[0]}] for device ${deviceName}`);
-          resolve( addresses[0] ); // return only the first IP address
-        })
-        .catch((err)=>{
-          if (err.code === 'ENOTFOUND'){
-            self.log.warn(`No IP address found for device ${deviceName}`);
-            reject(`Host ${deviceName} is unknown to your DNS.`);
-          }
-        });
-  });
+  try {
+    const addresses = await dnsResolver.resolve4(deviceName);
+    self.log.debug(`Found IP [${addresses[0]}] for device ${deviceName}`);
+    return addresses[0]; // return only the first IP address
+  } catch (error) {
+    if (error.code === 'ENOTFOUND'){
+      self.log.warn(`No IP address found for device ${deviceName}`);
+      throw new Error(`Host ${deviceName} is unknown to your DNS.`);
+    }
+  }
 };
