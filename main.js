@@ -7,6 +7,10 @@
  * @property {string} val
  */
 
+/**
+ * @typedef {Partial<utils.AdapterOptions> & {temperatureUnit: 'K' | 'C' | 'F'}} dysonOptions
+ */
+
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 const utils = require('@iobroker/adapter-core');
@@ -44,7 +48,7 @@ function clamp(number, min, max) {
  */
 class dysonAirPurifier extends utils.Adapter {
   /**
-   * @param {Partial<utils.AdapterOptions> & {temperatureUnit: 'K' | 'C' | 'F'}} options
+   * @param {dysonOptions} options
    */
   constructor(options = { temperatureUnit: 'C' }) {
     super({ ...options, name: adapterName });
@@ -54,15 +58,6 @@ class dysonAirPurifier extends utils.Adapter {
     this.on('ready', this.onReady.bind(this));
     this.on('stateChange', this.onStateChange.bind(this));
     this.on('unload', this.onUnload.bind(this));
-  }
-
-  /**
-   * Quick hack to get 'temperatureUnit' working
-   * @returns {Partial<utils.AdapterOptions> & {temperatureUnit: 'K' | 'C' | 'F'}}
-   */
-  // @ts-ignore
-  get config() {
-    return this.config;
   }
 
   /**
@@ -160,6 +155,7 @@ class dysonAirPurifier extends utils.Adapter {
             : messageValue.toString(),
           10
         );
+        // @ts-ignore
         switch (this.config.temperatureUnit) {
           case 'K':
             value *= 10;
@@ -832,6 +828,7 @@ class dysonAirPurifier extends utils.Adapter {
         }
         value = parseInt(message[this.getDysonCode(deviceConfig)], 10);
         // convert temperature to configured unit
+        // @ts-ignore
         switch (this.config.temperatureUnit) {
           case 'K':
             value /= 10;
@@ -1271,7 +1268,9 @@ class dysonAirPurifier extends utils.Adapter {
   async main() {
     const adapterLog = this.log;
     try {
-      adapterLog.info('Querying devices from dyson API.');
+      adapterLog.info(
+        `Querying devices from dyson API. ${adapter.config.token}`
+      );
       devices = await dysonUtils.getDevices(adapter.config.token, adapter);
       if (typeof devices != 'undefined') {
         for (const thisDevice in devices) {
@@ -1668,7 +1667,7 @@ class dysonAirPurifier extends utils.Adapter {
 if (module.parent) {
   // Export the constructor in compact mode
   /**
-   * @param {Partial<utils.AdapterOptions> & {temperatureUnit: 'K' | 'C' | 'F'}} options
+   * @param {dysonOptions} options
    */
   module.exports = options => new dysonAirPurifier(options);
 } else {
