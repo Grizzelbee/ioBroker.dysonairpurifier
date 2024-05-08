@@ -1304,7 +1304,7 @@ class dysonAirPurifier extends utils.Adapter {
           }
           // subscribe to changes on host address to re-init adapter on changes
           this.log.debug(
-            `Subscribing for state changes on :${thisDevice.Serial}.hostAddress`
+            `Subscribing for state changes on datapoint: ${thisDevice.Serial}.hostAddress`
           );
           this.subscribeStates(`${thisDevice.Serial}.hostAddress`);
           // connect to device
