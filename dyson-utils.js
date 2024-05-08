@@ -9,6 +9,7 @@ const path = require('path');
 const https = require('https');
 const rootCas = require('ssl-root-cas').create();
 const httpsAgent = new https.Agent({ ca: rootCas });
+const dnsResolver = require('node:dns').promises;
 // const ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
 rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
 
@@ -409,4 +410,28 @@ module.exports.deleteUnusedFields = async function (self, device) {
       }
     });
   }
+};
+
+/**
+ * Queries the current IP address of a host at a local dns resolver
+ *
+ * @param {Record<string, any>} self Handle of the instance
+ * @param {string}   deviceName The hostname of the queried device
+ * @returns {Promise<string>} first IPv4-Address of the device
+ */
+module.exports.getFanIP = async function(self, deviceName){
+  self.log.debug(`Querying IP for device ${deviceName}`);
+  return new Promise((resolve, reject) => {
+    dnsResolver.resolve4(deviceName)
+        .then((addresses) => {
+          self.log.debug(`Found IP [${addresses[0]}] for device ${deviceName}`);
+          resolve( addresses[0] ); // return only the first IP address
+        })
+        .catch((err)=>{
+          if (err.code === 'ENOTFOUND'){
+            self.log.warn(`No IP address found for device ${deviceName}`);
+            reject(`Host ${deviceName} is unknown to your DNS.`);
+          }
+        });
+  });
 };
