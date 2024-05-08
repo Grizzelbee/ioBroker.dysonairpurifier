@@ -15,7 +15,7 @@ describe('dyson-utils', () => {
         [5, 4, '0005'],
         [1, 1, '1'],
         [45, 2, '45'],
-        [734, 8, '00000734'],
+        [734, 8, '00000734']
       ];
 
       data.forEach(d => {
@@ -28,7 +28,7 @@ describe('dyson-utils', () => {
         [-5, 4, '-0005'],
         [-1, 1, '-1'],
         [-45, 2, '-45'],
-        [-734, 8, '-00000734'],
+        [-734, 8, '-00000734']
       ];
 
       data.forEach(d => {
@@ -47,7 +47,7 @@ describe('dyson-utils', () => {
 
     const fakeAdapter = {
       log: { debug: sinon.fake(), error: sinon.fake() },
-      config: null,
+      config: null
     };
 
     context('given an invalid adapter configuration', () => {
@@ -57,7 +57,7 @@ describe('dyson-utils', () => {
           pollInterval: '',
           country: '',
           email: '',
-          Password: '',
+          Password: ''
         };
         expect(() => dysonUtils.checkAdapterConfig(fakeAdapter)).to.throw();
       });
@@ -70,7 +70,7 @@ describe('dyson-utils', () => {
           pollInterval: 60,
           country: 'DE',
           email: 'me@example.com',
-          Password: 'SecretPassword',
+          Password: 'SecretPassword'
         };
         expect(() => dysonUtils.checkAdapterConfig(fakeAdapter)).to.not.throw();
       });
@@ -97,7 +97,7 @@ describe('dyson-utils', () => {
         pollInterval: expectedPollInterval,
         country: expectedCountry,
         email: expectedEmail,
-        Password: 'SecretPassword',
+        Password: 'SecretPassword'
       };
       const maskedConfig = dysonUtils.maskConfig(config);
 

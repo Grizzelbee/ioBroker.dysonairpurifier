@@ -74,7 +74,7 @@ class dysonAirPurifier extends utils.Adapter {
    * In detail: it performs the 2 FA login at the dyson API. Therefore it receives messages from admin,
    * sends them to dyson and reaches the received data back to admin.
    *
-   * @param {object} msg - Message object containing all necessary data to request the needed information
+   * @param {Object} msg - Message object containing all necessary data to request the needed information
    */
   async onMessage(msg) {
     if (!msg?.callback || !msg?.from?.startsWith('system.adapter.admin')) {
@@ -199,7 +199,7 @@ class dysonAirPurifier extends utils.Adapter {
               //['osal']: '0180',
               //['osau']: '0180',
               ['ancp']: 'BRZE',
-              ['oson']: 'ON',
+              ['oson']: 'ON'
             };
           }
           this.log.debug(
@@ -220,7 +220,7 @@ class dysonAirPurifier extends utils.Adapter {
             ['osal']: dysonUtils.zeroFill(result.osal, 4),
             ['osau']: dysonUtils.zeroFill(result.osau, 4),
             ['ancp']: 'CUST',
-            ['oson']: 'ON',
+            ['oson']: 'ON'
           };
         } catch (error) {
           this.log.error(
@@ -233,7 +233,7 @@ class dysonAirPurifier extends utils.Adapter {
           [dysonAction]:
             typeof messageValue === 'number'
               ? messageValue.toString().padStart(4, '0')
-              : messageValue,
+              : messageValue
         };
     }
   }
@@ -278,10 +278,10 @@ class dysonAirPurifier extends utils.Adapter {
               2: 'Bad',
               3: 'very Bad',
               4: 'extremely Bad',
-              5: 'worrying',
-            },
+              5: 'worrying'
+            }
           },
-          native: {},
+          native: {}
         },
         Math.max(VOC, Dust, PM25, PM10)
       );
@@ -331,7 +331,7 @@ class dysonAirPurifier extends utils.Adapter {
       time: new Date().toISOString(),
       'mode-reason': 'LAPP',
       'state-reason': 'MODE',
-      data: messageData,
+      data: messageData
     };
     for (const mqttDevice in devices) {
       if (devices[mqttDevice].Serial === thisDevice) {
@@ -353,7 +353,7 @@ class dysonAirPurifier extends utils.Adapter {
             `${devices[mqttDevice].ProductType}/${thisDevice}/command`,
             JSON.stringify({
               msg: 'REQUEST-CURRENT-STATE',
-              time: new Date().toISOString(),
+              time: new Date().toISOString()
             })
           );
         }, 100);
@@ -366,7 +366,7 @@ class dysonAirPurifier extends utils.Adapter {
    *
    * Creates the base device information
    *
-   * @param device  {object} data for the current device which are not provided by Web-API (IP-Address, MQTT-Password)
+   * @param {Object} device data for the current device which are not provided by Web-API (IP-Address, MQTT-Password)
    * @param {string} device.Serial Serial number of the device
    * @param {string} device.ProductType Product type of the device
    * @param {string} device.Version
@@ -387,9 +387,9 @@ class dysonAirPurifier extends utils.Adapter {
           common: {
             name: dysonConstants.PRODUCTS[device.ProductType].name,
             icon: dysonConstants.PRODUCTS[device.ProductType].icon,
-            type: 'string',
+            type: 'string'
           },
-          native: {},
+          native: {}
         },
         null
       );
@@ -402,9 +402,9 @@ class dysonAirPurifier extends utils.Adapter {
             read: true,
             write: false,
             type: 'string',
-            role: 'value',
+            role: 'value'
           },
-          native: {},
+          native: {}
         },
         null
       );
@@ -417,9 +417,9 @@ class dysonAirPurifier extends utils.Adapter {
             read: true,
             write: false,
             type: 'string',
-            role: 'value',
+            role: 'value'
           },
-          native: {},
+          native: {}
         },
         null
       );
@@ -432,9 +432,9 @@ class dysonAirPurifier extends utils.Adapter {
             read: true,
             write: false,
             type: 'string',
-            role: 'value',
+            role: 'value'
           },
-          native: {},
+          native: {}
         },
         null
       );
@@ -447,9 +447,9 @@ class dysonAirPurifier extends utils.Adapter {
             read: true,
             write: false,
             type: 'string',
-            role: 'value',
+            role: 'value'
           },
-          native: {},
+          native: {}
         },
         null
       );
@@ -462,9 +462,9 @@ class dysonAirPurifier extends utils.Adapter {
             read: true,
             write: false,
             type: 'string',
-            role: 'value',
+            role: 'value'
           },
-          native: {},
+          native: {}
         },
         null
       );
@@ -477,9 +477,9 @@ class dysonAirPurifier extends utils.Adapter {
             read: true,
             write: false,
             type: 'string',
-            role: 'value',
+            role: 'value'
           },
-          native: {},
+          native: {}
         },
         null
       );
@@ -492,9 +492,9 @@ class dysonAirPurifier extends utils.Adapter {
             read: true,
             write: false,
             role: 'value',
-            type: 'string',
+            type: 'string'
           },
-          native: {},
+          native: {}
         },
         device.Version
       );
@@ -507,9 +507,9 @@ class dysonAirPurifier extends utils.Adapter {
             read: true,
             write: true,
             role: 'indicator',
-            type: 'boolean',
+            type: 'boolean'
           },
-          native: {},
+          native: {}
         },
         device.AutoUpdate
       );
@@ -522,9 +522,9 @@ class dysonAirPurifier extends utils.Adapter {
             read: true,
             write: false,
             role: 'indicator',
-            type: 'boolean',
+            type: 'boolean'
           },
-          native: {},
+          native: {}
         },
         device.NewVersionAvailable
       );
@@ -537,9 +537,9 @@ class dysonAirPurifier extends utils.Adapter {
             read: true,
             write: false,
             role: 'value',
-            type: 'string',
+            type: 'string'
           },
-          native: {},
+          native: {}
         },
         device.ProductType
       );
@@ -552,9 +552,9 @@ class dysonAirPurifier extends utils.Adapter {
             read: true,
             write: false,
             role: 'value',
-            type: 'string',
+            type: 'string'
           },
-          native: {},
+          native: {}
         },
         device.ConnectionType
       );
@@ -567,9 +567,9 @@ class dysonAirPurifier extends utils.Adapter {
             read: true,
             write: true,
             role: 'value',
-            type: 'string',
+            type: 'string'
           },
-          native: {},
+          native: {}
         },
         device.Name
       );
@@ -594,9 +594,9 @@ class dysonAirPurifier extends utils.Adapter {
               read: true,
               write: true,
               role: 'value',
-              type: 'string',
+              type: 'string'
             },
-            native: {},
+            native: {}
           },
           hostAddress.val
         );
@@ -611,9 +611,9 @@ class dysonAirPurifier extends utils.Adapter {
               read: true,
               write: true,
               role: 'value',
-              type: 'string',
+              type: 'string'
             },
-            native: {},
+            native: {}
           },
           ''
         );
@@ -636,7 +636,7 @@ class dysonAirPurifier extends utils.Adapter {
   /**
    *
    * @param {string[]} dataField
-   * @param value {string}
+   * @param {string} value
    * @returns {void}
    */
   setDysonCode(dataField, value) {
@@ -697,8 +697,8 @@ class dysonAirPurifier extends utils.Adapter {
   }
   /**
    *
-   * @param dataField {any}
-   * @param value {string}
+   * @param {string[]} dataField
+   * @param {string} value
    * @returns {void}
    */
   setDataUnit(dataField, value) {
@@ -718,9 +718,9 @@ class dysonAirPurifier extends utils.Adapter {
    *
    * Processes the current received message and updates relevant data fields
    *
-   * @param device  {object} additional data for the current device which are not provided by Web-API (IP-Address, MQTT-Password)
-   * @param path    {string} Additional subfolders can be given here if needed with a leading dot (eg. .Sensor)!
-   * @param message {object} Current State of the device. Message is send by device via mqtt due to request or state change.
+   * @param {Object} device  additional data for the current device which are not provided by Web-API (IP-Address, MQTT-Password)
+   * @param {string} path    Additional subfolders can be given here if needed with a leading dot (eg. .Sensor)!
+   * @param {Object} message Current State of the device. Message is send by device via mqtt due to request or state change.
    */
   async processMsg(device, path, message) {
     for (const row in message) {
@@ -804,9 +804,9 @@ class dysonAirPurifier extends utils.Adapter {
                 role: this.getDataRole(deviceConfig),
                 type: this.getDataType(deviceConfig),
                 unit: '%',
-                states: this.getValueList(deviceConfig),
+                states: this.getValueList(deviceConfig)
               },
-              native: {},
+              native: {}
             },
             Number((value * 100) / 4300)
           );
@@ -918,9 +918,9 @@ class dysonAirPurifier extends utils.Adapter {
               role: this.getDataRole(deviceConfig),
               type: this.getDataType(deviceConfig),
               unit: this.getDataUnit(deviceConfig),
-              states: currentStates,
+              states: currentStates
             },
-            native: {},
+            native: {}
           },
           value
         );
@@ -935,9 +935,9 @@ class dysonAirPurifier extends utils.Adapter {
               write: this.getWriteable(deviceConfig) === true,
               role: this.getDataRole(deviceConfig),
               type: this.getDataType(deviceConfig),
-              unit: this.getDataUnit(deviceConfig),
+              unit: this.getDataUnit(deviceConfig)
             },
-            native: {},
+            native: {}
           },
           value
         );
@@ -957,10 +957,10 @@ class dysonAirPurifier extends utils.Adapter {
    *
    * creates the data fields for the values itself and the index if the device has a NO2 sensor
    *
-   * @param message {object} the received mqtt message
+   * @param {Object[]} message the received mqtt message
    * @param {number} message[].noxl
-   * @param row     {string} the current data row
-   * @param device  {object} the device object the data is valid for
+   * @param {string} row      the current data row
+   * @param {Object} device   the device object the data is valid for
    */
   createNO2(message, row, device) {
     // NO2 QualityIndex
@@ -991,10 +991,10 @@ class dysonAirPurifier extends utils.Adapter {
             2: 'Bad',
             3: 'very Bad',
             4: 'extremely Bad',
-            5: 'worrying',
-          },
+            5: 'worrying'
+          }
         },
-        native: {},
+        native: {}
       },
       NO2Index
     );
@@ -1006,10 +1006,10 @@ class dysonAirPurifier extends utils.Adapter {
    *
    * creates the data fields for the values itself and the index if the device has a HCHO sensor
    *
-   * @param message {object} the received mqtt message
+   * @param {Object[]} message  the received mqtt message
    * @param {number} message[].noxl
-   * @param row     {string} the current data row
-   * @param device  {object} the device object the data is valid for
+   * @param {string} row      the current data row
+   * @param {Object} device   the device object the data is valid for
    */
   createHCHO(message, row, device) {
     // HCHO QualityIndex
@@ -1041,10 +1041,10 @@ class dysonAirPurifier extends utils.Adapter {
             2: 'Bad',
             3: 'very Bad',
             4: 'extremely Bad',
-            5: 'worrying',
-          },
+            5: 'worrying'
+          }
         },
-        native: {},
+        native: {}
       },
       HCHOIndex
     );
@@ -1056,10 +1056,10 @@ class dysonAirPurifier extends utils.Adapter {
    *
    * creates the data fields for the values itself and the index if the device has a VOC sensor
    *
-   * @param message {object} the received mqtt message
+   * @param {Object[]} message the received mqtt message
    * @param {number} message[].va10
-   * @param row     {string} the current data row
-   * @param device  {object} the device object the data is valid for
+   * @param {string} row      the current data row
+   * @param {Object} device   the device object the data is valid for
    */
   createVOC(message, row, device) {
     // VOC QualityIndex
@@ -1090,10 +1090,10 @@ class dysonAirPurifier extends utils.Adapter {
             2: 'Bad',
             3: 'very Bad',
             4: 'extremely Bad',
-            5: 'worrying',
-          },
+            5: 'worrying'
+          }
         },
-        native: {},
+        native: {}
       },
       VOCIndex
     );
@@ -1106,10 +1106,10 @@ class dysonAirPurifier extends utils.Adapter {
    *
    * creates the data fields for the values itself and the index if the device has a PM 10 sensor
    *
-   * @param {object} message the received mqtt message
+   * @param {Object} message the received mqtt message
    * @param {number} message[].pm10
    * @param {string} row the current data row
-   * @param {object} device the device object the data is valid for
+   * @param {Object} device the device object the data is valid for
    */
   createPM10(message, row, device) {
     // PM10 QualityIndex
@@ -1144,10 +1144,10 @@ class dysonAirPurifier extends utils.Adapter {
             2: 'Bad',
             3: 'very Bad',
             4: 'extremely Bad',
-            5: 'worrying',
-          },
+            5: 'worrying'
+          }
         },
-        native: {},
+        native: {}
       },
       PM10Index
     );
@@ -1160,10 +1160,10 @@ class dysonAirPurifier extends utils.Adapter {
    *
    * creates the data fields for the values itself and the index if the device has a simple dust sensor
    *
-   * @param message {object} the received mqtt message
+   * @param {Object[]} message the received mqtt message
    * @param {number} message[].pact
-   * @param row     {string} the current data row
-   * @param device  {object} the device object the data is valid for
+   * @param {string} row      the current data row
+   * @param {Object} device   the device object the data is valid for
    */
   createDust(message, row, device) {
     // PM10 QualityIndex
@@ -1198,10 +1198,10 @@ class dysonAirPurifier extends utils.Adapter {
             2: 'Bad',
             3: 'very Bad',
             4: 'extremely Bad',
-            5: 'worrying',
-          },
+            5: 'worrying'
+          }
         },
-        native: {},
+        native: {}
       },
       dustIndex
     );
@@ -1214,10 +1214,10 @@ class dysonAirPurifier extends utils.Adapter {
    *
    * creates the data fields for the values itself and the index if the device has a PM 2,5 sensor
    *
-   * @param message {object} the received mqtt message
-   * @param {number} message[].pm25
-   * @param row     {string} the current data row
-   * @param device  {object} the device object the data is valid for
+   * @param {Object[]} message the received mqtt message
+   * @param {number} message[].p25r
+   * @param {string} row      the current data row
+   * @param {Object} device   the device object the data is valid for
    */
   createPM25(message, row, device) {
     // PM2.5 QualityIndex
@@ -1252,10 +1252,10 @@ class dysonAirPurifier extends utils.Adapter {
             2: 'Bad',
             3: 'very Bad',
             4: 'extremely Bad',
-            5: 'worrying',
-          },
+            5: 'worrying'
+          }
         },
-        native: {},
+        native: {}
       },
       PM25Index
     );
@@ -1311,7 +1311,7 @@ class dysonAirPurifier extends utils.Adapter {
               username: devices[thisDevice].Serial,
               password: devices[thisDevice].mqttPassword,
               protocolVersion: 3,
-              protocolId: 'MQIsdp',
+              protocolId: 'MQIsdp'
             }
           );
           //noinspection JSUnresolvedVariable
@@ -1337,7 +1337,7 @@ class dysonAirPurifier extends utils.Adapter {
                   `${devices[thisDevice].ProductType}/${devices[thisDevice].Serial}/command`,
                   JSON.stringify({
                     msg: 'REQUEST-CURRENT-STATE',
-                    time: new Date().toISOString(),
+                    time: new Date().toISOString()
                   })
                 );
               }
@@ -1351,7 +1351,7 @@ class dysonAirPurifier extends utils.Adapter {
                   `${devices[thisDevice].ProductType}/${devices[thisDevice].Serial}/command`,
                   JSON.stringify({
                     msg: 'REQUEST-CURRENT-FAULTS',
-                    time: new Date().toISOString(),
+                    time: new Date().toISOString()
                   })
                 );
               }
@@ -1386,14 +1386,14 @@ class dysonAirPurifier extends utils.Adapter {
                     `${devices[thisDevice].ProductType}/${devices[thisDevice].Serial}/command`,
                     JSON.stringify({
                       msg: 'REQUEST-CURRENT-STATE',
-                      time: new Date().toISOString(),
+                      time: new Date().toISOString()
                     })
                   );
                   devices[thisDevice].mqttClient.publish(
                     `${devices[thisDevice].ProductType}/${devices[thisDevice].Serial}/command`,
                     JSON.stringify({
                       msg: 'REQUEST-CURRENT-FAULTS',
-                      time: new Date().toISOString(),
+                      time: new Date().toISOString()
                     })
                   );
                 } catch (error) {
@@ -1442,9 +1442,9 @@ class dysonAirPurifier extends utils.Adapter {
                         name: "Information from device's sensors",
                         type: 'folder',
                         read: true,
-                        write: false,
+                        write: false
                       },
-                      native: {},
+                      native: {}
                     },
                     null
                   );
@@ -1559,8 +1559,8 @@ class dysonAirPurifier extends utils.Adapter {
    * Function setDeviceOnlineState
    * Sets an indicator whether the device is reachable via mqtt
    *
-   * @param device {string} path to the device incl. Serial
-   * @param state  {string} state to set (online, offline, reconnecting, ...)
+   * @param {string} device  path to the device incl. Serial
+   * @param {string} state   state to set (online, offline, reconnecting, ...)
    */
   setDeviceOnlineState(device, state) {
     this.createOrExtendObject(
@@ -1572,9 +1572,9 @@ class dysonAirPurifier extends utils.Adapter {
           read: true,
           write: false,
           role: 'indicator.reachable',
-          type: 'boolean',
+          type: 'boolean'
         },
-        native: {},
+        native: {}
       },
       state === 'online'
     );
@@ -1586,9 +1586,9 @@ class dysonAirPurifier extends utils.Adapter {
    *
    * Updates an existing object (id) or creates it if not existing.
    *
-   * @param id {string} path/id of datapoint to create
-   * @param objData {object} details to the datapoint to be created (Device, channel, state, ...)
-   * @param value {any} value of the datapoint
+   * @param {string} id  path/id of datapoint to create
+   * @param {Object} objData  details to the datapoint to be created (Device, channel, state, ...)
+   * @param {any} value  value of the datapoint
    */
   createOrExtendObject(id, objData, value) {
     if (adapterIsSetUp) {
@@ -1616,9 +1616,9 @@ class dysonAirPurifier extends utils.Adapter {
    *
    * returns the configDetails for any datapoint
    *
-   * @param searchValue {string} dysonCode to search for.
+   * @param {string} searchValue dysonCode to search for.
    *
-   * @returns {object} returns the configDetails for any given datapoint or undefined if searchValue can't be resolved.
+   * @returns {Object} returns the configDetails for any given datapoint or undefined if searchValue can't be resolved.
    */
   getDatapoint(searchValue) {
     // this.log.debug('getDatapoint('+searchValue+')');

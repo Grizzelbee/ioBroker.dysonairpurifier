@@ -50,7 +50,7 @@ module.exports.getDyson2faLocale = function (country) {
  * getDyson2faMail
  * Does the first part of the dyson 2FA. Requests the one-time-password from the API
  *
- * @param {object} adapter link to the adapter instance
+ * @param {import('@iobroker/adapter-core').AdapterInstance} adapter link to the adapter instance
  * @param {string} email email address as registered at dyson cloud
  * @param {string} passwd password according to dyson cloud account
  * @param {string} country country the account is registered in
@@ -68,7 +68,7 @@ module.exports.getDyson2faMail = async function (
   adapter.log.debug('Utils: getDyson2faMail!');
   const payload = {
     Email: email,
-    Password: passwd,
+    Password: passwd
   };
   try {
     const result = await axios.post(
@@ -78,13 +78,13 @@ module.exports.getDyson2faMail = async function (
     );
     if (result.data?.accountStatus !== 'ACTIVE') {
       return {
-        error: `This account : ${email} is ${result.data.accountStatus} but needs to be ACTIVE. Please fix this first and set this account to active using the dyson smartphone app or website.`,
+        error: `This account : ${email} is ${result.data.accountStatus} but needs to be ACTIVE. Please fix this first and set this account to active using the dyson smartphone app or website.`
       };
     }
     adapter.log.debug(`Result: ${JSON.stringify(result.data)}`);
     if (result.data.authenticationMethod !== 'EMAIL_PWD_2FA') {
       return {
-        error: `Received unexpected authentication-method from dyson API. Expecting: [EMAIL_PWD_2FA], received: [${result.data.authenticationMethod}].`,
+        error: `Received unexpected authentication-method from dyson API. Expecting: [EMAIL_PWD_2FA], received: [${result.data.authenticationMethod}].`
       };
     }
     const response = await axios.post(
@@ -101,7 +101,7 @@ module.exports.getDyson2faMail = async function (
   } catch (error) {
     adapter.log.error(`CATCH-getDyson2faMail: ${stringify(error)}`);
     return {
-      error: `Received error: [${error}] from dyson API.\n These credentials have been used during this request: Username: [${email}], Password: [${passwd}], country: [${country}], locale: [${locale}].\nIf these credentials are okay and you are facing a 401 error, please refer to the adapters readme file for a documented solution.\nIf these credentials are okay and you are facing another error please contact the developer via iobroker forum or github.`,
+      error: `Received error: [${error}] from dyson API.\n These credentials have been used during this request: Username: [${email}], Password: [${passwd}], country: [${country}], locale: [${locale}].\nIf these credentials are okay and you are facing a 401 error, please refer to the adapters readme file for a documented solution.\nIf these credentials are okay and you are facing another error please contact the developer via iobroker forum or github.`
     };
   }
 };
@@ -109,7 +109,7 @@ module.exports.getDyson2faMail = async function (
 /**
  * getDysonToken
  *
- * @param adapter link to the adapter instance
+ * @param {import('@iobroker/adapter-core').AdapterInstance} adapter link to the adapter instance
  * @param {string} email email address as registered at dyson cloud
  * @param {string} passwd password according to dyson cloud account* @param challengeId
  * @param {string} country country the account is registered in
@@ -131,7 +131,7 @@ module.exports.getDysonToken = async function (
     Email: email,
     Password: passwd,
     challengeId: challengeId,
-    otpCode: PIN,
+    otpCode: PIN
   };
   try {
     const response = await axios.post(
@@ -150,7 +150,7 @@ module.exports.getDysonToken = async function (
 /**
  * getAngles
  *
- * @param {Record<string, any>} adapter link to the adapter instance
+ * @param {import('@iobroker/adapter-core').AdapterInstance} adapter link to the adapter instance
  * @param {string} dysonAction the current action that changed it's state
  * @param {string} thisDevice path to the current device
  * @param {Record<string, any>} state the state-object as received by OnStateChange
@@ -214,7 +214,7 @@ module.exports.zeroFill = function (number, width) {
  *           resolves if the config is valid
  *           rejects if the config is invalid
  *
- * @param {Record<string, any>} adapter - ioBroker adapter which contains the configuration that should be checked
+ * @param {import('@iobroker/adapter-core').AdapterInstance} adapter - ioBroker adapter which contains the configuration that should be checked
  * @returns {unknown}
  * @throws
  */
@@ -291,7 +291,7 @@ module.exports.decryptMqttPasswd = function (LocalCredentials) {
  * Queries the devices stored in a given dyson online account
  *
  * @param {string} token - your dyson account token
- * @param {Record<string, any>} adapter - link to the adapter
+ * @param {import('@iobroker/adapter-core').AdapterInstance} adapter - link to the adapter
  * @returns {Promise<Record<string, any>>}
  *      resolves with a List of dyson devices connected to the given account
  *      rejects with an error message
@@ -360,7 +360,7 @@ module.exports.dysonGetDevicesFromApi = async function (token) {
     {
       httpsAgent,
       headers: { Authorization: `Bearer ${token}` },
-      json: true,
+      json: true
     }
   );
 };
