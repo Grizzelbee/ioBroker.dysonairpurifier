@@ -4,13 +4,13 @@ const crypto = require('crypto');
 const { stringify } = require('flatted');
 const dysonConstants = require('./dysonConstants.js');
 const axios = require('axios');
-const path = require('path');
 const https = require('https');
-const rootCas = require('ssl-root-cas').create();
-const httpsAgent = new https.Agent({ ca: rootCas });
 const dnsResolver = require('node:dns/promises');
-// const ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
+const tls = require('tls');
+const httpsAgent = new https.Agent({
+  ca: [...tls.rootCertificates],
+  rejectUnauthorized: false
+});
 
 module.exports.getDyson2faLocale = function (country) {
   switch (country) {
