@@ -801,7 +801,7 @@ class dysonAirPurifier extends utils.Adapter {
             : message[dysonCode];
         //this.log.debug(`${getDataPointName(deviceConfig)} is a bool switch. Current state: [${testValue}]`);
         value =
-          testValue === 'ON' || testValue === 'HUMD' || testValue === 'HEAT';
+          ['ON', 'HUMD', 'HEAT'].includes(testValue); //  testValue === 'ON' || testValue === 'HUMD' || testValue === 'HEAT';
       } else if (
         deviceConfig.type === 'boolean' &&
         deviceConfig.role.startsWith('indicator')
