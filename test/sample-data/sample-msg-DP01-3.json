@@ -1,53 +1,23 @@
 {
-    "msg": "STATE-CHANGE",
-    "time": "2020-10-31T14:44:17.000Z",
-    "mode-reason": "PRC",
-    "state-reason": "MODE",
-    "product-state": {
-        "fmod": [
-            "OFF",
-            "FAN"
-        ],
-        "fnst": [
-            "OFF",
-            "OFF"
-        ],
-        "fnsp": [
-            "0010",
-            "0010"
-        ],
-        "qtar": [
-            "0003",
-            "0003"
-        ],
-        "oson": [
-            "OFF",
-            "OFF"
-        ],
-        "rhtm": [
-            "OFF",
-            "OFF"
-        ],
-        "filf": [
-            "4272",
-            "4272"
-        ],
-        "ercd": [
-            "02C0",
-            "02C0"
-        ],
-        "nmod": [
-            "OFF",
-            "OFF"
-        ],
-        "wacd": [
-            "NONE",
-            "NONE"
-        ]
-    },
-    "scheduler": {
-        "srsc": "bcff",
-        "dstv": "0001",
-        "tzid": "0001"
-    }
+  "msg": "STATE-CHANGE",
+  "time": "2020-10-31T14:44:17.000Z",
+  "mode-reason": "PRC",
+  "state-reason": "MODE",
+  "product-state": {
+    "fmod": ["OFF", "FAN"],
+    "fnst": ["OFF", "OFF"],
+    "fnsp": ["0010", "0010"],
+    "qtar": ["0003", "0003"],
+    "oson": ["OFF", "OFF"],
+    "rhtm": ["OFF", "OFF"],
+    "filf": ["4272", "4272"],
+    "ercd": ["02C0", "02C0"],
+    "nmod": ["OFF", "OFF"],
+    "wacd": ["NONE", "NONE"]
+  },
+  "scheduler": {
+    "srsc": "bcff",
+    "dstv": "0001",
+    "tzid": "0001"
+  }
 }

@@ -1,305 +1,318 @@
 {
-    "common": {
-        "name": "dysonairpurifier",
-        "version": "3.1.7",
-        "news": {
-            "3.1.7": {
-                "en": "HeatingMode switch is now working correctly.",
-                "de": "Der HeatingMode-Schalter funktioniert jetzt ordnungsgemäß.",
-                "ru": "Переключатель режима обогрева теперь работает правильно.",
-                "pt": "O interruptor HeatingMode agora está funcionando corretamente.",
-                "nl": "De HeatingMode-schakelaar werkt nu correct.",
-                "fr": "Le commutateur HeatingMode fonctionne désormais correctement.",
-                "it": "L'interruttore della modalità di riscaldamento ora funziona correttamente.",
-                "es": "El interruptor de modo de calefacción ahora funciona correctamente.",
-                "pl": "Przełącznik trybu ogrzewania działa teraz poprawnie.",
-                "uk": "Перемикач HeatingMode тепер працює правильно.",
-                "zh-cn": "HeatingMode 开关现在工作正常。"
-            },
-            "3.1.6": {
-                "en": "Dependencies got updated\nHeatingMode switch is now working correctly (Attempt 1).",
-                "de": "Abhängigkeiten wurden aktualisiert\nHeatingMode-Schalter funktioniert jetzt korrekt (Versuch 1).",
-                "ru": "Зависимости обновлены. Переключатель HeatingMode теперь работает правильно (попытка 1).",
-                "pt": "As dependências foram atualizadas\n A chave HeatingMode agora está funcionando corretamente (tentativa 1).",
-                "nl": "Afhankelijkheden zijn bijgewerkt \nHeatingMode-schakelaar werkt nu correct (poging 1).",
-                "fr": "Les dépendances ont été mises à jour\nLe commutateur HeatingMode fonctionne désormais correctement (tentative 1).",
-                "it": "Le dipendenze sono state aggiornate\nL'interruttore della modalità di riscaldamento ora funziona correttamente (tentativo 1).",
-                "es": "Se actualizaron las dependencias. El interruptor de modo de calefacción ahora funciona correctamente (intento 1).",
-                "pl": "Zależności zostały zaktualizowane. \n Przełącznik trybu ogrzewania działa teraz poprawnie (próba 1).",
-                "uk": "Залежності оновлено\nПеремикач HeatingMode тепер працює правильно (спроба 1).",
-                "zh-cn": "依赖项已更新\nHeatingMode 开关现在可以正常工作（尝试 1）。"
-            },
-            "3.1.5": {
-                "en": "Requesting at least admin v6.13.16 as dependency.",
-                "de": "Mindestens Admin v6.13.16 als Abhängigkeit erforderlich.",
-                "ru": "Запрос как минимум администратора v6.13.16 в качестве зависимости.",
-                "pt": "Solicitando pelo menos admin v6.13.16 como dependência.",
-                "nl": "Minimaal beheerder v6.13.16 aanvragen als afhankelijkheid.",
-                "fr": "Demander au moins admin v6.13.16 comme dépendance.",
-                "it": "Richiedendo almeno admin v6.13.16 come dipendenza.",
-                "es": "Solicitando al menos admin v6.13.16 como dependencia.",
-                "pl": "Żądanie co najmniej administratora v6.13.16 jako zależność.",
-                "uk": "Запит принаймні admin v6.13.16 як залежність.",
-                "zh-cn": "请求至少 admin v6.13.16 作为依赖项。"
-            },
-            "3.1.4": {
-                "en": "Lamps (Product type 552) won't generate a warning on startup anymore but show an info that they are not supported by this adapter.",
-                "de": "Lampen (Produkttyp 552) generieren beim Start keine Warnung mehr, sondern zeigen einen Hinweis an, dass sie von diesem Adapter nicht unterstützt werden.",
-                "ru": "Лампы (тип продукта 552) больше не будут выдавать предупреждение при запуске, а будут показывать информацию о том, что они не поддерживаются этим адаптером.",
-                "pt": "As lâmpadas (tipo de produto 552) não gerarão mais um aviso na inicialização, mas mostrarão uma informação de que não são suportadas por este adaptador.",
-                "nl": "Lampen (producttype 552) genereren geen waarschuwing meer bij het opstarten, maar geven de informatie weer dat ze niet door deze adapter worden ondersteund.",
-                "fr": "Les lampes (type de produit 552) ne généreront plus d'avertissement au démarrage mais afficheront une information indiquant qu'elles ne sont pas prises en charge par cet adaptateur.",
-                "it": "Le lampade (tipo prodotto 552) non genereranno più un avviso all'avvio ma mostreranno un'informazione che non sono supportate da questo adattatore.",
-                "es": "Las lámparas (tipo de producto 552) ya no generarán una advertencia al iniciarse, pero mostrarán información de que no son compatibles con este adaptador.",
-                "pl": "Lampy (typ produktu 552) nie będą już generować ostrzeżenia przy uruchomieniu, ale pokażą informację, że nie są obsługiwane przez ten adapter.",
-                "uk": "Лампи (тип продукту 552) більше не генеруватимуть попередження під час запуску, але відображатимуть інформацію про те, що вони не підтримуються цим адаптером.",
-                "zh-cn": "灯（产品类型 552）将不再在启动时生成警告，但会显示此适配器不支持它们的信息。"
-            },
-            "3.1.3": {
-                "en": "2FA Process is working again - truely",
-                "de": "Der 2FA-Prozess funktioniert wieder – tatsächlich",
-                "ru": "Процесс 2FA снова работает — это правда",
-                "pt": "O processo 2FA está funcionando novamente - de verdade",
-                "nl": "Het 2FA-proces werkt weer - echt waar",
-                "fr": "Le processus 2FA fonctionne à nouveau – vraiment",
-                "it": "Il processo 2FA funziona di nuovo, davvero",
-                "es": "El proceso 2FA está funcionando nuevamente, de verdad",
-                "pl": "Proces 2FA znów działa – to prawda",
-                "uk": "Процес 2FA знову працює - дійсно",
-                "zh-cn": "2FA 流程再次发挥作用——确实如此"
-            },
-            "3.1.2": {
-                "en": "dependencies got updated\n2FA Process is working again\nAt least nodeJs V18.2.0 is required",
-                "de": "Abhängigkeiten wurden aktualisiert\n2FA-Prozess funktioniert wieder\nMindestens nodeJs V18.2.0 ist erforderlich",
-                "ru": "зависимости обновлены \n Процесс 2FA снова работает \n Требуется как минимум nodeJs V18.2.0",
-                "pt": "dependências foram atualizadas\n O processo 2FA está funcionando novamente\nPelo menos nodeJs V18.2.0 é necessário",
-                "nl": "afhankelijkheden zijn bijgewerkt\n2FA-proces werkt weer\nMinimaal nodeJs V18.2.0 is vereist",
-                "fr": "les dépendances ont été mises à jour\nLe processus 2FA fonctionne à nouveau\nAu moins nodeJs V18.2.0 est requis",
-                "it": "le dipendenze sono state aggiornate\n Il processo 2FA funziona di nuovo\nÈ richiesto almeno nodeJs V18.2.0",
-                "es": "las dependencias se actualizaron\n El proceso 2FA está funcionando nuevamente\n Se requiere al menos nodeJs V18.2.0",
-                "pl": "zależności zostały zaktualizowane\nProces 2FA znów działa\nWymagany jest przynajmniej nodeJs V18.2.0",
-                "uk": "залежності оновлено\nПроцес 2FA знову працює\nПотрібен принаймні nodeJs V18.2.0",
-                "zh-cn": "依赖项已更新\n2FA 进程再次运行\n至少需要 nodeJs V18.2.0"
-            },
-            "3.1.1": {
-                "en": "dependencies got updated\nFixed PM2.5, PM10, VOC, NO2 Values\nFixed PM2.5, PM10, VOC Indexes\nUpdated admin-UI to jsonConfig",
-                "de": "Abhängigkeiten wurden aktualisiert \n PM2.5-, PM10-, VOC-, NO2-Werte korrigiert \n PM2.5-, PM10-, VOC-Indizes korrigiert \n Admin-UI auf jsonConfig aktualisiert",
-                "ru": "зависимости обновлены \n Исправлены значения PM2.5, PM10, VOC, NO2 \n Исправлены индексы PM2.5, PM10, VOC \n Обновлен интерфейс администратора до jsonConfig",
-                "pt": "dependências foram atualizadas\n Valores corrigidos de PM2.5, PM10, VOC, NO2\n Corrigidos índices PM2.5, PM10, VOC\n UI de administração atualizada para jsonConfig",
-                "nl": "afhankelijkheden zijn bijgewerkt \n PM2.5-, PM10-, VOC-, NO2-waarden opgelost \n PM2.5-, PM10-, VOC-indexen opgelost \n Beheerdersinterface bijgewerkt naar jsonConfig",
-                "fr": "les dépendances ont été mises à jour\n Correction des valeurs PM2,5, PM10, VOC, NO2\n Correction des index PM2,5, PM10, VOC\n Mise à jour de l'interface utilisateur d'administration vers jsonConfig",
-                "it": "le dipendenze sono state aggiornate\nCorrezione dei valori PM2.5, PM10, VOC, NO2\nCorrezione degli indici PM2.5, PM10 e VOC\nInterfaccia utente di amministrazione aggiornata a jsonConfig",
-                "es": "las dependencias se actualizaron \n Se corrigieron los valores de PM2.5, PM10, VOC y NO2 \n Se corrigieron los índices de PM2.5, PM10 y VOC \n Se actualizó la interfaz de usuario del administrador a jsonConfig",
-                "pl": "zależności zostały zaktualizowane\nNaprawiono wartości PM2.5, PM10, VOC, NO2\nNaprawiono indeksy PM2.5, PM10, VOC\nZaktualizowano interfejs administratora do jsonConfig",
-                "uk": "залежності оновлено\nВиправлено значення PM2.5, PM10, VOC, NO2\nВиправлено індекси PM2.5, PM10, VOC\nОновлено інтерфейс адміністратора до jsonConfig",
-                "zh-cn": "更新了依赖项\n修复了 PM2.5、PM10、VOC、NO2 值\n修复了 PM2.5、PM10、VOC 索引\n将管理 UI 更新为 jsonConfig"
-            },
-            "3.0.0": {
-                "en": "\nUpd: dependencies got updated \nNew: Added HCHO-Index \nBREAKING CHANGES: \nReplaced values in field pm25 with values from pm25r and calculating them accordingly to the dyson App \nReplaced values in field pm10 with values from pm10r and calculating them accordingly to the dyson App \nReplaced values in field hcho with values from hchr  and calculating them accordingly to the dyson App \nFields pm25r and pm10r are now deprecated and will be removed",
-                "de": "\nAktualisiert: Abhängigkeiten wurden aktualisiert. \nNeu: HCHO-Index hinzugefügt Die Dyson-App \nWerte im Feld hcho durch Werte aus hchr ersetzt und entsprechend in der Dyson-App berechnet \nDie Felder pm25r und pm10r sind jetzt veraltet und werden entfernt",
-                "ru": "\nОбновление: обновлены зависимости \nНовое: добавлен индекс HCHO \nСЕРЬЕЗНЫЕ ИЗМЕНЕНИЯ: \nЗаменены значения в поле pm25 на значения из pm25r и расчет их в соответствии с приложением Dyson \nЗаменены значения в поле pm10 значениями из pm10r и расчет их в соответствии с приложение Dyson \nЗаменены значения в поле hcho значениями из hchr и расчет их в соответствии с приложением Dyson \nПоля pm25r и pm10r устарели и будут удалены.",
-                "pt": "\nAtualização: dependências foram atualizadas \nNovo: Índice HCHO adicionado \nALTERAÇÕES ÚLTIMAS: \nValores substituídos no campo pm25 por valores de pm25r e cálculo deles de acordo com o aplicativo dyson \nValores substituídos no campo pm10 por valores de pm10r e cálculo deles de acordo com o aplicativo dyson \nValores substituídos no campo hcho por valores de hchr e cálculo deles de acordo com o aplicativo dyson \nOs campos pm25r e pm10r agora estão obsoletos e serão removidos",
-                "nl": "\nUpd: afhankelijkheden zijn bijgewerkt \nNieuw: HCHO-index toegevoegd \nBREAKING CHANGES: \nWaarden in veld pm25 vervangen door waarden uit pm25r en deze overeenkomstig berekend met de dyson-app \nWaarden in veld pm10 vervangen door waarden uit pm10r en deze overeenkomstig berekend de dyson-app \nWaarden in veld hcho vervangen door waarden uit hchr en deze overeenkomstig berekend met de dyson-app \nVelden pm25r en pm10r zijn nu verouderd en worden verwijderd",
-                "fr": "\nMise à jour : les dépendances ont été mises à jour \nNouveau : ajout de l'index HCHO \nCHANGEMENTS RUPTURE : \nRemplacement des valeurs dans le champ pm25 par les valeurs de pm25r et calcul de celles-ci en fonction de l'application Dyson \nRemplacement des valeurs dans le champ pm10 par les valeurs de pm10r et calcul de celles-ci en conséquence l'application dyson \nRemplacement des valeurs dans le champ hcho par les valeurs de hchr et calcul de celles-ci en conséquence selon l'application dyson \nLes champs pm25r et pm10r sont désormais obsolètes et seront supprimés",
-                "it": "\nAggiornamento: le dipendenze sono state aggiornate \nNovità: aggiunto indice HCHO \nMODIFICHE ROTANTI: \nSostituiti i valori nel campo pm25 con valori da pm25r e calcolandoli in base all'app Dyson \nSostituiti i valori nel campo pm10 con valori da pm10r e calcolandoli in base a l'app Dyson \nSostituiti i valori nel campo hcho con i valori di hchr e calcolandoli di conseguenza all'app Dyson \nI campi pm25r e pm10r sono ora deprecati e verranno rimossi",
-                "es": "\nActualización: se actualizaron las dependencias \nNuevo: Índice HCHO agregado \nCAMBIOS IMPORTANTES: \nSe reemplazaron los valores en el campo pm25 con valores de pm25r y se calcularon de acuerdo con la aplicación Dyson \nSe reemplazaron los valores en el campo pm10 con valores de pm10r y se calcularon de acuerdo con la aplicación Dyson \nSe reemplazaron los valores en el campo hcho con valores de hchr y se calcularon de acuerdo con la aplicación Dyson \nLos campos pm25r y pm10r ahora están obsoletos y se eliminarán",
-                "pl": "\nAktualizacja: zaktualizowano zależności \nNowość: Dodano HCHO-Index \nPIERWSZE ZMIANY: \nZastąpiono wartości w polu pm25 wartościami z pm25r i przeliczono je zgodnie z aplikacją dyson \nZastąpiono wartości w polu pm10 wartościami z pm10r i przeliczono je odpowiednio do aplikacja dyson \nZastąpiono wartości w polu hcho wartościami z hchr i przeliczono je zgodnie z aplikacją dyson \nPola pm25r i pm10r są obecnie przestarzałe i zostaną usunięte",
-                "uk": "\nОновлено: оновлено залежності \nНове: додано HCHO-індекс \nОСНОВНІ ЗМІНИ: \nЗамінено значення в полі pm25 на значення з pm25r і обчислення їх відповідно до програми dyson \nЗамінено значення в полі pm10 на значення з pm10r і обчислення їх відповідно до програма dyson \nЗамінено значення в полі hcho на значення з hchr і обчислення їх відповідно до програми dyson \nПоля pm25r і pm10r тепер не підтримуються та будуть видалені",
-                "zh-cn": "\n更新：依赖项已更新 \n新功能：添加了 HCHO 索引 \n重大更改： \n将字段 pm25 中的值替换为 pm25r 中的值，并根据 Dyson 应用程序相应地计算它们 \n将字段 pm10 中的值替换为 pm10r 中的值，并相应地计算它们Dyson 应用程序 \n将字段 hcho 中的值替换为 hchr 中的值，并根据 Dyson 应用程序相应地计算它们 \n字段 pm25r 和 pm10r 现已弃用并将被删除"
-            },
-            "2.5.9": {
-                "en": "Updated year in license- and readme file to make adapter checker happy",
-                "de": "Aktualisiertes Jahr in der Lizenz- und Readme-Datei, um den Adapterprüfer glücklich zu machen",
-                "ru": "Обновлен год в файле лицензии и файле readme, чтобы сделать проверку адаптера счастливой.",
-                "pt": "Ano atualizado no arquivo de licença e leia-me para deixar o verificador do adaptador feliz",
-                "nl": "Bijgewerkt jaar in licentie- en leesmij-bestand om adapter checker blij te maken",
-                "fr": "Année mise à jour dans le fichier de licence et readme pour rendre le vérificateur d'adaptateur heureux",
-                "it": "Anno aggiornato nel file di licenza e readme per rendere felice il controllore dell'adattatore",
-                "es": "Año actualizado en la licencia y el archivo Léame para que el verificador de adaptadores sea feliz",
-                "pl": "Zaktualizowano rok w licencji i pliku readme, aby uszczęśliwić narzędzie do sprawdzania adapterów",
-                "uk": "Оновлено рік у файлі ліцензії та readme, щоб зробити інструмент перевірки адаптера щасливим",
-                "zh-cn": "更新了许可证和自述文件中的年份，以使适配器检查器满意"
-            },
-            "2.5.8": {
-                "en": "Fixed calculation of hmax values for heaters",
-                "de": "Berechnung der hmax-Werte für Heizungen korrigiert",
-                "ru": "Исправлен расчет значений hmax для обогревателей",
-                "pt": "Cálculo fixo de valores hmax para aquecedores",
-                "nl": "Vaste berekening van hmax-waarden voor verwarmingen",
-                "fr": "Calcul fixe des valeurs hmax pour les appareils de chauffage",
-                "it": "Calcolo fisso dei valori hmax per i riscaldatori",
-                "es": "Cálculo fijo de valores hmax para calentadores.",
-                "pl": "Naprawiono obliczanie wartości hmax dla grzejników",
-                "uk": "Виправлено розрахунок значень hmax для нагрівачів",
-                "zh-cn": "修复了加热器 hmax 值的计算"
-            },
-            "2.5.7": {
-                "en": "Added support for Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)",
-                "de": "Unterstützung für Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K) hinzugefügt",
-                "ru": "Добавлена ​​поддержка Dyson Pure Humidify+Cool Formальдегид (PH04, ProductType 358K).",
-                "pt": "Adicionado suporte para Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)",
-                "nl": "Ondersteuning toegevoegd voor Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)",
-                "fr": "Ajout de la prise en charge de Dyson Pure Humidify+Cool Formaldéhyde (PH04, ProductType 358K)",
-                "it": "Aggiunto il supporto per Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)",
-                "es": "Se agregó soporte para Dyson Pure Humidify+Cool Formaldehído (PH04, ProductType 358K)",
-                "pl": "Dodano obsługę Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)",
-                "uk": "Додано підтримку для Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)",
-                "zh-cn": "添加了对 Dyson Pure Humidify+Cool Formaldehyde（PH04，产品类型 358K）的支持"
-            }
-        },
-        "titleLang": {
-            "en": "dyson air purifiers, air humidifiers, fan heater and fans",
-            "de": "Dyson Luftreiniger, Luftbefeuchter, Heizlüfter und Lüfter",
-            "ru": "очистители воздуха, увлажнители воздуха, тепловентилятор и вентиляторы dyson",
-            "pt": "purificadores de ar da Dison, umidificadores de ar, aquecedor e ventiladores",
-            "nl": "dyson luchtreinigers, luchtbevochtigers, luchtverhitter en ventilatoren",
-            "fr": "Purificateurs d'air, humidificateurs d'air, radiateurs soufflants et ventilateurs dyson",
-            "it": "purificatori d'aria dyson, umidificatori d'aria, termoventilatori e ventilatori",
-            "es": "Purificadores de aire Dyson, humidificadores de aire, calefactores y ventiladores.",
-            "pl": "oczyszczacze powietrza dyson, nawilżacze powietrza, nagrzewnice i wentylatory",
-            "zh-cn": "戴森空气净化器，空气加湿器，风扇加热器和风扇",
-            "uk": "очищувачі повітря, зволожувачі повітря, обігрівачі та вентилятори dyson"
-        },
-        "desc": {
-            "en": "Integrate dyson air purifiers and fans into ioBroker",
-            "de": "Integrieren Sie Dyson-Luftreiniger und -Lüfter in ioBroker",
-            "ru": "Интегрируйте очистители воздуха и вентиляторы dyson в ioBroker",
-            "pt": "Integre purificadores de ar e ventiladores dyson no ioBroker",
-            "nl": "Integreer dyson-luchtreinigers en -ventilatoren in ioBroker",
-            "fr": "Intégrez les purificateurs d'air et les ventilateurs Dyson dans ioBroker",
-            "it": "Integra i purificatori d'aria e i ventilatori Dyson in ioBroker",
-            "es": "Integre purificadores de aire y ventiladores Dyson en ioBroker",
-            "pl": "Zintegruj oczyszczacze powietrza i wentylatory Dyson w ioBroker",
-            "zh-cn": "将戴森空气净化器和风扇集成到ioBroker中",
-            "uk": "Інтегруйте очищувачі повітря та вентилятори dyson в ioBroker"
-        },
-        "authors": [
-            "grizzelbee <open.source@hingsen.de>"
-        ],
-        "keywords": [
-            "dyson",
-            "air purifier",
-            "pure cool",
-            "hot & cool",
-            "humidify & cool",
-            "fan"
-        ],
-        "platform": "Javascript/Node.js",
-        "icon": "dyson_logo.svg",
-        "adminUI": {
-            "config": "json"
-        },
-        "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/Grizzelbee/ioBroker.dysonairpurifier/master/admin/dyson_logo.svg",
-        "readme": "https://raw.githubusercontent.com/Grizzelbee/ioBroker.dysonairpurifier/master/readme.md",
-        "loglevel": "info",
-        "mode": "daemon",
-        "type": "climate-control",
-        "tier": 2,
-        "compact": true,
-        "materialize": true,
-        "supportCustoms": false,
-        "connectionType": "local",
-        "dataSource": "poll",
-        "messagebox": true,
-        "subscribe": "messagebox",
-        "globalDependencies": [
-            {
-                "admin": ">=6.13.16"
-            }
-        ],
-        "dependencies": [
-            {
-                "js-controller": ">=3.0.0"
-            }
-        ],
-        "plugins": {
-            "sentry": {
-                "dsn": "https://1016f555431c4acfb16b2481019aa1aa@o505019.ingest.sentry.io/5735771"
-            }
-        },
-        "messages": [
-            {
-                "condition": {
-                    "operand": "and",
-                    "rules": [
-                        "oldVersion<3.0.0",
-                        "newVersion>=3.0.0"
-                    ]
-                },
-                "title": {
-                    "en": "Check your historization and scripts after update",
-                    "de": "Überprüfen Sie nach dem Update Ihre Historisierung und Skripte",
-                    "ru": "Проверьте свою историю и скрипты после обновления",
-                    "pt": "Verifique seu histórico e scripts após a atualização",
-                    "nl": "Controleer uw historisatie en scripts na de update",
-                    "fr": "Vérifiez votre historisation et vos scripts après la mise à jour",
-                    "it": "Controlla la storicizzazione e gli script dopo l'aggiornamento",
-                    "es": "Verifique su historización y scripts después de la actualización",
-                    "pl": "Sprawdź swoją historię i skrypty po aktualizacji",
-                    "uk": "Перевірте свою історію та сценарії після оновлення",
-                    "zh-cn": "更新后检查您的历史记录和脚本"
-                },
-                "text": {
-                    "en": "This Update changes the behavior of PM2.5, PM10 and HCHO fields and deletes the PM25R and PM10R fields - to be more compliant to the dyson App. Therefore you need to check whether you use the mentioned fields in scripts or any history adapter. lease read the changelog carefully.",
-                    "de": "Dieses Update ändert das Verhalten der PM2.5-, PM10- und HCHO-Felder und löscht die PM25R- und PM10R-Felder – um eine bessere Kompatibilität mit der Dyson-App zu gewährleisten. Daher müssen Sie prüfen, ob Sie die genannten Felder in Skripten oder einem Verlaufsadapter verwenden. Bitte lesen Sie das Änderungsprotokoll sorgfältig durch.",
-                    "ru": "Это обновление изменяет поведение полей PM2.5, PM10 и HCHO и удаляет поля PM25R и PM10R, чтобы обеспечить большую совместимость с приложением Dyson. Поэтому вам необходимо проверить, используете ли вы упомянутые поля в скриптах или каком-либо адаптере истории. аренду, внимательно прочитайте журнал изменений.",
-                    "pt": "Esta atualização altera o comportamento dos campos PM2.5, PM10 e HCHO e exclui os campos PM25R e PM10R - para ser mais compatível com o aplicativo dyson. Portanto, você precisa verificar se usa os campos mencionados em scripts ou em qualquer adaptador de histórico. leia o changelog com atenção.",
-                    "nl": "Deze update verandert het gedrag van PM2.5-, PM10- en HCHO-velden en verwijdert de PM25R- en PM10R-velden - om beter te voldoen aan de dyson-app. Daarom moet u controleren of u de genoemde velden in scripts of in een geschiedenisadapter gebruikt. lease lees de changelog zorgvuldig.",
-                    "fr": "Cette mise à jour modifie le comportement des champs PM2.5, PM10 et HCHO et supprime les champs PM25R et PM10R - pour être plus conforme à l'application Dyson. Par conséquent, vous devez vérifier si vous utilisez les champs mentionnés dans des scripts ou dans un adaptateur d'historique. lisez attentivement le journal des modifications.",
-                    "it": "Questo aggiornamento modifica il comportamento dei campi PM2.5, PM10 e HCHO ed elimina i campi PM25R e PM10R, per essere più conformi all'app Dyson. Pertanto è necessario verificare se si utilizzano i campi menzionati negli script o in qualsiasi adattatore della cronologia. lease leggere attentamente il registro delle modifiche.",
-                    "es": "Esta actualización cambia el comportamiento de los campos PM2.5, PM10 y HCHO y elimina los campos PM25R y PM10R para cumplir mejor con la aplicación Dyson. Por lo tanto, debe verificar si utiliza los campos mencionados en scripts o en cualquier adaptador de historial. Lea atentamente el registro de cambios.",
-                    "pl": "Ta aktualizacja zmienia zachowanie pól PM2.5, PM10 i HCHO oraz usuwa pola PM25R i PM10R, aby zapewnić większą zgodność z aplikacją dyson. Dlatego musisz sprawdzić, czy używasz wspomnianych pól w skryptach lub jakimś adapterze historii. Przeczytaj uważnie dziennik zmian.",
-                    "uk": "Це оновлення змінює поведінку полів PM2.5, PM10 і HCHO та видаляє поля PM25R і PM10R для більшої відповідності додатку dyson. Тому вам потрібно перевірити, чи використовуєте ви згадані поля в сценаріях або будь-якому адаптері історії. уважно прочитайте журнал змін.",
-                    "zh-cn": "此更新更改了 PM2.5、PM10 和 HCHO 字段的行为，并删除了 PM25R 和 PM10R 字段 - 以更符合 Dyson 应用程序。因此，您需要检查是否在脚本或任何历史适配器中使用提到的字段。请仔细阅读变更日志。"
-                },
-                "level": "warn",
-                "buttons": [
-                    "agree",
-                    "cancel"
-                ]
-            }
-        ],
-        "licenseInformation": {
-            "license": "MIT",
-            "link": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier/blob/master/LICENSE",
-            "type": "free"
-        }
+  "common": {
+    "name": "dysonairpurifier",
+    "version": "3.1.8",
+    "news": {
+      "3.1.8": {
+        "en": "Dependencies got updated\nCode refactoring\nPerformance improvements\nUpdate of outdated certificate",
+        "de": "Abhängigkeiten wurden aktualisiert\nCode-Refactoring\nLeistungsverbesserungen\nAktualisierung des veralteten Zertifikats",
+        "ru": "Зависимости обновлены\nРефакторинг кода\nУлучшение производительности\nОбновление устаревшего сертификата",
+        "pt": "Dependências atualizadas\n Refatoração de código\n Melhorias de desempenho\nAtualização de certificado desatualizado",
+        "nl": "Afhankelijkheden zijn bijgewerkt\nCode refactoring\nPrestatieverbeteringen\nUpdate van verouderd certificaat",
+        "fr": "Les dépendances ont été mises à jour\nRefactoring du code\nAméliorations des performances\nMise à jour du certificat obsolète",
+        "it": "Le dipendenze sono state aggiornate\nRefactoring del codice\nMiglioramenti delle prestazioni\nAggiornamento del certificato obsoleto",
+        "es": "Se actualizaron las dependencias\nRefactorización de código\nMejoras de rendimiento\nActualización de certificado desactualizado",
+        "pl": "Zależności zostały zaktualizowane\nRefaktoryzacja kodu\nPoprawa wydajności\nAktualizacja nieaktualnego certyfikatu",
+        "uk": "Залежності оновлено\nРефакторинг коду\nПокращення продуктивності\nОновлення застарілого сертифіката",
+        "zh-cn": "依赖项已更新\n代码重构\n性能改进\n过时证书的更新"
+      },
+      "3.1.7": {
+        "en": "HeatingMode switch is now working correctly.",
+        "de": "Der HeatingMode-Schalter funktioniert jetzt ordnungsgemäß.",
+        "ru": "Переключатель режима обогрева теперь работает правильно.",
+        "pt": "O interruptor HeatingMode agora está funcionando corretamente.",
+        "nl": "De HeatingMode-schakelaar werkt nu correct.",
+        "fr": "Le commutateur HeatingMode fonctionne désormais correctement.",
+        "it": "L'interruttore della modalità di riscaldamento ora funziona correttamente.",
+        "es": "El interruptor de modo de calefacción ahora funciona correctamente.",
+        "pl": "Przełącznik trybu ogrzewania działa teraz poprawnie.",
+        "uk": "Перемикач HeatingMode тепер працює правильно.",
+        "zh-cn": "HeatingMode 开关现在工作正常。"
+      },
+      "3.1.6": {
+        "en": "Dependencies got updated\nHeatingMode switch is now working correctly (Attempt 1).",
+        "de": "Abhängigkeiten wurden aktualisiert\nHeatingMode-Schalter funktioniert jetzt korrekt (Versuch 1).",
+        "ru": "Зависимости обновлены. Переключатель HeatingMode теперь работает правильно (попытка 1).",
+        "pt": "As dependências foram atualizadas\n A chave HeatingMode agora está funcionando corretamente (tentativa 1).",
+        "nl": "Afhankelijkheden zijn bijgewerkt \nHeatingMode-schakelaar werkt nu correct (poging 1).",
+        "fr": "Les dépendances ont été mises à jour\nLe commutateur HeatingMode fonctionne désormais correctement (tentative 1).",
+        "it": "Le dipendenze sono state aggiornate\nL'interruttore della modalità di riscaldamento ora funziona correttamente (tentativo 1).",
+        "es": "Se actualizaron las dependencias. El interruptor de modo de calefacción ahora funciona correctamente (intento 1).",
+        "pl": "Zależności zostały zaktualizowane. \n Przełącznik trybu ogrzewania działa teraz poprawnie (próba 1).",
+        "uk": "Залежності оновлено\nПеремикач HeatingMode тепер працює правильно (спроба 1).",
+        "zh-cn": "依赖项已更新\nHeatingMode 开关现在可以正常工作（尝试 1）。"
+      },
+      "3.1.5": {
+        "en": "Requesting at least admin v6.13.16 as dependency.",
+        "de": "Mindestens Admin v6.13.16 als Abhängigkeit erforderlich.",
+        "ru": "Запрос как минимум администратора v6.13.16 в качестве зависимости.",
+        "pt": "Solicitando pelo menos admin v6.13.16 como dependência.",
+        "nl": "Minimaal beheerder v6.13.16 aanvragen als afhankelijkheid.",
+        "fr": "Demander au moins admin v6.13.16 comme dépendance.",
+        "it": "Richiedendo almeno admin v6.13.16 come dipendenza.",
+        "es": "Solicitando al menos admin v6.13.16 como dependencia.",
+        "pl": "Żądanie co najmniej administratora v6.13.16 jako zależność.",
+        "uk": "Запит принаймні admin v6.13.16 як залежність.",
+        "zh-cn": "请求至少 admin v6.13.16 作为依赖项。"
+      },
+      "3.1.4": {
+        "en": "Lamps (Product type 552) won't generate a warning on startup anymore but show an info that they are not supported by this adapter.",
+        "de": "Lampen (Produkttyp 552) generieren beim Start keine Warnung mehr, sondern zeigen einen Hinweis an, dass sie von diesem Adapter nicht unterstützt werden.",
+        "ru": "Лампы (тип продукта 552) больше не будут выдавать предупреждение при запуске, а будут показывать информацию о том, что они не поддерживаются этим адаптером.",
+        "pt": "As lâmpadas (tipo de produto 552) não gerarão mais um aviso na inicialização, mas mostrarão uma informação de que não são suportadas por este adaptador.",
+        "nl": "Lampen (producttype 552) genereren geen waarschuwing meer bij het opstarten, maar geven de informatie weer dat ze niet door deze adapter worden ondersteund.",
+        "fr": "Les lampes (type de produit 552) ne généreront plus d'avertissement au démarrage mais afficheront une information indiquant qu'elles ne sont pas prises en charge par cet adaptateur.",
+        "it": "Le lampade (tipo prodotto 552) non genereranno più un avviso all'avvio ma mostreranno un'informazione che non sono supportate da questo adattatore.",
+        "es": "Las lámparas (tipo de producto 552) ya no generarán una advertencia al iniciarse, pero mostrarán información de que no son compatibles con este adaptador.",
+        "pl": "Lampy (typ produktu 552) nie będą już generować ostrzeżenia przy uruchomieniu, ale pokażą informację, że nie są obsługiwane przez ten adapter.",
+        "uk": "Лампи (тип продукту 552) більше не генеруватимуть попередження під час запуску, але відображатимуть інформацію про те, що вони не підтримуються цим адаптером.",
+        "zh-cn": "灯（产品类型 552）将不再在启动时生成警告，但会显示此适配器不支持它们的信息。"
+      },
+      "3.1.3": {
+        "en": "2FA Process is working again - truely",
+        "de": "Der 2FA-Prozess funktioniert wieder – tatsächlich",
+        "ru": "Процесс 2FA снова работает — это правда",
+        "pt": "O processo 2FA está funcionando novamente - de verdade",
+        "nl": "Het 2FA-proces werkt weer - echt waar",
+        "fr": "Le processus 2FA fonctionne à nouveau – vraiment",
+        "it": "Il processo 2FA funziona di nuovo, davvero",
+        "es": "El proceso 2FA está funcionando nuevamente, de verdad",
+        "pl": "Proces 2FA znów działa – to prawda",
+        "uk": "Процес 2FA знову працює - дійсно",
+        "zh-cn": "2FA 流程再次发挥作用——确实如此"
+      },
+      "3.1.2": {
+        "en": "dependencies got updated\n2FA Process is working again\nAt least nodeJs V18.2.0 is required",
+        "de": "Abhängigkeiten wurden aktualisiert\n2FA-Prozess funktioniert wieder\nMindestens nodeJs V18.2.0 ist erforderlich",
+        "ru": "зависимости обновлены \n Процесс 2FA снова работает \n Требуется как минимум nodeJs V18.2.0",
+        "pt": "dependências foram atualizadas\n O processo 2FA está funcionando novamente\nPelo menos nodeJs V18.2.0 é necessário",
+        "nl": "afhankelijkheden zijn bijgewerkt\n2FA-proces werkt weer\nMinimaal nodeJs V18.2.0 is vereist",
+        "fr": "les dépendances ont été mises à jour\nLe processus 2FA fonctionne à nouveau\nAu moins nodeJs V18.2.0 est requis",
+        "it": "le dipendenze sono state aggiornate\n Il processo 2FA funziona di nuovo\nÈ richiesto almeno nodeJs V18.2.0",
+        "es": "las dependencias se actualizaron\n El proceso 2FA está funcionando nuevamente\n Se requiere al menos nodeJs V18.2.0",
+        "pl": "zależności zostały zaktualizowane\nProces 2FA znów działa\nWymagany jest przynajmniej nodeJs V18.2.0",
+        "uk": "залежності оновлено\nПроцес 2FA знову працює\nПотрібен принаймні nodeJs V18.2.0",
+        "zh-cn": "依赖项已更新\n2FA 进程再次运行\n至少需要 nodeJs V18.2.0"
+      },
+      "3.1.1": {
+        "en": "dependencies got updated\nFixed PM2.5, PM10, VOC, NO2 Values\nFixed PM2.5, PM10, VOC Indexes\nUpdated admin-UI to jsonConfig",
+        "de": "Abhängigkeiten wurden aktualisiert \n PM2.5-, PM10-, VOC-, NO2-Werte korrigiert \n PM2.5-, PM10-, VOC-Indizes korrigiert \n Admin-UI auf jsonConfig aktualisiert",
+        "ru": "зависимости обновлены \n Исправлены значения PM2.5, PM10, VOC, NO2 \n Исправлены индексы PM2.5, PM10, VOC \n Обновлен интерфейс администратора до jsonConfig",
+        "pt": "dependências foram atualizadas\n Valores corrigidos de PM2.5, PM10, VOC, NO2\n Corrigidos índices PM2.5, PM10, VOC\n UI de administração atualizada para jsonConfig",
+        "nl": "afhankelijkheden zijn bijgewerkt \n PM2.5-, PM10-, VOC-, NO2-waarden opgelost \n PM2.5-, PM10-, VOC-indexen opgelost \n Beheerdersinterface bijgewerkt naar jsonConfig",
+        "fr": "les dépendances ont été mises à jour\n Correction des valeurs PM2,5, PM10, VOC, NO2\n Correction des index PM2,5, PM10, VOC\n Mise à jour de l'interface utilisateur d'administration vers jsonConfig",
+        "it": "le dipendenze sono state aggiornate\nCorrezione dei valori PM2.5, PM10, VOC, NO2\nCorrezione degli indici PM2.5, PM10 e VOC\nInterfaccia utente di amministrazione aggiornata a jsonConfig",
+        "es": "las dependencias se actualizaron \n Se corrigieron los valores de PM2.5, PM10, VOC y NO2 \n Se corrigieron los índices de PM2.5, PM10 y VOC \n Se actualizó la interfaz de usuario del administrador a jsonConfig",
+        "pl": "zależności zostały zaktualizowane\nNaprawiono wartości PM2.5, PM10, VOC, NO2\nNaprawiono indeksy PM2.5, PM10, VOC\nZaktualizowano interfejs administratora do jsonConfig",
+        "uk": "залежності оновлено\nВиправлено значення PM2.5, PM10, VOC, NO2\nВиправлено індекси PM2.5, PM10, VOC\nОновлено інтерфейс адміністратора до jsonConfig",
+        "zh-cn": "更新了依赖项\n修复了 PM2.5、PM10、VOC、NO2 值\n修复了 PM2.5、PM10、VOC 索引\n将管理 UI 更新为 jsonConfig"
+      },
+      "3.0.0": {
+        "en": "\nUpd: dependencies got updated \nNew: Added HCHO-Index \nBREAKING CHANGES: \nReplaced values in field pm25 with values from pm25r and calculating them accordingly to the dyson App \nReplaced values in field pm10 with values from pm10r and calculating them accordingly to the dyson App \nReplaced values in field hcho with values from hchr  and calculating them accordingly to the dyson App \nFields pm25r and pm10r are now deprecated and will be removed",
+        "de": "\nAktualisiert: Abhängigkeiten wurden aktualisiert. \nNeu: HCHO-Index hinzugefügt Die Dyson-App \nWerte im Feld hcho durch Werte aus hchr ersetzt und entsprechend in der Dyson-App berechnet \nDie Felder pm25r und pm10r sind jetzt veraltet und werden entfernt",
+        "ru": "\nОбновление: обновлены зависимости \nНовое: добавлен индекс HCHO \nСЕРЬЕЗНЫЕ ИЗМЕНЕНИЯ: \nЗаменены значения в поле pm25 на значения из pm25r и расчет их в соответствии с приложением Dyson \nЗаменены значения в поле pm10 значениями из pm10r и расчет их в соответствии с приложение Dyson \nЗаменены значения в поле hcho значениями из hchr и расчет их в соответствии с приложением Dyson \nПоля pm25r и pm10r устарели и будут удалены.",
+        "pt": "\nAtualização: dependências foram atualizadas \nNovo: Índice HCHO adicionado \nALTERAÇÕES ÚLTIMAS: \nValores substituídos no campo pm25 por valores de pm25r e cálculo deles de acordo com o aplicativo dyson \nValores substituídos no campo pm10 por valores de pm10r e cálculo deles de acordo com o aplicativo dyson \nValores substituídos no campo hcho por valores de hchr e cálculo deles de acordo com o aplicativo dyson \nOs campos pm25r e pm10r agora estão obsoletos e serão removidos",
+        "nl": "\nUpd: afhankelijkheden zijn bijgewerkt \nNieuw: HCHO-index toegevoegd \nBREAKING CHANGES: \nWaarden in veld pm25 vervangen door waarden uit pm25r en deze overeenkomstig berekend met de dyson-app \nWaarden in veld pm10 vervangen door waarden uit pm10r en deze overeenkomstig berekend de dyson-app \nWaarden in veld hcho vervangen door waarden uit hchr en deze overeenkomstig berekend met de dyson-app \nVelden pm25r en pm10r zijn nu verouderd en worden verwijderd",
+        "fr": "\nMise à jour : les dépendances ont été mises à jour \nNouveau : ajout de l'index HCHO \nCHANGEMENTS RUPTURE : \nRemplacement des valeurs dans le champ pm25 par les valeurs de pm25r et calcul de celles-ci en fonction de l'application Dyson \nRemplacement des valeurs dans le champ pm10 par les valeurs de pm10r et calcul de celles-ci en conséquence l'application dyson \nRemplacement des valeurs dans le champ hcho par les valeurs de hchr et calcul de celles-ci en conséquence selon l'application dyson \nLes champs pm25r et pm10r sont désormais obsolètes et seront supprimés",
+        "it": "\nAggiornamento: le dipendenze sono state aggiornate \nNovità: aggiunto indice HCHO \nMODIFICHE ROTANTI: \nSostituiti i valori nel campo pm25 con valori da pm25r e calcolandoli in base all'app Dyson \nSostituiti i valori nel campo pm10 con valori da pm10r e calcolandoli in base a l'app Dyson \nSostituiti i valori nel campo hcho con i valori di hchr e calcolandoli di conseguenza all'app Dyson \nI campi pm25r e pm10r sono ora deprecati e verranno rimossi",
+        "es": "\nActualización: se actualizaron las dependencias \nNuevo: Índice HCHO agregado \nCAMBIOS IMPORTANTES: \nSe reemplazaron los valores en el campo pm25 con valores de pm25r y se calcularon de acuerdo con la aplicación Dyson \nSe reemplazaron los valores en el campo pm10 con valores de pm10r y se calcularon de acuerdo con la aplicación Dyson \nSe reemplazaron los valores en el campo hcho con valores de hchr y se calcularon de acuerdo con la aplicación Dyson \nLos campos pm25r y pm10r ahora están obsoletos y se eliminarán",
+        "pl": "\nAktualizacja: zaktualizowano zależności \nNowość: Dodano HCHO-Index \nPIERWSZE ZMIANY: \nZastąpiono wartości w polu pm25 wartościami z pm25r i przeliczono je zgodnie z aplikacją dyson \nZastąpiono wartości w polu pm10 wartościami z pm10r i przeliczono je odpowiednio do aplikacja dyson \nZastąpiono wartości w polu hcho wartościami z hchr i przeliczono je zgodnie z aplikacją dyson \nPola pm25r i pm10r są obecnie przestarzałe i zostaną usunięte",
+        "uk": "\nОновлено: оновлено залежності \nНове: додано HCHO-індекс \nОСНОВНІ ЗМІНИ: \nЗамінено значення в полі pm25 на значення з pm25r і обчислення їх відповідно до програми dyson \nЗамінено значення в полі pm10 на значення з pm10r і обчислення їх відповідно до програма dyson \nЗамінено значення в полі hcho на значення з hchr і обчислення їх відповідно до програми dyson \nПоля pm25r і pm10r тепер не підтримуються та будуть видалені",
+        "zh-cn": "\n更新：依赖项已更新 \n新功能：添加了 HCHO 索引 \n重大更改： \n将字段 pm25 中的值替换为 pm25r 中的值，并根据 Dyson 应用程序相应地计算它们 \n将字段 pm10 中的值替换为 pm10r 中的值，并相应地计算它们Dyson 应用程序 \n将字段 hcho 中的值替换为 hchr 中的值，并根据 Dyson 应用程序相应地计算它们 \n字段 pm25r 和 pm10r 现已弃用并将被删除"
+      },
+      "2.5.9": {
+        "en": "Updated year in license- and readme file to make adapter checker happy",
+        "de": "Aktualisiertes Jahr in der Lizenz- und Readme-Datei, um den Adapterprüfer glücklich zu machen",
+        "ru": "Обновлен год в файле лицензии и файле readme, чтобы сделать проверку адаптера счастливой.",
+        "pt": "Ano atualizado no arquivo de licença e leia-me para deixar o verificador do adaptador feliz",
+        "nl": "Bijgewerkt jaar in licentie- en leesmij-bestand om adapter checker blij te maken",
+        "fr": "Année mise à jour dans le fichier de licence et readme pour rendre le vérificateur d'adaptateur heureux",
+        "it": "Anno aggiornato nel file di licenza e readme per rendere felice il controllore dell'adattatore",
+        "es": "Año actualizado en la licencia y el archivo Léame para que el verificador de adaptadores sea feliz",
+        "pl": "Zaktualizowano rok w licencji i pliku readme, aby uszczęśliwić narzędzie do sprawdzania adapterów",
+        "uk": "Оновлено рік у файлі ліцензії та readme, щоб зробити інструмент перевірки адаптера щасливим",
+        "zh-cn": "更新了许可证和自述文件中的年份，以使适配器检查器满意"
+      },
+      "2.5.8": {
+        "en": "Fixed calculation of hmax values for heaters",
+        "de": "Berechnung der hmax-Werte für Heizungen korrigiert",
+        "ru": "Исправлен расчет значений hmax для обогревателей",
+        "pt": "Cálculo fixo de valores hmax para aquecedores",
+        "nl": "Vaste berekening van hmax-waarden voor verwarmingen",
+        "fr": "Calcul fixe des valeurs hmax pour les appareils de chauffage",
+        "it": "Calcolo fisso dei valori hmax per i riscaldatori",
+        "es": "Cálculo fijo de valores hmax para calentadores.",
+        "pl": "Naprawiono obliczanie wartości hmax dla grzejników",
+        "uk": "Виправлено розрахунок значень hmax для нагрівачів",
+        "zh-cn": "修复了加热器 hmax 值的计算"
+      },
+      "2.5.7": {
+        "en": "Added support for Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)",
+        "de": "Unterstützung für Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K) hinzugefügt",
+        "ru": "Добавлена ​​поддержка Dyson Pure Humidify+Cool Formальдегид (PH04, ProductType 358K).",
+        "pt": "Adicionado suporte para Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)",
+        "nl": "Ondersteuning toegevoegd voor Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)",
+        "fr": "Ajout de la prise en charge de Dyson Pure Humidify+Cool Formaldéhyde (PH04, ProductType 358K)",
+        "it": "Aggiunto il supporto per Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)",
+        "es": "Se agregó soporte para Dyson Pure Humidify+Cool Formaldehído (PH04, ProductType 358K)",
+        "pl": "Dodano obsługę Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)",
+        "uk": "Додано підтримку для Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)",
+        "zh-cn": "添加了对 Dyson Pure Humidify+Cool Formaldehyde（PH04，产品类型 358K）的支持"
+      }
     },
-    "native": {
-        "email": "",
-        "Password": "",
-        "country": "de",
-        "pollInterval": 30,
-        "temperatureUnit": "C",
-        "keepValues": false,
-        "challengeId": "",
-        "dyson_code": "",
-        "token": "",
-        "disableReconnectLogging": false
+    "titleLang": {
+      "en": "dyson air purifiers, air humidifiers, fan heater and fans",
+      "de": "Dyson Luftreiniger, Luftbefeuchter, Heizlüfter und Lüfter",
+      "ru": "очистители воздуха, увлажнители воздуха, тепловентилятор и вентиляторы dyson",
+      "pt": "purificadores de ar da Dison, umidificadores de ar, aquecedor e ventiladores",
+      "nl": "dyson luchtreinigers, luchtbevochtigers, luchtverhitter en ventilatoren",
+      "fr": "Purificateurs d'air, humidificateurs d'air, radiateurs soufflants et ventilateurs dyson",
+      "it": "purificatori d'aria dyson, umidificatori d'aria, termoventilatori e ventilatori",
+      "es": "Purificadores de aire Dyson, humidificadores de aire, calefactores y ventiladores.",
+      "pl": "oczyszczacze powietrza dyson, nawilżacze powietrza, nagrzewnice i wentylatory",
+      "zh-cn": "戴森空气净化器，空气加湿器，风扇加热器和风扇",
+      "uk": "очищувачі повітря, зволожувачі повітря, обігрівачі та вентилятори dyson"
     },
-    "encryptedNative": [
-        "Password",
-        "token"
+    "desc": {
+      "en": "Integrate dyson air purifiers and fans into ioBroker",
+      "de": "Integrieren Sie Dyson-Luftreiniger und -Lüfter in ioBroker",
+      "ru": "Интегрируйте очистители воздуха и вентиляторы dyson в ioBroker",
+      "pt": "Integre purificadores de ar e ventiladores dyson no ioBroker",
+      "nl": "Integreer dyson-luchtreinigers en -ventilatoren in ioBroker",
+      "fr": "Intégrez les purificateurs d'air et les ventilateurs Dyson dans ioBroker",
+      "it": "Integra i purificatori d'aria e i ventilatori Dyson in ioBroker",
+      "es": "Integre purificadores de aire y ventiladores Dyson en ioBroker",
+      "pl": "Zintegruj oczyszczacze powietrza i wentylatory Dyson w ioBroker",
+      "zh-cn": "将戴森空气净化器和风扇集成到ioBroker中",
+      "uk": "Інтегруйте очищувачі повітря та вентилятори dyson в ioBroker"
+    },
+    "authors": [
+      "grizzelbee <open.source@hingsen.de>"
     ],
-    "protectedNative": [
-        "Password",
-        "token"
+    "keywords": [
+      "dyson",
+      "air purifier",
+      "pure cool",
+      "hot & cool",
+      "humidify & cool",
+      "fan"
     ],
-    "objects": [],
-    "instanceObjects": [
-        {
-            "_id": "info.connection",
-            "type": "state",
-            "common": {
-                "role": "indicator.connected",
-                "name": "If connected to dyson device",
-                "type": "boolean",
-                "read": true,
-                "write": false,
-                "def": false
-            },
-            "native": {}
-        }
-    ]
+    "platform": "Javascript/Node.js",
+    "icon": "dyson_logo.svg",
+    "adminUI": {
+      "config": "json"
+    },
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/Grizzelbee/ioBroker.dysonairpurifier/master/admin/dyson_logo.svg",
+    "readme": "https://raw.githubusercontent.com/Grizzelbee/ioBroker.dysonairpurifier/master/README.md",
+    "loglevel": "info",
+    "mode": "daemon",
+    "type": "climate-control",
+    "tier": 2,
+    "compact": true,
+    "materialize": true,
+    "supportCustoms": false,
+    "connectionType": "local",
+    "dataSource": "poll",
+    "messagebox": true,
+    "subscribe": "messagebox",
+    "globalDependencies": [
+      {
+        "admin": ">=6.13.16"
+      }
+    ],
+    "dependencies": [
+      {
+        "js-controller": ">=3.0.0"
+      }
+    ],
+    "plugins": {
+      "sentry": {
+        "dsn": "https://1016f555431c4acfb16b2481019aa1aa@o505019.ingest.sentry.io/5735771"
+      }
+    },
+    "messages": [
+      {
+        "condition": {
+          "operand": "and",
+          "rules": [
+            "oldVersion<3.0.0",
+            "newVersion>=3.0.0"
+          ]
+        },
+        "title": {
+          "en": "Check your historization and scripts after update",
+          "de": "Überprüfen Sie nach dem Update Ihre Historisierung und Skripte",
+          "ru": "Проверьте свою историю и скрипты после обновления",
+          "pt": "Verifique seu histórico e scripts após a atualização",
+          "nl": "Controleer uw historisatie en scripts na de update",
+          "fr": "Vérifiez votre historisation et vos scripts après la mise à jour",
+          "it": "Controlla la storicizzazione e gli script dopo l'aggiornamento",
+          "es": "Verifique su historización y scripts después de la actualización",
+          "pl": "Sprawdź swoją historię i skrypty po aktualizacji",
+          "uk": "Перевірте свою історію та сценарії після оновлення",
+          "zh-cn": "更新后检查您的历史记录和脚本"
+        },
+        "text": {
+          "en": "This Update changes the behavior of PM2.5, PM10 and HCHO fields and deletes the PM25R and PM10R fields - to be more compliant to the dyson App. Therefore you need to check whether you use the mentioned fields in scripts or any history adapter. lease read the changelog carefully.",
+          "de": "Dieses Update ändert das Verhalten der PM2.5-, PM10- und HCHO-Felder und löscht die PM25R- und PM10R-Felder – um eine bessere Kompatibilität mit der Dyson-App zu gewährleisten. Daher müssen Sie prüfen, ob Sie die genannten Felder in Skripten oder einem Verlaufsadapter verwenden. Bitte lesen Sie das Änderungsprotokoll sorgfältig durch.",
+          "ru": "Это обновление изменяет поведение полей PM2.5, PM10 и HCHO и удаляет поля PM25R и PM10R, чтобы обеспечить большую совместимость с приложением Dyson. Поэтому вам необходимо проверить, используете ли вы упомянутые поля в скриптах или каком-либо адаптере истории. аренду, внимательно прочитайте журнал изменений.",
+          "pt": "Esta atualização altera o comportamento dos campos PM2.5, PM10 e HCHO e exclui os campos PM25R e PM10R - para ser mais compatível com o aplicativo dyson. Portanto, você precisa verificar se usa os campos mencionados em scripts ou em qualquer adaptador de histórico. leia o changelog com atenção.",
+          "nl": "Deze update verandert het gedrag van PM2.5-, PM10- en HCHO-velden en verwijdert de PM25R- en PM10R-velden - om beter te voldoen aan de dyson-app. Daarom moet u controleren of u de genoemde velden in scripts of in een geschiedenisadapter gebruikt. lease lees de changelog zorgvuldig.",
+          "fr": "Cette mise à jour modifie le comportement des champs PM2.5, PM10 et HCHO et supprime les champs PM25R et PM10R - pour être plus conforme à l'application Dyson. Par conséquent, vous devez vérifier si vous utilisez les champs mentionnés dans des scripts ou dans un adaptateur d'historique. lisez attentivement le journal des modifications.",
+          "it": "Questo aggiornamento modifica il comportamento dei campi PM2.5, PM10 e HCHO ed elimina i campi PM25R e PM10R, per essere più conformi all'app Dyson. Pertanto è necessario verificare se si utilizzano i campi menzionati negli script o in qualsiasi adattatore della cronologia. lease leggere attentamente il registro delle modifiche.",
+          "es": "Esta actualización cambia el comportamiento de los campos PM2.5, PM10 y HCHO y elimina los campos PM25R y PM10R para cumplir mejor con la aplicación Dyson. Por lo tanto, debe verificar si utiliza los campos mencionados en scripts o en cualquier adaptador de historial. Lea atentamente el registro de cambios.",
+          "pl": "Ta aktualizacja zmienia zachowanie pól PM2.5, PM10 i HCHO oraz usuwa pola PM25R i PM10R, aby zapewnić większą zgodność z aplikacją dyson. Dlatego musisz sprawdzić, czy używasz wspomnianych pól w skryptach lub jakimś adapterze historii. Przeczytaj uważnie dziennik zmian.",
+          "uk": "Це оновлення змінює поведінку полів PM2.5, PM10 і HCHO та видаляє поля PM25R і PM10R для більшої відповідності додатку dyson. Тому вам потрібно перевірити, чи використовуєте ви згадані поля в сценаріях або будь-якому адаптері історії. уважно прочитайте журнал змін.",
+          "zh-cn": "此更新更改了 PM2.5、PM10 和 HCHO 字段的行为，并删除了 PM25R 和 PM10R 字段 - 以更符合 Dyson 应用程序。因此，您需要检查是否在脚本或任何历史适配器中使用提到的字段。请仔细阅读变更日志。"
+        },
+        "level": "warn",
+        "buttons": [
+          "agree",
+          "cancel"
+        ]
+      }
+    ],
+    "licenseInformation": {
+      "license": "MIT",
+      "link": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier/blob/master/LICENSE",
+      "type": "free"
+    }
+  },
+  "native": {
+    "email": "",
+    "Password": "",
+    "country": "de",
+    "pollInterval": 30,
+    "temperatureUnit": "C",
+    "keepValues": false,
+    "challengeId": "",
+    "dyson_code": "",
+    "token": "",
+    "disableReconnectLogging": false
+  },
+  "encryptedNative": [
+    "Password",
+    "token"
+  ],
+  "protectedNative": [
+    "Password",
+    "token"
+  ],
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "info.connection",
+      "type": "state",
+      "common": {
+        "role": "indicator.connected",
+        "name": "If connected to dyson device",
+        "type": "boolean",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    }
+  ]
 }

@@ -1,25 +1,25 @@
 {
-    "msg": "CURRENT-STATE",
-    "time": "2020-10-31T12:07:02.002Z",
-    "mode-reason": "PRC",
-    "state-reason": "MODE",
-    "dial": "OFF",
-    "rssi": "-51",
-    "product-state": {
-        "fmod": "OFF",
-        "fnst": "OFF",
-        "fnsp": "0010",
-        "qtar": "0003",
-        "oson": "OFF",
-        "rhtm": "OFF",
-        "filf": "4272",
-        "ercd": "02C0",
-        "nmod": "OFF",
-        "wacd": "NONE"
-    },
-    "scheduler": {
-        "srsc": "bcff",
-        "dstv": "0001",
-        "tzid": "0001"
-    }
+  "msg": "CURRENT-STATE",
+  "time": "2020-10-31T12:07:02.002Z",
+  "mode-reason": "PRC",
+  "state-reason": "MODE",
+  "dial": "OFF",
+  "rssi": "-51",
+  "product-state": {
+    "fmod": "OFF",
+    "fnst": "OFF",
+    "fnsp": "0010",
+    "qtar": "0003",
+    "oson": "OFF",
+    "rhtm": "OFF",
+    "filf": "4272",
+    "ercd": "02C0",
+    "nmod": "OFF",
+    "wacd": "NONE"
+  },
+  "scheduler": {
+    "srsc": "bcff",
+    "dstv": "0001",
+    "tzid": "0001"
+  }
 }
