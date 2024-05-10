@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "dysonairpurifier",
-    "version": "3.1.7",
+    "version": "3.1.8",
     "news": {
+      "3.1.8": {
+        "en": "Dependencies got updated\nCode refactoring\nPerformance improvements\nUpdate of outdated certificate",
+        "de": "Abhängigkeiten wurden aktualisiert\nCode-Refactoring\nLeistungsverbesserungen\nAktualisierung des veralteten Zertifikats",
+        "ru": "Зависимости обновлены\nРефакторинг кода\nУлучшение производительности\nОбновление устаревшего сертификата",
+        "pt": "Dependências atualizadas\n Refatoração de código\n Melhorias de desempenho\nAtualização de certificado desatualizado",
+        "nl": "Afhankelijkheden zijn bijgewerkt\nCode refactoring\nPrestatieverbeteringen\nUpdate van verouderd certificaat",
+        "fr": "Les dépendances ont été mises à jour\nRefactoring du code\nAméliorations des performances\nMise à jour du certificat obsolète",
+        "it": "Le dipendenze sono state aggiornate\nRefactoring del codice\nMiglioramenti delle prestazioni\nAggiornamento del certificato obsoleto",
+        "es": "Se actualizaron las dependencias\nRefactorización de código\nMejoras de rendimiento\nActualización de certificado desactualizado",
+        "pl": "Zależności zostały zaktualizowane\nRefaktoryzacja kodu\nPoprawa wydajności\nAktualizacja nieaktualnego certyfikatu",
+        "uk": "Залежності оновлено\nРефакторинг коду\nПокращення продуктивності\nОновлення застарілого сертифіката",
+        "zh-cn": "依赖项已更新\n代码重构\n性能改进\n过时证书的更新"
+      },
       "3.1.7": {
         "en": "HeatingMode switch is now working correctly.",
         "de": "Der HeatingMode-Schalter funktioniert jetzt ordnungsgemäß.",
@@ -173,7 +186,9 @@
       "zh-cn": "将戴森空气净化器和风扇集成到ioBroker中",
       "uk": "Інтегруйте очищувачі повітря та вентилятори dyson в ioBroker"
     },
-    "authors": ["grizzelbee <open.source@hingsen.de>"],
+    "authors": [
+      "grizzelbee <open.source@hingsen.de>"
+    ],
     "keywords": [
       "dyson",
       "air purifier",
@@ -220,7 +235,10 @@
       {
         "condition": {
           "operand": "and",
-          "rules": ["oldVersion<3.0.0", "newVersion>=3.0.0"]
+          "rules": [
+            "oldVersion<3.0.0",
+            "newVersion>=3.0.0"
+          ]
         },
         "title": {
           "en": "Check your historization and scripts after update",
@@ -249,7 +267,10 @@
           "zh-cn": "此更新更改了 PM2.5、PM10 和 HCHO 字段的行为，并删除了 PM25R 和 PM10R 字段 - 以更符合 Dyson 应用程序。因此，您需要检查是否在脚本或任何历史适配器中使用提到的字段。请仔细阅读变更日志。"
         },
         "level": "warn",
-        "buttons": ["agree", "cancel"]
+        "buttons": [
+          "agree",
+          "cancel"
+        ]
       }
     ],
     "licenseInformation": {
@@ -270,8 +291,14 @@
     "token": "",
     "disableReconnectLogging": false
   },
-  "encryptedNative": ["Password", "token"],
-  "protectedNative": ["Password", "token"],
+  "encryptedNative": [
+    "Password",
+    "token"
+  ],
+  "protectedNative": [
+    "Password",
+    "token"
+  ],
   "objects": [],
   "instanceObjects": [
     {

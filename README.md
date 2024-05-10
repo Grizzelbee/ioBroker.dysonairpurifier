@@ -185,6 +185,14 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 
 ### **WORK IN PROGRESS**
 
+### 3.1.8 (2024-05-10) (Marching on)
+
+- (arcticon)   Upd: Dependencies got updated
+- (grizzelbee) Chg: code refactoring  
+- (arcticon)   Chg: code refactoring  
+- (arcticon)   Chg:  [#273](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/273) Performance improvements
+- (arcticon)   Chg:  [#274](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/274) Update of outdated certificate
+
 ### 3.1.7 (2024-04-24) (Marching on)
 
 - (grizzelbee) Upd: dependencies got updated
