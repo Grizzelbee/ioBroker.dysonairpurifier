@@ -1,17 +1,16 @@
 'use strict';
 
-const _ = require('lodash');
 const crypto = require('crypto');
 const { stringify } = require('flatted');
 const dysonConstants = require('./dysonConstants.js');
 const axios = require('axios');
-const path = require('path');
 const https = require('https');
-const rootCas = require('ssl-root-cas').create();
-const httpsAgent = new https.Agent({ ca: rootCas });
-const dnsResolver = require('node:dns').promises;
-// const ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-rootCas.addFile(path.resolve(__dirname, 'certificates/intermediate.pem'));
+const dnsResolver = require('node:dns/promises');
+const tls = require('tls');
+const httpsAgent = new https.Agent({
+  ca: [...tls.rootCertificates],
+  rejectUnauthorized: false
+});
 
 module.exports.getDyson2faLocale = function (country) {
   switch (country) {
@@ -75,7 +74,7 @@ module.exports.getDyson2faMail = async function (
     const result = await axios.post(
       `${dysonConstants.API_BASE_URI}/v3/userregistration/email/userstatus?country=${country}`,
       payload,
-      { httpsAgent, headers: dysonConstants.HTTP_HEADERS, json: true }
+      { httpsAgent, headers: dysonConstants.HTTP_HEADERS }
     );
     if (result.data?.accountStatus !== 'ACTIVE') {
       return {
@@ -91,7 +90,7 @@ module.exports.getDyson2faMail = async function (
     const response = await axios.post(
       `${dysonConstants.API_BASE_URI}/v3/userregistration/email/auth?country=${country}&culture=${locale}`,
       payload,
-      { httpsAgent, headers: dysonConstants.HTTP_HEADERS, json: true }
+      { httpsAgent, headers: dysonConstants.HTTP_HEADERS }
     );
     adapter.log.debug(
       `Result from API-Status request -> challengeId is: ${response.data.challengeId}`
@@ -117,7 +116,7 @@ module.exports.getDyson2faMail = async function (
  * @param {string} challengeId
  * @param {string} PIN
  *
- * @returns {Promise<string, any>}
+ * @returns {Promise<{native?: {token: string}, error?: string}>}
  */
 module.exports.getDysonToken = async function (
   adapter,
@@ -138,7 +137,7 @@ module.exports.getDysonToken = async function (
     const response = await axios.post(
       `${dysonConstants.API_BASE_URI}/v3/userregistration/email/verify?country=${country}`,
       payload,
-      { httpsAgent, headers: dysonConstants.HTTP_HEADERS, json: true }
+      { httpsAgent, headers: dysonConstants.HTTP_HEADERS }
     );
     // return(response.data);
     return { native: { token: response.data.token } };
@@ -164,8 +163,7 @@ module.exports.getAngles = async function (
   state
 ) {
   // thisDevice=dysonairpurifier.0.VS9-EU-NAB0887A.OscillationAngle
-  thisDevice = thisDevice.split('.', 3);
-  thisDevice = thisDevice.join('.');
+  thisDevice = thisDevice.split('.', 3).join('.');
   const result = { ancp: {}, osal: {}, osau: {} };
   adapter.log.debug(
     `getAngles: given parameters: dysonAction: [${dysonAction}], thisDevice: [${thisDevice}]`
@@ -203,9 +201,9 @@ module.exports.zeroFill = function (number, width) {
   }
 
   const negativeSign = num < 0 ? '-' : '';
-  const str = `${Math.abs(num)}`;
+  const str = Math.abs(num).toString();
 
-  return `${negativeSign}${_.padStart(str, width, '0')}`;
+  return `${negativeSign}${str.padStart(width, '0')}`;
 };
 
 /**
@@ -216,7 +214,7 @@ module.exports.zeroFill = function (number, width) {
  *           rejects if the config is invalid
  *
  * @param {import('@iobroker/adapter-core').AdapterInstance} adapter - ioBroker adapter which contains the configuration that should be checked
- * @returns {unknown}
+ * @returns {void}
  * @throws
  */
 module.exports.checkAdapterConfig = function (adapter) {
@@ -293,7 +291,7 @@ module.exports.decryptMqttPasswd = function (LocalCredentials) {
  *
  * @param {string} token - your dyson account token
  * @param {import('@iobroker/adapter-core').AdapterInstance} adapter - link to the adapter
- * @returns {Promise<Record<string, any>>}
+ * @returns {Promise<import('./main.js').Device[]>}
  *      resolves with a List of dyson devices connected to the given account
  *      rejects with an error message
  */
@@ -301,6 +299,9 @@ module.exports.getDevices = async function (token, adapter) {
   try {
     const response = await this.dysonGetDevicesFromApi(token);
 
+    /**
+     * @type {import('./main.js').Device[]}
+     */
     const devices = [];
     for (const thisDevice in response.data) {
       adapter.log.debug(
@@ -360,8 +361,7 @@ module.exports.dysonGetDevicesFromApi = async function (token) {
     `${dysonConstants.API_BASE_URI}/v2/provisioningservice/manifest`,
     {
       httpsAgent,
-      headers: { Authorization: `Bearer ${token}` },
-      json: true
+      headers: { Authorization: `Bearer ${token}` }
     }
   );
 };
@@ -394,7 +394,7 @@ module.exports.parseDysonMessage = function (msg) {
 
 /**
  *
- * @param {Record<string, any>} self
+ * @param {import('@iobroker/adapter-core').AdapterInstance} self
  * @param {string} device
  */
 module.exports.deleteUnusedFields = async function (self, device) {
@@ -403,7 +403,7 @@ module.exports.deleteUnusedFields = async function (self, device) {
     const id = device + field;
     self.log.debug(`Looking for deprecated field: ${id}`);
     // const self = this;
-    self.getObject(id, function (err, oldObj) {
+    self.getObject(id, (err, oldObj) => {
       if (!err && oldObj) {
         self.log.info(`Deleting deprecated field: ${id}`);
         self.delObject(id);
@@ -415,23 +415,20 @@ module.exports.deleteUnusedFields = async function (self, device) {
 /**
  * Queries the current IP address of a host at a local dns resolver
  *
- * @param {Record<string, any>} self Handle of the instance
+ * @param {import('@iobroker/adapter-core').AdapterInstance} self Handle of the instance
  * @param {string}   deviceName The hostname of the queried device
- * @returns {Promise<string>} first IPv4-Address of the device
+ * @returns {Promise<string | undefined>} first IPv4-Address of the device
  */
-module.exports.getFanIP = async function(self, deviceName){
+module.exports.getFanIP = async function (self, deviceName) {
   self.log.debug(`Querying IP for device ${deviceName}`);
-  return new Promise((resolve, reject) => {
-    dnsResolver.resolve4(deviceName)
-        .then((addresses) => {
-          self.log.debug(`Found IP [${addresses[0]}] for device ${deviceName}`);
-          resolve( addresses[0] ); // return only the first IP address
-        })
-        .catch((err)=>{
-          if (err.code === 'ENOTFOUND'){
-            self.log.warn(`No IP address found for device ${deviceName}`);
-            reject(`Host ${deviceName} is unknown to your DNS.`);
-          }
-        });
-  });
+  try {
+    const addresses = await dnsResolver.resolve4(deviceName);
+    self.log.debug(`Found IP [${addresses[0]}] for device ${deviceName}`);
+    return addresses[0]; // return only the first IP address
+  } catch (error) {
+    if (error.code === 'ENOTFOUND') {
+      self.log.warn(`No IP address found for device ${deviceName}`);
+      throw new Error(`Host ${deviceName} is unknown to your DNS.`);
+    }
+  }
 };
