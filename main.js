@@ -1519,7 +1519,8 @@ class dysonAirPurifier extends utils.Adapter {
    */
   onUnload(callback) {
     try {
-      for (const thisDevice of devices) {
+      for (const DEVICE in devices) {
+        const thisDevice = devices[DEVICE];
         clearTimeout(thisDevice.updateIntervalHandle);
         this.log.info(`Cleaned up timeout for ${thisDevice.Serial}.`);
         // todo unsubscribe to any subscribes
