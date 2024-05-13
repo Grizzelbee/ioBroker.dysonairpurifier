@@ -37,7 +37,8 @@ const dysonUtils = require('./dyson-utils.js');
 const {
   getDatapoint,
   PRODUCTS,
-  SPECIAL_PROPERTIES
+  SPECIAL_PROPERTIES,
+  getNameToDysoncodeTranslation
 } = require('./dysonConstants.js');
 
 // Variable definitions
@@ -313,13 +314,16 @@ class dysonAirPurifier extends utils.Adapter {
       return;
     }
 
-    // you can use the ack flag to detect if it is status (true) or command (false)
-    // get the whole data field array
-    const ActionData = getDatapoint(action);
     // if dysonAction is undefined it's an adapter internal action and has to be handled with the given Name
     // pick the dyson internal Action from the result row
-    const dysonAction = ActionData?.[0] ?? action;
-    this.log.debug(`onStateChange: Using dysonAction: [${dysonAction}]`);
+    const dysonAction = getNameToDysoncodeTranslation(action);
+    if (!dysonAction) {
+      this.log.warn(`Unknown Dyson Action ${action}`);
+      return;
+    }
+    // you can use the ack flag to detect if it is status (true) or command (false)
+    // get the whole data field array
+    const ActionData = getDatapoint(dysonAction);
     const value = state.val;
     let messageData = await this.#getMessageData(dysonAction, value, id, state);
 
@@ -328,7 +332,10 @@ class dysonAirPurifier extends utils.Adapter {
     // this is to translate between the needed states for ioBroker and the device
     // boolean switches are better for visualizations and other adapters like text2command
     if (typeof ActionData !== 'undefined') {
-      if (ActionData[3] === 'boolean' && ActionData[5].startsWith('switch')) {
+      if (
+        ActionData.type === 'boolean' &&
+        ActionData.role.startsWith('switch')
+      ) {
         // current state is TRUE!
         if (state.val) {
           // handle special action "humidification" where ON is not ON but HUME
@@ -800,8 +807,7 @@ class dysonAirPurifier extends utils.Adapter {
             ? message[dysonCode][1]
             : message[dysonCode];
         //this.log.debug(`${getDataPointName(deviceConfig)} is a bool switch. Current state: [${testValue}]`);
-        value =
-          ['ON', 'HUMD', 'HEAT'].includes(testValue); //  testValue === 'ON' || testValue === 'HUMD' || testValue === 'HEAT';
+        value = ['ON', 'HUMD', 'HEAT'].includes(testValue); //  testValue === 'ON' || testValue === 'HUMD' || testValue === 'HEAT';
       } else if (
         deviceConfig.type === 'boolean' &&
         deviceConfig.role.startsWith('indicator')
