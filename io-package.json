@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "dysonairpurifier",
-    "version": "3.1.8",
+    "version": "3.1.9",
     "news": {
+      "3.1.9": {
+        "en": "Changeable fields are working again.",
+        "de": "Änderbare Felder funktionieren wieder.",
+        "ru": "Изменяемые поля снова работают.",
+        "pt": "Os campos alteráveis ​​estão funcionando novamente.",
+        "nl": "Veranderlijke velden werken weer.",
+        "fr": "Les champs modifiables fonctionnent à nouveau.",
+        "it": "I campi modificabili funzionano di nuovo.",
+        "es": "Los campos modificables están funcionando nuevamente.",
+        "pl": "Zmienne pola znów działają.",
+        "uk": "Змінні поля знову працюють.",
+        "zh-cn": "可变字段再次发挥作用。"
+      },
       "3.1.8": {
         "en": "Dependencies got updated\nCode refactoring\nPerformance improvements\nUpdate of outdated certificate",
         "de": "Abhängigkeiten wurden aktualisiert\nCode-Refactoring\nLeistungsverbesserungen\nAktualisierung des veralteten Zertifikats",

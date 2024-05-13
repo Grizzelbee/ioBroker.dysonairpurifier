@@ -407,6 +407,8 @@ module.exports.deleteUnusedFields = async function (self, device) {
       if (!err && oldObj) {
         self.log.info(`Deleting deprecated field: ${id}`);
         self.delObject(id);
+      } else {
+        self.log.debug(`deprecated field: ${id} not found - nothing to do.`);
       }
     });
   }

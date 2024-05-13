@@ -772,7 +772,7 @@ const datapoints = new Map([
       writeable: true, // TODO: Should this be writable?
       role: 'value',
       unit: '',
-      displayValues: { '0675': 'Hard', '1350': 'Medium', '2025': 'Soft' }
+      displayValues: { '0675': 'Hard', 1350: 'Medium', 2025: 'Soft' }
     }
   ],
   [
@@ -1413,11 +1413,24 @@ function getDatapoint(searchValue) {
   return datapoints.get(searchValue);
 }
 
+const nameToDysoncodeTranslation = new Map(
+  Array.from(datapoints.entries()).map(([key, { name }]) => [name, key])
+);
+
+/**
+ * @param {string} name - name to search for.
+ * @returns {string | undefined} returns the dyson code
+ */
+function getNameToDysoncodeTranslation(name) {
+  return nameToDysoncodeTranslation.get(name);
+}
+
 module.exports = {
   API_BASE_URI,
   HTTP_HEADERS,
   PRODUCTS,
   FIELDSTODELETE,
   SPECIAL_PROPERTIES,
-  getDatapoint
+  getDatapoint,
+  getNameToDysoncodeTranslation
 };
