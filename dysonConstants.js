@@ -490,7 +490,7 @@ const datapoints = new Map([
       name: 'Sleeptimer',
       description: 'Sleep timer',
       type: 'number',
-      writeable: false,
+      writeable: true,
       role: 'value',
       unit: 'Min'
     }
