@@ -393,17 +393,6 @@ const datapoints = new Map([
     }
   ],
   [
-    'sltm',
-    {
-      name: 'Sleeptimer',
-      description: 'Sleep timer.',
-      type: 'string',
-      writeable: false,
-      role: 'text',
-      unit: ''
-    }
-  ],
-  [
     'oscs',
     {
       name: 'OscillationActive',
@@ -501,7 +490,7 @@ const datapoints = new Map([
       name: 'Sleeptimer',
       description: 'Sleep timer',
       type: 'number',
-      writeable: false,
+      writeable: true,
       role: 'value',
       unit: 'Min'
     }

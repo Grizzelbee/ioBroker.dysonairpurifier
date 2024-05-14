@@ -185,6 +185,11 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 
 ### **WORK IN PROGRESS**
 
+### 3.1.10 (2024-05-14) (Marching on)
+
+- (grizzelbee) Fix: [#281](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/281) Removed duplicate Sleeptimer field from config
+- (grizzelbee) New: Enabled editing of field Sleeptimer 
+
 ### 3.1.9 (2024-05-13) (Marching on)
 
 - (arcticon)   Fix: [#278](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/278) Changeable fields are working again.

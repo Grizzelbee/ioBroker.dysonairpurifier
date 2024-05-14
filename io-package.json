@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "dysonairpurifier",
-    "version": "3.1.9",
+    "version": "3.1.10",
     "news": {
+      "3.1.10": {
+        "en": "Removed duplicate config of Sleeptimer\nEnabled editing of field Sleeptimer",
+        "de": "Doppelte Konfiguration von Sleeptimer entfernt\nBearbeitung des Feldes Sleeptimer aktiviert",
+        "ru": "Удален дублирующийся конфиг Sleeptimer\nВключено редактирование поля Sleeptimer.",
+        "pt": "Configuração duplicada removida do Sleeptimer\n Edição habilitada do campo Sleeptimer",
+        "nl": "Dubbele configuratie van Sleeptimer verwijderd\nBewerken van veld Sleeptimer ingeschakeld",
+        "fr": "Suppression de la configuration en double de Sleeptimer\nActivation de la modification du champ Sleeptimer",
+        "it": "Rimossa la configurazione duplicata di Sleeptimer\nAbilitata la modifica del campo Sleeptimer",
+        "es": "Se eliminó la configuración duplicada de Sleeptimer. Se habilitó la edición del campo Sleeptimer.",
+        "pl": "Usunięto zduplikowaną konfigurację wyłącznika czasowego\n Włączono edycję pola wyłącznika czasowego",
+        "uk": "Вилучено повторювану конфігурацію Sleeptimer\nУвімкнено редагування поля Sleeptimer",
+        "zh-cn": "删除了睡眠定时器的重复配置\n启用了字段睡眠定时器的编辑"
+      },
       "3.1.9": {
         "en": "Changeable fields are working again.",
         "de": "Änderbare Felder funktionieren wieder.",
