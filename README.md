@@ -189,6 +189,8 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 
 - (grizzelbee) Fix: [#281](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/281) Removed duplicate Sleeptimer field from config
 - (grizzelbee) New: Enabled editing of field Sleeptimer 
+- (grizzelbee) Fix: [#283](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/283) Late config of fields
+- (grizzelbee) Fix: Mapping text values in fields Sleeptimer & fanspeed to numerical values
 
 ### 3.1.9 (2024-05-13) (Marching on)
 
