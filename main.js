@@ -82,15 +82,6 @@ class dysonAirPurifier extends utils.Adapter {
   }
 
   /**
-   * Quick hack to get 'temperatureUnit' working
-   * @returns {Partial<utils.AdapterOptions> & {temperatureUnit: 'K' | 'C' | 'F'}}
-   */
-  // @ts-ignore
-  //get config() {
-  //    return this.config;
-  // }
-
-  /**
    * onMessage
    *
    * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
@@ -732,11 +723,20 @@ class dysonAirPurifier extends utils.Adapter {
         // TP02: When continuous monitoring is off and the fan is switched off - temperature and humidity loose their values.
         // test whether the values are invalid and config.keepValues is true to prevent the old values from being destroyed
         if (
+          dysonCode === 'rhtm' &&
           message[dysonCode] === 'OFF' &&
           // @ts-ignore
           this.config.keepValues
         ) {
           continue;
+        }
+        // if field is sleep timer test for value OFF and remap it to a number
+        if (dysonCode === 'sltm' && message[dysonCode] === 'OFF') {
+          value = 0;
+        }
+        // if field is fan speed test for value AUTO and remap it to a number
+        if (dysonCode === 'fnsp' && message[dysonCode] === 'AUTO') {
+          value = 11;
         }
         if (dysonCode === 'filf') {
           // create additional data field filterlifePercent converting value from hours to percent; 4300 is the estimated lifetime in hours by dyson
