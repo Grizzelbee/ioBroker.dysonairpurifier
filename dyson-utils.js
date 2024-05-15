@@ -434,3 +434,4 @@ module.exports.getFanIP = async function (self, deviceName) {
     }
   }
 };
+

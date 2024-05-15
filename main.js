@@ -82,15 +82,6 @@ class dysonAirPurifier extends utils.Adapter {
   }
 
   /**
-   * Quick hack to get 'temperatureUnit' working
-   * @returns {Partial<utils.AdapterOptions> & {temperatureUnit: 'K' | 'C' | 'F'}}
-   */
-  // @ts-ignore
-  //get config() {
-  //    return this.config;
-  // }
-
-  /**
    * onMessage
    *
    * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
@@ -606,7 +597,7 @@ class dysonAirPurifier extends utils.Adapter {
       );
       if (hostAddress?.val && typeof hostAddress.val === 'string') {
         this.log.debug(
-          `Found valid Host-Address [${hostAddress.val}] for device: ${device.Serial}`
+          `Found predefined Host-Address [${hostAddress.val}] for device: ${device.Serial} in object tree.`
         );
         device.hostAddress = hostAddress.val;
         this.createOrExtendObject(
@@ -732,11 +723,20 @@ class dysonAirPurifier extends utils.Adapter {
         // TP02: When continuous monitoring is off and the fan is switched off - temperature and humidity loose their values.
         // test whether the values are invalid and config.keepValues is true to prevent the old values from being destroyed
         if (
+          dysonCode === 'rhtm' &&
           message[dysonCode] === 'OFF' &&
           // @ts-ignore
           this.config.keepValues
         ) {
           continue;
+        }
+        // if field is sleep timer test for value OFF and remap it to a number
+        if (dysonCode === 'sltm' && message[dysonCode] === 'OFF') {
+          value = 0;
+        }
+        // if field is fan speed test for value AUTO and remap it to a number
+        if (dysonCode === 'fnsp' && message[dysonCode] === 'AUTO') {
+          value = 11;
         }
         if (dysonCode === 'filf') {
           // create additional data field filterlifePercent converting value from hours to percent; 4300 is the estimated lifetime in hours by dyson
@@ -1180,6 +1180,37 @@ class dysonAirPurifier extends utils.Adapter {
     this.subscribeStates(`${device.Serial}.Sensor.PM25Index`);
   }
 
+  async pollDeviceInfo(thisDevice, adapterLog) {
+    adapterLog.debug(
+        `Updating device [${thisDevice.Serial}] (polling API scheduled).`
+    );
+    try {
+      // possible messages:
+      // msg: 'REQUEST-CURRENT-STATE'
+      // msg: 'REQUEST-PRODUCT-ENVIRONMENT-CURRENT-SENSOR-DATA'
+      // msg: 'REQUEST-CURRENT-FAULTS'
+      // msg: 'REQUEST-CURRENT-STATE',
+      thisDevice.mqttClient.publish(
+          `${thisDevice.ProductType}/${thisDevice.Serial}/command`,
+          JSON.stringify({
+            msg: 'REQUEST-CURRENT-STATE',
+            time: new Date().toISOString()
+          })
+      );
+      thisDevice.mqttClient.publish(
+          `${thisDevice.ProductType}/${thisDevice.Serial}/command`,
+          JSON.stringify({
+            msg: 'REQUEST-CURRENT-FAULTS',
+            time: new Date().toISOString()
+          })
+      );
+    } catch (error) {
+      adapterLog.error(
+          `${thisDevice.Serial} - MQTT interval error: ${error}`
+      );
+    }
+  }
+
   /**
    * main
    *
@@ -1208,25 +1239,7 @@ class dysonAirPurifier extends utils.Adapter {
           this.log.debug(
             `Result of CreateOrUpdateDevice: [${JSON.stringify(thisDevice)}]`
           );
-          if (
-            !thisDevice.hostAddress ||
-            thisDevice.hostAddress === '' ||
-            thisDevice.hostAddress === 'undefined' ||
-            typeof thisDevice.hostAddress === 'undefined'
-          ) {
-            this.log.info(
-              `No host address given. Trying to connect to the device with it's default hostname [${thisDevice.Serial}]. This should work if you haven't changed it and if you're running a DNS.`
-            );
-            thisDevice.hostAddress = thisDevice.Serial;
-            try {
-              thisDevice.ipAddress = await dysonUtils.getFanIP(
-                this,
-                thisDevice.Serial
-              );
-            } catch (err) {
-              this.log.error(err);
-            }
-          }
+          await this.getIPofDevice(thisDevice);
           // subscribe to changes on host address to re-init adapter on changes
           this.log.debug(
             `Subscribing for state changes on datapoint: ${thisDevice.Serial}.hostAddress`
@@ -1234,7 +1247,7 @@ class dysonAirPurifier extends utils.Adapter {
           this.subscribeStates(`${thisDevice.Serial}.hostAddress`);
           // connect to device
           adapterLog.info(
-            `Trying to connect to device [${thisDevice.Serial}] via MQTT on host address [${thisDevice.hostAddress}@${thisDevice.ipAddress}].`
+              `${thisDevice.Serial} - MQTT connection requested for [${thisDevice.hostAddress}${thisDevice.ipAddress?`@${thisDevice.ipAddress}`:''}].`
           );
           thisDevice.mqttClient = mqtt.connect(
             `mqtt://${thisDevice.hostAddress}`,
@@ -1245,46 +1258,33 @@ class dysonAirPurifier extends utils.Adapter {
               protocolId: 'MQIsdp'
             }
           );
-
-          adapterLog.info(
-            `${thisDevice.Serial} - MQTT connection requested for [${thisDevice.hostAddress}@${thisDevice.ipAddress}].`
-          );
-
-          // Subscribes for events of the MQTT client
-          thisDevice.mqttClient.on('connect', function () {
+          /*******************************************************
+           * Subscribe to MQTT events
+           *******************************************************/
+          /****************
+           * Connect
+           ****************/
+          thisDevice.mqttClient.on('connect', async function () {
             adapterLog.info(
               `${thisDevice.Serial} - MQTT connection established.`
             );
             adapter.setDeviceOnlineState(thisDevice.Serial, 'online');
-
             // Subscribes to the status topic to receive updates
-
             thisDevice.mqttClient.subscribe(
               `${thisDevice.ProductType}/${thisDevice.Serial}/status/current`,
-              function () {
-                // Sends an initial request for the current state
-                thisDevice.mqttClient.publish(
-                  `${thisDevice.ProductType}/${thisDevice.Serial}/command`,
-                  JSON.stringify({
-                    msg: 'REQUEST-CURRENT-STATE',
-                    time: new Date().toISOString()
-                  })
-                );
-              }
+              function () {}
             );
+            // Sends an initial request for current state of device
+            await adapter.pollDeviceInfo(thisDevice, adapterLog);
+            // expect the adapter 20 seconds after first poll as Set-up
+            setTimeout(()=>{
+                  adapterIsSetUp = true;
+                  adapterLog.debug(`Device [${thisDevice.Serial}] is now set-up and config of datapoints is frozen.`);
+              }, 20000);
             // Subscribes to the "faults" topic to receive updates on any faults and warnings
             thisDevice.mqttClient.subscribe(
               `${thisDevice.ProductType}/${thisDevice.Serial}/status/faults`,
-              function () {
-                // Sends an initial request for the current state
-                thisDevice.mqttClient.publish(
-                  `${thisDevice.ProductType}/${thisDevice.Serial}/command`,
-                  JSON.stringify({
-                    msg: 'REQUEST-CURRENT-FAULTS',
-                    time: new Date().toISOString()
-                  })
-                );
-              }
+              function () {}
             );
             // Subscribes to the software topic to receive updates on any faults and warnings
             thisDevice.mqttClient.subscribe(
@@ -1298,49 +1298,18 @@ class dysonAirPurifier extends utils.Adapter {
             );
             // Sets the interval for status updates
             adapterLog.info(
-              // @ts-ignore
               `Starting Polltimer with a ${adapter.config.pollInterval} seconds interval.`
             );
             // start refresh scheduler with interval from adapters config
-            thisDevice.updateIntervalHandle = setTimeout(function schedule() {
-              adapterLog.debug(
-                `Updating device [${thisDevice.Serial}] (polling API scheduled).`
-              );
-              try {
-                // possible messages:
-                // msg: 'REQUEST-PRODUCT-ENVIRONMENT-CURRENT-SENSOR-DATA'
-                // msg: 'REQUEST-CURRENT-FAULTS'
-                // msg: 'REQUEST-CURRENT-STATE',
-                thisDevice.mqttClient.publish(
-                  `${thisDevice.ProductType}/${thisDevice.Serial}/command`,
-                  JSON.stringify({
-                    msg: 'REQUEST-CURRENT-STATE',
-                    time: new Date().toISOString()
-                  })
-                );
-                thisDevice.mqttClient.publish(
-                  `${thisDevice.ProductType}/${thisDevice.Serial}/command`,
-                  JSON.stringify({
-                    msg: 'REQUEST-CURRENT-FAULTS',
-                    time: new Date().toISOString()
-                  })
-                );
-              } catch (error) {
-                adapterLog.error(
-                  `${thisDevice.Serial} - MQTT interval error: ${error}`
-                );
-              }
-              // expect adapter has created all data points after first 20 secs of run.
-              setTimeout(() => {
-                adapterIsSetUp = true;
-              }, 20000);
-              thisDevice.updateIntervalHandle = setTimeout(
-                schedule,
-                // @ts-ignore
-                adapter.config.pollInterval * 1000
-              );
-            }, 10);
+            thisDevice.updateIntervalHandle = setTimeout( async () => {
+              await adapter.pollDeviceInfo(thisDevice, adapterLog);
+            },
+              adapter.config.pollInterval * 1000
+            );
           });
+          /****************
+           * Message
+           ****************/
           thisDevice.mqttClient.on(
             'message',
             async function (_, payloadBuffer) {
@@ -1378,19 +1347,25 @@ class dysonAirPurifier extends utils.Adapter {
               );
             }
           );
-
+          /****************
+           * Error
+           ****************/
           thisDevice.mqttClient.on('error', error => {
             adapterLog.debug(`${thisDevice.Serial} - MQTT error: ${error}`);
             adapter.setDeviceOnlineState(thisDevice.Serial, 'error');
           });
-
+          /****************
+           * Re-Connect
+           ****************/
           thisDevice.mqttClient.on('reconnect', () => {
             // @ts-ignore
             if (!adapter.config.disableReconnectLogging)
               adapterLog.info(`${thisDevice.Serial} - MQTT reconnecting.`);
             adapter.setDeviceOnlineState(thisDevice.Serial, 'reconnect');
           });
-
+          /****************
+           * Close
+           ****************/
           thisDevice.mqttClient.on('close', () => {
             // @ts-ignore
             if (!adapter.config.disableReconnectLogging)
@@ -1398,13 +1373,17 @@ class dysonAirPurifier extends utils.Adapter {
             this.clearIntervalHandle(thisDevice.updateIntervalHandle);
             adapter.setDeviceOnlineState(thisDevice.Serial, 'disconnected');
           });
-
+          /****************
+           * Offline
+           ****************/
           thisDevice.mqttClient.on('offline', () => {
             adapterLog.info(`${thisDevice.Serial} - MQTT offline.`);
             this.clearIntervalHandle(thisDevice.updateIntervalHandle);
             adapter.setDeviceOnlineState(thisDevice.Serial, 'offline');
           });
-
+          /****************
+           * End
+           ****************/
           thisDevice.mqttClient.on('end', () => {
             adapterLog.debug(`${thisDevice.Serial} - MQTT ended.`);
             adapter.clearIntervalHandle(thisDevice.updateIntervalHandle);
@@ -1421,6 +1400,39 @@ class dysonAirPurifier extends utils.Adapter {
         `[main] Error while querying devices from dyson servers. The most common issue is that you haven't finished the 2FA process. Please refer to the ReadMe for instructions.`
       );
       adapterLog.error(`[main] error: ${error}, stack: ${error.stack}`);
+    }
+  }
+
+  /**
+   * check whether there is a DNS that resolves the hostname
+   *
+   * @param {object} thisDevice link to the object of the device
+   * @returns {Promise<void>}
+   */
+  async getIPofDevice(thisDevice) {
+    // todo not all DNS work with the same name structure e.g. fritzbox, bind9, pihole
+    // use iterations if there is no result by DNS request:
+    // 1. keep name like it is
+    // 2. replace underscores (if existent) by dashes (-)
+    // 4. replace dashes      (if existent) by underscores (_)
+    if (
+        !thisDevice.hostAddress ||
+        thisDevice.hostAddress === '' ||
+        thisDevice.hostAddress === 'undefined' ||
+        typeof thisDevice.hostAddress === 'undefined'
+    ) {
+      this.log.info(
+          `No host address given. Trying to connect to the device with it's default hostname [${thisDevice.Serial}]. This should work if you haven't changed it and if you're running a DNS.`
+      );
+      thisDevice.hostAddress = thisDevice.Serial;
+      try {
+        thisDevice.ipAddress = await dysonUtils.getFanIP(
+            this,
+            thisDevice.Serial
+        );
+      } catch (err) {
+        this.log.error(err);
+      }
     }
   }
 

@@ -227,7 +227,8 @@ const datapoints = new Map([
       type: 'number',
       writeable: true,
       role: 'value',
-      unit: ''
+      unit: '',
+      displayValues: { 11: 'Auto' }
     }
   ],
   [
@@ -492,7 +493,8 @@ const datapoints = new Map([
       type: 'number',
       writeable: true,
       role: 'value',
-      unit: 'Min'
+      unit: 'Min',
+      displayValues: { 0: 'Off' }
     }
   ],
   [
