@@ -315,10 +315,14 @@ module.exports.getDevices = async function (token, adapter) {
         })
       ) {
         // ProductType 552 = Lampe - dann diese Warning nicht anzeigen
-        if (552 === response.data[thisDevice].ProductType) {
+        if (['552', '552a'].includes( response.data[thisDevice].ProductType.toString()) ) {
           adapter.log.info(
-            `Device with serial number [${response.data[thisDevice].Serial}] not added, since it is a lamp and not supported by this adapter.`
+              `Device with serial number [${response.data[thisDevice].Serial}] not added, since it is a lamp and not supported by this adapter.`
           );
+        } else if (['276', '277'].includes( response.data[thisDevice].ProductType.toString()) ) {
+            adapter.log.info(
+                `Device with serial number [${response.data[thisDevice].Serial}] not added, since it is a vacuum cleaner robot and not supported by this adapter. `
+            );
         } else {
           adapter.log.warn(
             `Device with serial number [${response.data[thisDevice].Serial}] not added, hence it is not supported by this adapter. Product type: [${response.data[thisDevice].ProductType}]`

@@ -105,7 +105,11 @@ const PRODUCTS = {
       CUST: 'Custom'
     }
   },
-  469: { name: 'Dyson Pure Cool Link Desk', icon: 'icons/fans.png', ancp: {} },
+  469: {
+    name: 'Dyson Pure Cool Link Desk',
+    icon: 'icons/fans.png',
+    ancp: {}
+  },
   475: {
     name: 'Dyson Pure Cool Link Tower',
     icon: 'icons/purifiers.png',
@@ -118,7 +122,11 @@ const PRODUCTS = {
       CUST: 'Custom'
     }
   },
-  520: { name: 'Dyson Pure Cool Desk', icon: 'icons/fans.png', ancp: {} },
+  520: {
+    name: 'Dyson Pure Cool Desk',
+    icon: 'icons/fans.png',
+    ancp: {}
+  },
   527: {
     name: 'Dyson Pure Hot+Cool',
     icon: 'icons/heaters.png',
@@ -154,7 +162,12 @@ const PRODUCTS = {
       350: '350',
       CUST: 'Custom'
     }
-  }
+  },
+  664: {
+    name: 'Dyson Purifier Big & Quiet Formaldehyde',
+    icon: 'icons/big_quiet.png',
+    ancp: {}
+  },
 };
 
 const FIELDSTODELETE = ['.Sensor.PM10R', '.Sensor.PM25R'];

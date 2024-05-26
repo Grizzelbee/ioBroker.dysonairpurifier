@@ -72,6 +72,7 @@
       "tooltip": "country_desc",
       "options": [
         { "label": "Germany", "value": "DE" },
+        { "label": "Switzerland", "value": "CH" },
         { "label": "Austria", "value": "AT" },
         { "label": "Belgium", "value": "BE" },
         { "label": "Netherlands", "value": "NL" },
