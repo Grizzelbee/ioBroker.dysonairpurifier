@@ -343,7 +343,10 @@ class dysonAirPurifier extends utils.Adapter {
         }
       }
     }
-
+    // check whether fanspeed has been set to Auto
+    if ('fnsp' === dysonAction && 11 === value){
+        messageData = {'auto':'ON'};
+    }
     // only send to device if change should set a device value
     if (action === 'Hostaddress') {
       return;
@@ -883,13 +886,14 @@ class dysonAirPurifier extends utils.Adapter {
     // NO2 QualityIndex
     // 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad
     let NO2Index = 0;
-    if (message[row].noxl < 4) {
+    const value = Math.floor(message[row].noxl / 10);
+    if (value < 4) {
       NO2Index = 0;
-    } else if (message[row].noxl >= 4 && message[row].noxl <= 6) {
+    } else if (value >= 4 && value <= 6) {
       NO2Index = 1;
-    } else if (message[row].noxl >= 7 && message[row].noxl <= 8) {
+    } else if (value >= 7 && value <= 8) {
       NO2Index = 2;
-    } else if (message[row].noxl >= 9) {
+    } else if (value >= 9) {
       NO2Index = 3;
     }
     this.createOrExtendObject(
@@ -1189,7 +1193,6 @@ class dysonAirPurifier extends utils.Adapter {
       // msg: 'REQUEST-CURRENT-STATE'
       // msg: 'REQUEST-PRODUCT-ENVIRONMENT-CURRENT-SENSOR-DATA'
       // msg: 'REQUEST-CURRENT-FAULTS'
-      // msg: 'REQUEST-CURRENT-STATE',
       thisDevice.mqttClient.publish(
           `${thisDevice.ProductType}/${thisDevice.Serial}/command`,
           JSON.stringify({
@@ -1201,6 +1204,13 @@ class dysonAirPurifier extends utils.Adapter {
           `${thisDevice.ProductType}/${thisDevice.Serial}/command`,
           JSON.stringify({
             msg: 'REQUEST-CURRENT-FAULTS',
+            time: new Date().toISOString()
+          })
+      );
+      thisDevice.mqttClient.publish(
+          `${thisDevice.ProductType}/${thisDevice.Serial}/command`,
+          JSON.stringify({
+            msg: 'REQUEST-PRODUCT-ENVIRONMENT-CURRENT-SENSOR-DATA',
             time: new Date().toISOString()
           })
       );
