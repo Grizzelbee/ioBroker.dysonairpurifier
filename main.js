@@ -343,7 +343,10 @@ class dysonAirPurifier extends utils.Adapter {
         }
       }
     }
-
+    // check whether fanspeed has been set to Auto
+    if ('fnsp' === dysonAction && 11 === value){
+        messageData = {'auto':'ON'};
+    }
     // only send to device if change should set a device value
     if (action === 'Hostaddress') {
       return;
