@@ -81,7 +81,7 @@ jobs:
 
   # Deploys the final package to NPM
   deploy:
-    needs: [adapter-tests-gui]
+    needs: [adapter-tests]
 
     # Trigger this step only when a commit on master is tagged with a version number
     if: |
@@ -119,32 +119,32 @@ jobs:
           npm whoami
           npx lerna publish from-package --yes
 
-      #- name: Create Github Release
-      #  uses: actions/create-release@v1
-      #  env:
-      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #  with:
-      #    tag_name: ${{ github.ref }}
-      #    release_name: Release v${{ steps.extract_release.outputs.VERSION }}
-      #    draft: false
-      #    # Prerelease versions create pre-releases on GitHub
-      #    prerelease: ${{ contains(steps.extract_release.outputs.VERSION, '-') }}
-      #    body: ${{ steps.extract_release.outputs.BODY }}
+      - name: Create Github Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release v${{ steps.extract_release.outputs.VERSION }}
+          draft: false
+          # Prerelease versions create pre-releases on GitHub
+          prerelease: ${{ contains(steps.extract_release.outputs.VERSION, '-') }}
+          body: ${{ steps.extract_release.outputs.BODY }}
 
-      #- name: Notify Sentry.io about the release
-      #  run: |
-      #    cd packages/admin
-      #    npm i -g @sentry/cli
-      #    export SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
-      #    export SENTRY_URL=https://sentry.iobroker.net
-      #    export SENTRY_ORG=iobroker
-      #    export SENTRY_PROJECT=iobroker-admin
-      #    export SENTRY_VERSION=iobroker.admin@${{ steps.extract_release.outputs.VERSION }}
-      #    export SENTRY_RELEASE=${{ steps.extract_release.outputs.VERSION }}
-      #    sentry-cli releases new $SENTRY_VERSION
-      #    sentry-cli releases finalize $SENTRY_VERSION
-      #    sentry-cli sourcemaps inject ./adminWww
-      #    sentry-cli sourcemaps upload ./adminWww
+      - name: Notify Sentry.io about the release
+        run: |
+          cd packages/admin
+          npm i -g @sentry/cli
+          export SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
+          export SENTRY_URL=https://sentry.iobroker.net
+          export SENTRY_ORG=iobroker
+          export SENTRY_PROJECT=iobroker-admin
+          export SENTRY_VERSION=iobroker.admin@${{ steps.extract_release.outputs.VERSION }}
+          export SENTRY_RELEASE=${{ steps.extract_release.outputs.VERSION }}
+          sentry-cli releases new $SENTRY_VERSION
+          sentry-cli releases finalize $SENTRY_VERSION
+          sentry-cli sourcemaps inject ./adminWww
+          sentry-cli sourcemaps upload ./adminWww
 
   # Dummy job for skipped builds - without this, github reports the build as failed
   skip-ci:
