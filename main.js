@@ -1193,7 +1193,6 @@ class dysonAirPurifier extends utils.Adapter {
       // msg: 'REQUEST-CURRENT-STATE'
       // msg: 'REQUEST-PRODUCT-ENVIRONMENT-CURRENT-SENSOR-DATA'
       // msg: 'REQUEST-CURRENT-FAULTS'
-      // msg: 'REQUEST-CURRENT-STATE',
       thisDevice.mqttClient.publish(
           `${thisDevice.ProductType}/${thisDevice.Serial}/command`,
           JSON.stringify({
@@ -1205,6 +1204,13 @@ class dysonAirPurifier extends utils.Adapter {
           `${thisDevice.ProductType}/${thisDevice.Serial}/command`,
           JSON.stringify({
             msg: 'REQUEST-CURRENT-FAULTS',
+            time: new Date().toISOString()
+          })
+      );
+      thisDevice.mqttClient.publish(
+          `${thisDevice.ProductType}/${thisDevice.Serial}/command`,
+          JSON.stringify({
+            msg: 'REQUEST-PRODUCT-ENVIRONMENT-CURRENT-SENSOR-DATA',
             time: new Date().toISOString()
           })
       );
