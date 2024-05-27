@@ -883,13 +883,14 @@ class dysonAirPurifier extends utils.Adapter {
     // NO2 QualityIndex
     // 0-3: Good, 4-6: Medium, 7-8, Bad, >9: very Bad
     let NO2Index = 0;
-    if (message[row].noxl < 4) {
+    const value = Math.floor(message[row].noxl / 10);
+    if (value < 4) {
       NO2Index = 0;
-    } else if (message[row].noxl >= 4 && message[row].noxl <= 6) {
+    } else if (value >= 4 && value <= 6) {
       NO2Index = 1;
-    } else if (message[row].noxl >= 7 && message[row].noxl <= 8) {
+    } else if (value >= 7 && value <= 8) {
       NO2Index = 2;
-    } else if (message[row].noxl >= 9) {
+    } else if (value >= 9) {
       NO2Index = 3;
     }
     this.createOrExtendObject(
