@@ -190,6 +190,7 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 - (grizzelbee) New: [#289](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/289) Added Support for Dyson Purifier Big+Quiet Formaldehyde (BP03, Produce type 664) 
 - (grizzelbee) Fix: [#287](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/287) Added Switzerland again to config 
 - (grizzelbee) Upd: Dependencies got updated
+- (grizzelbee) Chg: removed index_m.html, since it's no longer used
 
 ### 3.1.10 (2024-05-14) (Marching on)
 
