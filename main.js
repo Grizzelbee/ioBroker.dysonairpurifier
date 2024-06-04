@@ -40,6 +40,7 @@ const {
   SPECIAL_PROPERTIES,
   getNameToDysoncodeTranslation
 } = require('./dysonConstants.js');
+const {setInterval} = require("node:timers/promises");
 
 // Variable definitions
 // let adapter = null;
@@ -663,7 +664,7 @@ class dysonAirPurifier extends utils.Adapter {
         [
           'product-errors',
           'product-warnings',
-          'module-warnings',
+          'module-errors',
           'module-warnings'
         ].includes(dysonCode)
         //row === 'product-errors' ||
@@ -1184,9 +1185,16 @@ class dysonAirPurifier extends utils.Adapter {
     this.subscribeStates(`${device.Serial}.Sensor.PM25Index`);
   }
 
-  async pollDeviceInfo(thisDevice, adapterLog) {
+  /**
+   *
+   * @param thisDevice {Object} link to the current Device object
+   * @param adapterLog {Object} link to the adapters log output
+   * @param reason     {string} the reason why this function is called (for logging purposes)
+   * @returns {Promise<void>}
+   */
+  async pollDeviceInfo(thisDevice, adapterLog, reason) {
     adapterLog.debug(
-        `Updating device [${thisDevice.Serial}] (polling API scheduled).`
+        `Updating device [${thisDevice.Serial}] (polling API ${reason}).`
     );
     try {
       // possible messages:
@@ -1285,7 +1293,7 @@ class dysonAirPurifier extends utils.Adapter {
               function () {}
             );
             // Sends an initial request for current state of device
-            await adapter.pollDeviceInfo(thisDevice, adapterLog);
+            await adapter.pollDeviceInfo(thisDevice, adapterLog, 'initially');
             // expect the adapter 20 seconds after first poll as Set-up
             setTimeout(()=>{
                   adapterIsSetUp = true;
@@ -1311,11 +1319,15 @@ class dysonAirPurifier extends utils.Adapter {
               `Starting Polltimer with a ${adapter.config.pollInterval} seconds interval.`
             );
             // start refresh scheduler with interval from adapters config
-            thisDevice.updateIntervalHandle = setTimeout( async () => {
-              await adapter.pollDeviceInfo(thisDevice, adapterLog);
-            },
-              adapter.config.pollInterval * 1000
-            );
+            if (adapter.config.pollInterval > 0) {
+              thisDevice.updateIntervalHandle = setTimeout(function schedule(){
+                adapter.pollDeviceInfo(thisDevice, adapterLog, '@ regular schedule');
+                thisDevice.updateIntervalHandle = setTimeout(schedule, adapter.config.pollInterval * 1000);
+              }, adapter.config.pollInterval * 1000);
+
+            } else {
+              adapterLog.info(`Disabled scheduled polling for device ${thisDevice.Serial}`);
+            }
           });
           /****************
            * Message
