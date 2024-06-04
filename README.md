@@ -22,20 +22,20 @@ Fan-Icon in Logo created by [Freepik](https://www.flaticon.com/de/autoren/freepi
 
 ### supported devices
 
-- Dyson Pure Cool Link Tower (TP02, ProductType 475)
-- Dyson Pure Cool Tower, 2018 model (TP04, ProductType 438)
-- Dyson Pure Cool Tower Formaldehyde, 2018 model (TP07, ProductType 438E)
-- Dyson Pure Cool Tower Formaldehyde, 2018 model (TP07, ProductType 438K)
-- Dyson Pure Cool Link Desk (DP01, ProductType 469)
-- Dyson Pure Cool Desk, 2018 model (DP04, ProductType 520)
-- Dyson Pure Hot+Cool Link (HP02, ProductType 455)
-- Dyson Pure Hot+Cool Link New (ProductType 455A)
-- Dyson Pure Hot+Cool, 2018 model (HP04, ProductType 527)
-- Dyson Pure Hot+Cool (HP07, ProductType 527E)
-- Dyson Pure Hot+Cool Formaldehyde (HP09, ProductType 527K)
 - Dyson Pure Humidify+Cool (PH01, ProductType 358)
 - Dyson Pure Humidify+Cool (PH03, ProductType 358E)
 - Dyson Pure Humidify+Cool Formaldehyde (PH04, ProductType 358K)
+- Dyson Pure Cool Tower, 2018 model (TP04, ProductType 438)
+- Dyson Pure Cool Tower Formaldehyde, 2018 model (TP07, ProductType 438E)
+- Dyson Pure Cool Tower Formaldehyde, 2018 model (TP07, ProductType 438K)
+- Dyson Pure Hot+Cool Link (HP02, ProductType 455)
+- Dyson Pure Hot+Cool Link New (ProductType 455A)
+- Dyson Pure Cool Link Desk (DP01, ProductType 469)
+- Dyson Pure Cool Link Tower (TP02, ProductType 475)
+- Dyson Pure Cool Desk, 2018 model (DP04, ProductType 520)
+- Dyson Pure Hot+Cool, 2018 model (HP04, ProductType 527)
+- Dyson Pure Hot+Cool (HP07, ProductType 527E)
+- Dyson Pure Hot+Cool Formaldehyde (HP09, ProductType 527K)
 - Dyson Purifier Big+Quiet Formaldehyde (BP03, Produce type 664)
 
 ## Features
