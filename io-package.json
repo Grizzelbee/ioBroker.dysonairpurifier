@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "dysonairpurifier",
-    "version": "3.2.1",
+    "version": "3.2.2-beta-1",
     "news": {
       "3.2.1": {
         "en": "Fix: Fixed polling which got broken in v3.1.10\nChg: Dependencies got updated",
