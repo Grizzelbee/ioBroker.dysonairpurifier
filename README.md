@@ -185,6 +185,11 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 
 ### **WORK IN PROGRESS**
 
+### 3.2.1 (2024-06-04) (Marching on)
+- (grizzelbee) Upd: Dependencies got updated
+- (grizzelbee) Upd: [#286](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/286) Fixed polling which got broken in v3.1.10
+
+
 ### 3.2.0 (2024-05-28) (Marching on)
 
 - (grizzelbee) Chg: Lamps (Product type 552a) won't generate a warning on startup any longer but show an info that they are not supported by this adapter.

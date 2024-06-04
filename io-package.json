@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "dysonairpurifier",
-    "version": "3.2.0",
+    "version": "3.2.1",
     "news": {
+      "3.2.1": {
+        "en": "Fix: Fixed polling which got broken in v3.1.10\nChg: Dependencies got updated",
+        "de": "Fix: Polling wurde korrigiert nachdem es in Version 3.1.10 kaputt gegangen ist.\nÄnderung: Abhängigkeiten wurden aktualisiert",
+        "ru": "Исправлено: исправлен опрос, который был нарушен в версии 3.1.10\nChg: зависимости обновлены.",
+        "pt": "Correção: Corrigida a pesquisa que foi interrompida na v3.1.10\nAlteração: As dependências foram atualizadas",
+        "nl": "Fix: Vaste polling die kapot ging in v3.1.10\nChg: Afhankelijkheden zijn bijgewerkt",
+        "fr": "Correctif : correction de l'interrogation qui était interrompue dans la v3.1.10\nChg : les dépendances ont été mises à jour",
+        "it": "Correzione: risolto il polling che non funzionava nella versione 3.1.10\nChg: le dipendenze sono state aggiornate",
+        "es": "Solución: Se corrigió el sondeo que se rompió en v3.1.10\nChg: Se actualizaron las dependencias",
+        "pl": "Poprawka: Naprawiono odpytywanie, które uległo uszkodzeniu w wersji 3.1.10\nChg: Zaktualizowano zależności",
+        "uk": "Виправлення: виправлено опитування, яке було порушено у версії 3.1.10\nChg: оновлено залежності",
+        "zh-cn": "修复：修复了 v3.1.10 中损坏的轮询\nChg：依赖项已更新"
+      },
       "3.2.0": {
         "en": "Chg: Lamps (Product type 552a) won't generate a warning on startup any longer but show an info that they are not supported by this adapter\nChg: Vacuum cleaner robots (Product types 276 and 277) won't generate a warning on startup any longer but show an info that they are not supported by this adapter\nNew: [#289](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/289) Added Support for Dyson Purifier Big+Quiet Formaldehyde (BP03, Produce type 664)\n Fix: [#287](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/287) Added Switzerland again to config\nUpd: Dependencies got updated\nChg: removed obsolete index_m\nFix: Fixed broken NO2Index\nFix: Fixed broken fan speeds 0-10\nFix: Fixed polling of sensor data\nFix: setting fan speed = Auto works\n",
         "de": "Änderung: Lampen (Produkttyp 552a) generieren beim Start keine Warnung mehr, sondern zeigen einen Hinweis an, dass sie von diesem Adapter nicht unterstützt werden.\nÄnderung: Staubsaugerroboter (Produkttypen 276 und 277) generieren keine Warnung mehr Starten Sie nicht mehr, zeigen Sie jedoch die Information an, dass sie von diesem Adapter nicht unterstützt werden.\nNeu: [#289](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/289) Unterstützung für Dyson Purifier Big+Quiet Formaldehyde hinzugefügt (BP03, Produce-Typ 664)\n Fix: [#287](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/287) Schweiz erneut zur Konfiguration hinzugefügt\nAktualisiert: Abhängigkeiten wurden aktualisiert\nÄnderung: veralteter index_m entfernt \nFix: Fehlerhafter NO2Index behoben\nFix: Defekte Lüftergeschwindigkeiten 0-10 behoben\nFix: Abfrage von Sensordaten behoben\nFix: Einstellung der Lüftergeschwindigkeit = Auto funktioniert\n",
