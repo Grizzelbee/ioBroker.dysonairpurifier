@@ -1,6 +1,6 @@
 {
   "name": "iobroker.dysonairpurifier",
-  "version": "3.2.1",
+  "version": "3.2.2-beta-1",
   "description": "dyson air purifiers and fans",
   "author": {
     "name": "grizzelbee",
@@ -71,7 +71,7 @@
     "@types/sinon-chai": "^3.2.12",
     "chai": "^4.4.1",
     "chai-as-promised": "^7.1.2",
-    "eslint": "^9.4.0",
+    "eslint": "^8.57.0",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.5",
     "mocha": "^10.4.0",
