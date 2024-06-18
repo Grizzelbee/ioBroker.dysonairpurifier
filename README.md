@@ -185,6 +185,11 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 
 ### **WORK IN PROGRESS**
 
+### 3.2.2 (2024-06-18) (Marching on)
+- (grizzelbee) Upd: Dependencies got updated
+- (grizzelbee) Upd: [#286](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/286) Fixed polling which got broken in v3.1.10
+
+
 ### 3.2.1 (2024-06-04) (Marching on)
 - (grizzelbee) Upd: Dependencies got updated
 - (grizzelbee) Upd: [#286](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/286) Fixed polling which got broken in v3.1.10

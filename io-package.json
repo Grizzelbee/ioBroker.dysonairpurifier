@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "dysonairpurifier",
-    "version": "3.2.2-beta-1",
+    "version": "3.2.2-beta-2",
     "news": {
+      "3.2.2": {
+        "en": "Fix: Fixed polling which got broken in v3.1.10\nChg: Dependencies got updated",
+        "de": "Fix: Polling wurde korrigiert nachdem es in Version 3.1.10 kaputt gegangen ist.\nÄnderung: Abhängigkeiten wurden aktualisiert",
+        "ru": "Исправлено: исправлен опрос, который был нарушен в версии 3.1.10\nChg: зависимости обновлены.",
+        "pt": "Correção: Corrigida a pesquisa que foi interrompida na v3.1.10\nAlteração: As dependências foram atualizadas",
+        "nl": "Fix: Vaste polling die kapot ging in v3.1.10\nChg: Afhankelijkheden zijn bijgewerkt",
+        "fr": "Correctif : correction de l'interrogation qui était interrompue dans la v3.1.10\nChg : les dépendances ont été mises à jour",
+        "it": "Correzione: risolto il polling che non funzionava nella versione 3.1.10\nChg: le dipendenze sono state aggiornate",
+        "es": "Solución: Se corrigió el sondeo que se rompió en v3.1.10\nChg: Se actualizaron las dependencias",
+        "pl": "Poprawka: Naprawiono odpytywanie, które uległo uszkodzeniu w wersji 3.1.10\nChg: Zaktualizowano zależności",
+        "uk": "Виправлення: виправлено опитування, яке було порушено у версії 3.1.10\nChg: оновлено залежності",
+        "zh-cn": "修复：修复了 v3.1.10 中损坏的轮询\nChg：依赖项已更新"
+      },
       "3.2.1": {
         "en": "Fix: Fixed polling which got broken in v3.1.10\nChg: Dependencies got updated",
         "de": "Fix: Polling wurde korrigiert nachdem es in Version 3.1.10 kaputt gegangen ist.\nÄnderung: Abhängigkeiten wurden aktualisiert",
