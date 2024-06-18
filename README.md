@@ -172,6 +172,11 @@ For now there are only rough information on the failures, and the data points va
 If you have better information on a failure don't hesitate to report it to me to improve the adapter.
 All states report whether there is a failure or not. `True` means a failure, `false` means "No failure".
 
+### Poll Intervall
+- Starting with v3.2.2 a poll intervall of 0 definitely disables polling. It may have worked before due to mathematics - but not for sure and with unknown side effects.
+This is nice to know because the devices usually send (at least mine do) their state by themself when it changes. Using this setting helps reducing your network traffic by stopping unnecessary polling.  
+
+
 ### Known issues
 
 - No automatic IP detection of devices
@@ -188,7 +193,7 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 ### 3.2.2 (2024-06-18) (Marching on)
 - (grizzelbee) Upd: Dependencies got updated
 - (grizzelbee) Upd: [#286](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/286) Fixed polling which got broken in v3.1.10
-
+- (grizzelbee) Upd: Poll intervall of 0 disables polling
 
 ### 3.2.1 (2024-06-04) (Marching on)
 - (grizzelbee) Upd: Dependencies got updated
