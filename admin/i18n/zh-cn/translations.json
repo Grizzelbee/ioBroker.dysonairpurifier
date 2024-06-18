@@ -19,7 +19,6 @@
     "Netherlands": "荷兰",
     "Poland": "波兰",
     "Poll_Interval": "轮询间隔",
-    "Poll_Interval_desc": "每隔X秒从设备请求新的状态和传感器信息。",
     "Russia": "俄国",
     "United Kingdom": "英国",
     "United States of America": "美国",
@@ -45,5 +44,6 @@
     "Lbl_2FA": "2因素身份验证",
     "Lbl_ChallengeId": "戴森挑战-ID",
     "desc_2FA": "您需要执行类似于戴森应用程序的初始一次性 2FA 流程来激活此适配器。",
-    "Lbl_UpAndRunning": "该适配器实例需要在配置之前启动并运行。"
+    "Lbl_UpAndRunning": "该适配器实例需要在配置之前启动并运行。",
+    "Poll_Interval_desc": "每 X 秒向设备请求新的状态和传感器信息。 0（零）禁用轮询。"
 }

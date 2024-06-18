@@ -20,7 +20,7 @@
   "Netherlands": "Netherlands",
   "Poland": "Poland",
   "Poll_Interval": "Poll interval",
-  "Poll_Interval_desc": "Request new status and sensor information from devices every X seconds.",
+  "Poll_Interval_desc": "Request new status and sensor information from devices every X seconds. 0 (zero) disables polling.",
   "Russia": "Russia",
   "United Kingdom": "United Kingdom",
   "United States of America": "United States of America",

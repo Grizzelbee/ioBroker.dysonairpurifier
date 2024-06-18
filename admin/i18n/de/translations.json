@@ -19,7 +19,6 @@
     "Netherlands": "Niederlande",
     "Poland": "Polen",
     "Poll_Interval": "Pollinterval",
-    "Poll_Interval_desc": "Fordern Sie alle X Sekunden neue Status- und Sensorinformationen von den Geräten an.",
     "Russia": "Russland",
     "United Kingdom": "Vereinigtes Königreich",
     "United States of America": "vereinigte Staaten von Amerika",
@@ -45,5 +44,6 @@
     "desc_2FA": "Sie müssen zunächst einen einmaligen 2FA-Prozess ähnlich der Dyson-App durchführen, um diesen Adapter zu aktivieren.",
     "token_inside": "Ein Token wurde empfangen und gespeichert.",
     "token_inside_desc": "Zeigt an, ob ein Authentifizierungstoken von den Dyson-Servern empfangen wurde, der für die Anmeldung erforderlich ist – der Adapter funktioniert nicht, wenn dieses Kontrollkästchen nicht aktiviert ist.",
-    "Lbl_UpAndRunning": "Diese Adapterinstanz muss vor der Konfiguration betriebsbereit sein."
+    "Lbl_UpAndRunning": "Diese Adapterinstanz muss vor der Konfiguration betriebsbereit sein.",
+    "Poll_Interval_desc": "Fordern Sie alle X Sekunden neue Status- und Sensorinformationen von Geräten an. 0 (Null) deaktiviert die Abfrage."
 }
