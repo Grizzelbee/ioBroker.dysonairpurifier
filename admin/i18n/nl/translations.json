@@ -19,7 +19,6 @@
     "Netherlands": "Nederland",
     "Poland": "Polen",
     "Poll_Interval": "Pollinterval",
-    "Poll_Interval_desc": "Vraag elke X seconden nieuwe status- en sensorinformatie van apparaten op.",
     "Russia": "Rusland",
     "United Kingdom": "Verenigd Koningkrijk",
     "United States of America": "de Verenigde Staten van Amerika",
@@ -45,5 +44,6 @@
     "Lbl_2FA": "2-factor authenticatie",
     "Lbl_ChallengeId": "dyson Challenge-ID",
     "desc_2FA": "U moet een eerste eenmalig 2FA-proces uitvoeren, vergelijkbaar met de Dyson-app, om deze adapter te activeren.",
-    "Lbl_UpAndRunning": "Deze adapterinstantie moet actief zijn vóór de configuratie."
+    "Lbl_UpAndRunning": "Deze adapterinstantie moet actief zijn vóór de configuratie.",
+    "Poll_Interval_desc": "Vraag elke X seconden nieuwe status- en sensorinformatie op van apparaten. 0 (nul) schakelt polling uit."
 }

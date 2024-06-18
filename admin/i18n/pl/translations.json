@@ -19,7 +19,6 @@
     "Netherlands": "Holandia",
     "Poland": "Polska",
     "Poll_Interval": "Pollinterval",
-    "Poll_Interval_desc": "Żądaj nowego statusu i informacji z czujników z urządzeń co X sekund.",
     "Russia": "Rosja",
     "United Kingdom": "Zjednoczone Królestwo",
     "United States of America": "Stany Zjednoczone Ameryki",
@@ -45,5 +44,6 @@
     "Lbl_2FA": "Uwierzytelnianie dwuskładnikowe",
     "Lbl_ChallengeId": "dyson Challenge-Id",
     "desc_2FA": "Aby aktywować ten adapter, musisz wykonać początkowy jednorazowy proces 2FA podobny do aplikacji dyson.",
-    "Lbl_UpAndRunning": "Przed konfiguracją ta instancja adaptera musi zostać uruchomiona i uruchomiona."
+    "Lbl_UpAndRunning": "Przed konfiguracją ta instancja adaptera musi zostać uruchomiona i uruchomiona.",
+    "Poll_Interval_desc": "Żądaj nowych informacji o stanie i czujnikach z urządzeń co X sekund. 0 (zero) wyłącza odpytywanie."
 }

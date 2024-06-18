@@ -19,7 +19,6 @@
     "Netherlands": "Olanda",
     "Poland": "Polonia",
     "Poll_Interval": "Pollinterval",
-    "Poll_Interval_desc": "Richiedi nuove informazioni sullo stato e sui sensori dai dispositivi ogni X secondi.",
     "Russia": "Russia",
     "United Kingdom": "Regno Unito",
     "United States of America": "Stati Uniti d'America",
@@ -45,5 +44,6 @@
     "Lbl_2FA": "Autenticazione a 2 fattori",
     "Lbl_ChallengeId": "Dyson Challenge-Id",
     "desc_2FA": "È necessario eseguire un processo 2FA iniziale una tantum simile all'app Dyson per attivare questo adattatore.",
-    "Lbl_UpAndRunning": "Questa istanza dell'adattatore deve essere attiva e in esecuzione prima della configurazione."
+    "Lbl_UpAndRunning": "Questa istanza dell'adattatore deve essere attiva e in esecuzione prima della configurazione.",
+    "Poll_Interval_desc": "Richiedi nuove informazioni sullo stato e sui sensori dai dispositivi ogni X secondi. 0 (zero) disabilita il polling."
 }
