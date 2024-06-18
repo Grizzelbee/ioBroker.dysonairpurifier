@@ -40,7 +40,7 @@ const {
   SPECIAL_PROPERTIES,
   getNameToDysoncodeTranslation
 } = require('./dysonConstants.js');
-const {setInterval} = require("node:timers/promises");
+const { setInterval } = require('node:timers');
 
 // Variable definitions
 // let adapter = null;
@@ -1290,7 +1290,13 @@ class dysonAirPurifier extends utils.Adapter {
             // Subscribes to the status topic to receive updates
             thisDevice.mqttClient.subscribe(
               `${thisDevice.ProductType}/${thisDevice.Serial}/status/current`,
-              function () {}
+              function (err) {
+                if (!err) {
+                  adapterLog.debug(`Subscribed to current state of device ${thisDevice.Serial}.`);
+                } else {
+                  adapterLog.warn(`${thisDevice.Serial}: ${err}`);
+                }
+              }
             );
             // Sends an initial request for current state of device
             await adapter.pollDeviceInfo(thisDevice, adapterLog, 'initially');
@@ -1302,28 +1308,51 @@ class dysonAirPurifier extends utils.Adapter {
             // Subscribes to the "faults" topic to receive updates on any faults and warnings
             thisDevice.mqttClient.subscribe(
               `${thisDevice.ProductType}/${thisDevice.Serial}/status/faults`,
-              function () {}
+              function (err) {
+                if (!err) {
+                  adapterLog.debug(`Subscribed to faults of device ${thisDevice.Serial}.`);
+                } else {
+                  adapterLog.warn(`${thisDevice.Serial}: ${err}`);
+                }
+            }
             );
             // Subscribes to the software topic to receive updates on any faults and warnings
             thisDevice.mqttClient.subscribe(
               `${thisDevice.ProductType}/${thisDevice.Serial}/status/software`,
-              function () {}
+              function (err) {
+                if (!err) {
+                  adapterLog.debug(`Subscribed to software state of device ${thisDevice.Serial}.`);
+                } else {
+                  adapterLog.warn(`${thisDevice.Serial}: ${err}`);
+                }
+            }
             );
             // Subscribes to the connection topic to receive updates on any faults and warnings
             thisDevice.mqttClient.subscribe(
               `${thisDevice.ProductType}/${thisDevice.Serial}/status/connection`,
-              function () {}
-            );
+              function (err) {
+                if (!err) {
+                  adapterLog.debug(`Subscribed to connection state of device ${thisDevice.Serial}.`);
+                } else {
+                  adapterLog.warn(`${thisDevice.Serial}: ${err}`);
+                }
+              });
             // Sets the interval for status updates
             adapterLog.info(
-              `Starting Polltimer with a ${adapter.config.pollInterval} seconds interval.`
+              `Starting Polltimer with a ${adapter.config.pollInterval} seconds interval for device ${thisDevice.Serial}.`
             );
             // start refresh scheduler with interval from adapters config
             if (adapter.config.pollInterval > 0) {
+              thisDevice.updateIntervalHandle = setInterval(()=> {
+                adapter.pollDeviceInfo(thisDevice, adapterLog, '@ regular schedule');
+              }, adapter.config.pollInterval * 1000);
+              /*
               thisDevice.updateIntervalHandle = setTimeout(function schedule(){
                 adapter.pollDeviceInfo(thisDevice, adapterLog, '@ regular schedule');
                 thisDevice.updateIntervalHandle = setTimeout(schedule, adapter.config.pollInterval * 1000);
               }, adapter.config.pollInterval * 1000);
+
+               */
 
             } else {
               adapterLog.info(`Disabled scheduled polling for device ${thisDevice.Serial}`);
