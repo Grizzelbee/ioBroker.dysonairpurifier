@@ -217,7 +217,7 @@ module.exports.zeroFill = function (number, width) {
  * @returns {void}
  * @throws
  */
-module.exports.checkAdapterConfig = function (adapter) {
+module.exports.checkAdapterConfig = async function (adapter) {
   const config = adapter.config;
 
   if (

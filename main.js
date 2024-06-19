@@ -1496,12 +1496,14 @@ class dysonAirPurifier extends utils.Adapter {
     // Terminate adapter after first start because configuration is not yet received
     // Adapter is restarted automatically when config page is closed
     try {
-      dysonUtils.checkAdapterConfig(this);
+      await dysonUtils.checkAdapterConfig(this);
       await this.main();
     } catch (error) {
       this.log.warn(
         `This adapter has no or no valid configuration. Starting anyway to give you the opportunity to configure it properly. ${error}`
       );
+      // test if code is executed by mocha to exit properly and don't wait for getting configured
+      if (typeof global.it === 'function') this.terminate('Exiting due to mocha tests...', 11);
       this.setState('info.connection', false, true);
     }
   }
@@ -1588,6 +1590,7 @@ class dysonAirPurifier extends utils.Adapter {
         this.log.info(`Cleaned up timeout for ${thisDevice.Serial}.`);
         // todo unsubscribe to any subscribes
       }
+      this.setState('info.connection', false, true);
       this.log.info('Cleaned up everything...');
       callback();
     } catch (e) {
