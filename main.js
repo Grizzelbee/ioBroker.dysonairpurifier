@@ -1338,11 +1338,11 @@ class dysonAirPurifier extends utils.Adapter {
                 }
               });
             // Sets the interval for status updates
-            adapterLog.info(
-              `Starting Polltimer with a ${adapter.config.pollInterval} seconds interval for device ${thisDevice.Serial}.`
-            );
             // start refresh scheduler with interval from adapters config
             if (adapter.config.pollInterval > 0) {
+              adapterLog.info(
+                `Starting Polltimer with a ${adapter.config.pollInterval} seconds interval for device ${thisDevice.Serial}.`
+              );
               thisDevice.updateIntervalHandle = setInterval(()=> {
                 adapter.pollDeviceInfo(thisDevice, adapterLog, '@ regular schedule');
               }, adapter.config.pollInterval * 1000);
