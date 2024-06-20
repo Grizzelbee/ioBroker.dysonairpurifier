@@ -58,7 +58,7 @@
       "type": "checkbox",
       "label": "token_received",
       "tooltip": "token_received_desc",
-      "defaultFunc": "data.token.length>0",
+      "defaultFunc": "data.token_received=(data.token.length > 0)",
       "disabled": "true",
       "sm": 30,
       "md": 94,
