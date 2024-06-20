@@ -1502,8 +1502,6 @@ class dysonAirPurifier extends utils.Adapter {
       this.log.warn(
         `This adapter has no or no valid configuration. Starting anyway to give you the opportunity to configure it properly. ${error}`
       );
-      // test if code is executed by mocha to exit properly and don't wait for getting configured
-      if (typeof global.it === 'function') this.terminate('Exiting due to mocha tests...', 11);
       this.setState('info.connection', false, true);
     }
   }
