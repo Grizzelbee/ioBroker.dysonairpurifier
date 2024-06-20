@@ -51,7 +51,7 @@ describe('dyson-utils', () => {
     };
 
     context('given an invalid adapter configuration', () => {
-      it('should throw', () => {
+      it('should not throw - but wait for configuration', () => {
         fakeAdapter.config = {
           temperatureUnit: '',
           pollInterval: '',
@@ -59,7 +59,7 @@ describe('dyson-utils', () => {
           email: '',
           Password: ''
         };
-        expect(() => dysonUtils.checkAdapterConfig(fakeAdapter)).to.throw();
+        expect(() => dysonUtils.checkAdapterConfig(fakeAdapter)).to.not.throw();
       });
     });
 
