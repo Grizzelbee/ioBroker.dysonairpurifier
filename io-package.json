@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "dysonairpurifier",
-    "version": "3.2.2",
+    "version": "3.2.3",
     "news": {
+      "3.2.3": {
+        "en": "Fix: Added missing clearInterval in onUnload",
+        "de": "Fix: Fehlendes ClearInterval in onUnload hinzugefügt",
+        "ru": "Исправлено: добавлен отсутствующий параметр ClearInterval в onUnload.",
+        "pt": "Correção: adicionado clearInterval ausente em onUnload",
+        "nl": "Oplossing: ontbrekend clearInterval toegevoegd in onUnload",
+        "fr": "Correctif : ajout de clearInterval manquant dans onUnload",
+        "it": "Correzione: aggiunto clearInterval mancante in onUnload",
+        "es": "Solución: se agregó el intervalo claro que faltaba en onUnload",
+        "pl": "Poprawka: dodano brakujący clearInterval w onUnload",
+        "uk": "Виправлення: додано відсутній clearInterval у onUnload",
+        "zh-cn": "修复：在 onUnload 中添加了缺少的clearInterval"
+      },
       "3.2.2": {
         "en": "Fix: Fixed polling which got broken in v3.1.10\nChg: Dependencies got updated",
         "de": "Fix: Polling wurde korrigiert nachdem es in Version 3.1.10 kaputt gegangen ist.\nÄnderung: Abhängigkeiten wurden aktualisiert",
