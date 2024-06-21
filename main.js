@@ -1584,7 +1584,7 @@ class dysonAirPurifier extends utils.Adapter {
     try {
       for (const DEVICE in devices) {
         const thisDevice = devices[DEVICE];
-        clearTimeout(thisDevice.updateIntervalHandle);
+        clearInterval(thisDevice.updateIntervalHandle);
         this.log.info(`Cleaned up timeout for ${thisDevice.Serial}.`);
         await this.setDeviceOnlineState(thisDevice.Serial, 'offline');
         this.log.debug(`Set device ${thisDevice.Serial} to offline.`);
