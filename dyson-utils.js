@@ -406,7 +406,7 @@ module.exports.deleteUnusedFields = async function (self, device) {
   for (const field of dysonConstants.FIELDSTODELETE) {
     const id = device + field;
     self.log.debug(`Looking for deprecated field: ${id}`);
-    self.getObject(id, (err, oldObj) => {
+    self.getObject(id, null, (err, oldObj) => {
       if (!err && oldObj) {
         self.log.info(`Deleting deprecated field: ${id}`);
         self.delObject(id);

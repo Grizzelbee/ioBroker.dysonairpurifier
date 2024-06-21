@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "dysonairpurifier",
-    "version": "3.2.2-beta-3",
+    "version": "3.2.2",
     "news": {
       "3.2.2": {
         "en": "Fix: Fixed polling which got broken in v3.1.10\nChg: Dependencies got updated",
@@ -171,19 +171,6 @@
         "pl": "zależności zostały zaktualizowane\nNaprawiono wartości PM2.5, PM10, VOC, NO2\nNaprawiono indeksy PM2.5, PM10, VOC\nZaktualizowano interfejs administratora do jsonConfig",
         "uk": "залежності оновлено\nВиправлено значення PM2.5, PM10, VOC, NO2\nВиправлено індекси PM2.5, PM10, VOC\nОновлено інтерфейс адміністратора до jsonConfig",
         "zh-cn": "更新了依赖项\n修复了 PM2.5、PM10、VOC、NO2 值\n修复了 PM2.5、PM10、VOC 索引\n将管理 UI 更新为 jsonConfig"
-      },
-      "3.0.0": {
-        "en": "\nUpd: dependencies got updated \nNew: Added HCHO-Index \nBREAKING CHANGES: \nReplaced values in field pm25 with values from pm25r and calculating them accordingly to the dyson App \nReplaced values in field pm10 with values from pm10r and calculating them accordingly to the dyson App \nReplaced values in field hcho with values from hchr  and calculating them accordingly to the dyson App \nFields pm25r and pm10r are now deprecated and will be removed",
-        "de": "\nAktualisiert: Abhängigkeiten wurden aktualisiert. \nNeu: HCHO-Index hinzugefügt Die Dyson-App \nWerte im Feld hcho durch Werte aus hchr ersetzt und entsprechend in der Dyson-App berechnet \nDie Felder pm25r und pm10r sind jetzt veraltet und werden entfernt",
-        "ru": "\nОбновление: обновлены зависимости \nНовое: добавлен индекс HCHO \nСЕРЬЕЗНЫЕ ИЗМЕНЕНИЯ: \nЗаменены значения в поле pm25 на значения из pm25r и расчет их в соответствии с приложением Dyson \nЗаменены значения в поле pm10 значениями из pm10r и расчет их в соответствии с приложение Dyson \nЗаменены значения в поле hcho значениями из hchr и расчет их в соответствии с приложением Dyson \nПоля pm25r и pm10r устарели и будут удалены.",
-        "pt": "\nAtualização: dependências foram atualizadas \nNovo: Índice HCHO adicionado \nALTERAÇÕES ÚLTIMAS: \nValores substituídos no campo pm25 por valores de pm25r e cálculo deles de acordo com o aplicativo dyson \nValores substituídos no campo pm10 por valores de pm10r e cálculo deles de acordo com o aplicativo dyson \nValores substituídos no campo hcho por valores de hchr e cálculo deles de acordo com o aplicativo dyson \nOs campos pm25r e pm10r agora estão obsoletos e serão removidos",
-        "nl": "\nUpd: afhankelijkheden zijn bijgewerkt \nNieuw: HCHO-index toegevoegd \nBREAKING CHANGES: \nWaarden in veld pm25 vervangen door waarden uit pm25r en deze overeenkomstig berekend met de dyson-app \nWaarden in veld pm10 vervangen door waarden uit pm10r en deze overeenkomstig berekend de dyson-app \nWaarden in veld hcho vervangen door waarden uit hchr en deze overeenkomstig berekend met de dyson-app \nVelden pm25r en pm10r zijn nu verouderd en worden verwijderd",
-        "fr": "\nMise à jour : les dépendances ont été mises à jour \nNouveau : ajout de l'index HCHO \nCHANGEMENTS RUPTURE : \nRemplacement des valeurs dans le champ pm25 par les valeurs de pm25r et calcul de celles-ci en fonction de l'application Dyson \nRemplacement des valeurs dans le champ pm10 par les valeurs de pm10r et calcul de celles-ci en conséquence l'application dyson \nRemplacement des valeurs dans le champ hcho par les valeurs de hchr et calcul de celles-ci en conséquence selon l'application dyson \nLes champs pm25r et pm10r sont désormais obsolètes et seront supprimés",
-        "it": "\nAggiornamento: le dipendenze sono state aggiornate \nNovità: aggiunto indice HCHO \nMODIFICHE ROTANTI: \nSostituiti i valori nel campo pm25 con valori da pm25r e calcolandoli in base all'app Dyson \nSostituiti i valori nel campo pm10 con valori da pm10r e calcolandoli in base a l'app Dyson \nSostituiti i valori nel campo hcho con i valori di hchr e calcolandoli di conseguenza all'app Dyson \nI campi pm25r e pm10r sono ora deprecati e verranno rimossi",
-        "es": "\nActualización: se actualizaron las dependencias \nNuevo: Índice HCHO agregado \nCAMBIOS IMPORTANTES: \nSe reemplazaron los valores en el campo pm25 con valores de pm25r y se calcularon de acuerdo con la aplicación Dyson \nSe reemplazaron los valores en el campo pm10 con valores de pm10r y se calcularon de acuerdo con la aplicación Dyson \nSe reemplazaron los valores en el campo hcho con valores de hchr y se calcularon de acuerdo con la aplicación Dyson \nLos campos pm25r y pm10r ahora están obsoletos y se eliminarán",
-        "pl": "\nAktualizacja: zaktualizowano zależności \nNowość: Dodano HCHO-Index \nPIERWSZE ZMIANY: \nZastąpiono wartości w polu pm25 wartościami z pm25r i przeliczono je zgodnie z aplikacją dyson \nZastąpiono wartości w polu pm10 wartościami z pm10r i przeliczono je odpowiednio do aplikacja dyson \nZastąpiono wartości w polu hcho wartościami z hchr i przeliczono je zgodnie z aplikacją dyson \nPola pm25r i pm10r są obecnie przestarzałe i zostaną usunięte",
-        "uk": "\nОновлено: оновлено залежності \nНове: додано HCHO-індекс \nОСНОВНІ ЗМІНИ: \nЗамінено значення в полі pm25 на значення з pm25r і обчислення їх відповідно до програми dyson \nЗамінено значення в полі pm10 на значення з pm10r і обчислення їх відповідно до програма dyson \nЗамінено значення в полі hcho на значення з hchr і обчислення їх відповідно до програми dyson \nПоля pm25r і pm10r тепер не підтримуються та будуть видалені",
-        "zh-cn": "\n更新：依赖项已更新 \n新功能：添加了 HCHO 索引 \n重大更改： \n将字段 pm25 中的值替换为 pm25r 中的值，并根据 Dyson 应用程序相应地计算它们 \n将字段 pm10 中的值替换为 pm10r 中的值，并相应地计算它们Dyson 应用程序 \n将字段 hcho 中的值替换为 hchr 中的值，并根据 Dyson 应用程序相应地计算它们 \n字段 pm25r 和 pm10r 现已弃用并将被删除"
       }
     },
     "titleLang": {
@@ -251,11 +238,6 @@
         "js-controller": ">=5.0.16"
       }
     ],
-    "plugins": {
-      "sentry": {
-        "dsn": "https://1016f555431c4acfb16b2481019aa1aa@o505019.ingest.sentry.io/5735771"
-      }
-    },
     "messages": [
       {
         "condition": {

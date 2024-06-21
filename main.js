@@ -1516,7 +1516,7 @@ class dysonAirPurifier extends utils.Adapter {
    * @param {string} device  path to the device incl. Serial
    * @param {string} state   state to set (online, offline, reconnecting, ...)
    */
-  setDeviceOnlineState(device, state) {
+  async setDeviceOnlineState(device, state) {
     this.createOrExtendObject(
       `${device}.Online`,
       {
@@ -1580,12 +1580,14 @@ class dysonAirPurifier extends utils.Adapter {
    * Exit adapter
    * @param {() => unknown} callback
    */
-  onUnload(callback) {
+  async onUnload(callback) {
     try {
       for (const DEVICE in devices) {
         const thisDevice = devices[DEVICE];
         clearTimeout(thisDevice.updateIntervalHandle);
         this.log.info(`Cleaned up timeout for ${thisDevice.Serial}.`);
+        await this.setDeviceOnlineState(thisDevice.Serial, 'offline');
+        this.log.debug(`Set device ${thisDevice.Serial} to offline.`);
         // todo unsubscribe to any subscribes
       }
       this.setState('info.connection', false, true);
@@ -1597,8 +1599,7 @@ class dysonAirPurifier extends utils.Adapter {
   }
 }
 
-// @ts-ignore parent is a valid property on module
-if (module.parent) {
+if (require.main !== module) {
   // Export the constructor in compact mode
   /**
    * @param {Partial<utils.AdapterOptions> & {temperatureUnit: 'K' | 'C' | 'F'}} options
