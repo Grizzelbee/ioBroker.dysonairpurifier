@@ -50,7 +50,7 @@
     "@iobroker/adapter-core": "^3.1.6",
     "@iobroker/plugin-sentry": "^2.0.4",
     "@snyk/protect": "^1.1291.1",
-    "axios": "^1.7.2",
+    "axios": "^1.7.4",
     "flatted": "^3.3.1",
     "https": "^1.0.0",
     "lodash": "^4.17.21",
