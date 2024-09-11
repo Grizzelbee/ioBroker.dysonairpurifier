@@ -202,9 +202,11 @@ class dysonAirPurifier extends utils.Adapter {
             state
           );
           this.log.debug(`Result of getAngles: ${JSON.stringify(result)}`);
+          result.osal = parseInt(result.osal.val);
+          result.osau = parseInt(result.osau.val);
           switch (result.ancp.val) {
             case 'CUST':
-              result.ancp = 90;
+              result.ancp = result.osau - result.osal;
               break;
             case 'BRZE':
               result.ancp = 'BRZE';
@@ -214,8 +216,6 @@ class dysonAirPurifier extends utils.Adapter {
           }
           if (result.ancp === 'BRZE') {
             return {
-              //['osal']: '0180',
-              //['osau']: '0180',
               ['ancp']: 'BRZE',
               ['oson']: 'ON'
             };
@@ -223,8 +223,6 @@ class dysonAirPurifier extends utils.Adapter {
           this.log.debug(
             `Result of parseInt(result.ancp.val): ${result.ancp}, typeof: ${typeof result.ancp}`
           );
-          result.osal = parseInt(result.osal.val);
-          result.osau = parseInt(result.osau.val);
           if (result.osal + result.ancp > 355) {
             result.osau = 355;
             result.osal = 355 - result.ancp;
@@ -237,7 +235,8 @@ class dysonAirPurifier extends utils.Adapter {
           return {
             ['osal']: dysonUtils.zeroFill(result.osal, 4),
             ['osau']: dysonUtils.zeroFill(result.osau, 4),
-            ['ancp']: 'CUST',
+//            ['ancp']: 'CUST',
+            ['ancp']: await this.getOscillationAngle(result.ancp),
             ['oson']: 'ON'
           };
         } catch (error) {
@@ -254,6 +253,21 @@ class dysonAirPurifier extends utils.Adapter {
               : messageValue
         };
     }
+  }
+
+  async getOscillationAngle(angle){
+    if (angle === 0) {
+      return '0000';
+    } else if (angle <= 45) {
+      return '0045';
+    } else if (angle > 45 && angle <= 90) {
+      return '0090';
+    } else if (angle > 180 && angle <= 270) {
+      return '0180';
+    } else if (angle > 270 && angle <= 355) {
+      return '0350';
+    }
+
   }
 
   /**
