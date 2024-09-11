@@ -29,19 +29,6 @@
         "uk": "Виправлення: виправлено опитування, яке було порушено у версії 3.1.10\nChg: оновлено залежності",
         "zh-cn": "修复：修复了 v3.1.10 中损坏的轮询\nChg：依赖项已更新"
       },
-      "3.2.1": {
-        "en": "Fix: Fixed polling which got broken in v3.1.10\nChg: Dependencies got updated",
-        "de": "Fix: Polling wurde korrigiert nachdem es in Version 3.1.10 kaputt gegangen ist.\nÄnderung: Abhängigkeiten wurden aktualisiert",
-        "ru": "Исправлено: исправлен опрос, который был нарушен в версии 3.1.10\nChg: зависимости обновлены.",
-        "pt": "Correção: Corrigida a pesquisa que foi interrompida na v3.1.10\nAlteração: As dependências foram atualizadas",
-        "nl": "Fix: Vaste polling die kapot ging in v3.1.10\nChg: Afhankelijkheden zijn bijgewerkt",
-        "fr": "Correctif : correction de l'interrogation qui était interrompue dans la v3.1.10\nChg : les dépendances ont été mises à jour",
-        "it": "Correzione: risolto il polling che non funzionava nella versione 3.1.10\nChg: le dipendenze sono state aggiornate",
-        "es": "Solución: Se corrigió el sondeo que se rompió en v3.1.10\nChg: Se actualizaron las dependencias",
-        "pl": "Poprawka: Naprawiono odpytywanie, które uległo uszkodzeniu w wersji 3.1.10\nChg: Zaktualizowano zależności",
-        "uk": "Виправлення: виправлено опитування, яке було порушено у версії 3.1.10\nChg: оновлено залежності",
-        "zh-cn": "修复：修复了 v3.1.10 中损坏的轮询\nChg：依赖项已更新"
-      },
       "3.2.0": {
         "en": "Chg: Lamps (Product type 552a) won't generate a warning on startup any longer but show an info that they are not supported by this adapter\nChg: Vacuum cleaner robots (Product types 276 and 277) won't generate a warning on startup any longer but show an info that they are not supported by this adapter\nNew: [#289](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/289) Added Support for Dyson Purifier Big+Quiet Formaldehyde (BP03, Produce type 664)\n Fix: [#287](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/287) Added Switzerland again to config\nUpd: Dependencies got updated\nChg: removed obsolete index_m\nFix: Fixed broken NO2Index\nFix: Fixed broken fan speeds 0-10\nFix: Fixed polling of sensor data\nFix: setting fan speed = Auto works\n",
         "de": "Änderung: Lampen (Produkttyp 552a) generieren beim Start keine Warnung mehr, sondern zeigen einen Hinweis an, dass sie von diesem Adapter nicht unterstützt werden.\nÄnderung: Staubsaugerroboter (Produkttypen 276 und 277) generieren keine Warnung mehr Starten Sie nicht mehr, zeigen Sie jedoch die Information an, dass sie von diesem Adapter nicht unterstützt werden.\nNeu: [#289](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/289) Unterstützung für Dyson Purifier Big+Quiet Formaldehyde hinzugefügt (BP03, Produce-Typ 664)\n Fix: [#287](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/287) Schweiz erneut zur Konfiguration hinzugefügt\nAktualisiert: Abhängigkeiten wurden aktualisiert\nÄnderung: veralteter index_m entfernt \nFix: Fehlerhafter NO2Index behoben\nFix: Defekte Lüftergeschwindigkeiten 0-10 behoben\nFix: Abfrage von Sensordaten behoben\nFix: Einstellung der Lüftergeschwindigkeit = Auto funktioniert\n",
@@ -54,136 +41,6 @@
         "pl": "Chg: Lampy (typ produktu 552a) nie będą już generować ostrzeżenia przy uruchomieniu, ale pokażą informację, że nie są obsługiwane przez ten adapter\n Chg: Roboty odkurzające (typ produktu 276 i 277) nie będą generować ostrzeżenia uruchamiają się już dłużej, ale wyświetlają informację, że nie są obsługiwane przez ten adapter\nNowość: [#289](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/289) Dodano obsługę Dyson Purifier Big+Quiet Formaldehyde (BP03, typ produktu 664)\n Poprawka: [#287](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/287) Ponownie dodano Szwajcarię do konfiguracji\nAktualizacja: Zależności zostały zaktualizowane\nChg: usunięto przestarzałe indeks_m \nPoprawka: Naprawiono uszkodzony indeks NO2\nPoprawka: Naprawiono uszkodzone prędkości wentylatora 0-10\nPoprawka: Naprawiono odpytywanie danych czujnika\nPoprawka: ustawienie prędkości wentylatora = działa automatycznie\n",
         "uk": "Змін.: Лампи (тип продукту 552a) більше не генеруватимуть попередження під час запуску, але відображатимуть інформацію про те, що вони не підтримуються цим адаптером\nЗмін.: Роботи-пилососи (типи продукту 276 і 277) не генеруватимуть попередження запускати більше, але показувати інформацію про те, що вони не підтримуються цим адаптером\nНове: [#289](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/289) Додано підтримку Dyson Purifier Big+Quiet Formaldehyde (BP03, Produce type 664)\n Виправлення: [#287](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/287) До конфігурації знову додано Швейцарію\nОновлено: залежності оновлено\nЗміна: видалено застарілий index_m \nВиправлення: Виправлено неправильний індекс NO2\nВиправлено: Виправлено неправильні швидкості вентилятора 0-10\nВиправлено: Виправлено опитування даних датчиків\nВиправлено: налаштування швидкості вентилятора = працює автоматично\n",
         "zh-cn": "Chg：灯（产品类型 552a）将不再在启动时生成警告，但会显示此适配器不支持它们的信息\nChg：真空吸尘器机器人（产品类型 276 和 277）不会在启动时生成警告不再启动，但显示此适配器不支持的信息\n新功能：[#289](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/289) 添加了对戴森净化器 Big+Quiet 甲醛的支持（BP03，生产类型 664）\n 修复：[#287](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/287) 再次将瑞士添加到配置中\nUpd：依赖项已更新\nChg：删除了过时的 index_m \n修复：修复损坏的 NO2Index\n修复：修复损坏的风扇速度 0-10\n修复：修复传感器数据的轮询\n修复：设置风扇速度 = 自动工作\n"
-      },
-      "3.1.10": {
-        "en": "Removed duplicate config of Sleeptimer\nEnabled editing of field Sleeptimer",
-        "de": "Doppelte Konfiguration von Sleeptimer entfernt\nBearbeitung des Feldes Sleeptimer aktiviert",
-        "ru": "Удален дублирующийся конфиг Sleeptimer\nВключено редактирование поля Sleeptimer.",
-        "pt": "Configuração duplicada removida do Sleeptimer\n Edição habilitada do campo Sleeptimer",
-        "nl": "Dubbele configuratie van Sleeptimer verwijderd\nBewerken van veld Sleeptimer ingeschakeld",
-        "fr": "Suppression de la configuration en double de Sleeptimer\nActivation de la modification du champ Sleeptimer",
-        "it": "Rimossa la configurazione duplicata di Sleeptimer\nAbilitata la modifica del campo Sleeptimer",
-        "es": "Se eliminó la configuración duplicada de Sleeptimer. Se habilitó la edición del campo Sleeptimer.",
-        "pl": "Usunięto zduplikowaną konfigurację wyłącznika czasowego\n Włączono edycję pola wyłącznika czasowego",
-        "uk": "Вилучено повторювану конфігурацію Sleeptimer\nУвімкнено редагування поля Sleeptimer",
-        "zh-cn": "删除了睡眠定时器的重复配置\n启用了字段睡眠定时器的编辑"
-      },
-      "3.1.9": {
-        "en": "Changeable fields are working again.",
-        "de": "Änderbare Felder funktionieren wieder.",
-        "ru": "Изменяемые поля снова работают.",
-        "pt": "Os campos alteráveis ​​estão funcionando novamente.",
-        "nl": "Veranderlijke velden werken weer.",
-        "fr": "Les champs modifiables fonctionnent à nouveau.",
-        "it": "I campi modificabili funzionano di nuovo.",
-        "es": "Los campos modificables están funcionando nuevamente.",
-        "pl": "Zmienne pola znów działają.",
-        "uk": "Змінні поля знову працюють.",
-        "zh-cn": "可变字段再次发挥作用。"
-      },
-      "3.1.8": {
-        "en": "Dependencies got updated\nCode refactoring\nPerformance improvements\nUpdate of outdated certificate",
-        "de": "Abhängigkeiten wurden aktualisiert\nCode-Refactoring\nLeistungsverbesserungen\nAktualisierung des veralteten Zertifikats",
-        "ru": "Зависимости обновлены\nРефакторинг кода\nУлучшение производительности\nОбновление устаревшего сертификата",
-        "pt": "Dependências atualizadas\n Refatoração de código\n Melhorias de desempenho\nAtualização de certificado desatualizado",
-        "nl": "Afhankelijkheden zijn bijgewerkt\nCode refactoring\nPrestatieverbeteringen\nUpdate van verouderd certificaat",
-        "fr": "Les dépendances ont été mises à jour\nRefactoring du code\nAméliorations des performances\nMise à jour du certificat obsolète",
-        "it": "Le dipendenze sono state aggiornate\nRefactoring del codice\nMiglioramenti delle prestazioni\nAggiornamento del certificato obsoleto",
-        "es": "Se actualizaron las dependencias\nRefactorización de código\nMejoras de rendimiento\nActualización de certificado desactualizado",
-        "pl": "Zależności zostały zaktualizowane\nRefaktoryzacja kodu\nPoprawa wydajności\nAktualizacja nieaktualnego certyfikatu",
-        "uk": "Залежності оновлено\nРефакторинг коду\nПокращення продуктивності\nОновлення застарілого сертифіката",
-        "zh-cn": "依赖项已更新\n代码重构\n性能改进\n过时证书的更新"
-      },
-      "3.1.7": {
-        "en": "HeatingMode switch is now working correctly.",
-        "de": "Der HeatingMode-Schalter funktioniert jetzt ordnungsgemäß.",
-        "ru": "Переключатель режима обогрева теперь работает правильно.",
-        "pt": "O interruptor HeatingMode agora está funcionando corretamente.",
-        "nl": "De HeatingMode-schakelaar werkt nu correct.",
-        "fr": "Le commutateur HeatingMode fonctionne désormais correctement.",
-        "it": "L'interruttore della modalità di riscaldamento ora funziona correttamente.",
-        "es": "El interruptor de modo de calefacción ahora funciona correctamente.",
-        "pl": "Przełącznik trybu ogrzewania działa teraz poprawnie.",
-        "uk": "Перемикач HeatingMode тепер працює правильно.",
-        "zh-cn": "HeatingMode 开关现在工作正常。"
-      },
-      "3.1.6": {
-        "en": "Dependencies got updated\nHeatingMode switch is now working correctly (Attempt 1).",
-        "de": "Abhängigkeiten wurden aktualisiert\nHeatingMode-Schalter funktioniert jetzt korrekt (Versuch 1).",
-        "ru": "Зависимости обновлены. Переключатель HeatingMode теперь работает правильно (попытка 1).",
-        "pt": "As dependências foram atualizadas\n A chave HeatingMode agora está funcionando corretamente (tentativa 1).",
-        "nl": "Afhankelijkheden zijn bijgewerkt \nHeatingMode-schakelaar werkt nu correct (poging 1).",
-        "fr": "Les dépendances ont été mises à jour\nLe commutateur HeatingMode fonctionne désormais correctement (tentative 1).",
-        "it": "Le dipendenze sono state aggiornate\nL'interruttore della modalità di riscaldamento ora funziona correttamente (tentativo 1).",
-        "es": "Se actualizaron las dependencias. El interruptor de modo de calefacción ahora funciona correctamente (intento 1).",
-        "pl": "Zależności zostały zaktualizowane. \n Przełącznik trybu ogrzewania działa teraz poprawnie (próba 1).",
-        "uk": "Залежності оновлено\nПеремикач HeatingMode тепер працює правильно (спроба 1).",
-        "zh-cn": "依赖项已更新\nHeatingMode 开关现在可以正常工作（尝试 1）。"
-      },
-      "3.1.5": {
-        "en": "Requesting at least admin v6.13.16 as dependency.",
-        "de": "Mindestens Admin v6.13.16 als Abhängigkeit erforderlich.",
-        "ru": "Запрос как минимум администратора v6.13.16 в качестве зависимости.",
-        "pt": "Solicitando pelo menos admin v6.13.16 como dependência.",
-        "nl": "Minimaal beheerder v6.13.16 aanvragen als afhankelijkheid.",
-        "fr": "Demander au moins admin v6.13.16 comme dépendance.",
-        "it": "Richiedendo almeno admin v6.13.16 come dipendenza.",
-        "es": "Solicitando al menos admin v6.13.16 como dependencia.",
-        "pl": "Żądanie co najmniej administratora v6.13.16 jako zależność.",
-        "uk": "Запит принаймні admin v6.13.16 як залежність.",
-        "zh-cn": "请求至少 admin v6.13.16 作为依赖项。"
-      },
-      "3.1.4": {
-        "en": "Lamps (Product type 552) won't generate a warning on startup anymore but show an info that they are not supported by this adapter.",
-        "de": "Lampen (Produkttyp 552) generieren beim Start keine Warnung mehr, sondern zeigen einen Hinweis an, dass sie von diesem Adapter nicht unterstützt werden.",
-        "ru": "Лампы (тип продукта 552) больше не будут выдавать предупреждение при запуске, а будут показывать информацию о том, что они не поддерживаются этим адаптером.",
-        "pt": "As lâmpadas (tipo de produto 552) não gerarão mais um aviso na inicialização, mas mostrarão uma informação de que não são suportadas por este adaptador.",
-        "nl": "Lampen (producttype 552) genereren geen waarschuwing meer bij het opstarten, maar geven de informatie weer dat ze niet door deze adapter worden ondersteund.",
-        "fr": "Les lampes (type de produit 552) ne généreront plus d'avertissement au démarrage mais afficheront une information indiquant qu'elles ne sont pas prises en charge par cet adaptateur.",
-        "it": "Le lampade (tipo prodotto 552) non genereranno più un avviso all'avvio ma mostreranno un'informazione che non sono supportate da questo adattatore.",
-        "es": "Las lámparas (tipo de producto 552) ya no generarán una advertencia al iniciarse, pero mostrarán información de que no son compatibles con este adaptador.",
-        "pl": "Lampy (typ produktu 552) nie będą już generować ostrzeżenia przy uruchomieniu, ale pokażą informację, że nie są obsługiwane przez ten adapter.",
-        "uk": "Лампи (тип продукту 552) більше не генеруватимуть попередження під час запуску, але відображатимуть інформацію про те, що вони не підтримуються цим адаптером.",
-        "zh-cn": "灯（产品类型 552）将不再在启动时生成警告，但会显示此适配器不支持它们的信息。"
-      },
-      "3.1.3": {
-        "en": "2FA Process is working again - truely",
-        "de": "Der 2FA-Prozess funktioniert wieder – tatsächlich",
-        "ru": "Процесс 2FA снова работает — это правда",
-        "pt": "O processo 2FA está funcionando novamente - de verdade",
-        "nl": "Het 2FA-proces werkt weer - echt waar",
-        "fr": "Le processus 2FA fonctionne à nouveau – vraiment",
-        "it": "Il processo 2FA funziona di nuovo, davvero",
-        "es": "El proceso 2FA está funcionando nuevamente, de verdad",
-        "pl": "Proces 2FA znów działa – to prawda",
-        "uk": "Процес 2FA знову працює - дійсно",
-        "zh-cn": "2FA 流程再次发挥作用——确实如此"
-      },
-      "3.1.2": {
-        "en": "dependencies got updated\n2FA Process is working again\nAt least nodeJs V18.2.0 is required",
-        "de": "Abhängigkeiten wurden aktualisiert\n2FA-Prozess funktioniert wieder\nMindestens nodeJs V18.2.0 ist erforderlich",
-        "ru": "зависимости обновлены \n Процесс 2FA снова работает \n Требуется как минимум nodeJs V18.2.0",
-        "pt": "dependências foram atualizadas\n O processo 2FA está funcionando novamente\nPelo menos nodeJs V18.2.0 é necessário",
-        "nl": "afhankelijkheden zijn bijgewerkt\n2FA-proces werkt weer\nMinimaal nodeJs V18.2.0 is vereist",
-        "fr": "les dépendances ont été mises à jour\nLe processus 2FA fonctionne à nouveau\nAu moins nodeJs V18.2.0 est requis",
-        "it": "le dipendenze sono state aggiornate\n Il processo 2FA funziona di nuovo\nÈ richiesto almeno nodeJs V18.2.0",
-        "es": "las dependencias se actualizaron\n El proceso 2FA está funcionando nuevamente\n Se requiere al menos nodeJs V18.2.0",
-        "pl": "zależności zostały zaktualizowane\nProces 2FA znów działa\nWymagany jest przynajmniej nodeJs V18.2.0",
-        "uk": "залежності оновлено\nПроцес 2FA знову працює\nПотрібен принаймні nodeJs V18.2.0",
-        "zh-cn": "依赖项已更新\n2FA 进程再次运行\n至少需要 nodeJs V18.2.0"
-      },
-      "3.1.1": {
-        "en": "dependencies got updated\nFixed PM2.5, PM10, VOC, NO2 Values\nFixed PM2.5, PM10, VOC Indexes\nUpdated admin-UI to jsonConfig",
-        "de": "Abhängigkeiten wurden aktualisiert \n PM2.5-, PM10-, VOC-, NO2-Werte korrigiert \n PM2.5-, PM10-, VOC-Indizes korrigiert \n Admin-UI auf jsonConfig aktualisiert",
-        "ru": "зависимости обновлены \n Исправлены значения PM2.5, PM10, VOC, NO2 \n Исправлены индексы PM2.5, PM10, VOC \n Обновлен интерфейс администратора до jsonConfig",
-        "pt": "dependências foram atualizadas\n Valores corrigidos de PM2.5, PM10, VOC, NO2\n Corrigidos índices PM2.5, PM10, VOC\n UI de administração atualizada para jsonConfig",
-        "nl": "afhankelijkheden zijn bijgewerkt \n PM2.5-, PM10-, VOC-, NO2-waarden opgelost \n PM2.5-, PM10-, VOC-indexen opgelost \n Beheerdersinterface bijgewerkt naar jsonConfig",
-        "fr": "les dépendances ont été mises à jour\n Correction des valeurs PM2,5, PM10, VOC, NO2\n Correction des index PM2,5, PM10, VOC\n Mise à jour de l'interface utilisateur d'administration vers jsonConfig",
-        "it": "le dipendenze sono state aggiornate\nCorrezione dei valori PM2.5, PM10, VOC, NO2\nCorrezione degli indici PM2.5, PM10 e VOC\nInterfaccia utente di amministrazione aggiornata a jsonConfig",
-        "es": "las dependencias se actualizaron \n Se corrigieron los valores de PM2.5, PM10, VOC y NO2 \n Se corrigieron los índices de PM2.5, PM10 y VOC \n Se actualizó la interfaz de usuario del administrador a jsonConfig",
-        "pl": "zależności zostały zaktualizowane\nNaprawiono wartości PM2.5, PM10, VOC, NO2\nNaprawiono indeksy PM2.5, PM10, VOC\nZaktualizowano interfejs administratora do jsonConfig",
-        "uk": "залежності оновлено\nВиправлено значення PM2.5, PM10, VOC, NO2\nВиправлено індекси PM2.5, PM10, VOC\nОновлено інтерфейс адміністратора до jsonConfig",
-        "zh-cn": "更新了依赖项\n修复了 PM2.5、PM10、VOC、NO2 值\n修复了 PM2.5、PM10、VOC 索引\n将管理 UI 更新为 jsonConfig"
       }
     },
     "titleLang": {
@@ -236,7 +93,6 @@
     "type": "climate-control",
     "tier": 2,
     "compact": true,
-    "materialize": true,
     "supportCustoms": false,
     "connectionType": "local",
     "dataSource": "push",
@@ -248,7 +104,7 @@
     ],
     "dependencies": [
       {
-        "js-controller": ">=5.0.16"
+        "js-controller": ">=5.0.19"
       }
     ],
     "messages": [
