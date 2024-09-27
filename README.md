@@ -189,6 +189,7 @@ This is nice to know because the devices usually send (at least mine do) their s
 ## Changelog
 
 ### **WORK IN PROGRESS**
+- (@foxriver76) removed `@iobroker/plugin-sentry` from dependencies (necessary for js-controller 7)
 
 ### 3.2.3 (2024-06-21) (Marching on)
 - (grizzelbee) Fix: Added missing clearInterval in onUnload
