@@ -22,7 +22,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x]
+        node-version: [18.x, 20.x, 22.x]
 
     steps:
       - uses: actions/checkout@v1
@@ -48,7 +48,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node-version: [18.x, 20.x]
+        node-version: [18.x, 20.x, 22.x]
         os: [ubuntu-latest, windows-latest, macos-latest]
         exclude:
           # Don't test Node.js 8 on Windows. npm is weird here
@@ -87,7 +87,7 @@ jobs:
     if: |
       contains(github.event.head_commit.message, '[skip ci]') == false &&
       github.event_name == 'push' &&
-      startsWith(github.ref, 'refs/tags/')
+      startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
 
     steps:
