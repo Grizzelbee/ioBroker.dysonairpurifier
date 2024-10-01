@@ -22,6 +22,16 @@
     "type": "git",
     "url": "git+https://github.com/Grizzelbee/ioBroker.dysonairpurifier.git"
   },
+  "files": [
+    "admin{,/!(src)/**}/!(tsconfig|tsconfig.*).json",
+    "admin{,/!(src)/**}/*.{html,css,png,svg,jpg,js}",
+    "admin/build/",
+    "lib/",
+    "www/",
+    "io-package.json",
+    "LICENSE",
+    "main.js"
+  ],
   "engines": {
     "node": ">= 18.2.0"
   },
