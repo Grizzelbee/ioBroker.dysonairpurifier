@@ -1,6 +1,5 @@
 {
   "plugins": ["license", "iobroker", "manual-review"],
   "exec": {
-    "before_commit": "yarn run build"
   }
 }
