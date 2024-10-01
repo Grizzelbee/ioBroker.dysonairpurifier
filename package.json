@@ -1,6 +1,6 @@
 {
   "name": "iobroker.dysonairpurifier",
-  "version": "3.2.3",
+  "version": "3.2.4",
   "description": "dyson air purifiers and fans",
   "author": {
     "name": "grizzelbee",
@@ -34,6 +34,8 @@
     "test:unit": "mocha test/unit --exit",
     "test:integration": "mocha test/integration --exit",
     "test": "npm run test:js && npm run test:package",
+    "build:parcel": "parcel build admin/src/index.jsx -d admin/build",
+    "build": "npm run build:parcel",
     "lint": "eslint -c .eslintrc.json --report-unused-disable-directives --max-warnings 0 .",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier --write --config .prettierrc.json .",
