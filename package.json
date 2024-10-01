@@ -1,6 +1,6 @@
 {
   "name": "iobroker.dysonairpurifier",
-  "version": "3.2.3",
+  "version": "3.2.4",
   "description": "dyson air purifiers and fans",
   "author": {
     "name": "grizzelbee",
@@ -28,18 +28,18 @@
   "main": "main.js",
   "type": "commonjs",
   "scripts": {
-    "prepare": "[ \"$NODE_ENV\" = 'development' ] || [ -z \"$NODE_ENV\" ] && husky || exit 0",
-    "test:js": "mocha --require test/mocha.setup.js *.test.js",
+    "watch:parcel": "parcel admin/src/index.jsx -d admin/build",
+    "build:parcel": "parcel build admin/src/index.jsx -d admin/build",
+    "build": "npm run build:parcel",
+    "test:js": "mocha --config test/mocharc.custom.json \"{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}\"",
     "test:package": "mocha test/package --exit",
     "test:unit": "mocha test/unit --exit",
     "test:integration": "mocha test/integration --exit",
     "test": "npm run test:js && npm run test:package",
-    "lint": "eslint -c .eslintrc.json --report-unused-disable-directives --max-warnings 0 .",
-    "lint:fix": "npm run lint -- --fix",
-    "format": "prettier --write --config .prettierrc.json .",
+    "lint": "eslint --ext .js,.jsx",
     "snyk-protect": "snyk-protect",
-    "translate": "translate-adapter",
-    "release": "release-script"
+    "release": "release-script",
+    "translate": "translate-adapter"
   },
   "bugs": {
     "url": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues"
@@ -47,8 +47,7 @@
   "readmeFilename": "README.md",
   "snyk": true,
   "dependencies": {
-    "@iobroker/adapter-core": "^3.1.6",
-    "@iobroker/plugin-sentry": "^2.0.4",
+    "@iobroker/adapter-core": "^3.2.1",
     "@snyk/protect": "^1.1293.1",
     "axios": "^1.7.7",
     "flatted": "^3.3.1",
@@ -64,24 +63,24 @@
     "@alcalzone/release-script-plugin-manual-review": "^3.7.0",
     "@eslint/js": "^8.57.0",
     "@iobroker/adapter-dev": "^1.3.0",
-    "@iobroker/testing": "^4.1.3",
-    "@types/chai": "^4.3.19",
-    "@types/chai-as-promised": "^8.0.0",
-    "@types/mocha": "^10.0.7",
-    "@types/node": "^22.5.4",
+    "@iobroker/testing": "^5.0.0",
+    "@types/chai": "^5.0.0",
+    "@types/chai-as-promised": "^8.0.1",
+    "@types/mocha": "^10.0.8",
+    "@types/node": "^22.7.4",
     "@types/proxyquire": "^1.3.31",
     "@types/sinon": "^17.0.3",
     "@types/sinon-chai": "^3.2.12",
     "chai": "^4.4.1",
     "chai-as-promised": "^8.0.0",
     "eslint": "^8.57.0",
-    "husky": "^9.1.5",
+    "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
     "mocha": "^10.7.3",
     "prettier": "^3.3.3",
-    "prettier-plugin-organize-imports": "^4.0.0",
+    "prettier-plugin-organize-imports": "^4.1.0",
     "proxyquire": "^2.1.3",
-    "sinon": "^18.0.1",
+    "sinon": "^19.0.2",
     "sinon-chai": "^3.7.0"
   }
 }

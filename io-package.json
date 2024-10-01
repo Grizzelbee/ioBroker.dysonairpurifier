@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "dysonairpurifier",
-    "version": "3.2.3",
+    "version": "3.2.4",
     "news": {
+      "3.2.4": {
+        "en": "Upd: Dependencies got updated\nFix: Removed plugin-sentry\nFix: [#318](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/318) Added tests for node 22\nUpd: [#315](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/315) Fixed some issues mentioned by adapter-checker",
+        "de": "Aktualisierung: Abhängigkeiten wurden aktualisiert\nFix: entfernte Plugin-Sentry\nFix: [#318](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/318) Zusätzliche Tests für Knoten 22\nNach oben: [#315](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/315) Behoben einige Probleme von Adapter-Checker",
+        "ru": "Upd: зависимости обновили\nFix: Удаленный плагин-предложение\nFix: [#318] (https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/318) Добавленные тесты для узла 22\nUpd: [#315] (https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/315) Исправлены некоторые вопросы, упомянутые адаптером",
+        "pt": "Upd: Dependências foram atualizadas\nFix: Removido plugin-sentry\nFix: [#318](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/318) Adicionados testes para nó 22\n[#315](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/315)) Corrigido alguns problemas mencionados pelo verificador do adaptador",
+        "nl": "Upd: Afhankelijkheden werden bijgewerkt\nFix: verwijderde plugin-sentry\nFix: [#318](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/318) Toegevoegde tests voor knooppunt 22\nUpd: [#315](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/315) Regelde enkele problemen genoemd door adapter-checker",
+        "fr": "Mise à jour : Mise à jour des dépendances\nCorrection: Entrée du plugin supprimé\nCorrection: [#318](https://github.com/grizzelbee/ioBroker.dysonairpurifier/issues/318) Ajout de tests pour le noeud 22\nMise à jour: [#315](https://github.com/grizzelbee/ioBroker.dysonairpurifier/issues/315) Correction de certains problèmes mentionnés par l'adaptateur-vérificateur",
+        "it": "Aggiornamento delle dipendenze\nFisso: Removed plugin-sentry\n[#318](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/318) Test aggiunti per nodo 22\nAggiornamento: [#315](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/315) Risolto alcuni problemi menzionati da adattatore-checker",
+        "es": "Actualización de las dependencias\nFijación: Retirado plugin-sentrio\nFix: [#318](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/318) Pruebas adicionales para el nodo 22\nUpd: [#315](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/315) Arreglar algunos problemas mencionados por adaptador-checker",
+        "pl": "Upd: Aktualizacja zależności\nFix: Usunięto plugin- sentry\nFix: [# 318] (https: / / github.com / Grizzelbee / ioBroker.disonaircleacifier / issues / 318) Dodano testy dla węzła 22\nData umieszczenia w wykazie Naprawiono niektóre problemy wymienione przez kontroler adaptera",
+        "uk": "Оновлення: Залежності оновлено\nВиправлення: Видалення плагіна\nВиправлення: [#318](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/products/318) Додано тести для вузла 22\nОновлення: [#315](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/products/315) Виправлено деякі питання, зазначені перехідником",
+        "zh-cn": "Upd: 依赖更新\n修正: 删除插件输入\n修补:[#318](https://github.com/Grizzelbee/ioBroker.dysonair纯洁剂/issues/318) 22号节点添加测试\nUpd: [#315] (https://github.com/Grizzelbee/ioBroker.dysonair纯洁剂/issues/315) (中文(简体) ). 解决适配器检查器提到的一些问题"
+      },
       "3.2.3": {
         "en": "Fix: Added missing clearInterval in onUnload",
         "de": "Fix: Fehlendes ClearInterval in onUnload hinzugefügt",

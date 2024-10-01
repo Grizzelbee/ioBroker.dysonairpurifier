@@ -1,4 +1,4 @@
 {
   "upgrade": true,
-  "reject": ["chai", "eslint", "@eslint/js"]
+  "reject": ["chai", "eslint", "@eslint/js", "sinon-chai"]
 }
