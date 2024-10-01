@@ -28,20 +28,18 @@
   "main": "main.js",
   "type": "commonjs",
   "scripts": {
-    "prepare": "[ \"$NODE_ENV\" = 'development' ] || [ -z \"$NODE_ENV\" ] && husky || exit 0",
-    "test:js": "mocha --require test/mocha.setup.js *.test.js",
+    "watch:parcel": "parcel admin/src/index.jsx -d admin/build",
+    "build:parcel": "parcel build admin/src/index.jsx -d admin/build",
+    "build": "npm run build:parcel",
+    "test:js": "mocha --config test/mocharc.custom.json \"{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}\"",
     "test:package": "mocha test/package --exit",
     "test:unit": "mocha test/unit --exit",
     "test:integration": "mocha test/integration --exit",
     "test": "npm run test:js && npm run test:package",
-    "build:parcel": "parcel build admin/src/index.jsx -d admin/build",
-    "build": "npm run build:parcel",
-    "lint": "eslint -c .eslintrc.json --report-unused-disable-directives --max-warnings 0 .",
-    "lint:fix": "npm run lint -- --fix",
-    "format": "prettier --write --config .prettierrc.json .",
+    "lint": "eslint --ext .js,.jsx",
     "snyk-protect": "snyk-protect",
-    "translate": "translate-adapter",
-    "release": "release-script"
+    "release": "release-script",
+    "translate": "translate-adapter"
   },
   "bugs": {
     "url": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues"
