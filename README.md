@@ -189,6 +189,10 @@ This is nice to know because the devices usually send (at least mine do) their s
 ## Changelog
 
 ### **WORK IN PROGRESS**
+- (grizzelbee) Upd: Dependencies got updated
+- (grizzelbee) Fix: Removed plugin-sentry
+- (grizzelbee) Fix: [#318](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/318) Added tests for node 22
+- (grizzelbee) Upd: [#315](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/315) Fixed some issues mentioned by adapter-checker
 
 ### 3.2.3 (2024-06-21) (Marching on)
 - (grizzelbee) Fix: Added missing clearInterval in onUnload
