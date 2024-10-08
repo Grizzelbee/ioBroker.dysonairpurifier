@@ -187,6 +187,11 @@ This is nice to know because the devices usually send (at least mine do) their s
   - In other cases it has been an IP/DNS issue. Resetting the DHCP/DNS server (router) solved the issue.
 
 ## Changelog
+### **WORK IN PROGRESS** 
+- (grizzelbee) Upd: Dependencies got updated
+- (grizzelbee) Fix: Fixed GUI issues
+- (grizzelbee) Fix: Added missing dyson-utils.js to files section in package.json 
+
 ### 3.2.4 (2024-10-01)
 - (grizzelbee) Upd: Dependencies got updated
 - (grizzelbee) Fix: Removed plugin-sentry
