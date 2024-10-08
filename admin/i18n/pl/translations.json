@@ -45,5 +45,6 @@
     "Lbl_ChallengeId": "dyson Challenge-Id",
     "desc_2FA": "Aby aktywować ten adapter, musisz wykonać początkowy jednorazowy proces 2FA podobny do aplikacji dyson.",
     "Lbl_UpAndRunning": "Przed konfiguracją ta instancja adaptera musi zostać uruchomiona i uruchomiona.",
-    "Poll_Interval_desc": "Żądaj nowych informacji o stanie i czujnikach z urządzeń co X sekund. 0 (zero) wyłącza odpytywanie."
+    "Poll_Interval_desc": "Żądaj nowych informacji o stanie i czujnikach z urządzeń co X sekund. 0 (zero) wyłącza odpytywanie.",
+    "Lbl_Donation": "Darowizna"
 }

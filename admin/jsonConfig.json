@@ -2,16 +2,6 @@
   "i18n": true,
   "type": "panel",
   "items": {
-    "donationHelp": {
-      "type": "staticText",
-      "text": "donation"
-    },
-    "donateButton": {
-      "newLine": true,
-      "type": "staticImage",
-      "src": "adapter/dysonairpurifier/admin/paypal-donate-button.png",
-      "href": "https://www.paypal.com/donate/?hosted_button_id=SPUDTXGNG2MYG"
-    },
     "testAlive": {
       "newLine": true,
       "type": "alive",
@@ -24,16 +14,7 @@
       "type": "header",
       "text": "Settings",
       "size": 2,
-      "sm": 24,
-      "md": 8,
-      "lg": 6
-    },
-    "_2FactorSection": {
-      "type": "header",
-      "text": "Lbl_2FA",
-      "tooltip": "desc_2FA",
-      "size": 2,
-      "sm": 24,
+      "sm": 12,
       "md": 8,
       "lg": 6
     },
@@ -53,16 +34,6 @@
       "sm": 12,
       "md": 4,
       "lg": 3
-    },
-    "token_received": {
-      "type": "checkbox",
-      "label": "token_received",
-      "tooltip": "token_received_desc",
-      "defaultFunc": "data.token_received=(data.token.length > 0)",
-      "disabled": "true",
-      "sm": 30,
-      "md": 94,
-      "lg": 6
     },
     "country": {
       "newLine": true,
@@ -114,36 +85,47 @@
       "md": 3,
       "lg": 2
     },
-    "challengeId": {
-      "type": "text",
-      "label": "Lbl_ChallengeId",
-      "tooltip": "challengeId_desc",
-      "default": "",
-      "doNotSave": true,
-      "sm": 12,
-      "md": 4,
-      "lg": 3
-    },
-    "dyson_code": {
-      "type": "text",
-      "label": "Lbl_dyson_code",
-      "tooltip": "dyson_code_desc",
-      "doNotSave": true,
-      "sm": 12,
-      "md": 4,
-      "lg": 3
-    },
     "keepValues": {
       "newLine": true,
       "type": "checkbox",
       "label": "keepValues",
       "tooltip": "keepValues_desc",
       "default": false,
-      "sm": 30,
-      "md": 9,
+      "sm": 6,
+      "md": 3,
+      "lg": 2
+    },
+    "disableReconnectLogging": {
+      "type": "checkbox",
+      "label": "disableReconnectLogging",
+      "tooltip": "disableReconnectLogging_desc",
+      "default": false,
+      "sm": 6,
+      "md": 3,
+      "lg": 2
+    },
+    "_2FactorSection": {
+      "newLine": true,
+      "type": "header",
+      "text": "Lbl_2FA",
+      "tooltip": "desc_2FA",
+      "size": 2,
+      "sm": 12,
+      "md": 8,
       "lg": 6
     },
+    "token_received": {
+      "type": "checkbox",
+      "label": "token_received",
+      "tooltip": "token_received_desc",
+      "defaultFunc": "data.token_received=(data.token.length > 0)",
+      "disabled": "true",
+      "sm": 12,
+      "md": 6,
+      "lg": 4
+    },
     "getDyson2faMail": {
+      "newLine": true,
       "type": "sendTo",
       "label": "Start 2FA Process",
       "variant": "outlined",
@@ -169,15 +151,25 @@
       "md": 2,
       "lg": 3
     },
-    "disableReconnectLogging": {
+    "challengeId": {
       "newLine": true,
-      "type": "checkbox",
-      "label": "disableReconnectLogging",
-      "tooltip": "disableReconnectLogging_desc",
-      "default": false,
-      "sm": 30,
-      "md": 9,
-      "lg": 6
+      "type": "text",
+      "label": "Lbl_ChallengeId",
+      "tooltip": "challengeId_desc",
+      "default": "",
+      "doNotSave": true,
+      "sm": 12,
+      "md": 4,
+      "lg": 3
+    },
+    "dyson_code": {
+      "type": "text",
+      "label": "Lbl_dyson_code",
+      "tooltip": "dyson_code_desc",
+      "doNotSave": true,
+      "sm": 12,
+      "md": 4,
+      "lg": 3
     },
     "token": {
       "type": "password",
@@ -185,9 +177,29 @@
       "tooltip": "token_desc",
       "disabled": "true",
       "hidden": "true",
-      "sm": 30,
+      "sm": 12,
       "md": 9,
       "lg": 6
+    },
+    "_donateSection": {
+      "newLine": true,
+      "type": "header",
+      "text": "Lbl_Donation",
+      "tooltip": "donation",
+      "size": 2,
+      "sm": 12,
+      "md": 8,
+      "lg": 6
+    },
+    "donationHelp": {
+      "newLine": true,
+      "type": "staticText",
+      "text": "donation"
+    },
+    "donateButton": {
+      "type": "staticImage",
+      "src": "adapter/dysonairpurifier/admin/paypal-donate-button.png",
+      "href": "https://www.paypal.com/donate/?hosted_button_id=SPUDTXGNG2MYG"
     }
   }
 }
