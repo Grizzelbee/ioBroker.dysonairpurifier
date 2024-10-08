@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "dysonairpurifier",
-    "version": "3.2.4",
+    "version": "3.2.5",
     "news": {
+      "3.2.5": {
+        "en": "Upd: Dependencies got updated\nFix: Fixed GUI issues\nFix: Added missing files to files-section in package.json",
+        "de": "Aktualisierung: Abhängigkeiten wurden aktualisiert\nFix: Fehler behoben\nFix: Hinzufügen fehlender Dateien zu Dateien-Abschnitt im Paket. Json",
+        "ru": "Upd: зависимости обновили\nFix: Fixed GUI issues\nИсправление: Добавлено недостающие файлы в раздел файлов в упаковке. json",
+        "pt": "Upd: Dependências foram atualizadas\nCorrigir: problemas de interface gráfica fixa\nCorrigir: Adicionados arquivos ausentes para a seção de arquivos no pacote. O que foi",
+        "nl": "Upd: Afhankelijkheden werden bijgewerkt\nFix: Vaste GUI problemen\nFix: ontbrekende bestanden toegevoegd aan bestandssectie in pakket. json",
+        "fr": "Mise à jour : Mise à jour des dépendances\nCorrection : Correction des problèmes d'interface graphique\nCorrection: Ajout de fichiers manquants dans la section fichiers dans le paquet. Json",
+        "it": "Aggiornamento delle dipendenze\nFisso: Problemi di GUI fissi\nFix: Aggiunto file mancanti a file-sezione in pacchetto. J",
+        "es": "Actualización de las dependencias\nCorrección: Problemas de interfaz fijo\nFijación: Añadido archivos perdidos a la sección de archivos en paquete. json",
+        "pl": "Upd: Aktualizacja zależności\nFix: Naprawiono problemy GUI\nFix: Dodano brakujące pliki do sekcji plików w pakiecie. json",
+        "uk": "Оновлення: Залежності оновлено\nВиправлено: Виправлено проблеми GUI\nВиправлення: Додано відсутні файли до розділу файлів у пакеті. свінгери",
+        "zh-cn": "Upd: 依赖更新\n固定图形界面问题\n修补:将缺失的文件添加到包中的文件区. 贾森"
+      },
       "3.2.4": {
         "en": "Upd: Dependencies got updated\nFix: Removed plugin-sentry\nFix: [#318](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/318) Added tests for node 22\nUpd: [#315](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/315) Fixed some issues mentioned by adapter-checker",
         "de": "Aktualisierung: Abhängigkeiten wurden aktualisiert\nFix: entfernte Plugin-Sentry\nFix: [#318](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/318) Zusätzliche Tests für Knoten 22\nNach oben: [#315](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/315) Behoben einige Probleme von Adapter-Checker",
