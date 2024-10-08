@@ -30,8 +30,8 @@
     "www/",
     "io-package.json",
     "LICENSE",
-    "main.js",
-    "dyson-utils.js"
+    "README.md",
+    "*.{json,js}"
   ],
   "engines": {
     "node": ">= 18.2.0"

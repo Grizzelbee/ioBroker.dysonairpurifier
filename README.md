@@ -190,7 +190,7 @@ This is nice to know because the devices usually send (at least mine do) their s
 ### **WORK IN PROGRESS** 
 - (grizzelbee) Upd: Dependencies got updated
 - (grizzelbee) Fix: Fixed GUI issues
-- (grizzelbee) Fix: Added missing dyson-utils.js to files section in package.json 
+- (grizzelbee) Fix: Added missing files to files-section in package.json 
 
 ### 3.2.4 (2024-10-01)
 - (grizzelbee) Upd: Dependencies got updated
