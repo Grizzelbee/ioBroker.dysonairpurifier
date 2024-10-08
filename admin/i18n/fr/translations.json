@@ -45,5 +45,6 @@
     "Lbl_ChallengeId": "ID de défi Dyson",
     "desc_2FA": "Vous devez effectuer un premier processus 2FA unique similaire à l'application Dyson pour activer cet adaptateur.",
     "Lbl_UpAndRunning": "Cette instance d'adaptateur doit être opérationnelle avant la configuration.",
-    "Poll_Interval_desc": "Demandez de nouvelles informations sur l'état et les capteurs des appareils toutes les X secondes. 0 (zéro) désactive l’interrogation."
+    "Poll_Interval_desc": "Demandez de nouvelles informations sur l'état et les capteurs des appareils toutes les X secondes. 0 (zéro) désactive l’interrogation.",
+    "Lbl_Donation": "Donation"
 }

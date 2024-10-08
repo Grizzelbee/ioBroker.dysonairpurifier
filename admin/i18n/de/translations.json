@@ -45,5 +45,6 @@
     "token_inside": "Ein Token wurde empfangen und gespeichert.",
     "token_inside_desc": "Zeigt an, ob ein Authentifizierungstoken von den Dyson-Servern empfangen wurde, der für die Anmeldung erforderlich ist – der Adapter funktioniert nicht, wenn dieses Kontrollkästchen nicht aktiviert ist.",
     "Lbl_UpAndRunning": "Diese Adapterinstanz muss vor der Konfiguration betriebsbereit sein.",
-    "Poll_Interval_desc": "Fordern Sie alle X Sekunden neue Status- und Sensorinformationen von Geräten an. 0 (Null) deaktiviert die Abfrage."
+    "Poll_Interval_desc": "Fordern Sie alle X Sekunden neue Status- und Sensorinformationen von Geräten an. 0 (Null) deaktiviert die Abfrage.",
+    "Lbl_Donation": "Spende"
 }
