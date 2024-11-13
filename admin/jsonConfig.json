@@ -14,26 +14,32 @@
       "type": "header",
       "text": "Settings",
       "size": 2,
+      "xs": 12,
       "sm": 12,
-      "md": 8,
-      "lg": 6
+      "md": 6,
+      "lg": 4,
+      "xl": 4
     },
     "email": {
       "newLine": true,
       "type": "text",
       "label": "Lbl_email",
       "tooltip": "email_desc",
+      "xs": 12,
       "sm": 12,
-      "md": 4,
-      "lg": 3
+      "md": 6,
+      "lg": 4,
+      "xl": 4
     },
     "Password": {
       "type": "password",
       "label": "Lbl_Password",
       "tooltip": "password_desc",
+      "xs": 12,
       "sm": 12,
-      "md": 4,
-      "lg": 3
+      "md": 6,
+      "lg": 4,
+      "xl": 4
     },
     "country": {
       "newLine": true,
@@ -56,9 +62,11 @@
         { "label": "Russia", "value": "RU" },
         { "label": "China", "value": "CN" }
       ],
-      "sm": 10,
-      "md": 3,
-      "lg": 2
+      "xs": 12,
+      "sm": 12,
+      "md": 6,
+      "lg": 4,
+      "xl": 4
     },
     "temperatureUnit": {
       "type": "select",
@@ -70,9 +78,11 @@
         { "label": { "en": "Fahrenheit" }, "value": "F" },
         { "label": { "en": "Kelvin" }, "value": "K" }
       ],
-      "sm": 10,
-      "md": 3,
-      "lg": 2
+      "xs": 12,
+      "sm": 12,
+      "md": 6,
+      "lg": 4,
+      "xl": 4
     },
     "pollInterval": {
       "type": "number",
@@ -81,9 +91,11 @@
       "min": 0,
       "max": 10000,
       "default": 30,
-      "sm": 10,
-      "md": 3,
-      "lg": 2
+      "xs": 12,
+      "sm": 12,
+      "md": 6,
+      "lg": 4,
+      "xl": 4
     },
     "keepValues": {
       "newLine": true,
@@ -91,18 +103,22 @@
       "label": "keepValues",
       "tooltip": "keepValues_desc",
       "default": false,
-      "sm": 6,
-      "md": 3,
-      "lg": 2
+      "xs": 12,
+      "sm": 12,
+      "md": 6,
+      "lg": 4,
+      "xl": 4
     },
     "disableReconnectLogging": {
       "type": "checkbox",
       "label": "disableReconnectLogging",
       "tooltip": "disableReconnectLogging_desc",
       "default": false,
-      "sm": 6,
-      "md": 3,
-      "lg": 2
+      "xs": 12,
+      "sm": 12,
+      "md": 6,
+      "lg": 4,
+      "xl": 4
     },
     "_2FactorSection": {
       "newLine": true,
@@ -110,9 +126,11 @@
       "text": "Lbl_2FA",
       "tooltip": "desc_2FA",
       "size": 2,
+      "xs": 12,
       "sm": 12,
-      "md": 8,
-      "lg": 6
+      "md": 6,
+      "lg": 4,
+      "xl": 4
     },
     "token_received": {
       "type": "checkbox",
@@ -120,9 +138,11 @@
       "tooltip": "token_received_desc",
       "defaultFunc": "data.token_received=(data.token.length > 0)",
       "disabled": "true",
+      "xs": 12,
       "sm": 12,
       "md": 6,
-      "lg": 4
+      "lg": 4,
+      "xl": 4
     },
     "getDyson2faMail": {
       "newLine": true,
@@ -134,9 +154,11 @@
       "jsonData": "{ \"email\": \"${data.email}\", \"password\": \"${data.Password}\" , \"country\": \"${data.country}\", \"locale\": \"${data.locale}\"}",
       "useNative": true,
       "tooltip": "Start the 2FA Process and get the One-Time-Password eMail.",
+      "xs": 12,
       "sm": 12,
-      "md": 4,
-      "lg": 3
+      "md": 6,
+      "lg": 4,
+      "xl": 4
     },
     "getDysonToken": {
       "type": "sendTo",
@@ -147,9 +169,11 @@
       "jsonData": "{ \"email\": \"${data.email}\", \"password\": \"${data.Password}\" , \"country\": \"${data.country}\", \"challengeId\": \"${data.challengeId}\", \"PIN\": \"${data.dyson_code}\"}",
       "useNative": true,
       "tooltip": "finish_desc",
+      "xs": 12,
       "sm": 12,
-      "md": 2,
-      "lg": 3
+      "md": 6,
+      "lg": 4,
+      "xl": 4
     },
     "challengeId": {
       "newLine": true,
@@ -158,18 +182,22 @@
       "tooltip": "challengeId_desc",
       "default": "",
       "doNotSave": true,
+      "xs": 12,
       "sm": 12,
-      "md": 4,
-      "lg": 3
+      "md": 6,
+      "lg": 4,
+      "xl": 4
     },
     "dyson_code": {
       "type": "text",
       "label": "Lbl_dyson_code",
       "tooltip": "dyson_code_desc",
       "doNotSave": true,
+      "xs": 12,
       "sm": 12,
-      "md": 4,
-      "lg": 3
+      "md": 6,
+      "lg": 4,
+      "xl": 4
     },
     "token": {
       "type": "password",
@@ -177,9 +205,11 @@
       "tooltip": "token_desc",
       "disabled": "true",
       "hidden": "true",
+      "xs": 12,
       "sm": 12,
-      "md": 9,
-      "lg": 6
+      "md": 6,
+      "lg": 4,
+      "xl": 4
     },
     "_donateSection": {
       "newLine": true,
@@ -187,9 +217,11 @@
       "text": "Lbl_Donation",
       "tooltip": "donation",
       "size": 2,
+      "xs": 12,
       "sm": 12,
-      "md": 8,
-      "lg": 6
+      "md": 6,
+      "lg": 4,
+      "xl": 4
     },
     "donationHelp": {
       "newLine": true,
