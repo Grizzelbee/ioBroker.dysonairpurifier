@@ -231,7 +231,10 @@
     "donateButton": {
       "type": "staticImage",
       "src": "adapter/dysonairpurifier/admin/paypal-donate-button.png",
-      "href": "https://www.paypal.com/donate/?hosted_button_id=SPUDTXGNG2MYG"
+      "href": "https://www.paypal.com/donate/?hosted_button_id=SPUDTXGNG2MYG",
+      "style": {
+        "maxWidth": 194
+      }
     }
   }
 }
