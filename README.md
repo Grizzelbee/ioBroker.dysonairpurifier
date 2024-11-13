@@ -187,8 +187,7 @@ This is nice to know because the devices usually send (at least mine do) their s
   - In other cases it has been an IP/DNS issue. Resetting the DHCP/DNS server (router) solved the issue.
 
 ## Changelog
-
-### **WORK IN PROGRESS**
+### 3.2.6 (2024-11-13)
 - (grizzelbee) Upd: Dependencies got updated
 - (grizzelbee) Fix: Fixed issues mentioned by adapter checker regarding responsive design
 

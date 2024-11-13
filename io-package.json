@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "dysonairpurifier",
-    "version": "3.2.5",
+    "version": "3.2.6",
     "news": {
+      "3.2.6": {
+        "en": "Upd: Dependencies got updated\nFix: Fixed issues mentioned by adapter checker regarding responsive design",
+        "de": "Aktualisierung: Abhängigkeiten wurden aktualisiert\nFix: Behobene Probleme, die von Adapter Checker in Bezug auf responsive Design erwähnt werden",
+        "ru": "Upd: зависимости обновили\nFix: Исправленные вопросы, упомянутые адаптером шашки относительно адаптивного дизайна",
+        "pt": "Upd: Dependências foram atualizadas\nFix: Corrigido problemas mencionados pelo verificador do adaptador em relação ao design responsivo",
+        "nl": "Upd: Afhankelijkheden werden bijgewerkt\nFix: Vaste problemen genoemd door adapter checker met betrekking tot responsief ontwerp",
+        "fr": "Mise à jour : Mise à jour des dépendances\nCorrection: Correction des problèmes mentionnés par le vérificateur d'adaptateur concernant la conception réactive",
+        "it": "Aggiornamento delle dipendenze\nFisso: Problemi risolti menzionati dall'adattatore checker per quanto riguarda il design reattivo",
+        "es": "Actualización de las dependencias\nCorrección: Problemas fijos mencionados por el control de adaptador respecto al diseño sensible",
+        "pl": "Upd: Aktualizacja zależności\nFix: Naprawiono problemy wymienione przez sprawdzacz adaptera dotyczące responsive design",
+        "uk": "Оновлення: Залежності оновлено\nВиправлено: Виправлені питання, зазначені за допомогою адаптера перевірки щодо адаптивного дизайну",
+        "zh-cn": "Upd: 依赖更新\n固定问题:适配器检查员提及的关于响应性设计的固定问题"
+      },
       "3.2.5": {
         "en": "Upd: Dependencies got updated\nFix: Fixed GUI issues\nFix: Added missing files to files-section in package.json",
         "de": "Aktualisierung: Abhängigkeiten wurden aktualisiert\nFix: Fehler behoben\nFix: Hinzufügen fehlender Dateien zu Dateien-Abschnitt im Paket. Json",
