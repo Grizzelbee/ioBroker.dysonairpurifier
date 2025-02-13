@@ -37,7 +37,6 @@
     "node": ">= 18.2.0"
   },
   "main": "main.js",
-  "type": "commonjs",
   "scripts": {
     "watch:parcel": "parcel admin/src/index.jsx -d admin/build",
     "build:parcel": "parcel build admin/src/index.jsx -d admin/build",
@@ -48,7 +47,6 @@
     "test:integration": "mocha test/integration --exit",
     "test": "npm run test:js && npm run test:package",
     "lint": "eslint --ext .js,.jsx",
-    "snyk-protect": "snyk-protect",
     "release": "release-script",
     "translate": "translate-adapter"
   },
@@ -56,10 +54,8 @@
     "url": "https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues"
   },
   "readmeFilename": "README.md",
-  "snyk": true,
   "dependencies": {
     "@iobroker/adapter-core": "^3.2.3",
-    "@snyk/protect": "^1.1295.3",
     "axios": "^1.7.9",
     "flatted": "^3.3.2",
     "https": "^1.0.0",
