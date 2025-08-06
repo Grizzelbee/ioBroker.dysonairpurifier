@@ -174,7 +174,7 @@ All states report whether there is a failure or not. `True` means a failure, `fa
 
 ### Poll Intervall
 - Starting with v3.2.2 a poll intervall of 0 definitely disables polling. It may have worked before due to mathematics - but not for sure and with unknown side effects.
-This is nice to know because the devices usually send (at least mine do) their state by themself when it changes. Using this setting helps reducing your network traffic by stopping unnecessary polling.  
+This is nice to know because the devices usually send (at least mine do) their state by themselves when it changes. Using this setting helps to reduce your network traffic by stopping unnecessary polling.  
 
 
 ### Known issues
@@ -280,7 +280,7 @@ This is nice to know because the devices usually send (at least mine do) their s
 
 - (grizzelbee) Upd: dependencies got updated
 - (grizzelbee) Fix: 2FA Process is working again
-- (grizzelbee) New: At least nodeJs V18.2.0 is required
+- (grizzelbee) New: At least Node.js V18.2.0 is required
 
 ### 3.1.1 (2024-02-01) (Marching on)
 
@@ -536,7 +536,7 @@ This is nice to know because the devices usually send (at least mine do) their s
 
 - (jpwenzel) New: Removing crypto from package dependency list (using Node.js provided version)
 - (jpwenzel) New: Introducing unit tests
-- (jpwenzel) New: At least NodeJs 10.0.0 is required
+- (jpwenzel) New: At least Node.js 10.0.0 is required
 - (grizzelbee) New: [#23](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/23) - Introduced new data field AirQuality which represents the worst value of all present indexes.
 - (grizzelbee) New: BREAKING CHANGE! - switched over to the adapter-prototype build-in password encryption. Therefore, you'll need to enter your password again in config.
 - (grizzelbee) New: At least js-controller 3.0.0 is required
@@ -621,7 +621,7 @@ Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD
 ### CURRENT-STATE
 
 | name         | meaning                                                    | possible values      | Unit |
-| ------------ | ---------------------------------------------------------- | -------------------- | ---- |
+|--------------|------------------------------------------------------------|----------------------|------|
 | mode-reason  | Current Mode has been set by RemoteControl, App, Scheduler | PRC, LAPP, LSCH, PUI |      |
 | state-reason |                                                            | MODE                 |      |
 | rssi         | WIFI Strength                                              | -100 - 0             | dBm  |
@@ -678,7 +678,7 @@ Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD
 | dial | [DP0x] Unknown                                  |                                                                                                                                                                   |                                     |
 
 | Error-Codes | Meaning                                                                                      |
-| ----------- | -------------------------------------------------------------------------------------------- |
+|-------------|----------------------------------------------------------------------------------------------|
 | NONE        | There is no error active                                                                     |
 | 57C2        | unknown                                                                                      |
 | 11E1        | Oscillation has been disabled. Please press Button "Oscillation" on your remote to continue. |
@@ -686,7 +686,7 @@ Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD
 #### scheduler
 
 | name | meaning            | possible values | Unit |
-| ---- | ------------------ | --------------- | ---- |
+|------|--------------------|-----------------|------|
 | dstv | daylightSavingTime | 0001...         |      |
 | srsc | ?                  | 7c68...         |      |
 | tzid | timezone?          | 0001...         |      |
@@ -696,7 +696,7 @@ Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD
 #### data
 
 | name | meaning                    | possible values | Unit    |
-| ---- | -------------------------- | --------------- | ------- |
+|------|----------------------------|-----------------|---------|
 | hact | Humidity (%)               | 0000 - 0100     | Percent |
 | pact | Dust                       | 0000 - 0009     |         |
 | sltm | Sleep timer                | OFF... 9999     | Minutes |
