@@ -190,6 +190,8 @@ This is nice to know because the devices usually send (at least mine do) their s
 ### **WORK IN PROGRESS**
 - (grizzelbee) Upd: Dependencies got updated
 - (grizzelbee) Fix: [#338](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/338) Fixed Admin dependency
+- (grizzelbee) Fix: [#341](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/341) Fixed linting
+- fixes #342 Updated minimum required NodeJs Version to 20
 
 ### 3.2.7 (2025-02-13)
 - (grizzelbee) Upd: Dependencies got updated

@@ -34,7 +34,7 @@
     "*.{json,js}"
   ],
   "engines": {
-    "node": ">= 18.2.0"
+    "node": ">= 20.0.0"
   },
   "main": "main.js",
   "scripts": {
