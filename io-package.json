@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "dysonairpurifier",
-    "version": "3.2.6",
+    "version": "3.2.7",
     "news": {
+      "3.2.7": {
+        "en": "Upd: Dependencies got updated\nUpd: Moved to eslint 9 and fixed new lint issues",
+        "de": "Aktualisierung: Abhängigkeiten wurden aktualisiert\nUpd: Auf den Punkt 9 verschoben und neue Lint-Probleme behoben",
+        "ru": "Upd: зависимости обновили\nUpd: Передвинутый на eslint 9 и фиксированный новый выпуск lint",
+        "pt": "Upd: Dependências foram atualizadas\nUpd: Movido para eslint 9 e corrigido novos problemas lint",
+        "nl": "Upd: Afhankelijkheden werden bijgewerkt\nUpd: Verplaatst naar eslint 9 en vaste nieuwe pluis kwesties",
+        "fr": "Mise à jour : Mise à jour des dépendances\nMise à jour : Transféré à eslint 9 et corrigé de nouveaux problèmes de lint",
+        "it": "Aggiornamento delle dipendenze\nUpd: spostato a eslint 9 e risolto nuovi problemi di lint",
+        "es": "Actualización de las dependencias\nUpd: Moved to eslint 9 and fixed new lint issues",
+        "pl": "Upd: Aktualizacja zależności\nUpd: Przeniesiono do eslint 9 i naprawiono nowe kwestie",
+        "uk": "Оновлення: Залежності оновлено\nПопередня: Переміщено до eslint 9 і виправлено нові проблеми з розфарбовуванням",
+        "zh-cn": "Upd: 依赖更新\nUpd: 移动到 Eslint 9 并固定新线条问题"
+      },
       "3.2.6": {
         "en": "Upd: Dependencies got updated\nFix: Fixed issues mentioned by adapter checker regarding responsive design",
         "de": "Aktualisierung: Abhängigkeiten wurden aktualisiert\nFix: Behobene Probleme, die von Adapter Checker in Bezug auf responsive Design erwähnt werden",
