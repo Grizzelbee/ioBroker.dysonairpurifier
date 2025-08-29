@@ -1160,7 +1160,11 @@ class dysonAirPurifier extends utils.Adapter {
         try {
             adapterLog.info('Querying devices from dyson API.');
             // @ts-expect-error - devices is defined in the global scope
-            devices = await dysonUtils.getDevices(this.config.token, this);
+            devices = await dysonUtils.getDevicesFromAPI(this.config.token, this);
+            if (typeof devices === 'undefined') {
+                // @ts-expect-error - devices is defined in the global scope
+                // devices = await dysonUtils.getDevicesFromDevicetree(this.config.token, this);
+            }
             if (typeof devices != 'undefined') {
                 for (const thisDevice of devices) {
                     // delete deprecated fields from device tree
