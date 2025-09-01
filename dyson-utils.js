@@ -245,7 +245,7 @@ module.exports.decryptMqttPasswd = function (LocalCredentials) {
 };
 
 /**
- * Function getDevices
+ * Function getDevicesFromAPI
  * Queries the devices stored in a given dyson online account
  *
  * @param token - your dyson account token
@@ -254,7 +254,7 @@ module.exports.decryptMqttPasswd = function (LocalCredentials) {
  *      resolves with a List of dyson devices connected to the given account
  *      rejects with an error message
  */
-module.exports.getDevices = async function (token, adapter) {
+module.exports.getDevicesFromAPI = async function (token, adapter) {
     try {
         const response = await this.dysonGetDevicesFromApi(token);
 
