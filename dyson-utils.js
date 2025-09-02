@@ -244,6 +244,15 @@ module.exports.decryptMqttPasswd = function (LocalCredentials) {
     return decryptedPasswordJson.apPasswordHash;
 };
 
+function addToKnownDevices(response, thisDevice, devices) {
+    // productType is supported: Push to Array and create in devicetree
+    response.data[thisDevice].hostAddress = undefined;
+    response.data[thisDevice].mqttClient = null;
+    response.data[thisDevice].mqttPassword = this.decryptMqttPasswd(response.data[thisDevice].LocalCredentials);
+    response.data[thisDevice].updateIntervalHandle = null;
+    devices.push(response.data[thisDevice]);
+}
+
 /**
  * Function getDevices
  * Queries the devices stored in a given dyson online account
@@ -277,19 +286,16 @@ module.exports.getDevices = async function (token, adapter) {
                     );
                 } else {
                     adapter.log.warn(
-                        `Device with serial number [${response.data[thisDevice].Serial}] not added, hence it is not supported by this adapter. Product type: [${response.data[thisDevice].ProductType}]`,
+                        `Device with serial number [${response.data[thisDevice].Serial}] added, even it is unknown to by this adapter. Product type: [${response.data[thisDevice].ProductType}]`,
                     );
-                    adapter.log.warn('Please open an Issue on github if you think your device should be supported.');
+                    adapter.log.warn('Therefore some functions or sensor data may be missing.');
+                    adapter.log.warn(
+                        'Please open an Issue on github and attach debug log data to get better support for your device.',
+                    );
+                    addToKnownDevices(response, thisDevice, devices);
                 }
             } else {
-                // productType is supported: Push to Array and create in devicetree
-                response.data[thisDevice].hostAddress = undefined;
-                response.data[thisDevice].mqttClient = null;
-                response.data[thisDevice].mqttPassword = this.decryptMqttPasswd(
-                    response.data[thisDevice].LocalCredentials,
-                );
-                response.data[thisDevice].updateIntervalHandle = null;
-                devices.push(response.data[thisDevice]);
+                addToKnownDevices(response, thisDevice, devices);
             }
         }
         return devices;
