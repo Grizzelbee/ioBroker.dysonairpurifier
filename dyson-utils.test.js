@@ -1,8 +1,8 @@
 'use strict';
 
-const fs = require('fs');
+const fs = require('node:fs');
 
-const { fail } = require('assert');
+const { fail } = require('node:assert');
 const { expect } = require('chai');
 const sinon = require('sinon');
 

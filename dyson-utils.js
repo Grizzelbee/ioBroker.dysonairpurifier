@@ -1,12 +1,12 @@
 'use strict';
 
-const crypto = require('crypto');
+const crypto = require('node:crypto');
 const { stringify } = require('flatted');
 const dysonConstants = require('./dysonConstants.js');
 const axios = require('axios');
-const https = require('https');
+const https = require('node:https');
 const dnsResolver = require('node:dns/promises');
-const tls = require('tls');
+const tls = require('node:tls');
 const httpsAgent = new https.Agent({
     ca: [...tls.rootCertificates],
     rejectUnauthorized: false,
