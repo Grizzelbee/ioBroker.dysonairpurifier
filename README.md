@@ -616,6 +616,8 @@ This is nice to know because the devices usually send (at least mine do) their s
 
 - (grizzelbee) first development body (non-functional)
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## Explanation of Dyson API data (message payload)
 
 Information copied and extended from <https://github.com/shadowwa/Dyson-MQTT2RRD/blob/master/README.md>
