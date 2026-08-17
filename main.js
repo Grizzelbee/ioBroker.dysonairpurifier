@@ -252,6 +252,7 @@ class dysonAirPurifier extends utils.Adapter {
                         write: false,
                         role: 'value',
                         type: 'number',
+                        def: 0,
                         states: {
                             0: 'Good',
                             1: 'Medium',
@@ -467,6 +468,7 @@ class dysonAirPurifier extends utils.Adapter {
                         write: false,
                         role: 'value',
                         type: 'string',
+                        def: '',
                     },
                     native: {},
                 },
@@ -482,6 +484,7 @@ class dysonAirPurifier extends utils.Adapter {
                         write: true,
                         role: 'indicator',
                         type: 'boolean',
+                        def: false,
                     },
                     native: {},
                 },
@@ -497,6 +500,7 @@ class dysonAirPurifier extends utils.Adapter {
                         write: false,
                         role: 'indicator',
                         type: 'boolean',
+                        def: false,
                     },
                     native: {},
                 },
@@ -512,6 +516,7 @@ class dysonAirPurifier extends utils.Adapter {
                         write: false,
                         role: 'value',
                         type: 'string',
+                        def: '',
                     },
                     native: {},
                 },
@@ -527,6 +532,7 @@ class dysonAirPurifier extends utils.Adapter {
                         write: false,
                         role: 'value',
                         type: 'string',
+                        def: '',
                     },
                     native: {},
                 },
@@ -542,6 +548,7 @@ class dysonAirPurifier extends utils.Adapter {
                         write: true,
                         role: 'value',
                         type: 'string',
+                        def: '',
                     },
                     native: {},
                 },
@@ -565,6 +572,7 @@ class dysonAirPurifier extends utils.Adapter {
                             write: true,
                             role: 'value',
                             type: 'string',
+                            def: '',
                         },
                         native: {},
                     },
@@ -582,6 +590,7 @@ class dysonAirPurifier extends utils.Adapter {
                             write: true,
                             role: 'value',
                             type: 'string',
+                            def: '',
                         },
                         native: {},
                     },
@@ -777,6 +786,7 @@ class dysonAirPurifier extends utils.Adapter {
                         role: deviceConfig.role,
                         type: deviceConfig.type,
                         unit: deviceConfig.unit,
+                        def: deviceConfig.type === 'boolean' ? false : deviceConfig.type === 'number' ? 0 : '',
                         states: !deviceConfig.displayValues
                             ? undefined
                             : SPECIAL_PROPERTIES.has(dysonCode)
@@ -829,6 +839,7 @@ class dysonAirPurifier extends utils.Adapter {
                     write: false,
                     role: 'value',
                     type: 'number',
+                    def: 0,
                     states: {
                         0: 'Good',
                         1: 'Medium',
@@ -879,6 +890,7 @@ class dysonAirPurifier extends utils.Adapter {
                     write: false,
                     role: 'value',
                     type: 'number',
+                    def: 0,
                     states: {
                         0: 'Good',
                         1: 'Medium',
@@ -928,6 +940,7 @@ class dysonAirPurifier extends utils.Adapter {
                     write: false,
                     role: 'value',
                     type: 'number',
+                    def: 0,
                     states: {
                         0: 'Good',
                         1: 'Medium',
@@ -982,6 +995,7 @@ class dysonAirPurifier extends utils.Adapter {
                     write: false,
                     role: 'value',
                     type: 'number',
+                    def: 0,
                     states: {
                         0: 'Good',
                         1: 'Medium',
@@ -1036,6 +1050,7 @@ class dysonAirPurifier extends utils.Adapter {
                     write: false,
                     role: 'value',
                     type: 'number',
+                    def: 0,
                     states: {
                         0: 'Good',
                         1: 'Medium',
@@ -1090,6 +1105,7 @@ class dysonAirPurifier extends utils.Adapter {
                     write: false,
                     role: 'value',
                     type: 'number',
+                    def: 0,
                     states: {
                         0: 'Good',
                         1: 'Medium',
@@ -1430,6 +1446,7 @@ class dysonAirPurifier extends utils.Adapter {
                     write: false,
                     role: 'indicator.reachable',
                     type: 'boolean',
+                    def: false,
                 },
                 native: {},
             },
