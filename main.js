@@ -362,6 +362,9 @@ class dysonAirPurifier extends utils.Adapter {
                         name: PRODUCTS[device.ProductType].name,
                         icon: PRODUCTS[device.ProductType].icon,
                         type: 'string',
+                        statusStates: {
+                            onlineId: `${this.namespace}.${device.Serial}.Online`,
+                        },
                     },
                     native: {},
                 },
@@ -1435,7 +1438,8 @@ class dysonAirPurifier extends utils.Adapter {
             },
             state === 'online',
         );
-        this.setState('info.connection', state === 'online', true);
+        const anyOnline = devices.some(d => d.Serial === device ? state === 'online' : d.mqttClient?.connected);
+        this.setState('info.connection', anyOnline, true);
     }
 
     /**
