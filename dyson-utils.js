@@ -445,3 +445,23 @@ module.exports.nextAutoFanSpeed = function (isAuto, data, nowMs) {
     const speed = module.exports.getLatestCompletedSpeed(data, nowMs);
     return speed === null ? 'auto' : String(speed);
 };
+
+/**
+ * getDailyEnvData
+ *
+ * Fetches the Dyson cloud daily environment/usage history for a device. The
+ * response carries a rolling 7-day series at 15-minute resolution, including the
+ * real fan speed (fnsp). Reuses the already-decrypted bearer token; the token is
+ * never logged or persisted here.
+ *
+ * @param token  decrypted Dyson bearer token
+ * @param serial device serial number
+ * @returns parsed response object of environmentdata/daily
+ */
+module.exports.getDailyEnvData = async function (token, serial) {
+    const res = await axios.get(
+        `${dysonConstants.API_BASE_URI}/v1/messageprocessor/devices/${serial}/environmentdata/daily`,
+        { httpsAgent, headers: { ...dysonConstants.HTTP_HEADERS, Authorization: `Bearer ${token}` } },
+    );
+    return res.data;
+};

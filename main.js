@@ -367,6 +367,23 @@ class dysonAirPurifier extends utils.Adapter {
                 },
                 null,
             );
+            // AutoFanSpeed: real fan speed while in automatic mode, read from the Dyson cloud
+            this.createOrExtendObject(
+                `${device.Serial}.AutoFanSpeed`,
+                {
+                    type: 'state',
+                    common: {
+                        name: 'Fan speed in automatic mode (from cloud)',
+                        desc: 'Real fan speed of the last completed 15-minute interval while in automatic mode, read from the Dyson cloud (the only source for the auto speed). Shows "manual mode" when the fan is not in automatic mode.',
+                        read: true,
+                        write: false,
+                        type: 'string',
+                        role: 'text',
+                    },
+                    native: {},
+                },
+                'manual mode',
+            );
             this.createOrExtendObject(
                 `${device.Serial}.Firmware`,
                 {
@@ -604,6 +621,13 @@ class dysonAirPurifier extends utils.Adapter {
      */
     async processMsg(device, path, message) {
         for (const dysonCode in message) {
+            // [AutoFanSpeed] react to automatic-mode transitions reported by the device
+            // (from any source: ioBroker, the Dyson app or the remote)
+            if (dysonCode === 'auto' || dysonCode === 'fmod') {
+                const raw = message[dysonCode];
+                const modeVal = typeof raw === 'object' && raw !== null ? raw[1] : raw;
+                await this.handleAutoModeSignal(device, modeVal === 'ON' || modeVal === 'AUTO');
+            }
             // Is this a "product-state" message?
             if (dysonCode === 'product-state') {
                 await this.processMsg(device, '', message[dysonCode]);
@@ -1347,6 +1371,8 @@ class dysonAirPurifier extends utils.Adapter {
                         this.clearIntervalHandle(thisDevice.updateIntervalHandle);
                     });
                 }
+                // [AutoFanSpeed] start the periodic cloud poll (only polls devices in auto)
+                this.startAutoFanSpeedPolling();
             } else {
                 adapterLog.error(
                     `Unable to retrieve data from dyson servers. May be e.g. a failed login or connection issues. Please check.`,
@@ -1447,6 +1473,71 @@ class dysonAirPurifier extends utils.Adapter {
      * @param objData  details to the datapoint to be created (Device, channel, state, ...)
      * @param value  value of the datapoint
      */
+    // ===== AutoFanSpeed: expose the real auto-mode fan speed from the Dyson cloud =====
+
+    /**
+     * Reacts to an automatic-mode signal reported by the device (from any source:
+     * ioBroker, the Dyson app or the remote) and switches AutoFanSpeed immediately.
+     *
+     * @param device the device object (needs .Serial)
+     * @param isAuto whether the device is now in automatic mode
+     */
+    async handleAutoModeSignal(device, isAuto) {
+        this.autoModeState = this.autoModeState || {};
+        const prev = this.autoModeState[device.Serial];
+        this.autoModeState[device.Serial] = isAuto;
+        if (isAuto) {
+            // refresh immediately only on transition into auto (avoids cloud calls on
+            // every repeated CURRENT-STATE); ongoing updates come from the poll timer
+            if (prev !== true) {
+                await this.refreshAutoFanSpeed(device);
+            }
+        } else if (prev !== false) {
+            await this.setState(`${device.Serial}.AutoFanSpeed`, 'manual mode', true);
+        }
+    }
+
+    /**
+     * Fetches the latest completed 15-minute cloud speed and writes it to AutoFanSpeed.
+     *
+     * @param device the device object (needs .Serial)
+     */
+    async refreshAutoFanSpeed(device) {
+        try {
+            // @ts-expect-error - token is defined in the adapter configuration
+            const data = await dysonUtils.getDailyEnvData(this.config.token, device.Serial);
+            const value = dysonUtils.nextAutoFanSpeed(true, data, Date.now());
+            await this.setState(`${device.Serial}.AutoFanSpeed`, value, true);
+        } catch (error) {
+            this.log.debug(`[AutoFanSpeed] Could not refresh ${device.Serial}: ${error.message}`);
+        }
+    }
+
+    /**
+     * Starts the 15-minute cloud poll for AutoFanSpeed, aligned a few minutes past the
+     * quarter hour (when the completed slot is available). Only devices currently in
+     * automatic mode trigger a cloud request.
+     */
+    startAutoFanSpeedPolling() {
+        if (this.autoFanSpeedTimer) {
+            return;
+        }
+        const SLOT = 15 * 60 * 1000;
+        const poll = () => {
+            this.autoModeState = this.autoModeState || {};
+            for (const dev of devices) {
+                if (this.autoModeState[dev.Serial]) {
+                    void this.refreshAutoFanSpeed(dev);
+                }
+            }
+        };
+        const alignMs = SLOT - (Date.now() % SLOT) + 3 * 60 * 1000;
+        this.autoFanSpeedTimer = this.setTimeout(() => {
+            poll();
+            this.autoFanSpeedTimer = this.setInterval(poll, SLOT);
+        }, alignMs);
+    }
+
     createOrExtendObject(id, objData, value) {
         if (adapterIsSetUp) {
             this.setState(id, value, true);
