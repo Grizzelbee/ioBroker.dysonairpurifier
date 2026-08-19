@@ -384,3 +384,64 @@ module.exports.getFanIP = async function (self, deviceName) {
         }
     }
 };
+
+/**
+ * Parse an ISO-8601 duration like 'PT15M' into milliseconds. Falls back to 15 minutes.
+ *
+ * @param resolution resolution string from the cloud response (e.g. 'PT15M')
+ * @returns slot length in milliseconds
+ */
+function parseResolutionMs(resolution) {
+    const m = typeof resolution === 'string' ? resolution.match(/PT(\d+)M/) : null;
+    return m ? parseInt(m[1], 10) * 60 * 1000 : 15 * 60 * 1000;
+}
+
+/**
+ * getLatestCompletedSpeed
+ *
+ * Returns the real (time-averaged) fan speed of the last COMPLETED slot from the
+ * Dyson cloud daily environment/usage response, or null when unavailable. The
+ * currently open slot is intentionally ignored (it is still being averaged), and
+ * a null slot (fan was off / no reading) yields null.
+ *
+ * @param data  parsed response of environmentdata/daily ({ start_time, resolution, fnsp[] })
+ * @param nowMs current time as ms since epoch
+ * @returns {number|null} averaged speed of the last completed slot, or null
+ */
+module.exports.getLatestCompletedSpeed = function (data, nowMs) {
+    if (!data || !Array.isArray(data.fnsp)) {
+        return null;
+    }
+    const startMs = Date.parse(data.start_time);
+    if (Number.isNaN(startMs)) {
+        return null;
+    }
+    const slotMs = parseResolutionMs(data.resolution);
+    const lastCompleted = Math.floor((nowMs - startMs) / slotMs) - 1;
+    if (lastCompleted < 0 || lastCompleted >= data.fnsp.length) {
+        return null;
+    }
+    const value = data.fnsp[lastCompleted];
+    return typeof value === 'number' ? value : null;
+};
+
+/**
+ * nextAutoFanSpeed
+ *
+ * Computes the value for the AutoFanSpeed datapoint:
+ *   - not in automatic mode       -> 'manual mode'
+ *   - in auto with a cloud reading -> the real speed as string (e.g. '2.9', '0')
+ *   - in auto, no reading yet      -> 'auto'
+ *
+ * @param isAuto whether the device currently is in automatic mode
+ * @param data   parsed response of environmentdata/daily (may be null when !isAuto)
+ * @param nowMs  current time as ms since epoch
+ * @returns {string} value to write into AutoFanSpeed
+ */
+module.exports.nextAutoFanSpeed = function (isAuto, data, nowMs) {
+    if (!isAuto) {
+        return 'manual mode';
+    }
+    const speed = module.exports.getLatestCompletedSpeed(data, nowMs);
+    return speed === null ? 'auto' : String(speed);
+};
