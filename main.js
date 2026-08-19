@@ -367,22 +367,26 @@ class dysonAirPurifier extends utils.Adapter {
                 },
                 null,
             );
-            // AutoFanSpeed: real fan speed while in automatic mode, read from the Dyson cloud
+            // AutoFanSpeed: real fan speed while in automatic mode, read from the Dyson cloud.
+            // Numeric so it logs cleanly to history DBs and is easy to use in scripts:
+            // 0..10 = real speed (0 = idle), 11 = waiting for first reading, 12 = manual mode.
             this.createOrExtendObject(
                 `${device.Serial}.AutoFanSpeed`,
                 {
                     type: 'state',
                     common: {
                         name: 'Fan speed in automatic mode (from cloud)',
-                        desc: 'Real fan speed of the last completed 15-minute interval while in automatic mode, read from the Dyson cloud (the only source for the auto speed). Shows "manual mode" when the fan is not in automatic mode.',
+                        desc: 'Real fan speed of the last completed 15-minute interval while in automatic mode, read from the Dyson cloud (the only source for the auto speed). 0..10 = real speed (0 = idle in auto), 11 = waiting for the first completed interval, 12 = fan not in automatic mode.',
                         read: true,
                         write: false,
-                        type: 'string',
-                        role: 'text',
+                        type: 'number',
+                        role: 'value',
+                        min: 0,
+                        max: 12,
                     },
                     native: {},
                 },
-                'manual mode',
+                12,
             );
             this.createOrExtendObject(
                 `${device.Serial}.Firmware`,
@@ -1493,7 +1497,7 @@ class dysonAirPurifier extends utils.Adapter {
                 await this.refreshAutoFanSpeed(device);
             }
         } else if (prev !== false) {
-            await this.setState(`${device.Serial}.AutoFanSpeed`, 'manual mode', true);
+            await this.setState(`${device.Serial}.AutoFanSpeed`, 12, true);
         }
     }
 
@@ -1506,7 +1510,9 @@ class dysonAirPurifier extends utils.Adapter {
         try {
             // @ts-expect-error - token is defined in the adapter configuration
             const data = await dysonUtils.getDailyEnvData(this.config.token, device.Serial);
-            const value = dysonUtils.nextAutoFanSpeed(true, data, Date.now());
+            const fanState = await this.getStateAsync(`${device.Serial}.FanStatus`);
+            const fanRunning = !!fanState && fanState.val === 'FAN';
+            const value = dysonUtils.nextAutoFanSpeed(true, data, Date.now(), fanRunning);
             await this.setState(`${device.Serial}.AutoFanSpeed`, value, true);
         } catch (error) {
             this.log.debug(`[AutoFanSpeed] Could not refresh ${device.Serial}: ${error.message}`);

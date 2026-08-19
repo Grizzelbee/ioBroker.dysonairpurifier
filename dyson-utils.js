@@ -428,22 +428,27 @@ module.exports.getLatestCompletedSpeed = function (data, nowMs) {
 /**
  * nextAutoFanSpeed
  *
- * Computes the value for the AutoFanSpeed datapoint:
- *   - not in automatic mode       -> 'manual mode'
- *   - in auto with a cloud reading -> the real speed as string (e.g. '2.9', '0')
- *   - in auto, no reading yet      -> 'auto'
+ * Computes the numeric value for the AutoFanSpeed datapoint. Kept numeric (not a
+ * string) so it logs cleanly to history databases and is easy to compare in scripts:
+ *   - in auto with a cloud reading   -> the real speed 0..10 (decimals, 0 = idle)
+ *   - in auto, no reading yet, running -> 11 (waiting for the first completed interval)
+ *   - not in automatic mode          -> 12 (manual mode)
  *
- * @param isAuto whether the device currently is in automatic mode
- * @param data   parsed response of environmentdata/daily (may be null when !isAuto)
- * @param nowMs  current time as ms since epoch
- * @returns {string} value to write into AutoFanSpeed
+ * @param isAuto     whether the device currently is in automatic mode
+ * @param data       parsed response of environmentdata/daily (may be null when !isAuto)
+ * @param nowMs      current time as ms since epoch
+ * @param fanRunning whether the fan is currently blowing (FanStatus === 'FAN')
+ * @returns {number} value to write into AutoFanSpeed (0..10 real, 11 waiting, 12 manual)
  */
-module.exports.nextAutoFanSpeed = function (isAuto, data, nowMs) {
+module.exports.nextAutoFanSpeed = function (isAuto, data, nowMs, fanRunning) {
     if (!isAuto) {
-        return 'manual mode';
+        return 12;
     }
     const speed = module.exports.getLatestCompletedSpeed(data, nowMs);
-    return speed === null ? 'auto' : String(speed);
+    if (speed !== null) {
+        return speed;
+    }
+    return fanRunning ? 11 : 0;
 };
 
 /**

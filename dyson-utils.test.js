@@ -190,23 +190,28 @@ describe('dyson-utils', () => {
       return { start_time: startTime, resolution: 'PT15M', fnsp };
     }
 
-    it('returns "manual mode" when the fan is not in automatic mode', () => {
-      expect(dysonUtils.nextAutoFanSpeed(false, null, startMs)).to.equal('manual mode');
+    it('returns 12 (manual mode) when the fan is not in automatic mode', () => {
+      expect(dysonUtils.nextAutoFanSpeed(false, null, startMs)).to.equal(12);
     });
 
-    it('returns the cloud speed as string when in automatic mode', () => {
+    it('returns the real cloud speed as a number when in automatic mode', () => {
       const data = dailyWith([[638, 2]]);
-      expect(dysonUtils.nextAutoFanSpeed(true, data, nowForLastCompleted(638))).to.equal('2');
+      expect(dysonUtils.nextAutoFanSpeed(true, data, nowForLastCompleted(638))).to.equal(2);
     });
 
-    it('keeps one decimal for a fractional auto speed', () => {
+    it('preserves a fractional auto speed', () => {
       const data = dailyWith([[637, 2.9]]);
-      expect(dysonUtils.nextAutoFanSpeed(true, data, nowForLastCompleted(637))).to.equal('2.9');
+      expect(dysonUtils.nextAutoFanSpeed(true, data, nowForLastCompleted(637))).to.equal(2.9);
     });
 
-    it('returns "auto" while in auto but no completed reading yet', () => {
+    it('returns 0 while in auto with no reading yet and the fan is idle', () => {
       const data = dailyWith([]);
-      expect(dysonUtils.nextAutoFanSpeed(true, data, nowForLastCompleted(638))).to.equal('auto');
+      expect(dysonUtils.nextAutoFanSpeed(true, data, nowForLastCompleted(638), false)).to.equal(0);
+    });
+
+    it('returns 11 (waiting) while in auto with no reading yet and the fan is running', () => {
+      const data = dailyWith([]);
+      expect(dysonUtils.nextAutoFanSpeed(true, data, nowForLastCompleted(638), true)).to.equal(11);
     });
   });
 });
