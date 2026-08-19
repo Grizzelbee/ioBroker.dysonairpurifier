@@ -188,6 +188,7 @@ This is nice to know because the devices usually send (at least mine do) their s
 
 ## Changelog
 ### **WORK IN PROGRESS**
+- (krobipd) New: [#243](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/243) Added `AutoModeFanSpeed` datapoint - real fan speed while in auto mode, read from the Dyson cloud (15-minute average; 11=waiting, 12=manual mode)
 - (grizzelbee) Upd: Dependencies got updated
 - (grizzelbee) Fix: [#338](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/338) Fixed Admin dependency
 - (grizzelbee) Fix: [#341](https://github.com/Grizzelbee/ioBroker.dysonairpurifier/issues/341) Fixed linting

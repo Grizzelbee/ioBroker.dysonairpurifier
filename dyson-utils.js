@@ -384,3 +384,89 @@ module.exports.getFanIP = async function (self, deviceName) {
         }
     }
 };
+
+/**
+ * Parse an ISO-8601 duration like 'PT15M' into milliseconds. Falls back to 15 minutes.
+ *
+ * @param resolution resolution string from the cloud response (e.g. 'PT15M')
+ * @returns slot length in milliseconds
+ */
+function parseResolutionMs(resolution) {
+    const m = typeof resolution === 'string' ? resolution.match(/PT(\d+)M/) : null;
+    return m ? parseInt(m[1], 10) * 60 * 1000 : 15 * 60 * 1000;
+}
+
+/**
+ * getLatestCompletedSpeed
+ *
+ * Returns the real (time-averaged) fan speed of the last COMPLETED slot from the
+ * Dyson cloud daily environment/usage response, or null when unavailable. The
+ * currently open slot is intentionally ignored (it is still being averaged), and
+ * a null slot (fan was off / no reading) yields null.
+ *
+ * @param data  parsed response of environmentdata/daily ({ start_time, resolution, fnsp[] })
+ * @param nowMs current time as ms since epoch
+ * @returns {number|null} averaged speed of the last completed slot, or null
+ */
+module.exports.getLatestCompletedSpeed = function (data, nowMs) {
+    if (!data || !Array.isArray(data.fnsp)) {
+        return null;
+    }
+    const startMs = Date.parse(data.start_time);
+    if (Number.isNaN(startMs)) {
+        return null;
+    }
+    const slotMs = parseResolutionMs(data.resolution);
+    const lastCompleted = Math.floor((nowMs - startMs) / slotMs) - 1;
+    if (lastCompleted < 0 || lastCompleted >= data.fnsp.length) {
+        return null;
+    }
+    const value = data.fnsp[lastCompleted];
+    return typeof value === 'number' ? value : null;
+};
+
+/**
+ * nextAutoFanSpeed
+ *
+ * Computes the numeric value for the AutoFanSpeed datapoint. Kept numeric (not a
+ * string) so it logs cleanly to history databases and is easy to compare in scripts:
+ *   - in auto with a cloud reading   -> the real speed 0..10 (decimals, 0 = idle)
+ *   - in auto, no reading yet, running -> 11 (waiting for the first completed interval)
+ *   - not in automatic mode          -> 12 (manual mode)
+ *
+ * @param isAuto     whether the device currently is in automatic mode
+ * @param data       parsed response of environmentdata/daily (may be null when !isAuto)
+ * @param nowMs      current time as ms since epoch
+ * @param fanRunning whether the fan is currently blowing (FanStatus === 'FAN')
+ * @returns {number} value to write into AutoFanSpeed (0..10 real, 11 waiting, 12 manual)
+ */
+module.exports.nextAutoFanSpeed = function (isAuto, data, nowMs, fanRunning) {
+    if (!isAuto) {
+        return 12;
+    }
+    const speed = module.exports.getLatestCompletedSpeed(data, nowMs);
+    if (speed !== null) {
+        return speed;
+    }
+    return fanRunning ? 11 : 0;
+};
+
+/**
+ * getDailyEnvData
+ *
+ * Fetches the Dyson cloud daily environment/usage history for a device. The
+ * response carries a rolling 7-day series at 15-minute resolution, including the
+ * real fan speed (fnsp). Reuses the already-decrypted bearer token; the token is
+ * never logged or persisted here.
+ *
+ * @param token  decrypted Dyson bearer token
+ * @param serial device serial number
+ * @returns parsed response object of environmentdata/daily
+ */
+module.exports.getDailyEnvData = async function (token, serial) {
+    const res = await axios.get(
+        `${dysonConstants.API_BASE_URI}/v1/messageprocessor/devices/${serial}/environmentdata/daily`,
+        { httpsAgent, headers: { ...dysonConstants.HTTP_HEADERS, Authorization: `Bearer ${token}` } },
+    );
+    return res.data;
+};

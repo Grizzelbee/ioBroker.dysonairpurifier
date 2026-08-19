@@ -145,4 +145,73 @@ describe('dyson-utils', () => {
       console.log(data);
     });
   });
+
+  describe('getLatestCompletedSpeed', () => {
+    const startTime = '2026-08-12T22:00:00Z';
+    const SLOT = 15 * 60 * 1000;
+    const startMs = Date.parse(startTime);
+    // nowMs positioned 1 min into the slot AFTER idx, so idx is the last completed slot
+    const nowForLastCompleted = idx => startMs + (idx + 1) * SLOT + 60 * 1000;
+    function dailyWith(pairs) {
+      const fnsp = new Array(640).fill(null);
+      pairs.forEach(([i, v]) => (fnsp[i] = v));
+      return { start_time: startTime, resolution: 'PT15M', fnsp };
+    }
+
+    it('returns the real speed of the last completed 15-min slot', () => {
+      const data = dailyWith([[636, 10], [637, 2.9], [638, 2]]);
+      expect(dysonUtils.getLatestCompletedSpeed(data, nowForLastCompleted(638))).to.equal(2);
+    });
+
+    it('preserves fractional averaged speed', () => {
+      const data = dailyWith([[636, 10], [637, 2.9], [638, 2]]);
+      expect(dysonUtils.getLatestCompletedSpeed(data, nowForLastCompleted(637))).to.equal(2.9);
+    });
+
+    it('returns null when the last completed slot has no reading (fan off)', () => {
+      const data = dailyWith([[636, 10]]);
+      expect(dysonUtils.getLatestCompletedSpeed(data, nowForLastCompleted(638))).to.equal(null);
+    });
+
+    it('returns null for malformed data', () => {
+      expect(dysonUtils.getLatestCompletedSpeed(null, startMs)).to.equal(null);
+      expect(dysonUtils.getLatestCompletedSpeed({ start_time: 'x', resolution: 'PT15M', fnsp: [] }, startMs)).to.equal(null);
+    });
+  });
+
+  describe('nextAutoFanSpeed', () => {
+    const startTime = '2026-08-12T22:00:00Z';
+    const SLOT = 15 * 60 * 1000;
+    const startMs = Date.parse(startTime);
+    const nowForLastCompleted = idx => startMs + (idx + 1) * SLOT + 60 * 1000;
+    function dailyWith(pairs) {
+      const fnsp = new Array(640).fill(null);
+      pairs.forEach(([i, v]) => (fnsp[i] = v));
+      return { start_time: startTime, resolution: 'PT15M', fnsp };
+    }
+
+    it('returns 12 (manual mode) when the fan is not in automatic mode', () => {
+      expect(dysonUtils.nextAutoFanSpeed(false, null, startMs)).to.equal(12);
+    });
+
+    it('returns the real cloud speed as a number when in automatic mode', () => {
+      const data = dailyWith([[638, 2]]);
+      expect(dysonUtils.nextAutoFanSpeed(true, data, nowForLastCompleted(638))).to.equal(2);
+    });
+
+    it('preserves a fractional auto speed', () => {
+      const data = dailyWith([[637, 2.9]]);
+      expect(dysonUtils.nextAutoFanSpeed(true, data, nowForLastCompleted(637))).to.equal(2.9);
+    });
+
+    it('returns 0 while in auto with no reading yet and the fan is idle', () => {
+      const data = dailyWith([]);
+      expect(dysonUtils.nextAutoFanSpeed(true, data, nowForLastCompleted(638), false)).to.equal(0);
+    });
+
+    it('returns 11 (waiting) while in auto with no reading yet and the fan is running', () => {
+      const data = dailyWith([]);
+      expect(dysonUtils.nextAutoFanSpeed(true, data, nowForLastCompleted(638), true)).to.equal(11);
+    });
+  });
 });
