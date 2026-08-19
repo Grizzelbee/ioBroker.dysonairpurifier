@@ -375,8 +375,8 @@ class dysonAirPurifier extends utils.Adapter {
                 {
                     type: 'state',
                     common: {
-                        name: 'Fan speed in automatic mode (from cloud)',
-                        desc: 'Real fan speed of the last completed 15-minute interval while in automatic mode, read from the Dyson cloud (the only source for the auto speed). 0..10 = real speed (0 = idle in auto), 11 = waiting for the first completed interval, 12 = fan not in automatic mode.',
+                        name: 'Auto-mode fan speed',
+                        desc: 'Raw auto-mode fan speed from the Dyson cloud (15-min average, app shows it rounded)',
                         read: true,
                         write: false,
                         type: 'number',
