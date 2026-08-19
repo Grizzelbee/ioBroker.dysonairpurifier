@@ -367,16 +367,16 @@ class dysonAirPurifier extends utils.Adapter {
                 },
                 null,
             );
-            // AutoFanSpeed: real fan speed while in automatic mode, read from the Dyson cloud.
+            // AutoModeFanSpeed: real fan speed while in automatic mode, read from the Dyson cloud.
             // Numeric so it logs cleanly to history DBs and is easy to use in scripts:
             // 0..10 = real speed (0 = idle), 11 = waiting for first reading, 12 = manual mode.
             this.createOrExtendObject(
-                `${device.Serial}.AutoFanSpeed`,
+                `${device.Serial}.AutoModeFanSpeed`,
                 {
                     type: 'state',
                     common: {
-                        name: 'Auto-mode fan speed',
-                        desc: 'Raw auto-mode fan speed from the Dyson cloud (15-min average, app shows it rounded)',
+                        name: 'Raw cloud auto mode fan speed',
+                        desc: 'Raw auto-mode data from the Dyson cloud (updated every 15 minutes)',
                         read: true,
                         write: false,
                         type: 'number',
@@ -1497,7 +1497,7 @@ class dysonAirPurifier extends utils.Adapter {
                 await this.refreshAutoFanSpeed(device);
             }
         } else if (prev !== false) {
-            await this.setState(`${device.Serial}.AutoFanSpeed`, 12, true);
+            await this.setState(`${device.Serial}.AutoModeFanSpeed`, 12, true);
         }
     }
 
@@ -1513,7 +1513,7 @@ class dysonAirPurifier extends utils.Adapter {
             const fanState = await this.getStateAsync(`${device.Serial}.FanStatus`);
             const fanRunning = !!fanState && fanState.val === 'FAN';
             const value = dysonUtils.nextAutoFanSpeed(true, data, Date.now(), fanRunning);
-            await this.setState(`${device.Serial}.AutoFanSpeed`, value, true);
+            await this.setState(`${device.Serial}.AutoModeFanSpeed`, value, true);
         } catch (error) {
             this.log.debug(`[AutoFanSpeed] Could not refresh ${device.Serial}: ${error.message}`);
         }
