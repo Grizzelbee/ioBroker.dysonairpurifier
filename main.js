@@ -383,6 +383,7 @@ class dysonAirPurifier extends utils.Adapter {
                         role: 'value',
                         min: 0,
                         max: 12,
+                        states: { 11: 'waiting', 12: 'manual mode' },
                     },
                     native: {},
                 },
